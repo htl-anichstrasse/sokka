@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Code Octo Spoon',
       theme: ThemeData(
         // This is the theme of your application.
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.deepOrange,
-        accentColor: Colors.deepOrangeAccent[400]
+        accentColor: Colors.deepOrangeAccent[400],
       ),
       home: MyHomePage(title: 'Code Octo Spoon Main Page'),
     );
@@ -100,17 +101,14 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               'You have pushed the button this many times:',
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
+            Text('$_counter', style: Theme.of(context).textTheme.headline4),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
-        child: Icon(Icons.add),
+        child: Icon(Icons.ac_unit),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
