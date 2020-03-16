@@ -1,3 +1,8 @@
+/**
+ * @author Nicolaus Rossi
+ * @since 
+ */
+
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
