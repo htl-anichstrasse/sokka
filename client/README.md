@@ -1,3 +1,3 @@
 # Client
 
-The client (mobile app), developed using Flutter, can be found here.
+The client (mobile app & web app), developed using Flutter, can be found here.
