@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "gulp build",
-    "watch": "gulp watch"
+    "watch": "gulp watch",
+    "start": "gulp start"
   },
   "keywords": [],
   "author": "Joshua Winkler & Nicolaus Rossi",
