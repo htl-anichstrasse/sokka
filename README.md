@@ -11,7 +11,7 @@
   <p align="center">
     A highly functional, configurable and modular mobile ordering system for cantinas and restaurants.
     <br/>
-    <a href="https://github.com/htl-anichstrasse/sokka/issues">Releases</a>
+    <a href="https://github.com/htl-anichstrasse/sokka/releases">Releases</a>
     ·
     <a href="https://github.com/htl-anichstrasse/sokka/issues">Report Bug</a>
     ·
