@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/style.css" />
+
+    <title>404 — Sokka</title>
+</head>
+
+<body>
+    <div class="jumbotron vertical-center">
+        <div class="container">
+            <h1>Big oof</h1>
+            <p>Seems like you have reached a dead end. Sorry!</p>
+            <div class="footer">
+                <span class="text-muted">Copyright © <span id="year"></span> <a href="https://sokka.me/">Sokka Project</a></span>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('year').innerHTML = new Date().getFullYear();
+    </script>
+</body>
+
+</html>
