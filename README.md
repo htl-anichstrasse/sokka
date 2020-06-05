@@ -9,7 +9,7 @@
   <h3 align="center">Sokka</h3>
 
   <p align="center">
-    A highly functional, configurable and modular mobile ordering system for cantinas and restaurants.
+    A highly functional, configurable and modular mobile ordering system for canteens and restaurants.
     <br/>
     <a href="https://github.com/htl-anichstrasse/sokka/releases">Releases</a>
     ·
