@@ -6,6 +6,7 @@ COPY package*.json ./
 
 # install dependencies
 RUN npm install
+RUN npm install -g gulp
 
 # build
 COPY . .

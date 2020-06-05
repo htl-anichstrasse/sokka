@@ -1,7 +1,7 @@
 {
-  "name": "server",
+  "name": "sokka-server",
   "version": "1.0.0",
-  "description": "The server backend and administration panel can be found here.",
+  "description": "The Sokka server backend and administration panel can be found here.",
   "main": "dist/index.js",
   "scripts": {
     "build": "gulp build",

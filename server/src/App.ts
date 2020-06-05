@@ -25,6 +25,13 @@ class App {
 
         // Register all routers
         this.registerRouters();
+
+        // Register default router
+        this.express.use((req, res) => {
+            res.status(404).end();
+        });
+
+        this.logger.info('Sokka ready to rumble!');
     }
 
     private registerRouters(): void {
