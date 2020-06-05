@@ -36,7 +36,7 @@ class _TabController extends State<TabController> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('S O K K A'),
+          title: Text('SOKKA', style: TextStyle(color: Colors.white)),
           centerTitle: true,
           actions: <Widget>[
             IconButton(
@@ -70,7 +70,7 @@ Widget menu() {
       unselectedLabelColor: Colors.white70,
       indicatorSize: TabBarIndicatorSize.tab,
       indicatorPadding: EdgeInsets.all(5.0),
-      indicatorColor: Colors.blue,
+      indicatorColor: Colors.tealAccent[100],
       tabs: [
         Tab(text: 'Wallet', icon: Icon(Icons.account_balance_wallet)),
         Tab(text: 'Menus', icon: Icon(Icons.restaurant_menu)),
