@@ -52,7 +52,7 @@ class _TabController extends State<TabController> {
         bottomNavigationBar: menu(),
         body: TabBarView(
           children: <Widget>[
-            Container(child: Icon(Icons.account_balance_wallet, color: Colors.white,)),
+            TabViewContainer('1', 'Gemüsesuppe', 'Hühnercurry mit Jasminreis', 'Bananen-Split'),
             Container(child: Icon(Icons.restaurant_menu, color: Colors.white,)),
             Container(child: Icon(Icons.shopping_basket, color: Colors.white,)),
           ],
@@ -78,4 +78,60 @@ Widget menu() {
       ],
     ),
   );
+}
+
+class TabViewContainer extends StatelessWidget {
+  final String _menu;
+  String _appetizer;
+  String _mainCourse;
+  String _dessert;
+
+  TabViewContainer(this._menu, final String appetizer, final String mainCourse, final String dessert) {
+    this._appetizer = appetizer;
+    this._mainCourse = mainCourse;
+    this._dessert = dessert;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 60,
+      color: Colors.amber[300],
+      width: 40,
+      child: ListView(
+        padding: EdgeInsets.all(8.0),
+        children: <Widget>[
+          Container(
+            height: 50,
+            color: Colors.amber[600],
+            child: Text(
+              'Menu 1',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+          Container(
+            height: 50.0,
+            child: Text(
+              this._appetizer,
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+          Container(
+            height: 50.0,
+            child: Text(
+              this._mainCourse,
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+          Container(
+            height: 50.0,
+            child: Text(
+              this._dessert,
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
