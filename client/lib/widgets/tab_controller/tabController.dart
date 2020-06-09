@@ -3,10 +3,10 @@ import 'package:client/widgets/menu/menu.dart';
 
 class HomeTabController extends StatefulWidget {
   @override
-  _TabController createState() => _TabController();
+  _HomeTabController createState() => _HomeTabController();
 }
 
-class _TabController extends State<HomeTabController> {
+class _HomeTabController extends State<HomeTabController> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
