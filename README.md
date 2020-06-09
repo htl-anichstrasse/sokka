@@ -50,4 +50,4 @@ Nicolaus Rossi - nirossi@tsn.at<br>
 Joshua Winkler - jos.winkler@tsn.at<br>
 HTL Anichstraße - htlinn@tsn.at
 
-<img src=".github/logo_background.png" width="180px">
+<a href="https://htl-anichstrasse.tirol" target="_blank"><img src=".github/logo_background.png" width="180px"></a>
