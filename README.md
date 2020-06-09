@@ -24,7 +24,7 @@
 ## About the project
 Sokka is a diploma project created by students Joshua Winkler and Nicolaus Rossi of the higher technical college HTL Anichstraße in Innsbruck, Austria. It was created for use by the cantina of Innsbruck's tourism schools and supervised by software engineering professor Sabo Rubner.
 
-# Installation
+## Installation
 
 Clone the repository.
 ```
