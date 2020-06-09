@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.tealAccent[700],
         scaffoldBackgroundColor: Colors.grey[850],
+        cardColor: Colors.amber[300],
         textTheme: TextTheme(
           bodyText2: TextStyle(color: Colors.black, fontFamily: 'Source Code Pro'),
           headline4: TextStyle(color: Colors.white),
@@ -67,7 +68,14 @@ class _TabController extends State<TabController> {
         body: TabBarView(
           children: <Widget>[
             Container(child: Icon(Icons.account_balance_wallet, color: Colors.white,)),
-            Menu(),
+            Container(
+              child: ListView.builder(
+                itemCount: 5,
+                itemBuilder: (BuildContext context, int index) {
+                  return Menu(index + 1);
+                },
+              ),
+            ),
             Container(child: Icon(Icons.shopping_basket, color: Colors.white,)),
           ],
         ),
