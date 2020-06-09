@@ -1,3 +1,7 @@
 .vscode/
-proxy/
+# main page (sokka.me)
+main/
+# proxy configuration
+proxy.conf/
+# fallback configuration
 default/site.conf

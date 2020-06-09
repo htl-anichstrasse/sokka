@@ -3,7 +3,7 @@ services:
   # NGINX REVERSE PROXY
   proxy:
     image: jwilder/nginx-proxy:latest
-    container_name: "proxy"
+    container_name: "sokka_proxy"
     labels:
       - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
     restart: always
@@ -17,42 +17,71 @@ services:
       - "certs-volume:/etc/nginx/certs:ro"
       - "/etc/nginx/vhost.d"
       - "/usr/share/nginx/html"
-      - "./proxy/proxy.conf:/etc/nginx/conf.d/proxy.conf:ro"
+      - "./proxy.conf:/etc/nginx/conf.d"
   nginx-letsencrypt-companion:
     image: jrcs/letsencrypt-nginx-proxy-companion
-    container_name: "proxy_ssl"
+    container_name: "sokka_proxy_ssl"
     restart: always
     volumes:
       - "certs-volume:/etc/nginx/certs"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     volumes_from:
       - "proxy"
-  # FALLBACK (DEFAULT)
-  default:
+  # MAIN PAGE
+  main:
+    depends_on:
+      - proxy
     image: nginx
     container_name: "sokka.me"
-    restart: always
-    networks:
-      - proxy_default
-      - default 
+    restart: always 
     volumes:
-      - ./default:/code
-      - ./default:/usr/share/nginx/html
-      - ./default/site.conf:/etc/nginx/conf.d/000_site.conf
-    expose:
-      - 8001
+      - ./main/html:/usr/share/nginx/html
     ports:
-      - "8001:80"
+      - "8080:80"
     environment:
       - NGINX_HOST=sokka.me
       - NGINX_PORT=80
       - VIRTUAL_HOST=sokka.me,www.sokka.me
       - LETSENCRYPT_HOST=sokka.me,www.sokka.me
       - LETSENCRYPT_EMAIL=jos.winkler@tsn.at
-  php:
-    container_name: "sokka.me_php"
-    image: php:7-fpm
+# API PAGE
+  api:
+    depends_on:
+      - proxy
+      - db
+    container_name: "api.sokka.me"
+    image: htl-anichstrasse/sokka
+    restart: always
+    ports:
+     - "1234:80"
+    environment:
+     - NGINX_HOST=api.sokka.me
+     - NGINX_PORT=80
+     - PORT=1234
+     - VIRTUAL_PORT=1234
+     - VIRTUAL_HOST=api.sokka.me
+     - LETSENCRYPT_HOST=api.sokka.me
+     - LETSENCRYPT_EMAIL=jos.winkler@tsn.at
+  db:
+    image: mariadb
+    container_name: "api.sokka.me_db"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: verycoolpassword
+# DEFAULT PAGE (FALLBACK)
+  default:
+    depends_on:
+      - proxy
+    container_name: "default.sokka.me"
+    image: nginx
+    restart: always 
     volumes:
-      - ./default:/code
+      - ./default:/usr/share/nginx/html
+    ports:
+     - "8082:80"
+    environment:
+     - NGINX_HOST=default.sokka.me
+     - NGINX_PORT=80
+     - VIRTUAL_HOST=default.sokka.me
 volumes:
-  certs-volume: "./proxy/certs"
+  certs-volume:
