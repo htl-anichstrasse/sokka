@@ -82,6 +82,8 @@ services:
     environment:
      - NGINX_HOST=default.sokka.me
      - NGINX_PORT=80
-     - VIRTUAL_HOST=default.sokka.me
+     - VIRTUAL_HOST=bemoty.prox.kaifink.me
+     - LETSENCRYPT_HOST=bemoty.prox.kaifink.me
+     - LETSENCRYPT_EMAIL=jos.winkler@tsn.at
 volumes:
   certs-volume:
