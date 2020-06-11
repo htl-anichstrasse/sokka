@@ -31,7 +31,7 @@ Clone the repository.
 git clone https://github.com/htl-anichstrasse/sokka.git
 ```
 
-You can now make changes to the Docker container names or instance settings. Once you're ready, simply run the start script with the build flag.
+You can now make changes to the Docker container names, VIRTUAL_HOST & LETSENCRYPT_HOST settings. If you wish, you can also modify module configurations to include your logo for example. Once you're ready, simply run the start script with the build flag.
 ```
 ./start.sh build
 ```
