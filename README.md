@@ -24,6 +24,24 @@
 ## About the project
 Sokka is a diploma project created by students Joshua Winkler and Nicolaus Rossi of the higher technical college HTL Anichstraße in Innsbruck, Austria. It was created for use by the cantina of Innsbruck's tourism schools and supervised by software engineering professor Sabo Rubner.
 
+## Installation
+
+Clone the repository.
+```
+git clone https://github.com/htl-anichstrasse/sokka.git
+```
+
+You can now make changes to the Docker container names or instance settings. Once you're ready, simply run the start script with the build flag.
+```
+./start.sh build
+```
+
+Please note that you might have to adjust file permissions first.
+
+```
+chmod +x start.sh
+```
+
 ## Contact
 
 If you have any questions about this project, please feel free to contact us.
@@ -31,3 +49,5 @@ If you have any questions about this project, please feel free to contact us.
 Nicolaus Rossi - nirossi@tsn.at<br>
 Joshua Winkler - jos.winkler@tsn.at<br>
 HTL Anichstraße - htlinn@tsn.at
+
+<a href="https://htl-anichstrasse.tirol" target="_blank"><img src=".github/logo_background.png" width="180px"></a>
