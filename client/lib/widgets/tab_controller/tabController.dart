@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:client/widgets/menu/menu.dart';
+import 'package:client/widgets/account/account.dart';
 
 class HomeTabController extends StatefulWidget {
   @override
@@ -15,11 +16,11 @@ class _HomeTabController extends State<HomeTabController> {
         appBar: AppBar(
           title: Text('SOKKA', style: TextStyle(color: Colors.white)),
           centerTitle: true,
+          leading: IconButton(
+            icon: Icon(Icons.account_box, color: Colors.white),
+            onPressed: () => Account(),
+          ),
           actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.account_box, color: Colors.white),
-              onPressed: () => null,
-            ),
             IconButton(
               icon: Icon(Icons.settings, color: Colors.white,),
               onPressed: () => null,
