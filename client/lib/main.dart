@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:client/widgets/tab_controller/tabController.dart';
-void main() => runApp(MyApp());
+void main() => runApp(Sokka());
 
-class MyApp extends StatelessWidget {
+class Sokka extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays([]);
