@@ -46,8 +46,8 @@ chmod +x start.sh
 
 If you have any questions about this project, please feel free to contact us.
 
-Nicolaus Rossi - nirossi@tsn.at<br>
-Joshua Winkler - jos.winkler@tsn.at<br>
+Nicolaus Rossi - nico@sokka.me<br>
+Joshua Winkler - josh@sokka.me<br>
 HTL Anichstraße - htlinn@tsn.at
 
 <a href="https://htl-anichstrasse.tirol" target="_blank"><img src=".github/logo_background.png" width="180px"></a>
