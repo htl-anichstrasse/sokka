@@ -8,11 +8,11 @@ class Sokka extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays([]);
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: true,
       theme: ThemeData(
         primaryColor: Colors.tealAccent[700],
         scaffoldBackgroundColor: Colors.grey[850],
-        cardColor: Colors.amber[300],
+        cardColor: Colors.tealAccent[100],
         textTheme: TextTheme(
           bodyText2: TextStyle(color: Colors.black, fontFamily: 'Source Code Pro'),
           headline4: TextStyle(color: Colors.white),
