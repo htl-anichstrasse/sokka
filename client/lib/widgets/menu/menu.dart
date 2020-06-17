@@ -6,7 +6,7 @@ class Menu extends StatefulWidget {
   Menu(this._menuIndex);
 
   @override
-  _MenuState createState() => new _MenuState(this._menuIndex);
+  _MenuState createState() => _MenuState(this._menuIndex);
 }
 
 class _MenuState extends State<Menu> {
@@ -30,18 +30,23 @@ class _MenuState extends State<Menu> {
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  Text('Appetizer')
+                  Text('Appetizer'),
                 ],
               ),
               Row(
                 children: <Widget>[
-                  Text('Main Course')
+                  Text('Main Course'),
                 ],
               ),
               Row(
                 children: <Widget>[
-                  Text('Dessert')
+                  Text('Dessert'),
                 ],
+              ),
+              FlatButton.icon(
+                onPressed: null,                
+                label: Text('Order'),
+                icon: Icon(Icons.shopping_basket),
               ),
             ],
           ),
@@ -82,7 +87,7 @@ class _MenuState extends State<Menu> {
       ],
     );
   }
-}
+} 
 
 class Item {
   final int _menuNumber;
