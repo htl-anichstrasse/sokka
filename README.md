@@ -3,7 +3,7 @@
 <br/>
 <p align="center">
   <a href="https://sokka.me/">
-    <img src=".github/logo.png" alt="Sokka Logo" width="80" height="80">
+    <img src=".github/sokka.png" alt="Sokka Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Sokka</h3>
