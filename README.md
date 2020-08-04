@@ -40,6 +40,8 @@ Please note that you might have to adjust file permissions first.
 
 ```
 chmod +x start.sh
+chmod +x build.sh
+chmod +x stop.sh
 ```
 
 ## Contact
