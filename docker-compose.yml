@@ -50,7 +50,7 @@ services:
       - proxy
       - db
     container_name: "api.sokka.me"
-    image: htl-anichstrasse/sokka
+    image: htl-anichstrasse/sokka:v1
     restart: always
     ports:
      - "1234:80"
