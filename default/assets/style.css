@@ -28,3 +28,8 @@ body {
 .text-muted {
   font-size: 10pt;
 }
+
+.logo {
+	margin: 0 auto;
+	width: 200px;
+}
