@@ -3,7 +3,7 @@
 <br/>
 <p align="center">
   <a href="https://sokka.me/">
-    <img src=".github/sokka.png" alt="Sokka Logo" width="80" height="80">
+    <img src=".github/sokka.png" alt="Sokka Logo" height="80">
   </a>
 
   <h3 align="center">Sokka</h3>
@@ -40,6 +40,8 @@ Please note that you might have to adjust file permissions first.
 
 ```
 chmod +x start.sh
+chmod +x build.sh
+chmod +x stop.sh
 ```
 
 ## Contact

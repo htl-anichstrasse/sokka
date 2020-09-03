@@ -50,15 +50,15 @@ services:
       - proxy
       - db
     container_name: "api.sokka.me"
-    image: htl-anichstrasse/sokka
+    image: htl-anichstrasse/sokka:v1
     restart: always
     ports:
-     - "1234:80"
+     - "8090:8090"
     environment:
      - NGINX_HOST=api.sokka.me
-     - NGINX_PORT=80
-     - PORT=1234
-     - VIRTUAL_PORT=1234
+     - NGINX_PORT=8090
+     - PORT=8090
+     - VIRTUAL_PORT=8090
      - VIRTUAL_HOST=api.sokka.me
      - LETSENCRYPT_HOST=api.sokka.me
      - LETSENCRYPT_EMAIL=jos.winkler@tsn.at
