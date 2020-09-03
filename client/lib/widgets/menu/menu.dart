@@ -10,6 +10,7 @@ class Menu {
     Widget _body;
 
     Menu(final int menuIndex, final bool expanded, final String header, final String appetizer, final String mainCourse, final String dessert, final double price) {
+        this._menuIndex = menuIndex;
         this._expanded = expanded;
         this._header = header;
         this._body = new Padding(
