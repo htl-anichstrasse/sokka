@@ -22,7 +22,10 @@ class _HomeTabController extends State<HomeTabController> {
           ),
           actions: <Widget>[
             IconButton(
-              icon: Icon(Icons.settings, color: Colors.white,),
+              icon: Icon(
+                Icons.settings,
+                color: Colors.white,
+              ),
               onPressed: () => null,
             ),
           ],
@@ -45,7 +48,12 @@ class _HomeTabController extends State<HomeTabController> {
         body: SafeArea(
           child: TabBarView(
             children: <Widget>[
-              Container(child: Icon(Icons.account_balance_wallet, color: Colors.white,)),
+              Container(
+                child: Icon(
+                  Icons.account_balance_wallet,
+                  color: Colors.white,
+                ),
+              ),
               Container(
                 child: ListView.builder(
                   itemCount: 5,
@@ -54,10 +62,15 @@ class _HomeTabController extends State<HomeTabController> {
                   },
                 ),
               ),
-              Container(child: Icon(Icons.shopping_basket, color: Colors.white,)),
+              Container(
+                child: Icon(
+                  Icons.shopping_basket,
+                  color: Colors.white,
+                ),
+              ),
             ],
           ),
-        )
+        ),
       ),
     );
   }

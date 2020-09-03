@@ -44,7 +44,7 @@ class _MenuState extends State<Menu> {
                 ],
               ),
               FlatButton.icon(
-                onPressed: null,                
+                onPressed: null,
                 label: Text('Order'),
                 icon: Icon(Icons.shopping_basket),
               ),
@@ -54,7 +54,7 @@ class _MenuState extends State<Menu> {
       ),
     );
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -64,30 +64,28 @@ class _MenuState extends State<Menu> {
         Padding(
           padding: EdgeInsets.all(10.0),
           child: ExpansionPanelList(
-            expansionCallback: (int item, bool _isExpanded) => setState(() => {
-              items[item]._isExpandend = !items[item]._isExpandend
-            }),
+            expansionCallback: (int item, bool _isExpanded) =>
+                setState(() => {items[item]._isExpandend = !items[item]._isExpandend}),
             children: items.map((Item item) {
               return ExpansionPanel(
-                headerBuilder: (BuildContext context, bool isExpandend) {
-                  return ListTile(
-                    title: Text(
-                      item._header + ' ${item._menuNumber}',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w400),
-                    ),
-                  );
-                },
-                isExpanded: item._isExpandend,
-                body: item._body
-              );
+                  headerBuilder: (BuildContext context, bool isExpandend) {
+                    return ListTile(
+                      title: Text(
+                        item._header + ' ${item._menuNumber}',
+                        textAlign: TextAlign.left,
+                        style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w400),
+                      ),
+                    );
+                  },
+                  isExpanded: item._isExpandend,
+                  body: item._body);
             }).toList(),
           ),
         ),
       ],
     );
   }
-} 
+}
 
 class Item {
   final int _menuNumber;
