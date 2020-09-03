@@ -11,7 +11,7 @@ class _HomeTabController extends State<HomeTabController> {
     @override
     Widget build(BuildContext context) {
         return DefaultTabController(
-            length: 3,
+            length: 4,
             child: Scaffold(
                 appBar: AppBar(
                     title: Text('SOKKA', style: TextStyle(color: Colors.white)),
@@ -36,9 +36,10 @@ class _HomeTabController extends State<HomeTabController> {
                         indicatorPadding: EdgeInsets.all(5.0),
                         indicatorColor: Colors.tealAccent[100],
                         tabs: [
-                            Tab(text: 'Wallet', icon: Icon(Icons.account_balance_wallet)),
                             Tab(text: 'Menus', icon: Icon(Icons.restaurant_menu)),
+                            Tab(text: 'Meals', icon: Icon(Icons.set_meal)),
                             Tab(text: 'Basket', icon: Icon(Icons.shopping_basket)),
+                            Tab(text: 'Codes', icon: Icon(Icons.qr_code)),
                         ],
                     ),
                 ),
@@ -46,16 +47,19 @@ class _HomeTabController extends State<HomeTabController> {
                     child: TabBarView(
                         children: <Widget>[
                             Container(
-                                child: Icon(Icons.account_balance_wallet, color: Colors.white),
-                            ),
-                            Container(
                                 child: ListView.builder(
                                     itemCount: 5,
                                     itemBuilder: (BuildContext context, int index) => MenuPanel(index + 1)
                                 ),
                             ),
                             Container(
+                                child: Icon(Icons.set_meal, color: Colors.white),
+                            ),
+                            Container(
                                 child: Icon(Icons.shopping_basket, color: Colors.white),
+                            ),
+                            Container(
+                                child: Icon(Icons.qr_code, color: Colors.white),
                             ),
                         ],
                     ),
