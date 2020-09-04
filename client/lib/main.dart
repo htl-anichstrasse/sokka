@@ -13,6 +13,7 @@ class Sokka extends StatelessWidget {
             theme: new ThemeData(
                 primaryColor: Colors.tealAccent[700],
                 scaffoldBackgroundColor: Colors.grey[850],
+                canvasColor: Colors.grey[850],
                 cardColor: Colors.tealAccent[100],
                 textTheme: new TextTheme(
                     bodyText2: new TextStyle(color: Colors.black, fontFamily: 'Source Code Pro'),
