@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:client/widgets/menu/menu_panel.dart';
 import 'package:client/widgets/account/account.dart';
+import 'package:flutter/services.dart';
 
 class HomeTabController extends StatefulWidget {
     @override
@@ -16,16 +19,53 @@ class _HomeTabController extends State<HomeTabController> {
                 appBar: new AppBar(
                     title: new Text('SOKKA', style: TextStyle(color: Colors.white)),
                     centerTitle: true,
-                    leading: new IconButton(
-                        icon: Icon(Icons.account_box, color: Colors.white),
-                        onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => new Account())),
+                    iconTheme: new IconThemeData(color: Colors.white),
+                ),
+                drawer: new Drawer(
+                    child: new Column(
+                        children: <Widget>[
+                            new Expanded(
+                                child: new ListView(
+                                    children: <Widget>[
+                                        new DrawerHeader(
+                                            decoration: new BoxDecoration(color: Colors.teal[700]),
+                                            child: new Align(
+                                                alignment: Alignment.topCenter,
+                                                child: new Text('SOKKA', style: new TextStyle(color: Colors.white, fontSize: 25))
+                                            ),
+                                        ),
+                                        new ListTile(
+                                           leading: new Icon(Icons.account_circle),
+                                           title: new Text('Account'),
+                                           onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => new Account())),
+                                        ),
+                                        new ListTile(
+                                            leading: new Icon(Icons.account_balance_wallet),
+                                            title: new Text('Account Wallet')
+                                        ),
+                                    ],
+                                ),
+                            ),
+                            new Container(
+                                child: Align(
+                                    alignment: FractionalOffset.bottomCenter,
+                                    child: new Container(
+                                        child: new Column(
+                                            children: <Widget>[
+                                                new Transform.rotate(
+                                                    angle: 180 * pi / 180,
+                                                    child: new IconButton(
+                                                        icon: Icon(Icons.exit_to_app),
+                                                        onPressed: () => SystemChannels.platform.invokeMethod('SystemNavigator.pop'),
+                                                    ),
+                                                ),
+                                            ],
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ],
                     ),
-                    actions: <Widget>[
-                        new IconButton(
-                            icon: Icon(Icons.settings, color: Colors.white),
-                            onPressed: () => null,
-                        ),
-                    ],
                 ),
                 bottomNavigationBar: new Container(
                     color: Colors.tealAccent[700],
