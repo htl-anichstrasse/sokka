@@ -37,9 +37,9 @@ class _HomeTabController extends State<HomeTabController> {
                         indicatorColor: Colors.tealAccent[100],
                         tabs: [
                             new Tab(text: 'Menus', icon: Icon(Icons.restaurant_menu)),
-                            new Tab(text: 'Meals', icon: Icon(Icons.set_meal)),
+                            new Tab(text: 'Meals', icon: Icon(Icons.fastfood)),
                             new Tab(text: 'Basket', icon: Icon(Icons.shopping_basket)),
-                            new Tab(text: 'Codes', icon: Icon(Icons.qr_code)),
+                            new Tab(text: 'Codes', icon: Icon(Icons.code)),
                         ],
                     ),
                 ),
@@ -53,13 +53,13 @@ class _HomeTabController extends State<HomeTabController> {
                                 ),
                             ),
                             new Container(
-                                child: new Icon(Icons.set_meal, color: Colors.white),
+                                child: new Icon(Icons.fastfood, color: Colors.white),
                             ),
                             new Container(
                                 child: new Icon(Icons.shopping_basket, color: Colors.white),
                             ),
                             new Container(
-                                child: new Icon(Icons.qr_code, color: Colors.white),
+                                child: new Icon(Icons.code, color: Colors.white),
                             ),
                         ],
                     ),
