@@ -1,4 +1,4 @@
-version: '2'
+version: "2"
 services:
   # NGINX REVERSE PROXY
   proxy:
@@ -8,7 +8,7 @@ services:
       - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
     restart: always
     environment:
-      DEFAULT_HOST: default.sokka.me
+      - DEFAULT_HOST=default.sokka.me
     ports:
       - "80:80"
       - "443:443"
@@ -33,7 +33,7 @@ services:
       - proxy
     image: nginx
     container_name: "sokka.me"
-    restart: always 
+    restart: always
     volumes:
       - ./main/html:/usr/share/nginx/html
     ports:
@@ -44,7 +44,7 @@ services:
       - VIRTUAL_HOST=sokka.me,www.sokka.me
       - LETSENCRYPT_HOST=sokka.me,www.sokka.me
       - LETSENCRYPT_EMAIL=jos.winkler@tsn.at
-# API PAGE
+  # API PAGE
   api:
     depends_on:
       - proxy
@@ -53,15 +53,15 @@ services:
     image: htl-anichstrasse/sokka:v1
     restart: always
     ports:
-     - "8090:8090"
+      - "8090:8090"
     environment:
-     - NGINX_HOST=api.sokka.me
-     - NGINX_PORT=8090
-     - PORT=8090
-     - VIRTUAL_PORT=8090
-     - VIRTUAL_HOST=api.sokka.me
-     - LETSENCRYPT_HOST=api.sokka.me
-     - LETSENCRYPT_EMAIL=jos.winkler@tsn.at
+      - NGINX_HOST=api.sokka.me
+      - NGINX_PORT=8090
+      - PORT=8090
+      - VIRTUAL_PORT=8090
+      - VIRTUAL_HOST=api.sokka.me
+      - LETSENCRYPT_HOST=api.sokka.me
+      - LETSENCRYPT_EMAIL=jos.winkler@tsn.at
   mysql:
     image: mysql:latest
     container_name: "api.sokka.me_db"
@@ -70,37 +70,37 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: default_schema
   pma:
-     image: phpmyadmin/phpmyadmin
-     container_name: "api.sokka.me_pma"
-     restart: always
-     links:
+    image: phpmyadmin/phpmyadmin
+    container_name: "api.sokka.me_pma"
+    restart: always
+    links:
       - mysql
-     environment:
-       PMA_HOST: mysql
-       PMA_PORT: 3306
-       PMA_ARBITRARY: 1
-       NGINX_HOST: pma.sokka.me
-       VIRTUAL_PORT: 8095
-       VIRTUAL_HOST: pma.sokka.me
-       LETSENCRYPT_HOST: pma.sokka.me
-       LETSENCRYPT_EMAIL: jos.winkler@tsn.at
-     ports:
+    environment:
+      - PMA_HOST=mysql
+      - PMA_PORT=3306
+      - PMA_ARBITRARY=1
+      - NGINX_HOST=pma.sokka.me
+      - VIRTUAL_PORT=8095
+      - VIRTUAL_HOST=pma.sokka.me
+      - LETSENCRYPT_HOST=pma.sokka.me
+      - LETSENCRYPT_EMAIL=jos.winkler@tsn.at
+    ports:
       - "8095:80"
-# DEFAULT PAGE (FALLBACK)
+  # DEFAULT PAGE (FALLBACK)
   default:
     depends_on:
       - proxy
     container_name: "default.sokka.me"
     image: nginx
-    restart: always 
+    restart: always
     volumes:
       - ./default:/usr/share/nginx/html
     ports:
-     - "8082:80"
+      - "8082:80"
     environment:
-     - NGINX_HOST=default.sokka.me
-     - NGINX_PORT=80
-     - VIRTUAL_HOST=default.sokka.me
-     - HTTPS_METHOD=noredirect
+      - NGINX_HOST=default.sokka.me
+      - NGINX_PORT=80
+      - VIRTUAL_HOST=default.sokka.me
+      - HTTPS_METHOD=noredirect
 volumes:
   certs-volume:
