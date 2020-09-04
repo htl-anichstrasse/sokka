@@ -7,6 +7,6 @@
     </style>
 
     <style name="NormalTheme" parent="@android:style/Theme.Black.NoTitleBar">
-        <item name="android:windoBackground">@drawable/normal_background</item>
+        <item name="android:windowBackground">@drawable/normal_background</item>
     </style>
 </resources>

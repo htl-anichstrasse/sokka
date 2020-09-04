@@ -1,10 +1,12 @@
-package com.example.client
+
+// package com.example.client
 
 /**
  * @author Nicolaus Rossi
  * @since 2020-06-16
  */
 
+ /*
 import androidx.annotation.NonNull;
 
 class TransitionedSplashScreen: SplashScreen() {
@@ -19,3 +21,4 @@ class TransitionedSplashScreen: SplashScreen() {
         onTransitionComplete.run();
     }
 }
+*/
