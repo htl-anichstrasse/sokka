@@ -11,14 +11,14 @@ class Sokka extends StatelessWidget {
         return new MaterialApp(
             debugShowCheckedModeBanner: true,
             theme: new ThemeData(
-            primaryColor: Colors.tealAccent[700],
-            scaffoldBackgroundColor: Colors.grey[850],
-            cardColor: Colors.tealAccent[100],
-            textTheme: new TextTheme(
-                bodyText2: new TextStyle(color: Colors.black, fontFamily: 'Source Code Pro'),
-                headline4: new TextStyle(color: Colors.white),
-            ),
-            visualDensity: VisualDensity.adaptivePlatformDensity,
+                primaryColor: Colors.tealAccent[700],
+                scaffoldBackgroundColor: Colors.grey[850],
+                cardColor: Colors.tealAccent[100],
+                textTheme: new TextTheme(
+                    bodyText2: new TextStyle(color: Colors.black, fontFamily: 'Source Code Pro'),
+                    headline4: new TextStyle(color: Colors.white),
+                ),
+                visualDensity: VisualDensity.adaptivePlatformDensity,
             ),
             home: new HomeTabController()
         );
