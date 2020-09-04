@@ -1,3 +1,4 @@
+import 'package:client/widgets/tab_controller/tab_controller.dart';
 import 'package:flutter/material.dart';
 
 class Account extends StatefulWidget {
@@ -10,13 +11,21 @@ class _AccountState extends State<Account> {
     Widget build(BuildContext context) {
         return new Scaffold(
             appBar: new AppBar(
-                title: new Center(
-                    child: new Text('ACCOUNT'),
+                title: new Text('ACCOUNT', style: new TextStyle(color: Colors.white)),
+                centerTitle: true,
+                automaticallyImplyLeading: false,
+                leading: new IconButton(
+                    icon: Icon(Icons.arrow_back, color: Colors.white),
+                    onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => new HomeTabController())),
                 ),
+                actions: [],
             ),
             body: new SafeArea(
                 child: new Container(
-                    child: new Icon(Icons.account_box, color: Colors.white),
+                    child: new Align(
+                        alignment: Alignment.center,
+                        child: new Icon(Icons.account_box, color: Colors.white),
+                    ),
                 ),
             ),
         );
