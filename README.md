@@ -26,6 +26,8 @@ Sokka is a diploma project created by students Joshua Winkler and Nicolaus Rossi
 
 ## Installation
 
+### Setup
+
 Clone the repository.
 ```
 git clone https://github.com/htl-anichstrasse/sokka.git
@@ -43,6 +45,12 @@ chmod +x start.sh
 chmod +x build.sh
 chmod +x stop.sh
 ```
+
+### Configuration
+
+Make sure to change the MySQL default root password after setup. This can be done by logging in to the phpMyAdmin page (see `NGINX_HOST` environment variable for the PMA Docker container), clicking on `User accounts`, then `Edit privileges` for the `root` user account and then on `Change password`.
+
+![.github/phpmyadmin_changepassword.png]
 
 ## Contact
 
