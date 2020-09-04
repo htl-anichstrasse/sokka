@@ -48,7 +48,7 @@ services:
   api:
     depends_on:
       - proxy
-      - db
+      - mysql
     container_name: "api.sokka.me"
     image: htl-anichstrasse/sokka:v1
     restart: always
@@ -62,12 +62,30 @@ services:
      - VIRTUAL_HOST=api.sokka.me
      - LETSENCRYPT_HOST=api.sokka.me
      - LETSENCRYPT_EMAIL=jos.winkler@tsn.at
-  db:
-    image: mariadb
+  mysql:
+    image: mysql:latest
     container_name: "api.sokka.me_db"
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: verycoolpassword
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: default_schema
+  pma:
+     image: phpmyadmin/phpmyadmin
+     container_name: "api.sokka.me_pma"
+     restart: always
+     links:
+      - mysql
+     environment:
+       PMA_HOST: mysql
+       PMA_PORT: 3306
+       PMA_ARBITRARY: 1
+       NGINX_HOST: pma.sokka.me
+       VIRTUAL_PORT: 8095
+       VIRTUAL_HOST: pma.sokka.me
+       LETSENCRYPT_HOST: pma.sokka.me
+       LETSENCRYPT_EMAIL: jos.winkler@tsn.at
+     ports:
+      - "8095:80"
 # DEFAULT PAGE (FALLBACK)
   default:
     depends_on:

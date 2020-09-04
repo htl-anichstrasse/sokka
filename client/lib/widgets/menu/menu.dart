@@ -1,97 +1,55 @@
 import 'package:flutter/material.dart';
 
-class Menu extends StatefulWidget {
-  final int _menuIndex;
+/// -------------------------------------------------------------------------------
+/// Stores all relevant data, such as the different meals and the price of a menu.
+/// -------------------------------------------------------------------------------
+class Menu {
+    int _menuIndex;
+    bool _expanded;
+    String _header;
+    Widget _body;
 
-  Menu(this._menuIndex);
-
-  @override
-  _MenuState createState() => _MenuState(this._menuIndex);
-}
-
-class _MenuState extends State<Menu> {
-  final int _menuIndex;
-
-  List<Item> items = <Item>[];
-
-  _MenuState(this._menuIndex);
-
-  @override
-  void initState() {
-    super.initState();
-    items.add(
-      Item(
-        this._menuIndex,
-        false,
-        'Menu',
-        Padding(
-          padding: EdgeInsets.only(right: 20.0, left: 20.0, bottom: 20.0),
-          child: Column(
-            children: <Widget>[
-              Row(
+    Menu(final int menuIndex, final bool expanded, final String header, final String appetizer, final String mainCourse, final String dessert, final double price) {
+        this._menuIndex = menuIndex;
+        this._expanded = expanded;
+        this._header = header;
+        this._body = new Padding(
+            padding: new EdgeInsets.only(right: 20.0, left: 20.0, bottom: 20.0),
+            child: new Column(
                 children: <Widget>[
-                  Text('Appetizer'),
+                    new Row(
+                        children: <Widget>[
+                            new Text(appetizer),
+                        ],
+                    ),
+                    new Row(
+                        children: <Widget>[
+                            new Text(mainCourse),
+                        ],
+                    ),
+                    new Row(
+                        children: <Widget>[
+                            new Text(dessert),
+                        ],
+                    ),
+                    new FlatButton.icon(
+                        onPressed: null,
+                        label: new Text('${price.toStringAsFixed(2)} €'),
+                        icon: new Icon(Icons.shopping_basket),
+                    ),
                 ],
-              ),
-              Row(
-                children: <Widget>[
-                  Text('Main Course'),
-                ],
-              ),
-              Row(
-                children: <Widget>[
-                  Text('Dessert'),
-                ],
-              ),
-              FlatButton.icon(
-                onPressed: null,
-                label: Text('Order'),
-                icon: Icon(Icons.shopping_basket),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+            ),
+        );
+    }
 
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      shrinkWrap: true,
-      physics: ClampingScrollPhysics(),
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.all(10.0),
-          child: ExpansionPanelList(
-            expansionCallback: (int item, bool _isExpanded) =>
-                setState(() => {items[item]._isExpandend = !items[item]._isExpandend}),
-            children: items.map((Item item) {
-              return ExpansionPanel(
-                  headerBuilder: (BuildContext context, bool isExpandend) {
-                    return ListTile(
-                      title: Text(
-                        item._header + ' ${item._menuNumber}',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w400),
-                      ),
-                    );
-                  },
-                  isExpanded: item._isExpandend,
-                  body: item._body);
-            }).toList(),
-          ),
-        ),
-      ],
-    );
-  }
-}
+    int get getMenuIndex => _menuIndex;
 
-class Item {
-  final int _menuNumber;
-  bool _isExpandend;
-  final String _header;
-  final Widget _body;
+    bool get getExpanded => _expanded;
+    set setExpanded(bool expanded) => _expanded = expanded;
 
-  Item(this._menuNumber, this._isExpandend, this._header, this._body);
+    String get getHeader => _header;
+    set setHeader(String header) => _header = header;
+
+    Widget get getBody => _body;
+    set setBody(Widget body) => _body = body;
 }
