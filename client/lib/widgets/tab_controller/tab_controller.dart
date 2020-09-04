@@ -10,56 +10,56 @@ class HomeTabController extends StatefulWidget {
 class _HomeTabController extends State<HomeTabController> {
     @override
     Widget build(BuildContext context) {
-        return DefaultTabController(
+        return new DefaultTabController(
             length: 4,
-            child: Scaffold(
-                appBar: AppBar(
-                    title: Text('SOKKA', style: TextStyle(color: Colors.white)),
+            child: new Scaffold(
+                appBar: new AppBar(
+                    title: new Text('SOKKA', style: TextStyle(color: Colors.white)),
                     centerTitle: true,
-                    leading: IconButton(
+                    leading: new IconButton(
                         icon: Icon(Icons.account_box, color: Colors.white),
-                        onPressed: () => Account(),
+                        onPressed: () => new Account(),
                     ),
                     actions: <Widget>[
-                        IconButton(
+                        new IconButton(
                             icon: Icon(Icons.settings, color: Colors.white),
                             onPressed: () => null,
                         ),
                     ],
                 ),
-                bottomNavigationBar: Container(
+                bottomNavigationBar: new Container(
                     color: Colors.tealAccent[700],
-                    child: TabBar(
+                    child: new TabBar(
                         labelColor: Colors.white,
                         unselectedLabelColor: Colors.white70,
                         indicatorSize: TabBarIndicatorSize.tab,
-                        indicatorPadding: EdgeInsets.all(5.0),
+                        indicatorPadding: new EdgeInsets.all(5.0),
                         indicatorColor: Colors.tealAccent[100],
                         tabs: [
-                            Tab(text: 'Menus', icon: Icon(Icons.restaurant_menu)),
-                            Tab(text: 'Meals', icon: Icon(Icons.set_meal)),
-                            Tab(text: 'Basket', icon: Icon(Icons.shopping_basket)),
-                            Tab(text: 'Codes', icon: Icon(Icons.qr_code)),
+                            new Tab(text: 'Menus', icon: Icon(Icons.restaurant_menu)),
+                            new Tab(text: 'Meals', icon: Icon(Icons.set_meal)),
+                            new Tab(text: 'Basket', icon: Icon(Icons.shopping_basket)),
+                            new Tab(text: 'Codes', icon: Icon(Icons.qr_code)),
                         ],
                     ),
                 ),
-                body: SafeArea(
-                    child: TabBarView(
+                body: new SafeArea(
+                    child: new TabBarView(
                         children: <Widget>[
-                            Container(
-                                child: ListView.builder(
+                            new Container(
+                                child: new ListView.builder(
                                     itemCount: 5,
                                     itemBuilder: (BuildContext context, int index) => MenuPanel(index + 1)
                                 ),
                             ),
-                            Container(
-                                child: Icon(Icons.set_meal, color: Colors.white),
+                            new Container(
+                                child: new Icon(Icons.set_meal, color: Colors.white),
                             ),
-                            Container(
-                                child: Icon(Icons.shopping_basket, color: Colors.white),
+                            new Container(
+                                child: new Icon(Icons.shopping_basket, color: Colors.white),
                             ),
-                            Container(
-                                child: Icon(Icons.qr_code, color: Colors.white),
+                            new Container(
+                                child: new Icon(Icons.qr_code, color: Colors.white),
                             ),
                         ],
                     ),
