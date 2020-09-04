@@ -8,8 +8,17 @@ class Account extends StatefulWidget {
 class _AccountState extends State<Account> {
     @override 
     Widget build(BuildContext context) {
-        return Scaffold(
-            body: Icon(Icons.account_box)
+        return new Scaffold(
+            appBar: new AppBar(
+                title: new Center(
+                    child: new Text('ACCOUNT'),
+                ),
+            ),
+            body: new SafeArea(
+                child: new Container(
+                    child: new Icon(Icons.account_box, color: Colors.white),
+                ),
+            ),
         );
     }
 }

@@ -18,7 +18,7 @@ class _HomeTabController extends State<HomeTabController> {
                     centerTitle: true,
                     leading: new IconButton(
                         icon: Icon(Icons.account_box, color: Colors.white),
-                        onPressed: () => new Account(),
+                        onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => new Account())),
                     ),
                     actions: <Widget>[
                         new IconButton(
