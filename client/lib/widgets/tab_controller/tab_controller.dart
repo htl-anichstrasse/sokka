@@ -11,11 +11,14 @@ class HomeTabController extends StatefulWidget {
 }
 
 class _HomeTabController extends State<HomeTabController> {
+    final _key = GlobalKey<ScaffoldState>();
+
     @override
     Widget build(BuildContext context) {
         return new DefaultTabController(
             length: 4,
             child: new Scaffold(
+                key: _key,
                 appBar: new AppBar(
                     title: new Text('SOKKA', style: TextStyle(color: Colors.white)),
                     centerTitle: true,
@@ -24,44 +27,33 @@ class _HomeTabController extends State<HomeTabController> {
                 drawer: new Drawer(
                     child: new Column(
                         children: <Widget>[
-                            new Expanded(
-                                child: new ListView(
-                                    children: <Widget>[
-                                        new DrawerHeader(
-                                            decoration: new BoxDecoration(color: Colors.teal[700]),
-                                            child: new Align(
-                                                alignment: Alignment.topCenter,
-                                                child: new Text('SOKKA', style: new TextStyle(color: Colors.white, fontSize: 25))
-                                            ),
-                                        ),
-                                        new ListTile(
-                                           leading: new Icon(Icons.account_circle),
-                                           title: new Text('Account'),
-                                           onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => new Account())),
-                                        ),
-                                        new ListTile(
-                                            leading: new Icon(Icons.account_balance_wallet),
-                                            title: new Text('Account Wallet')
-                                        ),
-                                    ],
+                            new DrawerHeader(
+                                decoration: new BoxDecoration(color: Colors.tealAccent[700]),
+                                child: new Align(
+                                    alignment: Alignment.topCenter,
+                                    child: new Text('SOKKA', style: new TextStyle(color: Colors.white, fontSize: 25))
                                 ),
                             ),
+                            new ListTile(
+                                leading: new Icon(Icons.account_circle, color: Colors.white),
+                                title: new Text('Account', style: new TextStyle(color: Colors.white)),
+                                onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => new Account())),
+                            ),
+                            new ListTile(
+                                leading: new Icon(Icons.account_balance_wallet, color:Colors.white),
+                                title: new Text('Wallet', style: new TextStyle(color: Colors.white))
+                            ),
+                            new Spacer(),
                             new Container(
-                                child: Align(
-                                    alignment: FractionalOffset.bottomCenter,
-                                    child: new Container(
-                                        child: new Column(
-                                            children: <Widget>[
-                                                new Transform.rotate(
-                                                    angle: 180 * pi / 180,
-                                                    child: new IconButton(
-                                                        icon: Icon(Icons.exit_to_app),
-                                                        onPressed: () => SystemChannels.platform.invokeMethod('SystemNavigator.pop'),
-                                                    ),
-                                                ),
-                                            ],
-                                        ),
+                                decoration: new BoxDecoration(color: Colors.red),
+                                child: new ListTile(
+                                    leading: new Transform.rotate(
+                                        angle: 180 * pi / 180,
+                                        child: Icon(Icons.exit_to_app, color: Colors.white)
                                     ),
+                                    title: new Text('Hold to exit the app', style: new TextStyle(color: Colors.white)),
+                                    onTap: () => null,
+                                    onLongPress: () => SystemChannels.platform.invokeMethod('SystemNavigator.pop'),
                                 ),
                             ),
                         ],
