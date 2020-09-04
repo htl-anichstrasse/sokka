@@ -20,7 +20,7 @@ class Sokka extends StatelessWidget {
                 ),
                 visualDensity: VisualDensity.adaptivePlatformDensity,
             ),
-            home: new HomeTabController()
+            home: new HomeTabController(),
         );
     }
 }
