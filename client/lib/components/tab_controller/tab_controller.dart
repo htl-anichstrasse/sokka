@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:client/widgets/menu/menu_panel.dart';
-import 'package:client/widgets/account/account.dart';
+import 'package:client/components/menu/menu_panel.dart';
+import 'package:client/components/account/account.dart';
 import 'package:flutter/services.dart';
 
 class HomeTabController extends StatefulWidget {
@@ -20,7 +20,7 @@ class _HomeTabController extends State<HomeTabController> {
             child: new Scaffold(
                 key: _key,
                 appBar: new AppBar(
-                    title: new Text('SOKKA', style: TextStyle(color: Colors.white)),
+                    title: new Text('${new DateTime.now().day}.${new DateTime.now().month}.${new DateTime.now().year}', style: TextStyle(color: Colors.white)),
                     centerTitle: true,
                     iconTheme: new IconThemeData(color: Colors.white),
                 ),

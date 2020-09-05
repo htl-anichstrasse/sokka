@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:client/widgets/tab_controller/tab_controller.dart';
+import 'package:client/components/tab_controller/tab_controller.dart';
 
-void main() => runApp(Sokka());
+void main() async => runApp(Sokka());
 
 class Sokka extends StatelessWidget {
     @override
