@@ -20,7 +20,7 @@ class _HomeTabController extends State<HomeTabController> {
             child: new Scaffold(
                 key: _key,
                 appBar: new AppBar(
-                    title: new Text('${new DateTime.now().day}.${new DateTime.now().month}.${new DateTime.now().year}', style: TextStyle(color: Colors.white)),
+                    title: new Text('${new DateTime.now().day}.${new DateTime.now().month}.${new DateTime.now().year}'),
                     centerTitle: true,
                     iconTheme: new IconThemeData(color: Colors.white),
                 ),
@@ -31,17 +31,20 @@ class _HomeTabController extends State<HomeTabController> {
                                 decoration: new BoxDecoration(color: Colors.tealAccent[700]),
                                 child: new Align(
                                     alignment: Alignment.topCenter,
-                                    child: new Text('SOKKA', style: new TextStyle(color: Colors.white, fontSize: 25))
+                                    child: new Text('SOKKA'),
                                 ),
                             ),
                             new ListTile(
                                 leading: new Icon(Icons.account_circle, color: Colors.white),
-                                title: new Text('Account', style: new TextStyle(color: Colors.white)),
+                                title: new Text('Account'),
                                 onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => new Account())),
+                                onLongPress: () => null,
                             ),
                             new ListTile(
                                 leading: new Icon(Icons.account_balance_wallet, color:Colors.white),
-                                title: new Text('Wallet', style: new TextStyle(color: Colors.white))
+                                title: new Text('Wallet'),
+                                onTap:() => null,
+                                onLongPress: () => null,
                             ),
                             new Spacer(),
                             new Container(
@@ -51,7 +54,7 @@ class _HomeTabController extends State<HomeTabController> {
                                         angle: 180 * pi / 180,
                                         child: Icon(Icons.exit_to_app, color: Colors.white)
                                     ),
-                                    title: new Text('Hold to exit the app', style: new TextStyle(color: Colors.white)),
+                                    title: new Text('Hold to exit the app'),
                                     onTap: () => null,
                                     onLongPress: () => SystemChannels.platform.invokeMethod('SystemNavigator.pop'),
                                 ),

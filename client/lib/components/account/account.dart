@@ -11,7 +11,7 @@ class _AccountState extends State<Account> {
     Widget build(BuildContext context) {
         return new Scaffold(
             appBar: new AppBar(
-                title: new Text('ACCOUNT', style: new TextStyle(color: Colors.white)),
+                title: new Text('ACCOUNT'),
                 centerTitle: true,
                 automaticallyImplyLeading: false,
                 leading: new IconButton(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:client/components/tab_controller/tab_controller.dart';
+import 'package:client/styles/theme/app_themes.dart';
 
 void main() async => runApp(Sokka());
 
@@ -10,17 +11,7 @@ class Sokka extends StatelessWidget {
         SystemChrome.setEnabledSystemUIOverlays([]);
         return new MaterialApp(
             debugShowCheckedModeBanner: true,
-            theme: new ThemeData(
-                primaryColor: Colors.tealAccent[700],
-                scaffoldBackgroundColor: Colors.grey[850],
-                canvasColor: Colors.grey[850],
-                cardColor: Colors.tealAccent[100],
-                textTheme: new TextTheme(
-                    bodyText2: new TextStyle(color: Colors.black, fontFamily: 'Source Code Pro'),
-                    headline4: new TextStyle(color: Colors.white),
-                ),
-                visualDensity: VisualDensity.adaptivePlatformDensity,
-            ),
+            theme: AppThemes.darkModeAppTheme,
             home: new HomeTabController(),
         );
     }

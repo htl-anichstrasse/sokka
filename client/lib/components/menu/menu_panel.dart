@@ -46,7 +46,6 @@ class _MenuPanelState extends State<MenuPanel> {
                                         title: new Text(
                                             '${menu.getHeader} ${menu.getMenuIndex}',
                                             textAlign: TextAlign.left,
-                                            style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.w400),
                                         ),
                                     );
                                 },

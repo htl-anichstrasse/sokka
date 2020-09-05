@@ -8,10 +8,10 @@ class AppThemes {
     static final String _fontFamily = 'FiraCode';
 
     /// Foreground colour for dark theme.
-    static final Color _darkThemeFontColour = Colors.black;
+    static final Color _darkThemeFontColour = Colors.white;
 
     /// Foreground colour for light theme.
-    static final Color _lightThemeFontColour = Colors.white;
+    static final Color _lightThemeFontColour = Colors.black;
 
     /// ThemeData for dark mode.
     static ThemeData get darkModeAppTheme => ThemeData(
