@@ -12,7 +12,7 @@ class RootRoute implements Route {
     }
 
     private get(req: Request, res: Response, next: NextFunction): void {
-        res.send({ message: 'Hello World' });
+        res.send({ success: true, message: 'This domain serves as Sokkas backend gateway. It is not intended for public use.' });
     }
 }
 
