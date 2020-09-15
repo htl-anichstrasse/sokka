@@ -1,9 +1,7 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:client/components/menu/menu_panel.dart';
 import 'package:client/components/account/account.dart';
-import 'package:flutter/services.dart';
 
 class HomeTabController extends StatefulWidget {
     @override
@@ -11,16 +9,15 @@ class HomeTabController extends StatefulWidget {
 }
 
 class _HomeTabController extends State<HomeTabController> {
-    final _key = GlobalKey<ScaffoldState>();
+    final List<String> _days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
     @override
     Widget build(BuildContext context) {
         return new DefaultTabController(
             length: 4,
             child: new Scaffold(
-                key: _key,
                 appBar: new AppBar(
-                    title: new Text('${new DateTime.now().day}.${new DateTime.now().month}.${new DateTime.now().year}'),
+                    title: new Text('${_days[new DateTime.now().weekday]} - ${new DateTime.now().day}.${new DateTime.now().month}.${new DateTime.now().year}'),
                     centerTitle: true,
                     iconTheme: new IconThemeData(color: Colors.white),
                 ),
@@ -48,15 +45,10 @@ class _HomeTabController extends State<HomeTabController> {
                             ),
                             new Spacer(),
                             new Container(
-                                decoration: new BoxDecoration(color: Colors.red),
                                 child: new ListTile(
-                                    leading: new Transform.rotate(
-                                        angle: 180 * pi / 180,
-                                        child: Icon(Icons.exit_to_app, color: Colors.white)
-                                    ),
-                                    title: new Text('Hold to exit the app'),
+                                    leading: new Icon(Icons.settings, color: Colors.white),
+                                    title: new Text('Settings'),
                                     onTap: () => null,
-                                    onLongPress: () => SystemChannels.platform.invokeMethod('SystemNavigator.pop'),
                                 ),
                             ),
                         ],
