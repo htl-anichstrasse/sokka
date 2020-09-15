@@ -51,7 +51,7 @@ chmod +x stop.sh
 
 Make sure to change the MySQL default root password after setup. This can be done by logging in to the phpMyAdmin page (see `NGINX_HOST` environment variable for the PMA Docker container), clicking on `User accounts`, then `Edit privileges` for the `root` user account and then on `Change password`.
 
-![.github/phpmyadmin_changepassword.png]
+<img src=".github/phpmyadmin_changepassword.png" alt="phpMyAdmin Change Password Screenshot">
 
 ## Contact
 
