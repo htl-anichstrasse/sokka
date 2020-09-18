@@ -36,7 +36,6 @@ services:
     restart: always
     volumes:
       - ./main/html:/usr/share/nginx/html
-      - ./main/nginx.conf:/etc/nginx/nginx.conf:ro
     ports:
       - "8080:80"
     environment:
@@ -96,7 +95,6 @@ services:
     restart: always
     volumes:
       - ./default:/usr/share/nginx/html
-      - ./default/nginx.conf:/etc/nginx/nginx.conf:ro
     ports:
       - "8082:80"
     environment:
