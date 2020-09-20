@@ -4,19 +4,29 @@ import { Connection, createConnection, queryCallback } from 'mysql';
 class Database {
     private logger: log4js.Logger;
     private connection: Connection;
+    public static instance: Database;
 
-    constructor() {
+    private constructor() {
         this.logger = log4js.getLogger('Database');
         this.connection = createConnection({
             host: process.env.MYSQL_HOST,
             user: process.env.MYSQL_USERNAME,
-            password: process.env.MYSQL_PASSWORD
+            password: process.env.MYSQL_PASSWORD,
+            database: process.env.MYSQL_DB
         });
         this.logger.info('Connecting to MySQL...');
         this.connection.connect((err) => {
             if (err) throw err;
             this.logger.info('Successfully connected to MySQL');
-        })
+        });
+    }
+
+    public static create(): Database {
+        if (Database.instance) {
+            throw 'Database already created!';
+        }
+        Database.instance = new Database();
+        return Database.instance;
     }
 
     query(query: string, values?: any): Promise<any> {
@@ -35,7 +45,6 @@ class Database {
             }
         });
     }
-
 }
 
-export default new Database();
+export default Database;

@@ -1,14 +1,19 @@
 import axios from 'axios';
+import * as bcrypt from 'bcrypt';
 import { NextFunction, Request, Response, Router } from 'express';
+import * as log4js from 'log4js';
+import User from '../../models/User';
 import Route from '../../Route';
 
 class SignupRoute implements Route {
     readonly router: Router;
     readonly path: string;
+    private readonly logger: log4js.Logger;
 
     constructor() {
         this.router = Router();
-        this.path = '/user/signup';
+        this.logger = log4js.getLogger('SignupRoute');
+        this.path = '/user/create';
         this.router.get(this.path, this.get);
     }
 
@@ -17,6 +22,8 @@ class SignupRoute implements Route {
             res.send({ success: false, message: 'Invalid parameters' });
             return;
         }
+
+        // TODO: email validation
 
         // Captcha challenge
         let formData = new FormData();
@@ -30,7 +37,12 @@ class SignupRoute implements Route {
             headers: { 'Content-Type': 'multipart/form-data' }
         }).then((captchaRes) => {
             res.send(captchaRes);
-            // TODO: Send signup to database
+            bcrypt.hash(req.body.password, parseInt(process.env.SALT_ROUNDS), (err, hash) => {
+                if (err) throw err;
+                User.create(req.body.email, hash).then((user) => {
+                    this.logger.info(user);
+                });
+            });
         });
     }
 }
