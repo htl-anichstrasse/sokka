@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:client/components/menu/menu_panel.dart';
-import 'package:client/components/account/account.dart';
+import 'package:client/views/menu_panel.dart';
+import 'package:client/views/account_view.dart';
 
 class HomeTabController extends StatefulWidget {
     @override
@@ -9,7 +9,7 @@ class HomeTabController extends StatefulWidget {
 }
 
 class _HomeTabController extends State<HomeTabController> {
-    final List<String> _days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    final List<String> _days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
     @override
     Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class _HomeTabController extends State<HomeTabController> {
             length: 4,
             child: new Scaffold(
                 appBar: new AppBar(
-                    title: new Text('${_days[new DateTime.now().weekday]} - ${new DateTime.now().day}.${new DateTime.now().month}.${new DateTime.now().year}'),
+                    title: new Text('${_days[new DateTime.now().weekday - 1]} - ${new DateTime.now().day}.${new DateTime.now().month}.${new DateTime.now().year}'),
                     centerTitle: true,
                     iconTheme: new IconThemeData(color: Colors.white),
                 ),
