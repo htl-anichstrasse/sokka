@@ -11,9 +11,17 @@ class User implements Model {
         });
     }
 
+    public static exists(email: string): Promise<Boolean> {
+        return new Promise<Boolean>((resolve) => {
+            Database.instance.query('SELECT id FROM sokka_users WHERE email = ?;', [email]).then((result) => {
+                resolve(result > 0);
+            });
+        });
+    }
+
     public static get(email: string): Promise<User> {
         return new Promise<User>((resolve, reject) => {
-            Database.instance.query(`SELECT * FROM sokka_users WHERE email = ?;`, [email]).then((result) => {
+            Database.instance.query('SELECT * FROM sokka_users WHERE email = ?;', [email]).then((result) => {
                 if (result.length > 0) {
                     resolve(new User(result[0].id, result[0].email, result[0].pwhash));
                 } else {
@@ -25,7 +33,7 @@ class User implements Model {
 
     public delete(): Promise<void> {
         return new Promise<void>((resolve, reject) => {
-            Database.instance.query('').then(() => {
+            Database.instance.query('DELETE FROM sokka_users WHERE id = ?;', [this.id]).then(() => {
                 resolve(null);
             }).catch((err) => reject(err));
         });

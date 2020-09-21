@@ -30,10 +30,10 @@ class LoginRoute implements Route {
                     return;
                 }
                 if (same) {
-                    res.send({ success: false, message: 'Could not retrieve user' });
-                } else {
                     res.send({ success: true, message: 'Credentials validated' });
                     // TODO: create session
+                } else {
+                    res.send({ success: false, message: 'Could not retrieve user' });
                 }
             });
         }).catch((err) => {
