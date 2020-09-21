@@ -55,7 +55,7 @@ class SignupRoute implements Route {
                     });
                 });
             }).catch((err) => {
-                res.send({ success: false, message: 'Failed to validate captcha: ' + err.message });
+                res.send({ success: false, message: `Failed to validate captcha: ${err.message}` });
             });
         });
     }
