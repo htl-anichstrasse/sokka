@@ -15,6 +15,18 @@ class Session implements Model {
         });
     }
 
+    public static get(token: string): Promise<Session> {
+        return new Promise<Session>((resolve, reject) => {
+            Database.instance.query('SELECT * FROM sokka_sessions WHERE token = ?;', [token]).then((result) => {
+                if (result.length > 0) {
+                    resolve(new Session(result[0].id, result[0].user_id, result[0].token));
+                } else {
+                    reject('Session not found');
+                }
+            }).catch((err) => reject(err));
+        });
+    }
+
     public delete(): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             Database.instance.query('DELETE FROM sokka_sessions WHERE id = ?;', [this.id]).then(() => {
