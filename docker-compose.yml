@@ -58,6 +58,10 @@ services:
       - NGINX_HOST=api.sokka.me
       - NGINX_PORT=8090
       - PORT=8090
+      - MYSQL_HOST=mysql
+      - MYSQL_USERNAME=root
+      - MYSQL_PASSWORD=pwd
+      - MYSQL_DB=sokka
       - VIRTUAL_PORT=8090
       - VIRTUAL_HOST=api.sokka.me
       - LETSENCRYPT_HOST=api.sokka.me
