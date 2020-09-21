@@ -30,6 +30,7 @@ class SignupRoute implements Route {
                 res.send({ success: false, message: 'User already exists' });
                 return;
             }
+            // TODO: send verification email
             // Captcha challenge
             let formData = new FormData();
             formData.append('secret', process.env.V3_PRIVATE);

@@ -27,6 +27,14 @@ class Session implements Model {
         });
     }
 
+    public static deleteAll(user: User): Promise<void> {
+        return new Promise<void>((resolve, reject) => {
+            Database.instance.query('DELETE FROM sokka_sessions WHERE user_id = ?;', [user.id]).then(() => {
+                resolve(null);
+            }).catch((err) => reject(err));
+        });
+    }
+
     public delete(): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             Database.instance.query('DELETE FROM sokka_sessions WHERE id = ?;', [this.id]).then(() => {
