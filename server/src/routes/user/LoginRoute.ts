@@ -1,6 +1,8 @@
+import { rejects } from 'assert';
 import * as bcrypt from 'bcrypt';
 import { NextFunction, Request, Response, Router } from 'express';
 import * as log4js from 'log4js';
+import Session from '../../models/Session';
 import User from '../../models/User';
 import Route from '../../Route';
 
@@ -30,8 +32,9 @@ class LoginRoute implements Route {
                     return;
                 }
                 if (same) {
-                    res.send({ success: true, message: 'Credentials validated' });
-                    // TODO: create session
+                    Session.create(user).then((session) => {
+                        res.send({ success: true, message: 'Credentials validated', token: session.token });
+                    }).catch((err) => rejects(err));
                 } else {
                     res.send({ success: false, message: 'Could not retrieve user' });
                 }
