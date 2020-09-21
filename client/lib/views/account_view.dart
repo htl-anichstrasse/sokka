@@ -1,4 +1,4 @@
-import 'package:client/components/tab_controller/tab_controller.dart';
+import 'package:client/views/tab_controller.dart';
 import 'package:flutter/material.dart';
 
 class Account extends StatefulWidget {

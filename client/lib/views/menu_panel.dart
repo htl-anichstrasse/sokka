@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:client/components/menu/menu.dart';
+import 'package:client/models/menu.dart';
 
 /// ----------------------------------------------------------------------
 /// Render-Widget for displaying a menu as foldable expansion panel in the
