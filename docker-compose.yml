@@ -60,7 +60,7 @@ services:
       - PORT=8090
       - MYSQL_HOST=mysql
       - MYSQL_USERNAME=root
-      - MYSQL_PASSWORD=pwd
+      - MYSQL_PASSWORD=E6s2hYPSD6os3FaP
       - MYSQL_DB=sokka
       - VIRTUAL_PORT=8090
       - VIRTUAL_HOST=api.sokka.me
