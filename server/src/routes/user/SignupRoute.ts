@@ -2,6 +2,7 @@ import axios from 'axios';
 import * as bcrypt from 'bcrypt';
 import { NextFunction, Request, Response, Router } from 'express';
 import * as log4js from 'log4js';
+import Session from '../../models/Session';
 import User from '../../models/User';
 import Route from '../../Route';
 import FormData = require('form-data');
@@ -40,14 +41,18 @@ class SignupRoute implements Route {
                 data: formData,
                 headers: { 'Content-Type': 'multipart/form-data' }
             }).then((captchaRes) => {
-                // TODO: send resolution on successful db write
                 res.send(captchaRes);
                 bcrypt.hash(req.body.password, parseInt(process.env.SALT_ROUNDS), (err, hash) => {
                     if (err) throw err;
                     User.create(req.body.email, hash).then((user) => {
-                        this.logger.info(user);
+                        Session.create(user).then((session) => {
+                            res.send({ success: true, message: 'Successfully created user', token: session.token });
+                        }).catch((err) => {
+                            res.send({ success: false, message: err.message });
+                        });
+                    }).catch((err) => {
+                        res.send({ success: false, message: err.message });
                     });
-                    // TODO: create session info and return bearer
                 });
             }).catch((err) => {
                 res.send({ success: false, message: 'Failed to validate captcha: ' + err.message });
