@@ -34,10 +34,9 @@ class App {
         });
 
         // Initialize database
-        Database.create();
-
-        // TODO: correctly wait for database init
-        this.logger.info('Sokka ready to rumble!');
+        Database.create().then(() => {
+            this.logger.info('Sokka ready to rumble!');
+        });
     }
 
     private registerRouters(): void {

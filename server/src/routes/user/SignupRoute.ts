@@ -24,6 +24,8 @@ class SignupRoute implements Route {
             return;
         }
 
+        // TODO: check if email exists
+
         // TODO: email validation
         // Captcha challenge
         let formData = new FormData();
@@ -43,6 +45,7 @@ class SignupRoute implements Route {
                 User.create(req.body.email, hash).then((user) => {
                     this.logger.info(user);
                 });
+                // TODO: create session info and return bearer
             });
         }).catch((err) => {
             res.send({success: false, message: 'Failed to validate captcha: ' + err.message});
