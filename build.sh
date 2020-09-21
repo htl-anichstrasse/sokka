@@ -2,4 +2,4 @@
 # build server
 docker build -t htl-anichstrasse/sokka:v1 server
 # build acp
-cd acp && npm run build
+cd acp && npm install && npm run build
