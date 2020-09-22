@@ -4,7 +4,6 @@ import Route from '../Route';
 class RootRoute implements Route {
     readonly router: Router;
     readonly path: string;
-    readonly method: string;
 
     constructor() {
         this.router = Router();

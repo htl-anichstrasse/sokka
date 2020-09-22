@@ -6,10 +6,10 @@ import Database from './Database';
 import * as routes from './routes';
 
 class App {
-    public express: express.Application;
-    public server: Server;
-    public database: Database;
-    private logger: log4js.Logger;
+    server: Server;
+    readonly express: express.Application;
+    readonly database: Database;
+    private readonly logger: log4js.Logger;
 
     constructor() {
         this.express = express();

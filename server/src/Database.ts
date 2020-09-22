@@ -2,9 +2,9 @@ import * as log4js from 'log4js';
 import { Connection, createConnection, queryCallback } from 'mysql';
 
 class Database {
-    private logger: log4js.Logger;
-    private connection: Connection;
-    public static instance: Database;
+    private readonly logger: log4js.Logger;
+    private readonly connection: Connection;
+    static instance: Database;
 
     private constructor(callback: () => void) {
         this.logger = log4js.getLogger('Database');
@@ -22,7 +22,7 @@ class Database {
         });
     }
 
-    public static create(): Promise<Database> {
+    static create(): Promise<Database> {
         return new Promise<Database>((resolve) => {
             if (Database.instance) {
                 throw 'Database already created!';

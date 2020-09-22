@@ -5,7 +5,7 @@ import User from "./User";
 class Session implements Model {
     private constructor(readonly id: number, readonly user_id: number, readonly token: string) { }
 
-    public static create(user: User): Promise<Session> {
+    static create(user: User): Promise<Session> {
         // TODO: token has unique index, there is a VERY SMALL chance that this will fail -> loop
         return new Promise<Session>((resolve, reject) => {
             let token = crypto.randomBytes(16).toString('base64');
@@ -15,7 +15,7 @@ class Session implements Model {
         });
     }
 
-    public static get(token: string): Promise<Session> {
+    static get(token: string): Promise<Session> {
         return new Promise<Session>((resolve, reject) => {
             Database.instance.query('SELECT * FROM sokka_sessions WHERE token = ?;', [token]).then((result) => {
                 if (result.length > 0) {
@@ -27,7 +27,7 @@ class Session implements Model {
         });
     }
 
-    public static deleteAll(user: User): Promise<void> {
+    static deleteAll(user: User): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             Database.instance.query('DELETE FROM sokka_sessions WHERE user_id = ?;', [user.id]).then(() => {
                 resolve(null);
@@ -35,7 +35,7 @@ class Session implements Model {
         });
     }
 
-    public delete(): Promise<void> {
+    delete(): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             Database.instance.query('DELETE FROM sokka_sessions WHERE id = ?;', [this.id]).then(() => {
                 resolve(null);
