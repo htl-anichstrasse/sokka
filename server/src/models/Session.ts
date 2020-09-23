@@ -6,12 +6,18 @@ class Session implements Model {
     private constructor(readonly id: number, readonly user_id: number, readonly token: string) { }
 
     static create(user: User): Promise<Session> {
-        // TODO: token has unique index, there is a VERY SMALL chance that this will fail -> loop
         return new Promise<Session>((resolve, reject) => {
-            let token = crypto.randomBytes(16).toString('base64');
-            Database.instance.query('INSERT INTO sokka_sessions (user_id, token) VALUES (?, ?);', [user.id, token]).then((result) => {
-                resolve(new Session(result.insertId, user.id, token));
-            }).catch((err) => reject(err));
+            Session.count(user).then((count) => {
+                if (count >= parseInt(process.env.MAX_USER_SESSIONS)) {
+                    reject('Max number of sessions reached');
+                    return;
+                }
+                // TODO: token has unique index, there is a VERY SMALL chance that this will fail -> loop
+                let token = crypto.randomBytes(16).toString('base64');
+                Database.instance.query('INSERT INTO sokka_sessions (user_id, token) VALUES (?, ?);', [user.id, token]).then((result) => {
+                    resolve(new Session(result.insertId, user.id, token));
+                }).catch((err) => reject(err));
+            });
         });
     }
 
@@ -23,6 +29,14 @@ class Session implements Model {
                 } else {
                     reject('Session not found');
                 }
+            }).catch((err) => reject(err));
+        });
+    }
+
+    static count(user: User): Promise<number> {
+        return new Promise<number>((resolve, reject) => {
+            Database.instance.query('SELECT COUNT(id) FROM sokka_sessions WHERE user_id = ?;', [user.id]).then((result) => {
+                resolve(result[0]);
             }).catch((err) => reject(err));
         });
     }

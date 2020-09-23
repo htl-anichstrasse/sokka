@@ -6,12 +6,14 @@ import Route from '../../Route';
 class LogoutRoute implements Route {
     readonly router: Router;
     readonly path: string;
+    readonly fullpath: string;
     private readonly logger: log4js.Logger;
 
     constructor() {
         this.router = Router();
         this.logger = log4js.getLogger('LogoutRoute');
         this.path = '/user';
+        this.fullpath = '/user/login';
         this.router.post('/login', this.post);
     }
 

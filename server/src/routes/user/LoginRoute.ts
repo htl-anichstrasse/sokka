@@ -8,6 +8,7 @@ import Route from '../../Route';
 class LoginRoute implements Route {
     readonly router: Router;
     readonly path: string;
+    readonly fullpath: string;
     private readonly logger: log4js.Logger;
 
     constructor() {
@@ -15,6 +16,7 @@ class LoginRoute implements Route {
         this.logger = log4js.getLogger('LoginRoute');
         this.path = '/user';
         this.router.post('/login', this.post);
+        this.fullpath = '/user/login';
     }
 
     private post(req: Request, res: Response, next: NextFunction): void {

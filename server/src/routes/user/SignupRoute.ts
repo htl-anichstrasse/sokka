@@ -10,6 +10,7 @@ import FormData = require('form-data');
 class SignupRoute implements Route {
     readonly router: Router;
     readonly path: string;
+    readonly fullpath: string;
     private readonly logger: log4js.Logger;
 
     constructor() {
@@ -17,11 +18,17 @@ class SignupRoute implements Route {
         this.logger = log4js.getLogger('SignupRoute');
         this.path = '/user';
         this.router.post('/signup', this.post);
+        this.fullpath = '/user/signup';
     }
 
     private post(req: Request, res: Response, next: NextFunction): void {
         if (!req.body.token || !req.body.email || !req.body.password) {
             res.send({ success: false, message: 'Invalid parameters' });
+            return;
+        }
+
+        if (!req.body.tos || !req.body.privacypolicy) {
+            res.send({ sucess: false, message: 'Please accept our terms of service and privacy policy!'});
             return;
         }
 

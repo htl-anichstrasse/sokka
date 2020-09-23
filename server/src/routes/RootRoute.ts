@@ -4,11 +4,13 @@ import Route from '../Route';
 class RootRoute implements Route {
     readonly router: Router;
     readonly path: string;
+    readonly fullpath: string;
 
     constructor() {
         this.router = Router();
         this.path = '/';
         this.router.get('/', this.get);
+        this.fullpath = '/';
     }
 
     private get(req: Request, res: Response, next: NextFunction): void {
