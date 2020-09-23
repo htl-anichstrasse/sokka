@@ -5,6 +5,7 @@ import * as log4js from 'log4js';
 import Session from '../../models/Session';
 import User from '../../models/User';
 import Route from '../../Route';
+import rateLimit = require('express-rate-limit');
 import FormData = require('form-data');
 
 class SignupRoute implements Route {
@@ -17,7 +18,12 @@ class SignupRoute implements Route {
         this.router = Router();
         this.logger = log4js.getLogger('SignupRoute');
         this.path = '/user';
-        this.router.post('/signup', this.post);
+        const signupLimiter = rateLimit({
+            windowMs: 30 * 60 * 1000, // 30 minutes
+            max: 5,
+            message: `{ success: false, message: 'Too many created accounts from this IP, please try again later' }`
+        });
+        this.router.post('/signup', this.post, signupLimiter);
         this.fullpath = '/user/signup';
     }
 
@@ -28,7 +34,7 @@ class SignupRoute implements Route {
         }
 
         if (!req.body.tos || !req.body.privacypolicy) {
-            res.send({ sucess: false, message: 'Please accept our terms of service and privacy policy!'});
+            res.send({ sucess: false, message: 'Please accept our terms of service and privacy policy!' });
             return;
         }
 

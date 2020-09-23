@@ -4,6 +4,7 @@ import * as log4js from 'log4js';
 import Session from '../../models/Session';
 import User from '../../models/User';
 import Route from '../../Route';
+import rateLimit = require('express-rate-limit');
 
 class LoginRoute implements Route {
     readonly router: Router;
@@ -15,7 +16,12 @@ class LoginRoute implements Route {
         this.router = Router();
         this.logger = log4js.getLogger('LoginRoute');
         this.path = '/user';
-        this.router.post('/login', this.post);
+        const loginLimiter = rateLimit({
+            windowMs: 10 * 60 * 1000, // 10 minutes
+            max: 5,
+            message: `{ success: false, message: 'Too many login attempts from this IP, please try again later' }`
+        });
+        this.router.post('/login', this.post, loginLimiter);
         this.fullpath = '/user/login';
     }
 
