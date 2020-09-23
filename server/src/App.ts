@@ -25,6 +25,9 @@ class App {
         this.express.use(bodyParser.json());
         this.express.use(bodyParser.urlencoded({ extended: false }));
 
+        // Allow reverse proxy
+        this.express.enable('trust proxy');
+
         // Register all routers
         this.registerRouters();
 
