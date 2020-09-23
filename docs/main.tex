@@ -1,4 +1,5 @@
 \documentclass{scrreport}
+\usepackage[ngerman]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[combine]{ucs}
 \usepackage[pdftex]{graphicx}
@@ -24,7 +25,9 @@
 \lstset{commentstyle=\ttfamily}
 \lstset{numbers=left, numberstyle=\tiny, stepnumber=1, numbersep=5pt}
 \lstset{captionpos=b}
-\lstset{frame=single} 
+\lstset{frame=single}
+
+\DeclareOldFontCommand{\bf}{\normalfont\bfseries}{\mathbf}
 
 \ifx\pdftexversion\undefined
 \usepackage[dvips]{graphicx}
@@ -44,10 +47,17 @@
 \newpage
 \input{pages/acknowledgements}
 \newpage
+\tableofcontents
+\newpage
+\input{pages/page1}
+\setcounter{secnumdepth}{1}
+\appendix
 
-\section{Introduction}
-\subfile{sections/intro}
-\section{What's more}
-\subfile{sections/next}
+
+\bibliography{references} %references bibtech as used for all papers dealing with online-surveys
+\nocite{*}
+
+\listoffigures
+\listoftables
 
 \end{document}

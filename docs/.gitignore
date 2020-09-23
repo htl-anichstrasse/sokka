@@ -2,6 +2,11 @@
 *.fdb*
 *.fls
 *.log
+*.lof
+*.lot
+*.blg
+*.bbl
+*.toc
 *.gz
 *.pdf
 __latexindent*
