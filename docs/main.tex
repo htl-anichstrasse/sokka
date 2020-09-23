@@ -1,23 +1,63 @@
-\documentclass{article}
+\documentclass{scrreport}
+\usepackage[ngerman]{babel}
 \usepackage[utf8]{inputenc}
-\usepackage[english]{babel}
-\usepackage{graphicx}
-\graphicspath{{images/}{../images/}} % set correct path to images
-
+\usepackage[combine]{ucs}
+\usepackage[pdftex]{graphicx}
+\usepackage{listings} % source code formatting
 \usepackage{blindtext}
-
 \usepackage{subfiles}
+\usepackage{natbib}
+\usepackage{fullpage}
+\usepackage{courier}
+\usepackage{color} 
+\bibliographystyle{agsm}
+\graphicspath{{images/}{../images/}} % set correct path to images
+\headsep = 35pt
+\lstset{basicstyle=\ttfamily\scriptsize}
+\lstset{showspaces=false}
+\lstset{showtabs=false}
+\lstset{showstringspaces=false}
+\lstset{keywordstyle=\bfseries}
+\lstset{tabsize=3}
+\lstset{frameround=ffff}
+\lstset{extendedchars=true}
+\lstset{stringstyle=\ttfamily}
+\lstset{commentstyle=\ttfamily}
+\lstset{numbers=left, numberstyle=\tiny, stepnumber=1, numbersep=5pt}
+\lstset{captionpos=b}
+\lstset{frame=single}
+
+\DeclareOldFontCommand{\bf}{\normalfont\bfseries}{\mathbf}
+
+\ifx\pdftexversion\undefined
+\usepackage[dvips]{graphicx}
+\else
+\usepackage[pdftex]{graphicx}
+\DeclareGraphicsRule{*}{mps}{*}{}
+\fi
+
+\setcounter{secnumdepth}{3}
+\setlength{\parskip}{6pt plus0pt minus0pt}
+\setlength{\parindent}{0pt}
+\pagestyle{headings} 
 
 \begin{document}
+\input{pages/titlepage}
+\input{pages/abstract}
+\newpage
+\input{pages/acknowledgements}
+\newpage
+\tableofcontents
+\newpage
+\input{pages/page1}
+\setcounter{secnumdepth}{1}
+\appendix
 
-\title{Diploma 2020/2021}
-\author{Nicolaus Rossi \and Joshua Winkler}
-\date{01.01.2020}
-\maketitle
 
-\section{Introduction}
-\subfile{sections/intro}
-\section{What's more}
-\subfile{sections/next}
+\bibliography{references} %references bibtech as used for all papers dealing with online-surveys
+\nocite{*}
+
+\listoffigures
+\listoftables
 
 \end{document}
