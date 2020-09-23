@@ -8,6 +8,7 @@ import Route from '../../Route';
 class ACPLoginRoute implements Route {
     readonly router: Router;
     readonly path: string;
+    readonly fullpath: string;
     private readonly logger: log4js.Logger;
 
     constructor() {
@@ -15,6 +16,7 @@ class ACPLoginRoute implements Route {
         this.logger = log4js.getLogger('ACPLoginRoute');
         this.path = '/acp';
         this.router.post('/login', this.post);
+        this.fullpath = '/acp/login';
     }
 
     private post(req: Request, res: Response, next: NextFunction): void {

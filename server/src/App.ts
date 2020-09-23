@@ -42,7 +42,7 @@ class App {
     private registerRouters(): void {
         for (let route of Object.values(routes)) {
             this.express.use(route.path, route.router);
-            this.logger.info(`Registered route '${route.constructor.name}' for path '${route.path}'`);
+            this.logger.info(`Registered route '${route.constructor.name}' for path '${route.fullpath}'`);
         }
     }
 }
