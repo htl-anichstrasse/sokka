@@ -15,8 +15,24 @@ class ACPSession implements Model {
         });
     }
 
+    static get(token: string): Promise<ACPSession> {
+        return new Promise<ACPSession>((resolve, reject) => {
+            Database.instance.query('SELECT * FROM sokka_acp_sessions WHERE token = ?;', [token]).then((result) => {
+                if (result.length > 0) {
+                    resolve(new ACPSession(result[0].id, result[0].acp_username, result[0].token));
+                } else {
+                    reject('ACP Session not found');
+                }
+            }).catch((err) => reject(err));
+        });
+    }
+
     delete(): Promise<void> {
-        throw new Error("Method not implemented.");
+        return new Promise<void>((resolve, reject) => {
+            Database.instance.query('DELETE FROM sokka_acp_sessions WHERE id = ?;', [this.id]).then(() => {
+                resolve(null);
+            }).catch((err) => reject(err));
+        });
     }
 }
 
