@@ -2,12 +2,14 @@ import * as bodyParser from 'body-parser';
 import * as express from 'express';
 import { Server } from 'http';
 import * as log4js from 'log4js';
+import Database from './Database';
 import * as routes from './routes';
 
 class App {
-    public express: express.Application;
-    public server: Server;
-    private logger: log4js.Logger;
+    server: Server;
+    readonly express: express.Application;
+    readonly database: Database;
+    private readonly logger: log4js.Logger;
 
     constructor() {
         this.express = express();
@@ -31,7 +33,10 @@ class App {
             res.status(404).end();
         });
 
-        this.logger.info('Sokka ready to rumble!');
+        // Initialize database
+        Database.create().then(() => {
+            this.logger.info('Sokka ready to rumble!');
+        });
     }
 
     private registerRouters(): void {

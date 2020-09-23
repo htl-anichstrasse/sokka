@@ -1,0 +1,12 @@
+/*
+    Footer
+*/
+
+#root>.container {
+    margin-bottom: 35px;
+}
+
+.footer {
+    height: 80px;
+    line-height: 80px;
+}

@@ -2,21 +2,36 @@ import * as log4js from 'log4js';
 import { Connection, createConnection, queryCallback } from 'mysql';
 
 class Database {
-    private logger: log4js.Logger;
-    private connection: Connection;
+    private readonly logger: log4js.Logger;
+    private readonly connection: Connection;
+    static instance: Database;
 
-    constructor() {
+    private constructor(callback: () => void) {
         this.logger = log4js.getLogger('Database');
         this.connection = createConnection({
             host: process.env.MYSQL_HOST,
             user: process.env.MYSQL_USERNAME,
-            password: process.env.MYSQL_PASSWORD
+            password: process.env.MYSQL_PASSWORD,
+            database: process.env.MYSQL_DB
         });
         this.logger.info('Connecting to MySQL...');
         this.connection.connect((err) => {
             if (err) throw err;
             this.logger.info('Successfully connected to MySQL');
-        })
+            callback();
+        });
+    }
+
+    static create(): Promise<Database> {
+        return new Promise<Database>((resolve) => {
+            if (Database.instance) {
+                throw 'Database already created!';
+            }
+            let callback = () => {
+                resolve(Database.instance);
+            }
+            Database.instance = new Database(callback);
+        });
     }
 
     query(query: string, values?: any): Promise<any> {
@@ -35,7 +50,6 @@ class Database {
             }
         });
     }
-
 }
 
-export default new Database();
+export default Database;
