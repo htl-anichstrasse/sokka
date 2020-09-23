@@ -50,12 +50,42 @@ class _MenuPanelState extends State<MenuPanel> {
                                     );
                                 },
                                 isExpanded: menu.getExpanded,
-                                body: menu.getBody
+                                body: this._buildPanelBody(menu)
                             );
                         }).toList(),
                     ),
                 ),
             ],
+        );
+    }
+
+    Widget _buildPanelBody(final Menu menu) {
+        return new Padding(
+            padding: new EdgeInsets.only(right: 20.0, left: 20.0, bottom: 20.0),
+            child: new Column(
+                children: <Widget>[
+                    new Row(
+                        children: <Widget>[
+                            new Text(menu.getAppetizer),
+                        ],
+                    ),
+                    new Row(
+                        children: <Widget>[
+                            new Text(menu.getMainCourse),
+                        ],
+                    ),
+                    new Row(
+                        children: <Widget>[
+                            new Text(menu.getDessert),
+                        ],
+                    ),
+                    new FlatButton.icon(
+                        onPressed: null,
+                        label: new Text('${menu.getPrice.toStringAsFixed(2)} €'),
+                        icon: new Icon(Icons.shopping_basket),
+                    ),
+                ],
+            ),
         );
     }
 }

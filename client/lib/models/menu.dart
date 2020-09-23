@@ -5,51 +5,39 @@ import 'package:flutter/material.dart';
 /// -------------------------------------------------------------------------------
 class Menu {
     int _menuIndex;
+    int get getMenuIndex => _menuIndex;
+
     bool _expanded;
+    bool get getExpanded => _expanded;
+    set setExpanded(final bool expanded) => _expanded = expanded;
+
     String _header;
-    Widget _body;
+    String get getHeader => _header;
+    set setHeader(final String header) => _header = header;
+
+    String _appetizer;
+    String get getAppetizer => _appetizer;
+    set setAppetizer(final String appetizer) => _appetizer = appetizer;
+
+    String _mainCourse;
+    String get getMainCourse => _mainCourse;
+    set setMainCourse(final String mainCourse) => _mainCourse = mainCourse;
+
+    String _dessert;
+    String get getDessert => _dessert;
+    set setDessert(final String dessert) => _dessert = dessert;
+
+    double _price;
+    double get getPrice => _price;
+    set setPrice(final double price) => _price = price;
 
     Menu(final int menuIndex, final bool expanded, final String header, final String appetizer, final String mainCourse, final String dessert, final double price) {
         this._menuIndex = menuIndex;
         this._expanded = expanded;
         this._header = header;
-        this._body = new Padding(
-            padding: new EdgeInsets.only(right: 20.0, left: 20.0, bottom: 20.0),
-            child: new Column(
-                children: <Widget>[
-                    new Row(
-                        children: <Widget>[
-                            new Text(appetizer),
-                        ],
-                    ),
-                    new Row(
-                        children: <Widget>[
-                            new Text(mainCourse),
-                        ],
-                    ),
-                    new Row(
-                        children: <Widget>[
-                            new Text(dessert),
-                        ],
-                    ),
-                    new FlatButton.icon(
-                        onPressed: null,
-                        label: new Text('${price.toStringAsFixed(2)} €'),
-                        icon: new Icon(Icons.shopping_basket),
-                    ),
-                ],
-            ),
-        );
+        this._appetizer = appetizer;
+        this._mainCourse = mainCourse;
+        this._dessert = dessert;
+        this._price = price;
     }
-
-    int get getMenuIndex => _menuIndex;
-
-    bool get getExpanded => _expanded;
-    set setExpanded(bool expanded) => _expanded = expanded;
-
-    String get getHeader => _header;
-    set setHeader(String header) => _header = header;
-
-    Widget get getBody => _body;
-    set setBody(Widget body) => _body = body;
 }
