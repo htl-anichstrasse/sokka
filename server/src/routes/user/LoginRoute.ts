@@ -1,4 +1,3 @@
-import { rejects } from 'assert';
 import * as bcrypt from 'bcrypt';
 import { NextFunction, Request, Response, Router } from 'express';
 import * as log4js from 'log4js';
@@ -27,21 +26,27 @@ class LoginRoute implements Route {
         User.get(req.body.email).then((user) => {
             bcrypt.compare(req.body.password, user.password, (err, same) => {
                 if (err) {
-                    res.send({ success: false, message: `Could not retrieve user` });
+                    this.handleUnsuccessfulLogin(req, res, err);
                     this.logger.error(`Password comparison failed for user ${user.id}`);
                     return;
                 }
                 if (same) {
                     Session.create(user).then((session) => {
                         res.send({ success: true, message: 'Credentials validated', token: session.token });
-                    }).catch((err) => rejects(err));
+                    }).catch((err) => this.handleUnsuccessfulLogin(req, res, err));
                 } else {
-                    res.send({ success: false, message: 'Could not retrieve user' });
+                    this.handleUnsuccessfulLogin(req, res);
                 }
             });
-        }).catch((err) => {
-            res.send({ success: false, message: 'Could not retrieve user' });
-        });
+        }).catch((err) => this.handleUnsuccessfulLogin(req, res, err));
+    }
+
+    private handleUnsuccessfulLogin(req: Request, res: Response, err?: Error): void {
+        let requestedEmail = req.body.email;
+        if (err) {
+            this.logger.warn(`Unsuccessful login attempt for requested user '${requestedEmail}' with error: ${err.message}`);
+        }
+        res.send({ success: false, message: `Could not retrieve user for email '${requestedEmail}'` });
     }
 }
 

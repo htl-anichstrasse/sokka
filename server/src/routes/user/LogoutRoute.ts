@@ -1,13 +1,16 @@
 import { NextFunction, Request, Response, Router } from 'express';
+import * as log4js from 'log4js';
 import Session from '../../models/Session';
 import Route from '../../Route';
 
 class LogoutRoute implements Route {
     readonly router: Router;
     readonly path: string;
+    private readonly logger: log4js.Logger;
 
     constructor() {
         this.router = Router();
+        this.logger = log4js.getLogger('LogoutRoute');
         this.path = '/user';
         this.router.post('/login', this.post);
     }
@@ -24,6 +27,7 @@ class LogoutRoute implements Route {
             });
         }).catch((err) => {
             res.send({ success: false, message: err.message });
+            this.logger.warn(`Could not invalidate session for token '${req.body.token}': ${err.message}`);
         })
     }
 }

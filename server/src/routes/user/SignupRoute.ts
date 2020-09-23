@@ -30,8 +30,7 @@ class SignupRoute implements Route {
                 res.send({ success: false, message: 'User already exists' });
                 return;
             }
-            // TODO: send verification email
-            // Captcha challenge
+
             let formData = new FormData();
             formData.append('secret', process.env.V3_PRIVATE);
             formData.append('response', req.body.token);
@@ -48,17 +47,22 @@ class SignupRoute implements Route {
                     User.create(req.body.email, hash).then((user) => {
                         Session.create(user).then((session) => {
                             res.send({ success: true, message: 'Successfully created user', token: session.token });
-                        }).catch((err) => {
-                            res.send({ success: false, message: err.message });
-                        });
-                    }).catch((err) => {
-                        res.send({ success: false, message: err.message });
-                    });
+                            // TODO: Send verification mail
+                        }).catch((err) => this.handleUnsuccessfulSignup(req, res, err));
+                    }).catch((err) => this.handleUnsuccessfulSignup(req, res, err));
                 });
             }).catch((err) => {
                 res.send({ success: false, message: `Failed to validate captcha: ${err.message}` });
             });
         });
+    }
+
+    private handleUnsuccessfulSignup(req: Request, res: Response, err?: Error): void {
+        let requestedEmail = req.body.email;
+        if (err) {
+            this.logger.warn(`Unsuccessful signup attempt for email '${requestedEmail}' with error: ${err.message}`);
+        }
+        res.send({ success: false, message: `Could not sign up user for email '${requestedEmail}'` });
     }
 }
 

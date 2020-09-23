@@ -1,4 +1,3 @@
-import { rejects } from 'assert';
 import * as bcrypt from 'bcrypt';
 import { NextFunction, Request, Response, Router } from 'express';
 import * as log4js from 'log4js';
@@ -27,26 +26,27 @@ class ACPLoginRoute implements Route {
         ACPUser.get(req.body.email).then((user) => {
             bcrypt.compare(req.body.password, user.password, (err, same) => {
                 if (err) {
-                    this.handleUnsuccessfulLogin(res);
+                    this.handleUnsuccessfulLogin(req, res, err);
                     this.logger.error(`Password comparison failed for ACP user ${user.username}`);
                     return;
                 }
                 if (same) {
                     ACPSession.create(user).then((session) => {
                         res.send({ success: true, message: 'Credentials validated', token: session.token });
-                    }).catch((err) => rejects(err));
+                    }).catch((err) => this.handleUnsuccessfulLogin(req, res, err));
                 } else {
-                    this.handleUnsuccessfulLogin(res);
+                    this.handleUnsuccessfulLogin(req, res);
                 }
             });
-        }).catch((err) => this.handleUnsuccessfulLogin(res, err));
+        }).catch((err) => this.handleUnsuccessfulLogin(req, res, err));
     }
 
-    private handleUnsuccessfulLogin(res: Response, err?: Error): void {
+    private handleUnsuccessfulLogin(req: Request, res: Response, err?: Error): void {
+        let requestedUsername = req.body.username;
         if (err) {
-            this.logger.warn(`Unsuccessful ACP login attempt with error: ${err.message}`);
+            this.logger.warn(`Unsuccessful ACP login attempt for requested user '${requestedUsername}' with error: ${err.message}`);
         }
-        res.send({ success: false, message: 'Could not retrieve user' });
+        res.send({ success: false, message: `Could not retrieve user '${requestedUsername}'` });
     }
 }
 
