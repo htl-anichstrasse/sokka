@@ -27,6 +27,11 @@ class SignupRoute implements Route {
             return;
         }
 
+        if (!req.body.tos || !req.body.privacypolicy) {
+            res.send({ sucess: false, message: 'Please accept our terms of service and privacy policy!'});
+            return;
+        }
+
         User.exists(req.body.email).then((exists) => {
             if (!exists) {
                 res.send({ success: false, message: 'User already exists' });
