@@ -11,7 +11,7 @@ class Sokka extends StatelessWidget {
         SystemChrome.setEnabledSystemUIOverlays([]);
         return new MaterialApp(
             debugShowCheckedModeBanner: true,
-            theme: AppThemes.darkModeAppTheme,
+            theme: AppThemes.getDarkModeAppTheme,
             home: new HomeTabController(),
         );
     }

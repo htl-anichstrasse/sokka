@@ -14,7 +14,7 @@ class AppThemes {
     static final Color _lightThemeFontColour = Colors.black;
 
     /// ThemeData for dark mode.
-    static ThemeData get darkModeAppTheme => ThemeData(
+    static ThemeData get getDarkModeAppTheme => ThemeData(
         primaryColor: Colors.tealAccent[700],
         scaffoldBackgroundColor: Colors.grey[850],
         canvasColor: Colors.grey[850],
@@ -25,7 +25,7 @@ class AppThemes {
     );
 
     /// ThemeData for light mode.
-    static ThemeData get lightModeAppTheme => ThemeData(
+    static ThemeData get getLightModeAppTheme => ThemeData(
         primaryColor: Colors.tealAccent[700],
         scaffoldBackgroundColor: Colors.white,
         canvasColor: Colors.white,
