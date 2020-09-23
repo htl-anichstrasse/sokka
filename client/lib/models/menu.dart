@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 /// -------------------------------------------------------------------------------
 /// Stores all relevant data, such as the different meals and the price of a menu.
 /// -------------------------------------------------------------------------------
