@@ -9,9 +9,9 @@ class Menu {
     bool get getExpanded => _expanded;
     set setExpanded(final bool expanded) => _expanded = expanded;
 
-    String _header;
-    String get getHeader => _header;
-    set setHeader(final String header) => _header = header;
+    String _title;
+    String get getTitle => _title;
+    set setTitle(final String title) => _title = title;
 
     String _appetizer;
     String get getAppetizer => _appetizer;
@@ -29,10 +29,10 @@ class Menu {
     double get getPrice => _price;
     set setPrice(final double price) => _price = price;
 
-    Menu(final int menuIndex, final bool expanded, final String header, final String appetizer, final String mainCourse, final String dessert, final double price) {
+    Menu(final int menuIndex, final bool expanded, final String title, final String appetizer, final String mainCourse, final String dessert, final double price) {
         this._menuIndex = menuIndex;
         this._expanded = expanded;
-        this._header = header;
+        this._title = title;
         this._appetizer = appetizer;
         this._mainCourse = mainCourse;
         this._dessert = dessert;

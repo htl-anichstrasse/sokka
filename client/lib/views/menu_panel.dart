@@ -24,7 +24,9 @@ class _MenuPanelState extends State<MenuPanel> {
     @override
     void initState() {
         super.initState();
-        _menus.add(new Menu(this._menuIndex, false, 'Menu', 'appetizer', 'main course', 'dessert', 5.00));
+        _menus = [
+            new Menu(this._menuIndex, false, 'Veggie', 'Couscous salad', 'Spring rolls', 'Banana split', 4.50),
+        ];
     }
 
     @override
@@ -44,7 +46,7 @@ class _MenuPanelState extends State<MenuPanel> {
                                 headerBuilder: (BuildContext context, bool isExpandend) {
                                     return new ListTile(
                                         title: new Text(
-                                            '${menu.getHeader} ${menu.getMenuIndex}',
+                                            '${menu.getTitle} ${menu.getMenuIndex}',
                                             textAlign: TextAlign.left,
                                         ),
                                     );
