@@ -9,7 +9,7 @@ interface LoginPageProps {
 
 }
 
-let loginRef: React.RefObject<HTMLFormElement>
+let loginRef: React.RefObject<HTMLDivElement>
 let userRef: React.RefObject<HTMLInputElement>
 let passwordRef: React.RefObject<HTMLInputElement>
 
@@ -19,14 +19,16 @@ const LoginPage: FunctionComponent<LoginPageProps> = (props) => {
     passwordRef = React.createRef();
     loginRef = React.createRef();
     return (<div className="login">
-        <h1>Please log in to access the ACP</h1>
-        <form ref={loginRef}>
-            <label htmlFor="username">Username:</label>
-            <input type="text" id="username" name="username" ref={userRef} onKeyUp={(event) => onKeyUp(event)} /><br />
-            <label htmlFor="password">Password:</label>
-            <input type="password" id="password" name="password" ref={passwordRef} onKeyUp={(event) => onKeyUp(event)} /><br />
-            <input type="button" value="Submit" onClick={() => login()} />
-        </form>
+        <div className="container" ref={loginRef}>
+            <h1>Please log in to access the ACP</h1>
+            <form>
+                <label htmlFor="username">Username:</label>
+                <input type="text" id="username" name="username" ref={userRef} onKeyUp={(event) => onKeyUp(event)} /><br />
+                <label htmlFor="password">Password:</label>
+                <input type="password" id="password" name="password" ref={passwordRef} onKeyUp={(event) => onKeyUp(event)} /><br />
+                <input type="button" value="Submit" onClick={() => login()} />
+            </form>
+        </div>
     </div>);
 }
 
