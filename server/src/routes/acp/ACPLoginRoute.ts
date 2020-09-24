@@ -19,6 +19,14 @@ class ACPLoginRoute implements Route {
         this.fullpath = '/acp/login';
     }
 
+    private handleUnsuccessfulLogin(req: Request, res: Response, err?: Error): void {
+        let requestedUsername = req.body.username;
+        if (err) {
+            this.logger.warn(`Unsuccessful ACP login attempt for requested user '${requestedUsername}' with error: ${err.message}`);
+        }
+        res.send({ success: false, message: `Could not retrieve user '${requestedUsername}'` });
+    }
+
     private post(req: Request, res: Response, next: NextFunction): void {
         if (!req.body.username || !req.body.password) {
             res.send({ success: false, message: 'Invalid parameters' });
@@ -41,14 +49,6 @@ class ACPLoginRoute implements Route {
                 }
             });
         }).catch((err) => this.handleUnsuccessfulLogin(req, res, err));
-    }
-
-    private handleUnsuccessfulLogin(req: Request, res: Response, err?: Error): void {
-        let requestedUsername = req.body.username;
-        if (err) {
-            this.logger.warn(`Unsuccessful ACP login attempt for requested user '${requestedUsername}' with error: ${err.message}`);
-        }
-        res.send({ success: false, message: `Could not retrieve user '${requestedUsername}'` });
     }
 }
 
