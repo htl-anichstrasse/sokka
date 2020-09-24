@@ -33,7 +33,7 @@ class ACPLoginRoute implements Route {
             return;
         }
 
-        ACPUser.get(req.body.email).then((user) => {
+        ACPUser.get(req.body.username).then((user) => {
             bcrypt.compare(req.body.password, user.password, (err, same) => {
                 if (err) {
                     this.handleUnsuccessfulLogin(req, res, err);
