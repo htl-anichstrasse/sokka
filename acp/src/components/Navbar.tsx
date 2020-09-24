@@ -27,7 +27,8 @@ const Navbar: FunctionComponent<RouteComponentProps> = (props: RouteComponentPro
                     {siteItems}
                 </Nav>
                 <Nav className="ml-auto">
-                    <LogoutButton/>
+                    <span className="mr-2 mt-auto mb-auto text-muted">Welcome, {new Cookies().get('sokka_username')}</span>
+                    <LogoutButton />
                 </Nav>
             </BSNavbar.Collapse>
         </BSNavbar>
