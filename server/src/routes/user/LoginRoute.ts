@@ -10,11 +10,10 @@ class LoginRoute implements Route {
     readonly router: Router;
     readonly path: string;
     readonly fullpath: string;
-    private readonly logger: log4js.Logger;
+    private static readonly logger = log4js.getLogger('LoginRoute');
 
     constructor() {
         this.router = Router();
-        this.logger = log4js.getLogger('LoginRoute');
         this.path = '/user';
         const loginLimiter = rateLimit({
             windowMs: 10 * 60 * 1000, // 10 minutes
@@ -34,25 +33,25 @@ class LoginRoute implements Route {
         User.get(req.body.email).then((user) => {
             bcrypt.compare(req.body.password, user.password, (err, same) => {
                 if (err) {
-                    this.handleUnsuccessfulLogin(req, res, err);
-                    this.logger.error(`Password comparison failed for user ${user.id}`);
+                    LoginRoute.handleUnsuccessfulLogin(req, res, err);
+                    LoginRoute.logger.error(`Password comparison failed for user ${user.id}`);
                     return;
                 }
                 if (same) {
                     Session.create(user).then((session) => {
                         res.send({ success: true, message: 'Credentials validated', token: session.token });
-                    }).catch((err) => this.handleUnsuccessfulLogin(req, res, err));
+                    }).catch((err) => LoginRoute.handleUnsuccessfulLogin(req, res, err));
                 } else {
-                    this.handleUnsuccessfulLogin(req, res);
+                    LoginRoute.handleUnsuccessfulLogin(req, res);
                 }
             });
-        }).catch((err) => this.handleUnsuccessfulLogin(req, res, err));
+        }).catch((err) => LoginRoute.handleUnsuccessfulLogin(req, res, err));
     }
 
-    private handleUnsuccessfulLogin(req: Request, res: Response, err?: Error): void {
+    private static handleUnsuccessfulLogin(req: Request, res: Response, err?: Error): void {
         let requestedEmail = req.body.email;
         if (err) {
-            this.logger.warn(`Unsuccessful login attempt for requested user '${requestedEmail}' with error: ${err.message}`);
+            LoginRoute.logger.warn(`Unsuccessful login attempt for requested user '${requestedEmail}' with error: ${err}`);
         }
         res.send({ success: false, message: `Could not retrieve user for email '${requestedEmail}'` });
     }

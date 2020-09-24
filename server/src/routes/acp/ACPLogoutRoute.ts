@@ -7,11 +7,10 @@ class ACPLogoutRoute implements Route {
     readonly router: Router;
     readonly path: string;
     readonly fullpath: string;
-    private readonly logger: log4js.Logger;
+    private static readonly logger = log4js.getLogger('ACPLogoutRoute');
 
     constructor() {
         this.router = Router();
-        this.logger = log4js.getLogger('ACPLogoutRoute');
         this.path = '/acp';
         this.router.post('/logout', this.post);
         this.fullpath = '/acp/logout';
@@ -29,7 +28,7 @@ class ACPLogoutRoute implements Route {
             });
         }).catch((err) => {
             res.send({ success: false, message: err.message });
-            this.logger.warn(`Could not invalidate session for token '${req.body.token}': ${err.message}`);
+            ACPLogoutRoute.logger.warn(`Could not invalidate session for token '${req.body.token}': ${err}`);
         });
     }
 }

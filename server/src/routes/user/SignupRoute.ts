@@ -12,11 +12,10 @@ class SignupRoute implements Route {
     readonly router: Router;
     readonly path: string;
     readonly fullpath: string;
-    private readonly logger: log4js.Logger;
+    private static readonly logger = log4js.getLogger('SignupRoute');
 
     constructor() {
         this.router = Router();
-        this.logger = log4js.getLogger('SignupRoute');
         this.path = '/user';
         const signupLimiter = rateLimit({
             windowMs: 30 * 60 * 1000, // 30 minutes
@@ -61,8 +60,8 @@ class SignupRoute implements Route {
                         Session.create(user).then((session) => {
                             res.send({ success: true, message: 'Successfully created user', token: session.token });
                             // TODO: Send verification mail
-                        }).catch((err) => this.handleUnsuccessfulSignup(req, res, err));
-                    }).catch((err) => this.handleUnsuccessfulSignup(req, res, err));
+                        }).catch((err) => SignupRoute.handleUnsuccessfulSignup(req, res, err));
+                    }).catch((err) => SignupRoute.handleUnsuccessfulSignup(req, res, err));
                 });
             }).catch((err) => {
                 res.send({ success: false, message: `Failed to validate captcha: ${err.message}` });
@@ -70,10 +69,10 @@ class SignupRoute implements Route {
         });
     }
 
-    private handleUnsuccessfulSignup(req: Request, res: Response, err?: Error): void {
+    private static handleUnsuccessfulSignup(req: Request, res: Response, err?: Error): void {
         let requestedEmail = req.body.email;
         if (err) {
-            this.logger.warn(`Unsuccessful signup attempt for email '${requestedEmail}' with error: ${err.message}`);
+            SignupRoute.logger.warn(`Unsuccessful signup attempt for email '${requestedEmail}' with error: ${err.message}`);
         }
         res.send({ success: false, message: `Could not sign up user for email '${requestedEmail}'` });
     }

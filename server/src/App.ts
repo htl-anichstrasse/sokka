@@ -4,6 +4,7 @@ import { Server } from 'http';
 import * as log4js from 'log4js';
 import Database from './Database';
 import * as routes from './routes';
+import cors = require('cors');
 
 class App {
     server: Server;
@@ -24,6 +25,9 @@ class App {
         }));
         this.express.use(bodyParser.json());
         this.express.use(bodyParser.urlencoded({ extended: false }));
+
+        // Allow CORS
+        this.express.use(cors());
 
         // Allow reverse proxy
         this.express.enable('trust proxy');
