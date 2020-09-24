@@ -13,11 +13,11 @@ class ACPValidateRoute implements Route {
     constructor() {
         this.router = Router();
         this.path = '/acp';
-        this.router.get('/validate', this.get);
+        this.router.post('/validate', this.post);
         this.fullpath = '/acp/validate';
     }
 
-    private get(req: Request, res: Response, next: NextFunction): void {
+    private post(req: Request, res: Response, next: NextFunction): void {
         if (!req.body.token || !req.body.username) {
             res.send({ success: false, message: 'Invalid parameters' });
             return;

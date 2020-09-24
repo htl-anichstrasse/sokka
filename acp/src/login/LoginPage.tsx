@@ -47,6 +47,7 @@ function login(event: React.MouseEvent): void {
                 return;
             }
             const cookies = new Cookies();
+            cookies.set('sokka_username', username);
             cookies.set('sokka_token', response.data.token);
             window.location.reload();
         }).catch((err) => console.error(err));

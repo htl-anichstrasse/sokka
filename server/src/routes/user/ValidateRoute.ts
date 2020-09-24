@@ -13,11 +13,11 @@ class ValidateRoute implements Route {
     constructor() {
         this.router = Router();
         this.path = '/user';
-        this.router.get('/validate', this.get);
+        this.router.post('/validate', this.post);
         this.fullpath = '/user/validate';
     }
 
-    private get(req: Request, res: Response, next: NextFunction): void {
+    private post(req: Request, res: Response, next: NextFunction): void {
         if (!req.body.token || !req.body.email) {
             res.send({ success: false, message: 'Invalid parameters' });
             return;
