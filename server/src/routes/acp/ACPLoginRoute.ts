@@ -9,22 +9,13 @@ class ACPLoginRoute implements Route {
     readonly router: Router;
     readonly path: string;
     readonly fullpath: string;
-    private readonly logger: log4js.Logger;
+    private static readonly logger = log4js.getLogger('ACPLoginRoute');
 
     constructor() {
         this.router = Router();
-        this.logger = log4js.getLogger('ACPLoginRoute');
         this.path = '/acp';
         this.router.post('/login', this.post);
         this.fullpath = '/acp/login';
-    }
-
-    private handleUnsuccessfulLogin(req: Request, res: Response, err?: Error): void {
-        let requestedUsername = req.body.username;
-        if (err) {
-            this.logger.warn(`Unsuccessful ACP login attempt for requested user '${requestedUsername}' with error: ${err.message}`);
-        }
-        res.send({ success: false, message: `Could not retrieve user '${requestedUsername}'` });
     }
 
     private post(req: Request, res: Response, next: NextFunction): void {
@@ -36,19 +27,27 @@ class ACPLoginRoute implements Route {
         ACPUser.get(req.body.username).then((user) => {
             bcrypt.compare(req.body.password, user.password, (err, same) => {
                 if (err) {
-                    this.handleUnsuccessfulLogin(req, res, err);
-                    this.logger.error(`Password comparison failed for ACP user ${user.username}`);
+                    ACPLoginRoute.handleUnsuccessfulLogin(req, res, err);
+                    ACPLoginRoute.logger.error(`Password comparison failed for ACP user ${user.username}`);
                     return;
                 }
                 if (same) {
                     ACPSession.create(user).then((session) => {
                         res.send({ success: true, message: 'Credentials validated', token: session.token });
-                    }).catch((err) => this.handleUnsuccessfulLogin(req, res, err));
+                    }).catch((err) => ACPLoginRoute.handleUnsuccessfulLogin(req, res, err));
                 } else {
-                    this.handleUnsuccessfulLogin(req, res);
+                    ACPLoginRoute.handleUnsuccessfulLogin(req, res);
                 }
             });
-        }).catch((err) => this.handleUnsuccessfulLogin(req, res, err));
+        }).catch((err) => ACPLoginRoute.handleUnsuccessfulLogin(req, res, err));
+    }
+
+    private static handleUnsuccessfulLogin(req: Request, res: Response, err?: Error): void {
+        let requestedUsername = req.body.username;
+        if (err) {
+            ACPLoginRoute.logger.warn(`Unsuccessful ACP login attempt for requested user '${requestedUsername}' with error: ${err}`);
+        }
+        res.send({ success: false, message: `Could not retrieve user '${requestedUsername}'` });
     }
 }
 

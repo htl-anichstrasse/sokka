@@ -7,11 +7,10 @@ class LogoutRoute implements Route {
     readonly router: Router;
     readonly path: string;
     readonly fullpath: string;
-    private readonly logger: log4js.Logger;
+    private static readonly logger = log4js.getLogger('LogoutRoute');
 
     constructor() {
         this.router = Router();
-        this.logger = log4js.getLogger('LogoutRoute');
         this.path = '/user';
         this.fullpath = '/user/login';
         this.router.post('/login', this.post);
@@ -29,7 +28,7 @@ class LogoutRoute implements Route {
             });
         }).catch((err) => {
             res.send({ success: false, message: err.message });
-            this.logger.warn(`Could not invalidate session for token '${req.body.token}': ${err.message}`);
+            LogoutRoute.logger.warn(`Could not invalidate session for token '${req.body.token}': ${err}`);
         })
     }
 }
