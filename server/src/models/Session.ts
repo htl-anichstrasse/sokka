@@ -41,18 +41,18 @@ class Session implements Model {
         });
     }
 
-    static deleteAll(user: User): Promise<void> {
-        return new Promise<void>((resolve, reject) => {
-            Database.instance.query('DELETE FROM sokka_sessions WHERE user_id = ?;', [user.id]).then(() => {
-                resolve(null);
-            }).catch((err) => reject(err));
-        });
-    }
-
     static validate(user: User, token: string): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
             Database.instance.query('SELECT id FROM sokka_sessions WHERE user_id = ? AND token = ?;', [user.id, token]).then((result) => {
                 resolve(result.length > 0);
+            }).catch((err) => reject(err));
+        });
+    }
+
+    static deleteAll(user: User): Promise<void> {
+        return new Promise<void>((resolve, reject) => {
+            Database.instance.query('DELETE FROM sokka_sessions WHERE user_id = ?;', [user.id]).then(() => {
+                resolve(null);
             }).catch((err) => reject(err));
         });
     }

@@ -21,14 +21,6 @@ class ACPSession implements Model {
         });
     }
 
-    static count(user: ACPUser): Promise<number> {
-        return new Promise<number>((resolve, reject) => {
-            Database.instance.query('SELECT COUNT(id) FROM sokka_acp_sessions WHERE acp_username = ?;', [user.username]).then((result) => {
-                resolve(result[0]);
-            }).catch((err) => reject(err));
-        });
-    }
-
     static get(token: string): Promise<ACPSession> {
         return new Promise<ACPSession>((resolve, reject) => {
             Database.instance.query('SELECT * FROM sokka_acp_sessions WHERE token = ?;', [token]).then((result) => {
@@ -37,6 +29,22 @@ class ACPSession implements Model {
                 } else {
                     reject('ACP Session not found');
                 }
+            }).catch((err) => reject(err));
+        });
+    }
+
+    static count(user: ACPUser): Promise<number> {
+        return new Promise<number>((resolve, reject) => {
+            Database.instance.query('SELECT COUNT(id) FROM sokka_acp_sessions WHERE acp_username = ?;', [user.username]).then((result) => {
+                resolve(result[0]);
+            }).catch((err) => reject(err));
+        });
+    }
+    
+    static validate(user: ACPUser, token: string): Promise<boolean> {
+        return new Promise<boolean>((resolve, reject) => {
+            Database.instance.query('SELECT id FROM sokka_acp_sessions WHERE acp_username = ? AND token = ?;', [user.username, token]).then((result) => {
+                resolve(result.length > 0);
             }).catch((err) => reject(err));
         });
     }
