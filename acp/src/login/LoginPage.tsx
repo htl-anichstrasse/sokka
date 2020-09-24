@@ -1,9 +1,9 @@
 import Axios from 'axios';
 import React, { FunctionComponent } from 'react';
 import Cookies from 'universal-cookie';
-import config from '../config.json';
 import { animateCSS } from '../Util';
 import './LoginPage.css';
+import config from '../config.json';
 
 interface LoginPageProps {
 
@@ -46,9 +46,10 @@ function login(event: React.MouseEvent): void {
                 }
                 return;
             }
-            const cookies = new Cookies();
-            cookies.set('sokka_username', username);
-            cookies.set('sokka_token', response.data.token);
+            // cache this for a bit ... otherwise token will be validated on every page change
+            new Cookies().set('sokka_token_validation', true, { expires: new Date(Date.now() + 5 * 60 * 1000) });
+            new Cookies().set('sokka_username', username);
+            new Cookies().set('sokka_token', response.data.token);
             window.location.reload();
         }).catch((err) => console.error(err));
     }
