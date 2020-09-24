@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:client/models/menu.dart';
+import 'package:client/handlers/menu_handler/menu_handler.dart';
 
 /// ----------------------------------------------------------------------
 /// Render-Widget for displaying a menu as foldable expansion panel in the
@@ -24,9 +26,6 @@ class _MenuPanelState extends State<MenuPanel> {
     @override
     void initState() {
         super.initState();
-        _menus = [
-            new Menu(this._menuIndex, false, 'Veggie', 'Couscous salad', 'Spring rolls', 'Banana split', 4.50),
-        ];
     }
 
     @override
@@ -38,26 +37,29 @@ class _MenuPanelState extends State<MenuPanel> {
                 new Padding(
                     padding: new EdgeInsets.all(10.0),
                     child: new ExpansionPanelList(
-                        expansionCallback: (int index, bool _isExpanded) => setState(() => {
-                            _menus[index].setExpanded = !_menus[index].getExpanded
+                        expansionCallback: (final int index, bool isExpanded) => setState(() => {
+                            MenuHandler.getInstance().getMenus()[index].setExpanded = !MenuHandler.getInstance().getMenus()[index].getExpanded
                         }),
-                        children: _menus.map((Menu menu) {
-                            return new ExpansionPanel(
-                                headerBuilder: (BuildContext context, bool isExpandend) {
-                                    return new ListTile(
-                                        title: new Text(
-                                            '${menu.getTitle} ${menu.getMenuIndex}',
-                                            textAlign: TextAlign.left,
-                                        ),
-                                    );
-                                },
-                                isExpanded: menu.getExpanded,
-                                body: this._buildPanelBody(menu)
-                            );
-                        }).toList(),
+                        children: MenuHandler.getInstance().getMenus().map((Menu menu) {
+                            this._buildPanel(menu);
+                        }).toList(),                    
                     ),
                 ),
             ],
+        );
+    }
+
+    ExpansionPanel _buildPanel(final Menu menu) {
+        return new ExpansionPanel(
+            headerBuilder: (BuildContext context, bool isExpanded) {
+                return new ListTile(
+                    title: new Text(
+                        '${menu.getTitle} ${menu.getMenuIndex + 1}',
+                    ),
+                );
+            },
+            isExpanded: menu.getExpanded,
+            body: this._buildPanelBody(menu)
         );
     }
 
