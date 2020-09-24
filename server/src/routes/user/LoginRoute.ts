@@ -51,7 +51,7 @@ class LoginRoute implements Route {
     private static handleUnsuccessfulLogin(req: Request, res: Response, err?: Error): void {
         let requestedEmail = req.body.email;
         if (err) {
-            LoginRoute.logger.warn(`Unsuccessful login attempt for requested user '${requestedEmail}' with error: ${err.message}`);
+            LoginRoute.logger.warn(`Unsuccessful login attempt for requested user '${requestedEmail}' with error: ${err}`);
         }
         res.send({ success: false, message: `Could not retrieve user for email '${requestedEmail}'` });
     }

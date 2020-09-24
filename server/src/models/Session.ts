@@ -49,6 +49,14 @@ class Session implements Model {
         });
     }
 
+    static validate(user: User, token: string): Promise<boolean> {
+        return new Promise<boolean>((resolve, reject) => {
+            Database.instance.query('SELECT id FROM sokka_sessions WHERE user_id = ? AND token = ?;', [user.id, token]).then((result) => {
+                resolve(result.length > 0);
+            }).catch((err) => reject(err));
+        });
+    }
+
     delete(): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             Database.instance.query('DELETE FROM sokka_sessions WHERE id = ?;', [this.id]).then(() => {
