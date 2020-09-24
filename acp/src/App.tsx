@@ -15,6 +15,7 @@ function App() {
   const [loggedIn, setLoggedIn]: [boolean | undefined, (arg: boolean) => void] = useState();
   const logIn = () => {
     const cookies = new Cookies();
+    // TODO: manually set token validation cookies allow users to access acp
     if (cookies.get('sokka_token_validation')) {
       setLoggedIn(true);
       return;
