@@ -1,7 +1,9 @@
-
+import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:client/views/menu_panel.dart';
-import 'package:client/views/account_view.dart';
+import 'package:client/models/menu.dart';
+import 'package:client/views/menu/menu_panel.dart';
+import 'package:client/handlers/menu_handler/menu_handler.dart';
+import 'package:client/views/account/account_view.dart';
 
 class HomeTabController extends StatefulWidget {
     @override
@@ -10,6 +12,19 @@ class HomeTabController extends StatefulWidget {
 
 class _HomeTabController extends State<HomeTabController> {
     final List<String> _days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+    @override
+    void initState() {
+        super.initState();
+        final MenuHandler _menuHandler = new MenuHandler();
+        MenuHandler.getInstance().appendIterableToMenus(
+            [
+                new Menu(0, false, 'veggie', 'green salad', 'spring rolls', 'vanilla muffing', 4.50),
+                new Menu(1, false, 'veggie', 'green salad', 'spring rolls', 'vanilla muffing', 4.50),
+                new Menu(2, false, 'veggie', 'green salad', 'spring rolls', 'vanilla muffing', 4.50),
+            ]
+        );
+    }
 
     @override
     Widget build(BuildContext context) {
@@ -75,8 +90,8 @@ class _HomeTabController extends State<HomeTabController> {
                         children: <Widget>[
                             new Container(
                                 child: new ListView.builder(
-                                    itemCount: 5,
-                                    itemBuilder: (BuildContext context, int index) => MenuPanel(index + 1)
+                                    itemCount: 1, //MenuHandler.getInstance().getMenus().length,
+                                    itemBuilder: (BuildContext context, int index) => new MenuPanel(index)
                                 ),
                             ),
                             new Container(
