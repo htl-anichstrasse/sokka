@@ -2,6 +2,7 @@ import Axios from 'axios';
 import React, { FunctionComponent } from 'react';
 import Cookies from 'universal-cookie';
 import config from '../config.json';
+import logo from '../images/logo.png';
 import { animateCSS } from '../Util';
 import './LoginPage.css';
 
@@ -20,13 +21,15 @@ const LoginPage: FunctionComponent<LoginPageProps> = (props) => {
     loginRef = React.createRef();
     return (<div className="login">
         <div className="container" ref={loginRef}>
-            <h1>Please log in to access the ACP</h1>
+            <img id="logo" src={logo} alt="Sokka Logo" />
+            <h1>Sokka</h1>
+            <h5 className="text-muted">Please log in to access the ACP</h5>
             <form>
                 <label htmlFor="username">Username:</label>
                 <input type="text" id="username" name="username" ref={userRef} onKeyUp={(event) => onKeyUp(event)} /><br />
                 <label htmlFor="password">Password:</label>
                 <input type="password" id="password" name="password" ref={passwordRef} onKeyUp={(event) => onKeyUp(event)} /><br />
-                <input type="button" value="Submit" onClick={() => login()} />
+                <input className="btn btn-secondary" type="button" value="Log in" onClick={() => login()} />
             </form>
         </div>
     </div>);
@@ -44,20 +47,28 @@ function login(): void {
         let passwordElement = passwordRef.current;
         let username = usernameElement.value;
         let password = passwordElement.value;
+        if (username.length === 0 || password.length === 0) {
+            logInFail(loginRef.current);
+            return;
+        }
         Axios.post(`${config.api.url}/acp/login`, {
             username,
             password
         }).then((response) => {
             if (!response.data.success) {
-                if (loginRef.current != null) {
-                    animateCSS(loginRef.current, 'shakeX');
-                }
+                logInFail(loginRef.current);
                 return;
             }
             new Cookies().set('sokka_username', username);
             new Cookies().set('sokka_token', response.data.token);
             window.location.reload();
         }).catch((err) => console.error(err));
+    }
+}
+
+function logInFail(element: HTMLDivElement | null) {
+    if (element && element !== null) {
+        animateCSS(element, 'shakeX');
     }
 }
 
