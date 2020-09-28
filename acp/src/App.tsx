@@ -6,10 +6,13 @@ import './App.css';
 import Navbar from './components/Navbar';
 import config from './config.json';
 import LoginPage from './login/LoginPage';
+import ConfigPage from './pages/ConfigPage';
 import FourZeroFour from './pages/FourZeroFour';
-import MainPage from './pages/MainPage';
-import Test1Page from './pages/Test1Page';
-import Test2Page from './pages/Test2Page';
+import GroupsPage from './pages/GroupsPage';
+import HomePage from './pages/HomePage';
+import MenusPage from './pages/MenusPage';
+import ProductsPage from './pages/ProductsPage';
+import UsersPage from './pages/UsersPage';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(true);
@@ -35,9 +38,12 @@ function App() {
       <Router>
         <Navbar />
         <Switch>
-          <Route path="/" exact component={MainPage} />
-          <Route path="/test1" exact component={Test1Page} />
-          <Route path="/test2" exact component={Test2Page} />
+          <Route path="/" exact component={HomePage} />
+          <Route path="/config" exact component={ConfigPage} />
+          <Route path="/products" exact component={ProductsPage} />
+          <Route path="/menus" exact component={MenusPage} />
+          <Route path="/groups" exact component={GroupsPage} />
+          <Route path="/users" exact component={UsersPage} />
           <Route path="**" component={FourZeroFour} />
         </Switch>
       </Router>

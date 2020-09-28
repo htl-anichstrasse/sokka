@@ -8,14 +8,17 @@ import logo from '../images/logo.png';
 
 const items = [
     { link: '/', label: 'Home' },
-    { link: '/test1', label: 'Test1' },
-    { link: '/test2', label: 'Test2' }
+    { link: '/products', label: 'Products' },
+    { link: '/menus', label: 'Menus' },
+    { link: '/users', label: 'Users' },
+    { link: '/groups', label: 'Groups' }
 ];
+const configItem = { link: '/config', label: (<i className="fa fa-lg fa-cogs"></i>) };
 
 const Navbar: FunctionComponent<RouteComponentProps> = (props: RouteComponentProps) => {
     let siteItems = [];
     for (let i = 0; i < items.length; i++) {
-        let item = items[i];
+        let item: { link: string, label: string | JSX.Element } = items[i];
         siteItems.push(<Nav.Link key={i} href={item.link} className={itemIsActive(item, props) ? 'active' : ''}>{item.label}</Nav.Link>)
     }
     return (
@@ -27,6 +30,7 @@ const Navbar: FunctionComponent<RouteComponentProps> = (props: RouteComponentPro
                     {siteItems}
                 </Nav>
                 <Nav className="ml-auto">
+                    <Nav.Link key={999} href={configItem.link} className={itemIsActive({ link: configItem.link, label: 'Config' }, props) ? 'active mr-3' : 'mr-3'}>{configItem.label}</Nav.Link>
                     <span className="mr-2 mt-auto mb-auto text-muted">Welcome, {new Cookies().get('sokka_username')}</span>
                     <LogoutButton />
                 </Nav>
@@ -35,7 +39,7 @@ const Navbar: FunctionComponent<RouteComponentProps> = (props: RouteComponentPro
     );
 }
 
-function itemIsActive(item: { link: string, label: string }, props: RouteComponentProps) {
+function itemIsActive(item: { link: string, label: string | JSX.Element }, props: RouteComponentProps) {
     return item.link === props.location.pathname;
 }
 
