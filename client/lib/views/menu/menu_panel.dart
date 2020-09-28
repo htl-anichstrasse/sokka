@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:client/models/menu.dart';
+import 'package:client/handlers/basket_handler/basket_handler.dart';
 
 /// ----------------------------------------------------------------------
 /// Render-Widget for displaying a menu as foldable expansion panel in the
@@ -49,7 +50,7 @@ class _MenuPanelState extends State<MenuPanel> {
                     ),
                 );
             },
-            isExpanded: menu.getExpanded,
+            isExpanded: menu.getExpanded,  
             body: this._buildPanelBody(menu)
         );
     }
@@ -75,9 +76,9 @@ class _MenuPanelState extends State<MenuPanel> {
                         ],
                     ),
                     new FlatButton.icon(
-                        onPressed: null,
-                        label: new Text('${menu.getPrice.toStringAsFixed(2)} €'),
-                        icon: new Icon(Icons.shopping_basket),
+                        onPressed: () => BasketHandler.getInstance().appendMenuToBasket(menu),
+                        label: new Text('${menu.getPrice.toStringAsFixed(2)} €', style: new TextStyle(color: Colors.grey),),
+                        icon: new Icon(Icons.shopping_basket, color: Colors.grey,),
                     ),
                 ],
             ),
