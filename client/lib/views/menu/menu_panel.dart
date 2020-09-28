@@ -6,58 +6,51 @@ import 'package:client/models/menu.dart';
 /// menus section in the app.
 /// ----------------------------------------------------------------------
 class MenuPanel extends StatefulWidget {
-    final int _menuIndex;
+    final Menu _menu;
 
-    MenuPanel(this._menuIndex);
+    MenuPanel(this._menu);
 
     @override
-    _MenuPanelState createState() => _MenuPanelState(this._menuIndex);
+    _MenuPanelState createState() => _MenuPanelState(this._menu);
 }
 
 class _MenuPanelState extends State<MenuPanel> {
-    final int _menuIndex;
+    final Menu _menu;
 
-    List<Menu> _menus = <Menu>[];
-
-    _MenuPanelState(this._menuIndex);
-
-    @override
-    void initState() {
-        super.initState();
-        _menus = [
-            new Menu(this._menuIndex, false, 'Veggie', 'Couscous salad', 'Spring rolls', 'Banana split', 4.50),
-        ];
-    }
+    _MenuPanelState(this._menu);
 
     @override
     Widget build(BuildContext context) {
         return ListView(
             shrinkWrap: true,
             physics: ClampingScrollPhysics(),
-            children: <Widget>[
+            children: <Padding>[
                 new Padding(
                     padding: new EdgeInsets.all(10.0),
                     child: new ExpansionPanelList(
-                        expansionCallback: (int index, bool _isExpanded) => setState(() => {
-                            _menus[index].setExpanded = !_menus[index].getExpanded
+                        expansionCallback: (final int index, bool isExpanded) => setState(() => {
+                            this._menu.setExpanded = !this._menu.getExpanded
                         }),
-                        children: _menus.map((Menu menu) {
-                            return new ExpansionPanel(
-                                headerBuilder: (BuildContext context, bool isExpandend) {
-                                    return new ListTile(
-                                        title: new Text(
-                                            '${menu.getTitle} ${menu.getMenuIndex}',
-                                            textAlign: TextAlign.left,
-                                        ),
-                                    );
-                                },
-                                isExpanded: menu.getExpanded,
-                                body: this._buildPanelBody(menu)
-                            );
-                        }).toList(),
+                        children: <ExpansionPanel>[
+                            this._buildPanel(this._menu)
+                        ],                 
                     ),
                 ),
             ],
+        );
+    }
+
+    ExpansionPanel _buildPanel(final Menu menu) {
+        return new ExpansionPanel(
+            headerBuilder: (BuildContext context, bool isExpanded) {
+                return new ListTile(
+                    title: new Text(
+                        '${menu.getTitle} ${menu.getMenuIndex != null ? menu.getMenuIndex + 1 : ''}',
+                    ),
+                );
+            },
+            isExpanded: menu.getExpanded,
+            body: this._buildPanelBody(menu)
         );
     }
 
