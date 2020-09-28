@@ -1,48 +1,39 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:client/models/menu.dart';
-import 'package:client/handlers/menu_handler/menu_handler.dart';
 
 /// ----------------------------------------------------------------------
 /// Render-Widget for displaying a menu as foldable expansion panel in the
 /// menus section in the app.
 /// ----------------------------------------------------------------------
 class MenuPanel extends StatefulWidget {
-    final int _menuIndex;
+    final Menu _menu;
 
-    MenuPanel(this._menuIndex);
+    MenuPanel(this._menu);
 
     @override
-    _MenuPanelState createState() => _MenuPanelState(this._menuIndex);
+    _MenuPanelState createState() => _MenuPanelState(this._menu);
 }
 
 class _MenuPanelState extends State<MenuPanel> {
-    final int _menuIndex;
+    final Menu _menu;
 
-    List<Menu> _menus = <Menu>[];
-
-    _MenuPanelState(this._menuIndex);
-
-    @override
-    void initState() {
-        super.initState();
-    }
+    _MenuPanelState(this._menu);
 
     @override
     Widget build(BuildContext context) {
         return ListView(
             shrinkWrap: true,
             physics: ClampingScrollPhysics(),
-            children: <Widget>[
+            children: <Padding>[
                 new Padding(
                     padding: new EdgeInsets.all(10.0),
                     child: new ExpansionPanelList(
                         expansionCallback: (final int index, bool isExpanded) => setState(() => {
-                            MenuHandler.getInstance().getMenus()[index].setExpanded = !MenuHandler.getInstance().getMenus()[index].getExpanded
+                            this._menu.setExpanded = !this._menu.getExpanded
                         }),
-                        children: MenuHandler.getInstance().getMenus().map((Menu menu) {
-                            this._buildPanel(menu);
-                        }).toList(),                    
+                        children: <ExpansionPanel>[
+                            this._buildPanel(this._menu)
+                        ],                 
                     ),
                 ),
             ],
@@ -54,7 +45,7 @@ class _MenuPanelState extends State<MenuPanel> {
             headerBuilder: (BuildContext context, bool isExpanded) {
                 return new ListTile(
                     title: new Text(
-                        '${menu.getTitle} ${menu.getMenuIndex + 1}',
+                        '${menu.getTitle} ${menu.getMenuIndex != null ? menu.getMenuIndex + 1 : ''}',
                     ),
                 );
             },

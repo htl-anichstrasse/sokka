@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:client/models/menu.dart';
 import 'package:client/views/menu/menu_panel.dart';
@@ -19,9 +18,8 @@ class _HomeTabController extends State<HomeTabController> {
         final MenuHandler _menuHandler = new MenuHandler();
         MenuHandler.getInstance().appendIterableToMenus(
             [
-                new Menu(0, false, 'veggie', 'green salad', 'spring rolls', 'vanilla muffing', 4.50),
-                new Menu(1, false, 'veggie', 'green salad', 'spring rolls', 'vanilla muffing', 4.50),
-                new Menu(2, false, 'veggie', 'green salad', 'spring rolls', 'vanilla muffing', 4.50),
+                new Menu(0, false, 'Veggie', 'Green salad', 'Spring rolls', 'Vanilla muffin', 4.50),
+                new Menu(1, false, 'Meat Love', 'Chicken soup with croutons', 'Meat loaf', 'Chocolate molten lava cake', 5.50),
             ]
         );
     }
@@ -90,8 +88,8 @@ class _HomeTabController extends State<HomeTabController> {
                         children: <Widget>[
                             new Container(
                                 child: new ListView.builder(
-                                    itemCount: 1, //MenuHandler.getInstance().getMenus().length,
-                                    itemBuilder: (BuildContext context, int index) => new MenuPanel(index)
+                                    itemCount: MenuHandler.getInstance().getMenus().length, //MenuHandler.getInstance().getMenus().length,
+                                    itemBuilder: (BuildContext context, int index) => new MenuPanel(MenuHandler.getInstance().getMenus()[index])
                                 ),
                             ),
                             new Container(
