@@ -23,7 +23,7 @@ const Navbar: FunctionComponent<RouteComponentProps> = (props: RouteComponentPro
     }
     return (
         <BSNavbar bg="light" expand="lg">
-            <BSNavbar.Brand href="/"><img src={logo} alt="Sokka Logo" width="50px" /> Sokka ACP</BSNavbar.Brand>
+            <BSNavbar.Brand href="/"><img src={logo} alt="Sokka Logo" width="50px" /> Sokka<sup>ACP</sup></BSNavbar.Brand>
             <BSNavbar.Toggle aria-controls="basic-navbar-nav" />
             <BSNavbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
