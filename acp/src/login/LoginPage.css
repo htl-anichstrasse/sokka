@@ -3,12 +3,12 @@
     text-align: center;
 }
 
-input {
-    margin-left: 8px;
+.login .container {
+    max-width: 400px;
 }
 
-label {
-    min-width: 100px;
+input {
+    margin-left: 8px;
 }
 
 h5 {
@@ -20,5 +20,5 @@ input[type="button"] {
 }
 
 #logo {
-    width: 15%;
+    width: 35%;
 }

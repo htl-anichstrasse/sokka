@@ -25,10 +25,14 @@ const LoginPage: FunctionComponent<LoginPageProps> = (props) => {
             <h1>Sokka</h1>
             <h5 className="text-muted">Please log in to access the ACP</h5>
             <form>
-                <label htmlFor="username">Username:</label>
-                <input type="text" id="username" name="username" ref={userRef} onKeyUp={(event) => onKeyUp(event)} /><br />
-                <label htmlFor="password">Password:</label>
-                <input type="password" id="password" name="password" ref={passwordRef} onKeyUp={(event) => onKeyUp(event)} /><br />
+                <div className="form-group mx-sm-3 mb-2">
+                    <label htmlFor="username" className="sr-only">Username</label>
+                    <input ref={userRef} type="text" className="form-control" id="username" placeholder="Username" onKeyUp={(event) => onKeyUp(event)} />
+                </div>
+                <div className="form-group mx-sm-3 mb-2">
+                    <label htmlFor="password" className="sr-only">Password</label>
+                    <input ref={passwordRef} type="password" className="form-control" id="password" placeholder="Password" onKeyUp={(event) => onKeyUp(event)} />
+                </div>
                 <input className="btn btn-secondary" type="button" value="Log in" onClick={() => login()} />
             </form>
         </div>
