@@ -54,8 +54,6 @@ function login(): void {
                 }
                 return;
             }
-            // cache this for a bit ... otherwise token will be validated on every page change
-            new Cookies().set('sokka_token_validation', true, { expires: new Date(Date.now() + 5 * 60 * 1000) });
             new Cookies().set('sokka_username', username);
             new Cookies().set('sokka_token', response.data.token);
             window.location.reload();

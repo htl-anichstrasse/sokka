@@ -12,14 +12,9 @@ import Test1Page from './pages/Test1Page';
 import Test2Page from './pages/Test2Page';
 
 function App() {
-  const [loggedIn, setLoggedIn]: [boolean | undefined, (arg: boolean) => void] = useState();
+  const [loggedIn, setLoggedIn] = useState(true);
   const logIn = () => {
     const cookies = new Cookies();
-    // TODO: manually set token validation cookies allow users to access acp
-    if (cookies.get('sokka_token_validation')) {
-      setLoggedIn(true);
-      return;
-    }
     let cookiesToken: string = cookies.get('sokka_token');
     let cookiesUsername: string = cookies.get('sokka_username');
     if (!cookiesToken || !cookiesUsername) {
@@ -34,12 +29,8 @@ function App() {
     });
   }
 
-  if (loggedIn == null) {
-    logIn();
-    return null;
-  }
-
   if (loggedIn) {
+    logIn();
     return (
       <Router>
         <Navbar />
