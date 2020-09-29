@@ -3,7 +3,7 @@ class Meal {
     int get getMealIndex => _mealIndex;
 
     String _title;
-    String get getMealTitle => _title;
+    String get getTitle => _title;
     set setTitle(final String title) => _title = title;
 
     double _price;
