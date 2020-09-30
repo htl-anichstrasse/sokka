@@ -53,7 +53,11 @@ class SignupRoute implements Route {
                 data: formData,
                 headers: { 'Content-Type': 'multipart/form-data' }
             }).then((captchaRes) => {
-                res.send(captchaRes);
+                console.log(captchaRes);
+                if (!captchaRes.data.success || captchaRes.data.score < 0.7) {
+                    res.send({ success: false, message: `Failed to validate captcha: Low score` });
+                    return;
+                }
                 bcrypt.hash(req.body.password, parseInt(process.env.SALT_ROUNDS), (err, hash) => {
                     if (err) throw err;
                     User.create(req.body.email, hash).then((user) => {
