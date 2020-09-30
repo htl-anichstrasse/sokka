@@ -17,10 +17,9 @@ class _BasketState extends State<Basket> {
                 child: new ListTile(
                     leading: BasketHandler.getInstance().getBasket()[index] is Menu ? Icon(Icons.restaurant_menu) : Icon(Icons.fastfood),
                     title: new Text('${BasketHandler.getInstance().getBasket()[index].getTitle}'),
-                    trailing: new FlatButton.icon(
+                    trailing: new IconButton(
                         onPressed: () => BasketHandler.getInstance().getBasket().removeAt(index),
-                        icon: new Icon(Icons.remove),
-                        label: new Text('')
+                        icon: new Icon(Icons.remove_circle_outline),
                     ),
                 ),
             ),
