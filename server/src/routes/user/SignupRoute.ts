@@ -27,7 +27,6 @@ class SignupRoute implements Route {
     }
 
     private post(req: Request, res: Response, next: NextFunction): void {
-        console.log(req.body);
         if (!(req.body.token && req.body.email && req.body.password)) {
             res.send({ success: false, message: 'Invalid parameters' });
             return;
