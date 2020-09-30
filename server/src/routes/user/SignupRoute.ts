@@ -6,7 +6,6 @@ import Session from '../../models/Session';
 import User from '../../models/User';
 import Route from '../../Route';
 import rateLimit = require('express-rate-limit');
-import FormData = require('form-data');
 
 class SignupRoute implements Route {
     readonly router: Router;
