@@ -2,27 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:client/models/menu.dart';
 import 'package:client/views/menu/menu_panel.dart';
 import 'package:client/handlers/menu_handler/menu_handler.dart';
+import 'package:client/handlers/basket_handler/basket_handler.dart';
 import 'package:client/views/account/account_view.dart';
+import 'package:client/views/basket/basket_view.dart';
 
 class HomeTabController extends StatefulWidget {
     @override
     _HomeTabController createState() => _HomeTabController();
-}
+}       
 
 class _HomeTabController extends State<HomeTabController> {
     final List<String> _days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-
-    @override
-    void initState() {
-        super.initState();
-        final MenuHandler _menuHandler = new MenuHandler();
-        MenuHandler.getInstance().appendIterableToMenus(
-            [
-                new Menu(0, false, 'Veggie', 'Green salad', 'Spring rolls', 'Vanilla muffin', 4.50),
-                new Menu(1, false, 'Meat Love', 'Chicken soup with croutons', 'Meat loaf', 'Chocolate molten lava cake', 5.50),
-            ]
-        );
-    }
 
     @override
     Widget build(BuildContext context) {
@@ -88,7 +78,7 @@ class _HomeTabController extends State<HomeTabController> {
                         children: <Widget>[
                             new Container(
                                 child: new ListView.builder(
-                                    itemCount: MenuHandler.getInstance().getMenus().length, //MenuHandler.getInstance().getMenus().length,
+                                    itemCount: MenuHandler.getInstance().getMenus().length,
                                     itemBuilder: (BuildContext context, int index) => new MenuPanel(MenuHandler.getInstance().getMenus()[index])
                                 ),
                             ),
@@ -96,7 +86,8 @@ class _HomeTabController extends State<HomeTabController> {
                                 child: new Icon(Icons.fastfood, color: Colors.white),
                             ),
                             new Container(
-                                child: new Icon(Icons.shopping_basket, color: Colors.white),
+                                child: new Basket(),
+                                // new Icon(Icons.shopping_basket, color: Colors.white),
                             ),
                             new Container(
                                 child: new Icon(Icons.code, color: Colors.white),

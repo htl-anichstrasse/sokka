@@ -9,10 +9,17 @@ class MenuHandler {
             throw new Exception('Handler has already been instantiated!');
         }
         _instance = this;
-        this._menus = [];
+        this._menus = [
+            new Menu(0, false, 'Veggie', 'Green salad', 'Spring rolls', 'Vanilla muffin', 4.50),
+            new Menu(1, false, 'Meat Love', 'Chicken soup with croutons', 'Meat loaf', 'Chocolate molten lava cake', 5.50),
+        ];
     }
 
     static MenuHandler getInstance() {
+        if (MenuHandler._instance != null) {
+            return MenuHandler._instance;
+        }
+        MenuHandler._instance = new MenuHandler();
         return MenuHandler._instance;
     }
 
