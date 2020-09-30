@@ -6,7 +6,6 @@ import Session from '../../models/Session';
 import User from '../../models/User';
 import Route from '../../Route';
 import rateLimit = require('express-rate-limit');
-import FormData = require('form-data');
 
 class SignupRoute implements Route {
     readonly router: Router;
@@ -27,7 +26,7 @@ class SignupRoute implements Route {
     }
 
     private post(req: Request, res: Response, next: NextFunction): void {
-        if (!req.body.token || !req.body.email || !req.body.password) {
+        if (!(req.body.email && req.body.password)) {
             res.send({ success: false, message: 'Invalid parameters' });
             return;
         }
@@ -38,33 +37,19 @@ class SignupRoute implements Route {
         }
 
         User.exists(req.body.email).then((exists) => {
-            if (!exists) {
+            if (exists) {
                 res.send({ success: false, message: 'User already exists' });
                 return;
             }
 
-            let formData = new FormData();
-            formData.append('secret', process.env.V3_PRIVATE);
-            formData.append('response', req.body.token);
-            formData.append('remoteip', req.ip);
-            axios({
-                method: 'post',
-                url: 'https://www.google.com/recaptcha/api/siteverify',
-                data: formData,
-                headers: { 'Content-Type': 'multipart/form-data' }
-            }).then((captchaRes) => {
-                res.send(captchaRes);
-                bcrypt.hash(req.body.password, parseInt(process.env.SALT_ROUNDS), (err, hash) => {
-                    if (err) throw err;
-                    User.create(req.body.email, hash).then((user) => {
-                        Session.create(user).then((session) => {
-                            res.send({ success: true, message: 'Successfully created user', token: session.token });
-                            // TODO: Send verification mail
-                        }).catch((err) => SignupRoute.handleUnsuccessfulSignup(req, res, err));
+            bcrypt.hash(req.body.password, parseInt(process.env.SALT_ROUNDS), (err, hash) => {
+                if (err) throw err;
+                User.create(req.body.email, hash).then((user) => {
+                    Session.create(user).then((session) => {
+                        res.send({ success: true, message: 'Successfully created user', token: session.token });
+                        // TODO: Send verification mail
                     }).catch((err) => SignupRoute.handleUnsuccessfulSignup(req, res, err));
-                });
-            }).catch((err) => {
-                res.send({ success: false, message: `Failed to validate captcha: ${err.message}` });
+                }).catch((err) => SignupRoute.handleUnsuccessfulSignup(req, res, err));
             });
         });
     }
