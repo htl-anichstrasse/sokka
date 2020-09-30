@@ -39,7 +39,7 @@ class SignupRoute implements Route {
         }
 
         User.exists(req.body.email).then((exists) => {
-            if (!exists) {
+            if (exists) {
                 res.send({ success: false, message: 'User already exists' });
                 return;
             }
