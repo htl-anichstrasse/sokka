@@ -30,7 +30,7 @@ class LoginRoute implements Route {
             return;
         }
 
-        User.get(req.body.email).then((user) => {
+        User.getByEmail(req.body.email).then((user) => {
             bcrypt.compare(req.body.password, user.password, (err, same) => {
                 if (err) {
                     LoginRoute.handleUnsuccessfulLogin(req, res, err);

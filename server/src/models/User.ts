@@ -19,7 +19,19 @@ class User implements Model {
         });
     }
 
-    static get(email: string): Promise<User> {
+    static getById(id: string): Promise<User> {
+        return new Promise<User>((resolve, reject) => {
+            Database.instance.query('SELECT * FROM sokka_users WHERE id = ?;', [id]).then((result) => {
+                if (result.length > 0) {
+                    resolve(new User(result[0].id, result[0].email, result[0].pwhash));
+                } else {
+                    reject('User not found');
+                }
+            }).catch((err) => reject(err));
+        });
+    }
+
+    static getByEmail(email: string): Promise<User> {
         return new Promise<User>((resolve, reject) => {
             Database.instance.query('SELECT * FROM sokka_users WHERE email = ?;', [email]).then((result) => {
                 if (result.length > 0) {
@@ -27,6 +39,14 @@ class User implements Model {
                 } else {
                     reject('User not found');
                 }
+            }).catch((err) => reject(err));
+        });
+    }
+
+    verify(): Promise<void> {
+        return new Promise<void>((resolve, reject) => {
+            Database.instance.query('UPDATE sokka_users SET verified = ? WHERE id = ?;', [true, this.id]).then(() => {
+                resolve(null);
             }).catch((err) => reject(err));
         });
     }

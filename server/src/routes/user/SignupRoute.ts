@@ -1,10 +1,10 @@
-import axios from 'axios';
 import * as bcrypt from 'bcrypt';
 import { NextFunction, Request, Response, Router } from 'express';
 import * as log4js from 'log4js';
 import Session from '../../models/Session';
 import User from '../../models/User';
 import Route from '../../Route';
+import VerificationService from '../../VerificationService';
 import rateLimit = require('express-rate-limit');
 
 class SignupRoute implements Route {
@@ -46,8 +46,10 @@ class SignupRoute implements Route {
                 if (err) throw err;
                 User.create(req.body.email, hash).then((user) => {
                     Session.create(user).then((session) => {
-                        res.send({ success: true, message: 'Successfully created user', token: session.token });
-                        // TODO: Send verification mail
+                        VerificationService.sendVerification(user).then((smtpResponse) => {
+                            console.log(smtpResponse); // debug
+                            res.send({ success: true, message: 'Successfully created user', token: session.token });
+                        }).catch((err) => SignupRoute.handleUnsuccessfulSignup(req, res, err));
                     }).catch((err) => SignupRoute.handleUnsuccessfulSignup(req, res, err));
                 }).catch((err) => SignupRoute.handleUnsuccessfulSignup(req, res, err));
             });

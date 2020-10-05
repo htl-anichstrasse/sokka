@@ -23,7 +23,7 @@ class ValidateRoute implements Route {
             return;
         }
 
-        User.get(req.body.email).then((user) => {
+        User.getByEmail(req.body.email).then((user) => {
             Session.validate(user, req.body.token).then((result) => {
                 if (result) {
                     res.send({ success: true, message: 'Token for this email is valid' });
