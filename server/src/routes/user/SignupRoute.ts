@@ -6,6 +6,7 @@ import User from '../../models/User';
 import Route from '../../Route';
 import VerificationService from '../../VerificationService';
 import rateLimit = require('express-rate-limit');
+import config from '../../Config';
 
 class SignupRoute implements Route {
     readonly router: Router;
@@ -42,7 +43,7 @@ class SignupRoute implements Route {
                 return;
             }
 
-            bcrypt.hash(req.body.password, parseInt(process.env.SALT_ROUNDS), (err, hash) => {
+            bcrypt.hash(req.body.password, parseInt(config.readConfigValueSync('SALT_ROUNDS')), (err, hash) => {
                 if (err) throw err;
                 User.create(req.body.email, hash).then((user) => {
                     Session.create(user).then((session) => {

@@ -1,4 +1,5 @@
 import * as crypto from 'crypto';
+import config from '../../Config';
 import Database from "../../Database";
 import ACPUser from "./ACPUser";
 
@@ -8,7 +9,7 @@ class ACPSession implements Model {
     static create(user: ACPUser): Promise<ACPSession> {
         return new Promise<ACPSession>((resolve, reject) => {
             ACPSession.count(user).then((count) => {
-                if (count >= parseInt(process.env.MAX_ACP_USER_SESSIONS)) {
+                if (count >= parseInt(config.readConfigValueSync('MAX_ACP_USER_SESSIONS'))) {
                     reject('Max number of sessions reached');
                     return;
                 }

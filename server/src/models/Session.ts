@@ -1,4 +1,5 @@
 import * as crypto from 'crypto';
+import config from '../Config';
 import Database from "../Database";
 import User from "./User";
 
@@ -8,7 +9,7 @@ class Session implements Model {
     static create(user: User): Promise<Session> {
         return new Promise<Session>((resolve, reject) => {
             Session.count(user).then((count) => {
-                if (count >= parseInt(process.env.MAX_USER_SESSIONS)) {
+                if (count >= parseInt(config.readConfigValueSync('MAX_USER_SESSIONS'))) {
                     reject('Max number of sessions reached');
                     return;
                 }

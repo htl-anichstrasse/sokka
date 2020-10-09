@@ -1,5 +1,6 @@
 import * as log4js from 'log4js';
 import { Connection, createConnection, queryCallback } from 'mysql';
+import config from './Config';
 
 class Database {
     private readonly logger: log4js.Logger;
@@ -9,10 +10,10 @@ class Database {
     private constructor(callback: () => void) {
         this.logger = log4js.getLogger('Database');
         this.connection = createConnection({
-            host: process.env.MYSQL_HOST,
-            user: process.env.MYSQL_USERNAME,
-            password: process.env.MYSQL_PASSWORD,
-            database: process.env.MYSQL_DB
+            host: config.readConfigValueSync('MYSQL_HOST'),
+            user: config.readConfigValueSync('MYSQL_USERNAME'),
+            password: config.readConfigValueSync('MYSQL_PASSWORD'),
+            database: config.readConfigValueSync('MYSQL_DB')
         });
         this.logger.info('Connecting to MySQL...');
         this.connection.connect((err) => {

@@ -2,7 +2,7 @@ import * as dotenv from 'dotenv';
 import * as http from 'http';
 import * as log4js from 'log4js';
 import App from './App';
-import { setEnvironmentReady } from './Config';
+import config, { setEnvironmentReady } from './Config';
 
 function validatePort(port: number | string): boolean {
     let convPort = (typeof port === 'string') ? parseInt(port, 10) : port;
@@ -34,8 +34,9 @@ const logger = log4js.getLogger('Bootstrap');
 
 // Validate and set port from environ
 var port = 3000;
-if (validatePort(process.env.PORT || 3000)) {
-    port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
+var configPort = config.readConfigValueSync('PORT');
+if (validatePort(configPort || 3000)) {
+    port = configPort ? parseInt(configPort) : 3000;
 } else {
     logger.warn('Invalid port, using port 3000');
 }
