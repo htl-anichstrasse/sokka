@@ -14,7 +14,7 @@ class User implements Model {
     static exists(email: string): Promise<Boolean> {
         return new Promise<Boolean>((resolve) => {
             Database.instance.query('SELECT id FROM sokka_users WHERE email = ?;', [email]).then((result) => {
-                resolve(result > 0);
+                resolve(result.length > 0);
             });
         });
     }

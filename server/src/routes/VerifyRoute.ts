@@ -11,7 +11,7 @@ class VerifyRoute implements Route {
 
     constructor() {
         this.router = Router();
-        this.path = '/verify';
+        this.path = '/';
         this.router.get('/verify', this.get);
         this.fullpath = '/verify';
     }
