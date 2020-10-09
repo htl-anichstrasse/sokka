@@ -1,6 +1,8 @@
 .vscode/
 # main page (sokka.me)
 main/
+# docker secrets
+secrets/
 # proxy configuration
 proxy.conf/
 # fallback configuration

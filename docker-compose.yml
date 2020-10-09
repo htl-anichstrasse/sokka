@@ -54,14 +54,15 @@ services:
     restart: always
     ports:
       - "8090:8090"
+    secrets:
+      - MYSQL_DB
+      - MYSQL_HOST
+      - MYSQL_USERNAME
+      - MYSQL_PASSWORD
     environment:
       - NGINX_HOST=api.sokka.me
       - NGINX_PORT=8090
       - PORT=8090
-      - MYSQL_HOST=mysql
-      - MYSQL_USERNAME=root
-      - MYSQL_PASSWORD=E6s2hYPSD6os3FaP
-      - MYSQL_DB=sokka
       - VIRTUAL_PORT=8090
       - VIRTUAL_HOST=api.sokka.me
       - LETSENCRYPT_HOST=api.sokka.me
@@ -124,5 +125,14 @@ services:
       - NGINX_PORT=80
       - VIRTUAL_HOST=default.sokka.me
       - HTTPS_METHOD=noredirect
+secrets:
+  MYSQL_DB:
+    file: ./secrets/MYSQL_DB.txt
+  MYSQL_HOST:
+    file: ./secrets/MYSQL_HOST.txt
+  MYSQL_USERNAME:
+    file: ./secrets/MYSQL_USERNAME.txt
+  MYSQL_PASSWORD:
+    file: ./secrets/MYSQL_PASSWORD.txt
 volumes:
   certs-volume:
