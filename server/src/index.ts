@@ -2,6 +2,7 @@ import * as dotenv from 'dotenv';
 import * as http from 'http';
 import * as log4js from 'log4js';
 import App from './App';
+import { setEnvironmentReady } from './Config';
 
 function validatePort(port: number | string): boolean {
     let convPort = (typeof port === 'string') ? parseInt(port, 10) : port;
@@ -20,6 +21,7 @@ function onListening() {
 
 // Configure environ and logger
 dotenv.config();
+setEnvironmentReady();
 log4js.configure({
     appenders: {
         console: { type: 'console' }

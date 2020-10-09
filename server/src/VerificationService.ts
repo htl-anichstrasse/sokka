@@ -1,3 +1,5 @@
+import * as log4js from 'log4js';
+import config from './Config';
 import Database from "./Database";
 import User from "./models/User";
 import nodemailer = require('nodemailer');
@@ -6,14 +8,20 @@ import crypto = require('crypto');
 
 class VerificationService {
     private mailer: Mail;
+    private static readonly logger = log4js.getLogger('VerificationService');
 
     constructor() {
-        this.mailer = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: 'vulzuplays@gmail.com',
-                pass: 'inacxalwrwnmpsew'
-            }
+        Promise.all([config.readConfigValue('VERIFY_EMAIL'), config.readConfigValue('VERIFY_EMAIL_PASSWORD')]).then((values) => {
+            this.mailer = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: values[0],
+                    pass: values[1]
+                }
+            });
+            VerificationService.logger.info('Successfully initialized verification service');
+        }).catch((err) => {
+            VerificationService.logger.error(`Could not enable verification service: ${err}`);
         });
     }
 
