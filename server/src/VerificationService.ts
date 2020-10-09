@@ -27,7 +27,7 @@ class VerificationService {
 
     private storeVerificationURL(user: User): Promise<string> {
         return new Promise<string>((resolve, reject) => {
-            let token = crypto.randomBytes(64).toString('base64');
+            let token = crypto.randomBytes(64).toString('base64').replace('+', '').replace('/', '');
             Database.instance.query("INSERT INTO sokka_verification_urls (user_id, token) VALUES (?, ?);", [user.id, token]).then(() => {
                 resolve(token);
             }).catch((err) => reject(err));
