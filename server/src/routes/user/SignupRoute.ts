@@ -48,7 +48,7 @@ class SignupRoute implements Route {
                 User.create(req.body.email, hash).then((user) => {
                     Session.create(user).then((session) => {
                         VerificationService.sendVerification(user).then((smtpResponse) => {
-                            if (JSON.parse(smtpResponse).rejected.lengt > 0) {
+                            if (smtpResponse.rejected.lengt > 0) {
                                 SignupRoute.handleUnsuccessfulSignup(req, res, err);
                                 SignupRoute.logger.error(`SEVERE: Could not send verification mail for user '${user.email}'`);
                                 return;

@@ -64,8 +64,8 @@ class VerificationService {
         });
     }
 
-    public sendVerification(user: User): Promise<string> {
-        return new Promise<string>((resolve, reject) => {
+    public sendVerification(user: User): Promise<any> {
+        return new Promise<any>((resolve, reject) => {
             this.storeVerificationURL(user).then((token) => {
                 this.mailer.sendMail({
                     from: 'Sokka noreply@sokka.me',
