@@ -36,7 +36,7 @@ class VerificationService {
 
     public isVerificationIDValid(token: string): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
-            Database.instance.query("SELECT COUNT(*) FROM sokka_verification_urls WHERE token = ?;", [token]).then((result) => {
+            Database.instance.query("SELECT id FROM sokka_verification_urls WHERE token = ?;", [token]).then((result) => {
                 resolve(result.length > 0);
             }).catch((err) => reject(err));
         });
