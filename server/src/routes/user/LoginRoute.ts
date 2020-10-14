@@ -26,6 +26,7 @@ class LoginRoute implements Route {
 
     private post(req: Request, res: Response, next: NextFunction): void {
         if (!req.body.email || !req.body.password) {
+            res.status(400);
             res.send({ success: false, message: 'Invalid parameters' });
             return;
         }
@@ -53,6 +54,7 @@ class LoginRoute implements Route {
         if (err) {
             LoginRoute.logger.warn(`Unsuccessful login attempt for requested user '${requestedEmail}' with error: ${err}`);
         }
+        res.status(500);
         res.send({ success: false, message: `Could not retrieve user for email '${requestedEmail}'` });
     }
 }

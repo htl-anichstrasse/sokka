@@ -20,6 +20,7 @@ class ACPLoginRoute implements Route {
 
     private post(req: Request, res: Response, next: NextFunction): void {
         if (!req.body.username || !req.body.password) {
+            res.status(400);
             res.send({ success: false, message: 'Invalid parameters' });
             return;
         }
@@ -47,6 +48,7 @@ class ACPLoginRoute implements Route {
         if (err) {
             ACPLoginRoute.logger.warn(`Unsuccessful ACP login attempt for requested user '${requestedUsername}' with error: ${err}`);
         }
+        res.status(500);
         res.send({ success: false, message: `Could not retrieve user '${requestedUsername}'` });
     }
 }

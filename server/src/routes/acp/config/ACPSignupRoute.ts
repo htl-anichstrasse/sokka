@@ -27,6 +27,7 @@ class ACPSignupRoute implements Route {
         }
         ACPSession.get(req.token).then(() => {
             if (!(req.body.username && req.body.password)) {
+                res.status(400);
                 res.send({ success: false, message: 'Invalid parameters' });
                 return;
             }
@@ -53,6 +54,7 @@ class ACPSignupRoute implements Route {
         if (err) {
             ACPSignupRoute.logger.warn(`Could not create ACP user for '${requestedUsername}' with error: ${err.message}`);
         }
+        res.status(500);
         res.send({ success: false, message: `Could not create ACP user for '${requestedUsername}'` });
     }
 }

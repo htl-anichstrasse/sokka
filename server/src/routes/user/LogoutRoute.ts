@@ -18,6 +18,7 @@ class LogoutRoute implements Route {
 
     private post(req: Request, res: Response, next: NextFunction): void {
         if (!req.body.token) {
+            res.status(400);
             res.send({ success: false, message: 'Invalid parameters' });
             return;
         }
@@ -27,6 +28,7 @@ class LogoutRoute implements Route {
                 res.send({ success: true, message: 'Successfully invalidated session' });
             });
         }).catch((err) => {
+            res.status(500);
             res.send({ success: false, message: err.message });
             LogoutRoute.logger.warn(`Could not invalidate session for token '${req.body.token}': ${err}`);
         })

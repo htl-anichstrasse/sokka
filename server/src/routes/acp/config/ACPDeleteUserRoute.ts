@@ -25,6 +25,7 @@ class ACPDeleteUserRoute implements Route {
         }
         ACPSession.get(req.token).then(() => {
             if (!req.body.username) {
+                res.status(400);
                 res.send({ success: false, message: 'Invalid parameters' });
                 return;
             }
@@ -44,6 +45,7 @@ class ACPDeleteUserRoute implements Route {
         if (err) {
             ACPDeleteUserRoute.logger.warn(`Could not delete ACP user '${requestedUsername}' with error: ${err.message}`);
         }
+        res.status(500);
         res.send({ success: false, message: `Could not delete ACP user '${requestedUsername}'` });
     }
 }
