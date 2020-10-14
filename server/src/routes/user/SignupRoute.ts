@@ -28,6 +28,7 @@ class SignupRoute implements Route {
 
     private post(req: Request, res: Response, next: NextFunction): void {
         if (!(req.body.email && req.body.password)) {
+            res.status(400);
             res.send({ success: false, message: 'Invalid parameters' });
             return;
         }
@@ -66,6 +67,7 @@ class SignupRoute implements Route {
         if (err) {
             SignupRoute.logger.warn(`Unsuccessful signup attempt for email '${requestedEmail}' with error: ${err.message}`);
         }
+        res.status(500);
         res.send({ success: false, message: `Could not sign up user for email '${requestedEmail}'` });
     }
 }

@@ -18,6 +18,7 @@ class VerifyRoute implements Route {
 
     private get(req: Request, res: Response, next: NextFunction): void {
         if (!req.query.id) {
+            res.status(400);
             res.send({ success: false, message: 'Invalid verification token' });
             return;
         }
@@ -40,6 +41,7 @@ class VerifyRoute implements Route {
         if (err) {
             VerifyRoute.logger.warn(`Unsuccessful email verification for token ${token} with error: ${err}`);
         }
+        res.status(500);
         res.send({ success: false, message: `Invalid token '${token}'` });
     }
 }

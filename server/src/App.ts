@@ -5,6 +5,7 @@ import * as log4js from 'log4js';
 import Database from './Database';
 import * as routes from './routes';
 import cors = require('cors');
+import bearerToken = require('express-bearer-token');
 
 class App {
     server: Server;
@@ -28,6 +29,9 @@ class App {
 
         // Allow CORS
         this.express.use(cors());
+
+        // Get bearer tokens
+        this.express.use(bearerToken());
 
         // Allow reverse proxy
         this.express.enable('trust proxy');
