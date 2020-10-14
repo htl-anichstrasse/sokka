@@ -34,6 +34,7 @@ class LoginRoute implements Route {
         User.getByEmail(req.body.email).then((user) => {
             bcrypt.compare(req.body.password, user.password, (err, same) => {
                 if (err) {
+                    res.status(500);
                     LoginRoute.handleUnsuccessfulLogin(req, res, err);
                     LoginRoute.logger.error(`Password comparison failed for user ${user.id}`);
                     return;
@@ -54,7 +55,6 @@ class LoginRoute implements Route {
         if (err) {
             LoginRoute.logger.warn(`Unsuccessful login attempt for requested user '${requestedEmail}' with error: ${err}`);
         }
-        res.status(500);
         res.send({ success: false, message: `Could not retrieve user for email '${requestedEmail}'` });
     }
 }
