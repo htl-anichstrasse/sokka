@@ -3,6 +3,14 @@ import Database from "../../Database";
 class ACPUser implements Model {
     private constructor(readonly username: string, readonly password: string) { }
 
+    static create(username: string, password: string): Promise<ACPUser> {
+        return new Promise<ACPUser>((resolve, reject) => {
+            Database.instance.query(`INSERT INTO sokka_acp_users (username, pwhash) VALUES (?, ?)`, [username, password]).then(() => {
+                resolve(new ACPUser(username, password));
+            }).catch((err) => reject(err));
+        });
+    }
+
     static get(username: string): Promise<ACPUser> {
         return new Promise<ACPUser>((resolve, reject) => {
             Database.instance.query('SELECT * FROM sokka_acp_users WHERE username = ?;', [username]).then((result) => {
@@ -15,8 +23,28 @@ class ACPUser implements Model {
         });
     }
 
+    static exists(username: string): Promise<Boolean> {
+        return new Promise<Boolean>((resolve) => {
+            Database.instance.query('SELECT username FROM sokka_acp_users WHERE username = ?;', [username]).then((result) => {
+                resolve(result.length > 0);
+            });
+        });
+    }
+
+    static getAll(): Promise<string[]> {
+        return new Promise<string[]>((resolve, reject) => {
+            Database.instance.query('SELECT username FROM sokka_acp_users;').then((result) => {
+                resolve(result);
+            }).catch((err) => reject(err));
+        });
+    }
+
     delete(): Promise<void> {
-        throw new Error("Method not implemented.");
+        return new Promise<void>((resolve, reject) => {
+            Database.instance.query('DELETE FROM sokka_acp_users WHERE username = ?;', [this.username]).then(() => {
+                resolve(null);
+            }).catch((err) => reject(err));
+        });
     }
 }
 
