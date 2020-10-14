@@ -28,6 +28,7 @@ class ACPLoginRoute implements Route {
         ACPUser.get(req.body.username).then((user) => {
             bcrypt.compare(req.body.password, user.password, (err, same) => {
                 if (err) {
+                    res.status(500);
                     ACPLoginRoute.handleUnsuccessfulLogin(req, res, err);
                     ACPLoginRoute.logger.error(`Password comparison failed for ACP user ${user.username}`);
                     return;
@@ -48,7 +49,6 @@ class ACPLoginRoute implements Route {
         if (err) {
             ACPLoginRoute.logger.warn(`Unsuccessful ACP login attempt for requested user '${requestedUsername}' with error: ${err}`);
         }
-        res.status(500);
         res.send({ success: false, message: `Could not retrieve user '${requestedUsername}'` });
     }
 }
