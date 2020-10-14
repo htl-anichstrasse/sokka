@@ -82,6 +82,9 @@ services:
       - VIRTUAL_HOST=api.sokka.me
       - LETSENCRYPT_HOST=api.sokka.me
       - LETSENCRYPT_EMAIL=jos.winkler@tsn.at
+      - SALT_ROUNDS=10
+      - MAX_USER_SESSIONS=3
+      - MAX_ACP_USER_SESSIONS=1
   pma:
     image: phpmyadmin/phpmyadmin
     container_name: "api.sokka.me_pma"
