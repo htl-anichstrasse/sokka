@@ -1,5 +1,5 @@
 {
     "api": {
-        "url": "http://localhost:2525"
+        "url": "http://api.sokka.me"
     }
 }
