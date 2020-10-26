@@ -80,6 +80,7 @@ class _MenuPanelState extends State<MenuPanel> {
                             BasketHandler.getInstance().appendMenuToBasket(menu),
                             Scaffold.of(context).showSnackBar(new SnackBar(
                                 content: new Text('Menu: "${menu.getTitle}" has been added to your basket!'),
+                                // duration: new Duration(seconds: 1),
                             ))
                         },
                         label: new Text('${menu.getPrice.toStringAsFixed(2)} €', style: new TextStyle(color: Colors.grey),),

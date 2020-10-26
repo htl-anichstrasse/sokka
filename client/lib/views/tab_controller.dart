@@ -1,6 +1,6 @@
+import 'package:client/views/menu/menu_view.dart';
 import 'package:flutter/material.dart';
-import 'package:client/models/menu.dart';
-import 'package:client/views/menu/menu_panel.dart';
+import 'package:client/views/menu/panel/menu_panel.dart';
 import 'package:client/handlers/menu_handler/menu_handler.dart';
 import 'package:client/handlers/basket_handler/basket_handler.dart';
 import 'package:client/views/account/account_view.dart';
@@ -77,19 +77,19 @@ class _HomeTabController extends State<HomeTabController> {
                     child: new TabBarView(
                         children: <Widget>[
                             new Container(
-                                child: new ListView.builder(
-                                    itemCount: MenuHandler.getInstance().getMenus().length,
-                                    itemBuilder: (BuildContext context, int index) => new MenuPanel(MenuHandler.getInstance().getMenus()[index])
-                                ),
+                                // Menu-View
+                                child: new MenuView(),
                             ),
                             new Container(
+                                // Meal-Grid
                                 child: new Icon(Icons.fastfood, color: Colors.white),
                             ),
                             new Container(
-                                child: new Basket(),
-                                // new Icon(Icons.shopping_basket, color: Colors.white),
+                                // Basket-View
+                                child: new BasketView(),
                             ),
                             new Container(
+                                // QR-Codes
                                 child: new Icon(Icons.code, color: Colors.white),
                             ),
                         ],
