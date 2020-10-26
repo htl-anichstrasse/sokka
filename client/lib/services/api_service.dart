@@ -1,10 +1,8 @@
 import 'dart:async';
 import 'package:client/util/network_wrapper.dart';
-import 'package:client/util/session_token_storage.dart';
 
-class APIDataSource {
+class APIService {
     final NetworkWrapper _networkWrapper = new NetworkWrapper();
-    final SessionTokenStorage _sessionTokenStorage = new SessionTokenStorage();
 
     static const String LOGIN_ROUTE = "https://api.sokka.me/user/login";
     static const String LOGOUT_ROUTE = "https://api.sokka.me/user/logout";
