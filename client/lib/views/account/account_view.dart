@@ -1,4 +1,4 @@
-import 'package:client/views/tab_controller.dart';
+import 'package:client/views/home_screen.dart';
 import 'package:flutter/material.dart';
 
 class Account extends StatefulWidget {
@@ -16,7 +16,7 @@ class _AccountState extends State<Account> {
                 automaticallyImplyLeading: false,
                 leading: new IconButton(
                     icon: Icon(Icons.arrow_back, color: Colors.white),
-                    onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => new HomeTabController())),
+                    onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => new HomeScreen())),
                 ),
                 actions: [],
             ),
