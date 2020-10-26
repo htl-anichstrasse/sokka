@@ -1,17 +1,14 @@
 import 'package:client/views/menu/menu_view.dart';
 import 'package:flutter/material.dart';
-import 'package:client/views/menu/panel/menu_panel.dart';
-import 'package:client/handlers/menu_handler/menu_handler.dart';
-import 'package:client/handlers/basket_handler/basket_handler.dart';
 import 'package:client/views/account/account_view.dart';
 import 'package:client/views/basket/basket_view.dart';
 
-class HomeTabController extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
     @override
-    _HomeTabController createState() => _HomeTabController();
+    _HomeScreenState createState() => _HomeScreenState();
 }       
 
-class _HomeTabController extends State<HomeTabController> {
+class _HomeScreenState extends State<HomeScreen> {
     final List<String> _days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
     @override
