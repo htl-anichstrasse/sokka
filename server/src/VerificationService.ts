@@ -27,7 +27,7 @@ class VerificationService {
 
     private storeVerificationURL(user: User): Promise<string> {
         return new Promise<string>((resolve, reject) => {
-            let token = crypto.randomBytes(64).toString('base64');
+            let token = crypto.randomBytes(64).toString('base64').replace('+', '').replace('/', '');
             Database.instance.query("INSERT INTO sokka_verification_urls (user_id, token) VALUES (?, ?);", [user.id, token]).then(() => {
                 resolve(token);
             }).catch((err) => reject(err));
@@ -36,7 +36,7 @@ class VerificationService {
 
     public isVerificationIDValid(token: string): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
-            Database.instance.query("SELECT COUNT(*) FROM sokka_verification_urls WHERE token = ?;", [token]).then((result) => {
+            Database.instance.query("SELECT id FROM sokka_verification_urls WHERE token = ?;", [token]).then((result) => {
                 resolve(result.length > 0);
             }).catch((err) => reject(err));
         });
@@ -64,8 +64,8 @@ class VerificationService {
         });
     }
 
-    public sendVerification(user: User): Promise<string> {
-        return new Promise<string>((resolve, reject) => {
+    public sendVerification(user: User): Promise<any> {
+        return new Promise<any>((resolve, reject) => {
             this.storeVerificationURL(user).then((token) => {
                 this.mailer.sendMail({
                     from: 'Sokka noreply@sokka.me',

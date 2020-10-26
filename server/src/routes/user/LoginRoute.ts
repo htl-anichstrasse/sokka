@@ -26,6 +26,7 @@ class LoginRoute implements Route {
 
     private post(req: Request, res: Response, next: NextFunction): void {
         if (!req.body.email || !req.body.password) {
+            res.status(400);
             res.send({ success: false, message: 'Invalid parameters' });
             return;
         }
@@ -33,6 +34,7 @@ class LoginRoute implements Route {
         User.getByEmail(req.body.email).then((user) => {
             bcrypt.compare(req.body.password, user.password, (err, same) => {
                 if (err) {
+                    res.status(500);
                     LoginRoute.handleUnsuccessfulLogin(req, res, err);
                     LoginRoute.logger.error(`Password comparison failed for user ${user.id}`);
                     return;

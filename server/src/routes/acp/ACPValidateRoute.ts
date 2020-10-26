@@ -19,6 +19,7 @@ class ACPValidateRoute implements Route {
 
     private post(req: Request, res: Response, next: NextFunction): void {
         if (!req.body.token || !req.body.username) {
+            res.status(400);
             res.send({ success: false, message: 'Invalid parameters' });
             return;
         }
@@ -39,6 +40,7 @@ class ACPValidateRoute implements Route {
         if (err) {
             ACPValidateRoute.logger.warn(`Unsuccessful ACP token validation for '${requestedUsername}' with error: ${err}`);
         }
+        res.status(500);
         res.send({ success: false, message: `Could not validate ACP token for username '${requestedUsername}'` });
     }
 }

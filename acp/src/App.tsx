@@ -6,7 +6,7 @@ import './App.css';
 import Navbar from './components/Navbar';
 import config from './config.json';
 import LoginPage from './login/LoginPage';
-import ConfigPage from './pages/ConfigPage';
+import ConfigPage from './pages/config/ConfigPage';
 import FourZeroFour from './pages/FourZeroFour';
 import GroupsPage from './pages/GroupsPage';
 import HomePage from './pages/HomePage';

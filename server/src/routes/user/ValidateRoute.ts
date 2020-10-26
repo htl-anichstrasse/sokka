@@ -19,6 +19,7 @@ class ValidateRoute implements Route {
 
     private post(req: Request, res: Response, next: NextFunction): void {
         if (!req.body.token || !req.body.email) {
+            res.status(400);
             res.send({ success: false, message: 'Invalid parameters' });
             return;
         }
@@ -39,6 +40,7 @@ class ValidateRoute implements Route {
         if (err) {
             ValidateRoute.logger.warn(`Unsuccessful token validation for '${requestedEmail}' with error: ${err}`);
         }
+        res.status(500);
         res.send({ success: false, message: `Could not validate token for email '${requestedEmail}'` });
     }
 }

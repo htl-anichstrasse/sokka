@@ -20,6 +20,7 @@ class ACPLoginRoute implements Route {
 
     private post(req: Request, res: Response, next: NextFunction): void {
         if (!req.body.username || !req.body.password) {
+            res.status(400);
             res.send({ success: false, message: 'Invalid parameters' });
             return;
         }
@@ -27,6 +28,7 @@ class ACPLoginRoute implements Route {
         ACPUser.get(req.body.username).then((user) => {
             bcrypt.compare(req.body.password, user.password, (err, same) => {
                 if (err) {
+                    res.status(500);
                     ACPLoginRoute.handleUnsuccessfulLogin(req, res, err);
                     ACPLoginRoute.logger.error(`Password comparison failed for ACP user ${user.username}`);
                     return;

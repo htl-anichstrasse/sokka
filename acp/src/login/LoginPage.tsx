@@ -1,9 +1,7 @@
-import Axios from 'axios';
 import React, { FunctionComponent } from 'react';
 import Cookies from 'universal-cookie';
-import config from '../config.json';
 import logo from '../images/logo.png';
-import { animateCSS } from '../Util';
+import { animateCSS, sendRequest } from '../Util';
 import './LoginPage.css';
 
 interface LoginPageProps {
@@ -55,7 +53,7 @@ function login(): void {
             logInFail(loginRef.current);
             return;
         }
-        Axios.post(`${config.api.url}/acp/login`, {
+        sendRequest('/acp/login', 'POST', false, {
             username,
             password
         }).then((response) => {
@@ -66,7 +64,7 @@ function login(): void {
             new Cookies().set('sokka_username', username);
             new Cookies().set('sokka_token', response.data.token);
             window.location.reload();
-        }).catch((err) => console.error(err));
+        });
     }
 }
 
