@@ -12,7 +12,7 @@ const ConfigPage: FunctionComponent<ConfigPageProps> = (props) => {
         <div className="container">
             <div className="row">
                 <div className="col">
-                    <h1>Config Page</h1>
+                    <h1><i className="fa fa-cog mr-2" aria-hidden="true"></i>Config</h1>
                     <p>There will be config values here one day.</p>
                 </div>
                 <div className="col">

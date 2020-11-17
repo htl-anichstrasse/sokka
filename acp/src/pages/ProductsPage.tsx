@@ -5,8 +5,15 @@ interface ProductsPageProps {
 }
 
 const ProductsPage: FunctionComponent<ProductsPageProps> = (props) => {
-    return (<div className="app" >
-        <h1>i love mi products</h1>
+    return (<div className="app">
+        <div className="container">
+            <div className="row">
+                <div className="col">
+                    <h1><i className="fa fa-shopping-cart mr-2" aria-hidden="true"></i>Products</h1>
+                    <p>There will be products here one day.</p>
+                </div>
+            </div>
+        </div>
     </div>);
 }
 

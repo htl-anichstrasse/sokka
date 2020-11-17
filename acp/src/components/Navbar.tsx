@@ -14,7 +14,7 @@ const items = [
     { link: '/users', label: 'Users' },
     { link: '/groups', label: 'Groups' }
 ];
-const configItem = { link: '/config', label: (<i className="fa fa-lg fa-cogs"></i>), alternateLabel: 'Config' };
+const configItem = { link: '/config', label: (<i className="fa fa-lg fa-cogs" aria-hidden="true"></i>), alternateLabel: 'Config' };
 
 const Navbar: FunctionComponent<RouteComponentProps> = (props: RouteComponentProps) => {
     let siteItems = [];
