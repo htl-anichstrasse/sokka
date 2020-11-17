@@ -5,6 +5,7 @@ import BSNavbar from 'react-bootstrap/Navbar';
 import { NavLink, RouteComponentProps, withRouter } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import logo from '../images/logo.png';
+import './Navbar.css';
 
 const items = [
     { link: '/', label: 'Home' },
@@ -13,7 +14,7 @@ const items = [
     { link: '/users', label: 'Users' },
     { link: '/groups', label: 'Groups' }
 ];
-const configItem = { link: '/config', label: (<i className="fa fa-lg fa-cogs"></i>) };
+const configItem = { link: '/config', label: (<i className="fa fa-lg fa-cogs"></i>), alternateLabel: 'Config' };
 
 const Navbar: FunctionComponent<RouteComponentProps> = (props: RouteComponentProps) => {
     let siteItems = [];
@@ -31,17 +32,13 @@ const Navbar: FunctionComponent<RouteComponentProps> = (props: RouteComponentPro
                     {siteItems}
                 </Nav>
                 <Nav className="ml-auto">
-                    <NavLink key={999} to={configItem.link} className='nav-link mr-3'>{configItem.label}</NavLink>
-                    <span className="mr-2 mt-auto mb-auto text-muted">Welcome, {new Cookies().get('sokka_username')}</span>
+                    <NavLink key={999} to={configItem.link} className='nav-link mr-3'><span className="d-none d-lg-block">{configItem.label}</span><span className="d-block d-lg-none">{configItem.alternateLabel}</span></NavLink>
+                    <span className="user-name mr-2 mt-auto mb-auto text-muted">Welcome, {new Cookies().get('sokka_username')}</span>
                     <LogoutButton />
                 </Nav>
             </BSNavbar.Collapse>
         </BSNavbar>
     );
-}
-
-function itemIsActive(item: { link: string, label: string | JSX.Element }, props: RouteComponentProps) {
-    return item.link === props.location.pathname;
 }
 
 const LogoutButton: FunctionComponent = (props) => {
