@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Button } from 'react-bootstrap';
 import Nav from 'react-bootstrap/Nav';
 import BSNavbar from 'react-bootstrap/Navbar';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Link, NavLink, RouteComponentProps, withRouter } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import logo from '../images/logo.png';
 
@@ -19,7 +19,8 @@ const Navbar: FunctionComponent<RouteComponentProps> = (props: RouteComponentPro
     let siteItems = [];
     for (let i = 0; i < items.length; i++) {
         let item: { link: string, label: string | JSX.Element } = items[i];
-        siteItems.push(<Nav.Link key={i} href={item.link} className={itemIsActive(item, props) ? 'active' : ''}>{item.label}</Nav.Link>)
+        // set exact attribute for home link
+        siteItems.push(<NavLink exact={item.label === 'Home'} key={i} to={item.link} className='nav-link'>{item.label}</NavLink>);
     }
     return (
         <BSNavbar bg="light" expand="lg">
@@ -30,7 +31,7 @@ const Navbar: FunctionComponent<RouteComponentProps> = (props: RouteComponentPro
                     {siteItems}
                 </Nav>
                 <Nav className="ml-auto">
-                    <Nav.Link key={999} href={configItem.link} className={itemIsActive({ link: configItem.link, label: 'Config' }, props) ? 'active mr-3' : 'mr-3'}>{configItem.label}</Nav.Link>
+                    <NavLink key={999} to={configItem.link} className='nav-link mr-3'>{configItem.label}</NavLink>
                     <span className="mr-2 mt-auto mb-auto text-muted">Welcome, {new Cookies().get('sokka_username')}</span>
                     <LogoutButton />
                 </Nav>
