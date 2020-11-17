@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Button } from 'react-bootstrap';
 import Nav from 'react-bootstrap/Nav';
 import BSNavbar from 'react-bootstrap/Navbar';
-import { Link, NavLink, RouteComponentProps, withRouter } from 'react-router-dom';
+import { NavLink, RouteComponentProps, withRouter } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import logo from '../images/logo.png';
 
