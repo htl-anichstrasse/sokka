@@ -43,6 +43,14 @@ class User implements Model {
         });
     }
 
+    static getAll(): Promise<string[]> {
+        return new Promise<string[]>((resolve, reject) => {
+            Database.instance.query('SELECT * FROM sokka_users AS su INNER JOIN sokka_groups AS sg ON su.group_id = sg.id;').then((result) => {
+                resolve(result);
+            }).catch((err) => reject(err));
+        });
+    }
+
     verify(): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             Database.instance.query('UPDATE sokka_users SET verified = ? WHERE id = ?;', [true, this.id]).then(() => {

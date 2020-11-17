@@ -10,7 +10,7 @@ import GroupsPage from './pages/GroupsPage';
 import HomePage from './pages/HomePage';
 import MenusPage from './pages/MenusPage';
 import ProductsPage from './pages/ProductsPage';
-import UsersPage from './pages/UsersPage';
+import UsersPage from './pages/users/UsersPage';
 import { sendRequest } from './Util';
 
 function App() {

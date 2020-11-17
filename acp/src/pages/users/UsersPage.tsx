@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from 'react';
+import ListUserComponent from './ListUserComponent';
 
 interface UsersPageProps {
 
@@ -10,7 +11,7 @@ const UsersPage: FunctionComponent<UsersPageProps> = (props) => {
             <div className="row">
                 <div className="col">
                     <h1><i className="fa fa-users mr-2" aria-hidden="true"></i>Users</h1>
-                    <p>There will be users here one day.</p>
+                    <ListUserComponent />
                 </div>
             </div>
         </div>

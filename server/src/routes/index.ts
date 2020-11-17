@@ -1,4 +1,5 @@
-export { default as ACPGetUsersRoute } from './acp/config/ACPGetUsersRoute';
+export { default as ACPGetACPUsersRoute } from './acp/config/ACPGetACPUsersRoute';
+export { default as ACPGetUsersRoute } from './acp/users/ACPGetUsersRoute';
 export { default as ACPLoginRoute } from './acp/ACPLoginRoute';
 export { default as ACPLogoutRoute } from './acp/ACPLogoutRoute';
 export { default as ACPSignupRoute } from './acp/config/ACPSignupRoute';

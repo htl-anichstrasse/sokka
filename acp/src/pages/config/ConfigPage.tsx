@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import './ConfigPage.css';
 import CreateUserComponent from './CreateUserComponent';
-import ListUserComponent from './ListUserComponent';
+import ListACPUserComponent from './ListACPUserComponent';
 
 interface ConfigPageProps {
 
@@ -17,7 +17,7 @@ const ConfigPage: FunctionComponent<ConfigPageProps> = (props) => {
                 </div>
                 <div className="col">
                     <CreateUserComponent />
-                    <ListUserComponent />
+                    <ListACPUserComponent />
                 </div>
             </div>
         </div>

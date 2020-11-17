@@ -2,14 +2,14 @@ import React, { FunctionComponent, useState } from 'react';
 import Cookies from 'universal-cookie';
 import { sendRequest } from '../../Util';
 
-interface ListUserComponentProps {
+interface ListACPUserComponentProps {
 
 }
 
 let loaded: number, setLoaded: React.Dispatch<React.SetStateAction<number>>;
 let users: JSX.Element[];
 
-const ListUserComponent: FunctionComponent<ListUserComponentProps> = (props) => {
+const ListACPUserComponent: FunctionComponent<ListACPUserComponentProps> = (props) => {
     [loaded, setLoaded] = useState(1);
     if (loaded === 0) {
         return (<div className="box">
@@ -37,7 +37,7 @@ const ListUserComponent: FunctionComponent<ListUserComponentProps> = (props) => 
 }
 
 function load(): void {
-    sendRequest('/acp/getusers', 'GET', true, {}).then((response) => {
+    sendRequest('/acp/getacpusers', 'GET', true, {}).then((response) => {
         let tableRows = [];
         let loggedInUser = new Cookies().get('sokka_username');
         for (let id in response.data.users) {
@@ -70,4 +70,4 @@ function onDeleteClicked(username: string): void {
     });
 }
 
-export default ListUserComponent;
+export default ListACPUserComponent;
