@@ -62,6 +62,10 @@ function createUser(): void {
             alert("Please enter a username and a password!");
             return;
         }
+        if (passwordElement.value.length < 5) {
+            alert("This passwort is too short!");
+            return;
+        }
         setLoaded(1);
         sendRequest('/acp/signup', 'POST', true, {
             username: userElement.value,
