@@ -26,3 +26,25 @@ input {
 form {
     text-align: center;
 }
+
+/*
+React Passwort Strength Override
+*/
+
+.ReactPasswordStrength-strength-desc {
+    padding: 5px 15px !important;
+    width: 25% !important;
+}
+
+.ReactPasswordStrength {
+    border: none !important;
+    font: inherit !important;
+}
+
+.ReactPasswordStrength-input {
+    font-size: 1rem !important;
+    font-weight: 400 !important;
+    border: 1px solid #ced4da !important;
+    padding: .375rem .75rem !important;
+    width: 100% !important;
+}

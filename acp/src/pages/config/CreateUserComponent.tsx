@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useState } from 'react';
+import ReactPasswordStrength from 'react-password-strength';
 import { sendRequest } from '../../Util';
 
 interface CreateUserComponentProps {
@@ -6,13 +7,14 @@ interface CreateUserComponentProps {
 }
 
 let userRef: React.RefObject<HTMLInputElement>
-let passwordRef: React.RefObject<HTMLInputElement>
+let passwordRef: any;
 let loaded: number, setLoaded: React.Dispatch<React.SetStateAction<number>>;
 
 const CreateUserComponent: FunctionComponent<CreateUserComponentProps> = (props) => {
     userRef = React.createRef();
     passwordRef = React.createRef();
     [loaded, setLoaded] = useState(0);
+
     return (<div className="box">
         <h3>Create a new ACP user</h3>
         <p className="text-muted">Enable a new access to the ACP</p>
@@ -23,7 +25,14 @@ const CreateUserComponent: FunctionComponent<CreateUserComponentProps> = (props)
             </div>
             <div className="form-group mb-2">
                 <label htmlFor="password" className="sr-only">Password</label>
-                <input ref={passwordRef} type="password" className="form-control" id="password" placeholder="Password" onKeyUp={(event) => onKeyUp(event)} />
+                <ReactPasswordStrength
+                    minLength={5}
+                    minScore={2}
+                    ref={passwordRef}
+                    scoreWords={['too weak', 'weak', 'okay', 'strong', 'perfect']}
+                    changeCallback={changeCallback}
+                    inputProps={{ name: "password", placeholder: "Password", autoComplete: "off", id: "password", className: "form-control", onKeyUp: ((event: React.KeyboardEvent) => onKeyUp(event)) }}
+                />
             </div>
             {loaded === 0 ?
                 <input className="btn btn-secondary create-user-btn" type="button" value="Create" onClick={() => createUser()} />
@@ -35,6 +44,10 @@ const CreateUserComponent: FunctionComponent<CreateUserComponentProps> = (props)
     </div>);
 }
 
+function changeCallback(event: { score: number, isValid: boolean, password: string }) {
+    console.log(event);
+}
+
 function onKeyUp(event: React.KeyboardEvent): void {
     if (event.key === 'Enter') {
         createUser();
@@ -44,7 +57,7 @@ function onKeyUp(event: React.KeyboardEvent): void {
 function createUser(): void {
     if (userRef.current != null && passwordRef.current != null) {
         let userElement = userRef.current;
-        let passwordElement = passwordRef.current;
+        let passwordElement = passwordRef.current.reactPasswordStrengthInput;
         if (userElement.value.length === 0 || passwordElement.value.length === 0) {
             alert("Please enter a username and a password!");
             return;
