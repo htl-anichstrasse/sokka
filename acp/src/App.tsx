@@ -1,10 +1,8 @@
-import Axios from 'axios';
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import './App.css';
 import Navbar from './components/Navbar';
-import config from './config.json';
 import LoginPage from './login/LoginPage';
 import ConfigPage from './pages/config/ConfigPage';
 import FourZeroFour from './pages/FourZeroFour';
@@ -13,6 +11,7 @@ import HomePage from './pages/HomePage';
 import MenusPage from './pages/MenusPage';
 import ProductsPage from './pages/ProductsPage';
 import UsersPage from './pages/UsersPage';
+import { sendRequest } from './Util';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(true);
@@ -24,7 +23,7 @@ function App() {
       setLoggedIn(false);
       return;
     }
-    Axios.post(`${config.api.url}/acp/validate`, {
+    sendRequest('/acp/validate', 'POST', false, {
       username: cookiesUsername,
       token: cookiesToken
     }).then((response) => {

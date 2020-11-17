@@ -1,6 +1,5 @@
 import Axios, { AxiosResponse } from "axios";
 import Cookies from "universal-cookie";
-import config from './config.json';
 
 function animateCSS(node: HTMLElement, animation: string, prefix = 'animate__'): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -23,7 +22,7 @@ function sendRequest(node: string, reqMethod: "GET" | "POST", authNeeded: boolea
         }
         let reqHeaders = authNeeded ? { 'Authorization': `Bearer ${bearer}` } : {};
         Axios({
-            url: `${config.api.url}${node}`,
+            url: `${isDebug() ? 'http://localhost:3001' : 'https://api.sokka.me'}${node}`,
             method: reqMethod,
             headers: reqHeaders,
             data: reqData
@@ -36,6 +35,10 @@ function sendRequest(node: string, reqMethod: "GET" | "POST", authNeeded: boolea
             resolve(response);
         }).catch((err) => reject(err));
     });
+}
+
+function isDebug(): boolean {
+    return process.env.SOKKA_ACP_PROD !== 'true';
 }
 
 export { animateCSS, sendRequest };
