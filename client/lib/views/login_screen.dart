@@ -1,3 +1,5 @@
+import 'package:client/services/user_api_service.dart';
+import 'package:client/util/session_token_storage.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -6,8 +8,86 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+    final Map<String, String> _credentials = new Map<String, String>();
+
+    final TextEditingController _emailController = new TextEditingController();
+    final TextEditingController _passwordController = new TextEditingController();
+
+    final SessionTokenStorage _sessionTokenStorage = new SessionTokenStorage();
+    final UserAPIService _userAPIService = new UserAPIService(); 
+    
+    @override
+    void initState() {
+        super.initState();
+    }
+
     @override
     Widget build(BuildContext context) {
-        throw UnimplementedError();
+        return new Scaffold(
+            body: new Builder(
+                builder: (context) => new Container(
+                    padding: new EdgeInsets.all(20.0),
+                    child: new Column(
+                        children: <Widget>[
+                            new SizedBox(height: 20.0),
+                            new Text(
+                                'Login Credentials',
+                            ), 
+                            new SizedBox(height: 20.0),
+                            new TextFormField(
+                                controller: this._emailController,
+                                keyboardType: TextInputType.emailAddress,
+                                keyboardAppearance: Brightness.dark,
+                                decoration: new InputDecoration(
+                                    labelText: 'Email address',
+                                ),
+                            ),
+                            new TextFormField(
+                                controller: this._passwordController,
+                                obscureText: true,
+                                decoration: new InputDecoration(
+                                    labelText: 'Password',
+                                ),
+                            ),
+                            new SizedBox(height: 20.0),
+                            new RaisedButton(
+                                child: new Text('Submit'),
+                                onPressed: () => {
+                                    if (this._emailController.text.isEmpty || this._passwordController.text.isEmpty) {
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                                return new AlertDialog(
+                                                    title: new Text('Email / password field may not be empty!'),
+                                                    actions: <Widget>[
+                                                        new FlatButton(
+                                                            child: new Text('OK'),
+                                                            onPressed: () => Navigator.pop(context),
+                                                        ),
+                                                    ]
+                                                );
+                                            }
+                                        )
+                                    },
+                                    this._sessionTokenStorage.storeNewSessionToken('email', this._emailController.text),
+                                    this._userAPIService.loginUser(this._emailController.text, this._passwordController.text)
+                                        .then((token) => {
+                                            print(token),
+                                            if (token != null) {
+                                                this._sessionTokenStorage.storeNewSessionToken('sessionToken', token),
+                                                Navigator.pushNamed(context, '/'),
+                                            } else {
+                                                Scaffold.of(context).showSnackBar(new SnackBar(
+                                                    content: new Text('Email and password do not match, please try again!'),
+                                                ))
+                                            }
+                                        }),
+                                },
+                            ),
+                        ],
+                    ),
+                ),
+            ),
+        );
     }
 }

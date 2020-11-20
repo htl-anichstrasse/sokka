@@ -1,12 +1,13 @@
 import 'dart:async';
+import 'package:http/http.dart' as http;
 import 'package:client/util/network_wrapper.dart';
 
 class UserAPIService {
     final NetworkWrapper _networkWrapper = new NetworkWrapper();
 
-    static const String LOGIN_ROUTE = "https://api.sokka.me/user/login";
-    static const String LOGOUT_ROUTE = "https://api.sokka.me/user/logout";
-    static const String VALIDATE_ROUTE = "https://api.sokka.me/user/validate";
+    static const String LOGIN_ROUTE = 'https://api.sokka.me/user/login';
+    static const String LOGOUT_ROUTE = 'https://api.sokka.me/user/logout';
+    static const String VALIDATE_ROUTE = 'https://api.sokka.me/user/validate';
 
     Future<String> loginUser(final String email, final String password) async {
         return await this._networkWrapper

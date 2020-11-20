@@ -8,6 +8,7 @@ class NetworkWrapper {
     factory NetworkWrapper() => _instance;
 
     final JsonDecoder _jsonDecoder = new JsonDecoder();
+    final JsonEncoder _jsonEncoder = new JsonEncoder();
 
     Future<dynamic> get(final String url) async {
         return await http.get(url).then((http.Response response) {
@@ -18,12 +19,12 @@ class NetworkWrapper {
         });
     }
 
-    Future<dynamic> post(final String url, {final Map headers, body, encoding}) async {
+    Future<dynamic> post(final String url, {final Map<String, String> headers, body, encoding}) async {
         return await http
             .post(
                 url,
-                body: body,
                 headers: headers,
+                body: this._jsonEncoder.convert(body),
                 encoding: encoding
             )
             .then((http.Response response) {
