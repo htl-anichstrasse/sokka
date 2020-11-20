@@ -4,17 +4,17 @@ import ACPSession from '../../../models/acp/ACPSession';
 import ACPUser from '../../../models/acp/ACPUser';
 import Route from '../../../Route';
 
-class ACPDeleteUserRoute implements Route {
+class ACPDeleteACPUserRoute implements Route {
     readonly router: Router;
     readonly path: string;
     readonly fullpath: string;
-    private static readonly logger = log4js.getLogger('ACPDeleteUserRoute');
+    private static readonly logger = log4js.getLogger('ACPDeleteACPUserRoute');
 
     constructor() {
         this.router = Router();
         this.path = '/acp';
-        this.router.post('/deleteuser', this.post);
-        this.fullpath = '/acp/deleteuser';
+        this.router.post('/deleteacpuser', this.post);
+        this.fullpath = '/acp/deleteacpuser';
     }
 
     private post(req: Request, res: Response, next: NextFunction): void {
@@ -32,8 +32,8 @@ class ACPDeleteUserRoute implements Route {
             ACPUser.get(req.body.username).then((user) => {
                 user.delete().then(() => {
                     res.send({ success: true, message: 'Successfully deleted ACP user' });
-                }).catch((err) => ACPDeleteUserRoute.handleUnsuccessfulDelete(req, res, err));
-            }).catch((err) => ACPDeleteUserRoute.handleUnsuccessfulDelete(req, res, err));
+                }).catch((err) => ACPDeleteACPUserRoute.handleUnsuccessfulDelete(req, res, err));
+            }).catch((err) => ACPDeleteACPUserRoute.handleUnsuccessfulDelete(req, res, err));
         }).catch(() => {
             res.status(401);
             res.send({ success: false, message: 'Authorization required' });
@@ -43,11 +43,11 @@ class ACPDeleteUserRoute implements Route {
     private static handleUnsuccessfulDelete(req: Request, res: Response, err?: Error): void {
         let requestedUsername = req.body.username;
         if (err) {
-            ACPDeleteUserRoute.logger.warn(`Could not delete ACP user '${requestedUsername}' with error: ${err.message}`);
+            ACPDeleteACPUserRoute.logger.warn(`Could not delete ACP user '${requestedUsername}' with error: ${err.message}`);
         }
         res.status(500);
         res.send({ success: false, message: `Could not delete ACP user '${requestedUsername}'` });
     }
 }
 
-export default new ACPDeleteUserRoute();
+export default new ACPDeleteACPUserRoute();

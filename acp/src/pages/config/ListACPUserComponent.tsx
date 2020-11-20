@@ -61,7 +61,7 @@ function onDeleteClicked(username: string): void {
         alert('Are you really trying to sabotage yourself like that?');
         return;
     }
-    sendRequest('/acp/deleteuser', 'POST', true, { username }).then((response) => {
+    sendRequest('/acp/deleteacpuser', 'POST', true, { username }).then((response) => {
         if (response) {
             window.location.reload();
         } else {

@@ -5,7 +5,7 @@ class User implements Model {
 
     static create(email: string, password: string): Promise<User> {
         return new Promise<User>((resolve, reject) => {
-            Database.instance.query(`INSERT INTO sokka_users (email, pwhash) VALUES (?, ?)`, [email, password]).then((result) => {
+            Database.instance.query(`INSERT INTO sokka_users (email, pwhash) VALUES (?, ?);`, [email, password]).then((result) => {
                 resolve(new User(result.insertId, email, password));
             }).catch((err) => reject(err));
         });
@@ -45,7 +45,7 @@ class User implements Model {
 
     static getAll(): Promise<string[]> {
         return new Promise<string[]>((resolve, reject) => {
-            Database.instance.query('SELECT * FROM sokka_users AS su INNER JOIN sokka_groups AS sg ON su.group_id = sg.id;').then((result) => {
+            Database.instance.query('SELECT * FROM sokka_users AS su INNER JOIN sokka_groups AS sg ON su.group_id = sg.group_id;').then((result) => {
                 resolve(result);
             }).catch((err) => reject(err));
         });
