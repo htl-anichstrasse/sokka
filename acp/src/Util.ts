@@ -28,13 +28,17 @@ function sendRequest(node: string, reqMethod: "GET" | "POST", authNeeded: boolea
             headers: reqHeaders,
             data: reqData
         }).then((response) => {
-            if (response.status === 401) {
-                new Cookies().set('sokka_token', null);
-                reject('Auth token is not valid');
-                return;
-            }
             resolve(response);
-        }).catch((err) => reject(err));
+        }).catch((err) => {
+            if (err.message.includes('401')) {
+                let cookies = new Cookies();
+                cookies.remove('sokka_token');
+                cookies.remove('sokka_username');
+                console.log("yeet");
+                window.location.href = '/'; // redirect to home
+                reject('Logged out');
+            }
+        });
     });
 }
 

@@ -51,7 +51,7 @@ function load(): void {
         }
         users = tableRows;
         setLoaded(0);
-    })
+    }).catch();
 }
 
 function onDeleteClicked(username: string): void {
@@ -67,7 +67,7 @@ function onDeleteClicked(username: string): void {
         } else {
             alert('Failed to delete user');
         }
-    });
+    }).catch();
 }
 
 export default ListACPUserComponent;

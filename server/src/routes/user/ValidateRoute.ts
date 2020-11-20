@@ -29,7 +29,7 @@ class ValidateRoute implements Route {
                 if (result) {
                     res.send({ success: true, message: 'Token for this email is valid' });
                 } else {
-                    ValidateRoute.handleInvalidToken(req, res);
+                    res.send({ success: false, message: `Could not validate token for email '${req.body.email}'` });
                 }
             }).catch((err) => ValidateRoute.handleInvalidToken(req, res, err));
         }).catch((err) => ValidateRoute.handleInvalidToken(req, res, err));

@@ -29,7 +29,7 @@ class ACPValidateRoute implements Route {
                 if (result) {
                     res.send({ success: true, message: 'ACP token for this email is valid' });
                 } else {
-                    ACPValidateRoute.handleInvalidToken(req, res);
+                    res.send({ success: false, message: `Could not validate ACP token for username '${req.body.username}'` })
                 }
             }).catch((err) => ACPValidateRoute.handleInvalidToken(req, res, err));
         }).catch((err) => ACPValidateRoute.handleInvalidToken(req, res, err));

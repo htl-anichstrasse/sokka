@@ -72,7 +72,7 @@ function createUser(): void {
             password: passwordElement.value
         }).then(() => {
             window.location.reload()
-        });
+        }).catch();
     }
 }
 

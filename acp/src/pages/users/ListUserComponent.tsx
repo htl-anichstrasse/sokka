@@ -91,7 +91,7 @@ function load(): void {
             users[i].id = i + 1;
         }
         setLoaded(0);
-    });
+    }).catch();
 }
 
 export default ListUserComponent;
