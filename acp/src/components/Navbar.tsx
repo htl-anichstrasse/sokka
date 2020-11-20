@@ -5,6 +5,7 @@ import BSNavbar from 'react-bootstrap/Navbar';
 import { NavLink, RouteComponentProps, withRouter } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import logo from '../images/logo.png';
+import { sendRequest } from '../Util';
 import './Navbar.css';
 
 const items = [
@@ -44,10 +45,13 @@ const Navbar: FunctionComponent<RouteComponentProps> = (props: RouteComponentPro
 const LogoutButton: FunctionComponent = (props) => {
     const click = () => {
         let cookies = new Cookies();
-        cookies.remove('sokka_username');
-        cookies.remove('sokka_token_validation');
-        cookies.remove('sokka_token');
-        window.location.reload();
+        sendRequest('/acp/logout', 'POST', false, {
+            token: cookies.get('sokka_token')
+        }).then(() => {
+            cookies.remove('sokka_username');
+            cookies.remove('sokka_token');
+            window.location.reload();
+        });
     };
 
     return (
