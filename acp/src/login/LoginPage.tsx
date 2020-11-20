@@ -13,7 +13,7 @@ let userRef: React.RefObject<HTMLInputElement>
 let passwordRef: React.RefObject<HTMLInputElement>
 
 const LoginPage: FunctionComponent<LoginPageProps> = (props) => {
-    document.title = 'Login — Sokka';
+    document.title = 'Login | Sokka ACP';
     userRef = React.createRef();
     passwordRef = React.createRef();
     loginRef = React.createRef();
