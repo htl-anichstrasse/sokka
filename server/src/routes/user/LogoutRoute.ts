@@ -31,7 +31,7 @@ class LogoutRoute implements Route {
             res.status(500);
             res.send({ success: false, message: err.message });
             LogoutRoute.logger.warn(`Could not invalidate session for token '${req.body.token}': ${err}`);
-        })
+        });
     }
 }
 

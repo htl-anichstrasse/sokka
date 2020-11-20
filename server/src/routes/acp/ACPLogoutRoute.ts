@@ -12,8 +12,8 @@ class ACPLogoutRoute implements Route {
     constructor() {
         this.router = Router();
         this.path = '/acp';
-        this.router.post('/logout', this.post);
         this.fullpath = '/acp/logout';
+        this.router.post('/logout', this.post);
     }
 
     private post(req: Request, res: Response, next: NextFunction): void {
