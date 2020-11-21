@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:http/http.dart' as http;
 import 'package:client/util/network_wrapper.dart';
 
 class UserAPIService {
@@ -7,6 +6,7 @@ class UserAPIService {
 
     static const String LOGIN_ROUTE = 'https://api.sokka.me/user/login';
     static const String LOGOUT_ROUTE = 'https://api.sokka.me/user/logout';
+    static const String SIGNUP_ROUTE = 'https://api.sokka.com/user/signup';
     static const String VALIDATE_ROUTE = 'https://api.sokka.me/user/validate';
 
     Future<String> loginUser(final String email, final String password) async {
@@ -37,6 +37,25 @@ class UserAPIService {
                     'token': sessionToken,
                 },
             );
+    }
+
+    Future<String> signUpUser(final String email, final String password) async {
+        return await this._networkWrapper
+            .post(
+                SIGNUP_ROUTE,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: {
+                    'email': email,
+                    'password': password,
+                    "tos": true,
+                    "privacypolicy": true,
+                },
+            )
+            .then((response) {
+                return response['token'];
+            });
     }
 
     Future<bool> validateSessionToken(final String sessionToken, final String email) async {

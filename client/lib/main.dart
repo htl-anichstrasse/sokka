@@ -1,11 +1,9 @@
 import 'package:client/services/user_api_service.dart';
 import 'package:client/util/routes.dart';
 import 'package:client/util/session_token_storage.dart';
-import 'package:client/views/login_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:client/views/home_screen.dart';
 import 'package:client/styles/theme/app_themes.dart';
+import 'package:flutter/services.dart';
 
 void main() async => runApp(Sokka());
 
