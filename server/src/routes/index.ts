@@ -1,6 +1,7 @@
 export { default as ACPGetACPUsersRoute } from './acp/config/ACPGetACPUsersRoute';
 export { default as ACPGetUsersRoute } from './acp/users/ACPGetUsersRoute';
 export { default as ACPDeleteUserRoute } from './acp/users/ACPDeleteUserRoute';
+export { default as ACPUpdateUserRoute } from './acp/users/ACPUpdateUserRoute';
 export { default as ACPGetGroupsRoute } from './acp/groups/ACPGetGroupsRoute';
 export { default as ACPLoginRoute } from './acp/ACPLoginRoute';
 export { default as ACPLogoutRoute } from './acp/ACPLogoutRoute';

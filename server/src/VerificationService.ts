@@ -59,7 +59,8 @@ class VerificationService {
     public verifyUser(user: User): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             Database.instance.query("DELETE FROM sokka_verification_urls WHERE user_id = ?;", [user.id]).then(() => {
-                user.verify().then(() => resolve(null)).catch((err) => reject(err));
+                user.verified = true;
+                user.update().then(() => resolve(null)).catch((err) => reject(err));
             }).catch((err) => reject(err));
         });
     }

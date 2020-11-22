@@ -1,3 +1,11 @@
 .users-search {
     width: initial;
 }
+
+.change-group-modal form {
+    padding: 15px;
+}
+
+.change-group-modal .form-group {
+    text-align: left;
+}

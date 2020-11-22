@@ -2,13 +2,31 @@ import React, { FunctionComponent } from 'react';
 import { Button } from 'react-bootstrap';
 import DataTable from 'react-data-table-component';
 import { sendRequest } from '../../Util';
+import ChangeGroupModalComponent from './ChangeGroupModalComponent';
 import './UsersPage.css';
 
 interface ListUserComponentProps {
 
 }
 
-const columns = (deleteHandler: (row: any) => void) => [
+const customStyle = {
+    rows: {
+        style: {
+            fontSize: "inherit",
+            fontFamily: "inherit",
+            fontWeight: "inherit"
+        }
+    },
+    headCells: {
+        style: {
+            fontSize: "inherit",
+            fontFamily: "inherit",
+            fontWeight: "inherit"
+        }
+    }
+}
+
+const columns = (deleteHandler: (row: any) => void, changeCallback: (row: any, group_id: number) => void, groups: Group[]) => [
     {
         name: '#',
         selector: 'id',
@@ -30,7 +48,11 @@ const columns = (deleteHandler: (row: any) => void) => [
         sortable: true,
     },
     {
-        cell: (row: any) => <Button variant="danger" onClick={(e => deleteHandler(row))}><i className="fa fa-trash"></i></Button>,
+        cell: (row: any) => <ChangeGroupModalComponent row={row} callback={changeCallback} groups={groups}/>,
+        button: true,
+    },
+    {
+        cell: (row: any) => <Button title="Delete" variant="danger" onClick={(e => deleteHandler(row))}><i className="fa fa-trash"></i></Button>,
         button: true,
     },
 ];
@@ -46,11 +68,11 @@ const FilterComponent = (props: FilterComponentProps) => (
 
 const ListUserComponent: FunctionComponent<ListUserComponentProps> = (props) => {
     const [filterText, setFilterText] = React.useState('');
-    const [users, setUsers] = React.useState({} as [{ id: number, email: string, verified: string, group: string }]);
+    const [state, setState] = React.useState({} as {users: Array<User>, groups: Array<Group>});
 
     let filteredUsers: any[] = [];
-    if (users.length > 0) {
-        filteredUsers = users.filter(item => item.email.toLowerCase().includes(filterText.toLowerCase()));
+    if (state.users) {
+        filteredUsers = state.users.filter(item => item.email.toLowerCase().includes(filterText.toLowerCase()));
         for (let i = 0; i < filteredUsers.length; i++) {
             filteredUsers[i].verified = filteredUsers[i].verified === '1' ? 'Yes' : 'No';
         }
@@ -61,9 +83,34 @@ const ListUserComponent: FunctionComponent<ListUserComponentProps> = (props) => 
             sendRequest('/acp/deleteuser', 'POST', true, {
                 email: row.email
             });
-            const index = users.findIndex((r: any) => r.id === row.id);
-            setUsers([...users.slice(0, index), ...users.slice(index + 1)] as any);
+            const index = state.users.findIndex((r: any) => r.id === row.id);
+            setState({users: [...state.users.slice(0, index), ...state.users.slice(index + 1)], groups: state.groups});
         }
+    }
+
+    const changeCallback = (row: any, group_id: number) => {
+        sendRequest('/acp/updateuser', 'POST', true, {
+            email: row.email,
+            user: {
+                group: group_id
+            }
+        }).then((response) => {
+            if (response.data.success) {
+                let groupObject = state.groups.find((val) => val.group_id === group_id);
+                if (groupObject) {
+                    const index = state.users.findIndex((r: any) => r.id === row.id);
+                    let user = state.users[index];
+                    user.group_id = group_id;
+                    user.groupname = groupObject.groupname;
+                    let newUsers = [...state.users.slice(0, index), user, ...state.users.slice(index + 1)];
+                    setState({users: newUsers, groups: state.groups});
+                } else {
+                    alert('Group not found');
+                }
+            } else {
+                alert('An error occured');
+            }
+        });
     }
 
     const subHeaderComponentMemo = React.useMemo(() => {
@@ -71,30 +118,29 @@ const ListUserComponent: FunctionComponent<ListUserComponentProps> = (props) => 
     }, [filterText]);
 
     const load = () => {
-        sendRequest('/acp/getusers', 'GET', true, {}).then((response) => {
-            setUsers(response.data.users);
-        }).catch();
+        Promise.all([sendRequest('/acp/getusers', 'GET', true, {}), sendRequest('/acp/getgroups', 'GET', true, {})]).then((values) => {
+            setState({users: values[0].data.users, groups: values[1].data.groups});
+        });
     }
 
-    if (users.length > 0) {
+    if (state.users) {
         return (<>
             <p>You can manage Sokka users and manually remove them from the database here.</p>
             <DataTable
                 noHeader={true}
-                columns={columns(deleteHandler) as any}
+                columns={columns(deleteHandler, changeCallback, state.groups) as any}
                 data={filteredUsers}
                 pagination={true}
                 paginationPerPage={5}
                 paginationRowsPerPageOptions={[5, 10, 15, 20, 30, 50]}
                 subHeader={true}
+                customStyles={customStyle}
                 subHeaderComponent={subHeaderComponentMemo}
             />
         </>);
     } else {
         load();
-        return (<div className="box">
-            <h3>Loading...</h3>
-        </div>)
+        return (<h3>Loading...</h3>)
     }
 }
 
