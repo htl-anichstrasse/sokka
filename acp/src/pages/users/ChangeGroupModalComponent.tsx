@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import { Button, Form, Modal, Row } from "react-bootstrap";
+import { Button, Form, Modal } from "react-bootstrap";
 
 interface ChangeGroupModalComponentProps {
     row: any
