@@ -5,6 +5,7 @@ interface ProductsPageProps {
 }
 
 const ProductsPage: FunctionComponent<ProductsPageProps> = (props) => {
+    document.title = 'Products | Sokka ACP';
     return (<div className="app">
         <div className="container">
             <div className="row">

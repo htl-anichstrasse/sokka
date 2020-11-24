@@ -6,6 +6,7 @@ interface UsersPageProps {
 }
 
 const UsersPage: FunctionComponent<UsersPageProps> = (props) => {
+    document.title = 'Users | Sokka ACP';
     return (<div className="app">
         <div className="container">
             <div className="row">

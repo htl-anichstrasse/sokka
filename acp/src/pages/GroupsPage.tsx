@@ -5,6 +5,7 @@ interface GroupsPageProps {
 }
 
 const GroupsPage: FunctionComponent<GroupsPageProps> = (props) => {
+    document.title = 'Groups | Sokka ACP';
     return (<div className="app">
         <div className="container">
             <div className="row">

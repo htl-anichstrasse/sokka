@@ -5,6 +5,7 @@ interface HomePageProps {
 }
 
 const HomePage: FunctionComponent<HomePageProps> = (props) => {
+    document.title = 'Home | Sokka ACP';
     return (<div className="app">
         <div className="container">
             <div className="row">

@@ -5,6 +5,7 @@ interface MenusPageProps {
 }
 
 const MenusPage: FunctionComponent<MenusPageProps> = (props) => {
+    document.title = 'Menus | Sokka ACP';
     return (<div className="app">
         <div className="container">
             <div className="row">

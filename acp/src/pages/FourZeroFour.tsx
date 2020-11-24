@@ -6,6 +6,7 @@ interface FourZeroFourProps {
 }
 
 const FourZeroFour: FunctionComponent<FourZeroFourProps> = (props) => {
+    document.title = '404 | Sokka ACP';
     return (<div className="app fourzerofour">
         <div className="sokkasad">
             <img src={sokkasad} alt="Sokka Logo sad"/>

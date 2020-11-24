@@ -8,6 +8,7 @@ interface ConfigPageProps {
 }
 
 const ConfigPage: FunctionComponent<ConfigPageProps> = (props) => {
+    document.title = 'Config | Sokka ACP';
     return (<div className="app">
         <div className="container">
             <div className="row">
