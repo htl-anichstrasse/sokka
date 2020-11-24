@@ -48,10 +48,12 @@ const columns = (deleteHandler: (row: any) => void, changeCallback: (row: any, g
         sortable: true,
     },
     {
+        name: "Change",
         cell: (row: any) => <ChangeGroupModalComponent row={row} callback={changeCallback} groups={groups} />,
         button: true,
     },
     {
+        name: "Delete",
         cell: (row: any) => <Button title="Delete" variant="danger" onClick={(e => deleteHandler(row))}><i className="fa fa-trash"></i></Button>,
         button: true,
     },
