@@ -1,7 +1,7 @@
 import Database from "../../Database";
 
 class ACPUser implements Model {
-    private constructor(readonly username: string, readonly password: string) { }
+    private constructor(readonly username: string, public password: string) { }
 
     static create(username: string, password: string): Promise<ACPUser> {
         return new Promise<ACPUser>((resolve, reject) => {
@@ -35,6 +35,14 @@ class ACPUser implements Model {
         return new Promise<string[]>((resolve, reject) => {
             Database.instance.query('SELECT username FROM sokka_acp_users;').then((result) => {
                 resolve(result);
+            }).catch((err) => reject(err));
+        });
+    }
+
+    update(): Promise<void> {
+        return new Promise<void>((resolve, reject) => {
+            Database.instance.query('UPDATE sokka_acp_users SET password = ? WHERE username = ?;', [this.password, this.username]).then(() => {
+                resolve(null);
             }).catch((err) => reject(err));
         });
     }

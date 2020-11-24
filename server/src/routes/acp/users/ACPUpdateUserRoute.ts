@@ -33,7 +33,7 @@ class ACPUpdateUserRoute implements Route {
             return new Promise<User>((resolve, reject) => {
                 if (req.body.user.group) {
                     Group.getById(req.body.user.group).then((group) => {
-                        user.group = group;
+                        user.group_id = group.id;
                         resolve(user);
                     }).catch((err) => reject(err));
                 } else {
@@ -54,6 +54,7 @@ class ACPUpdateUserRoute implements Route {
                     user.verified = req.body.user.veriifed;
                 }
 
+                // Check if group exists & set group for user
                 updateGroup(user, req).then((user) => {
                     console.log(user);
                     user.update().then(() => {

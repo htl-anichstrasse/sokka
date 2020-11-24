@@ -4,7 +4,7 @@ import Database from "../../Database";
 import ACPUser from "./ACPUser";
 
 class ACPSession implements Model {
-    private constructor(readonly id: number, readonly acp_username: string, readonly token: string) { }
+    private constructor(readonly id: number, public acp_username: string, public token: string) { }
 
     static create(user: ACPUser): Promise<ACPSession> {
         return new Promise<ACPSession>((resolve, reject) => {
@@ -41,11 +41,19 @@ class ACPSession implements Model {
             }).catch((err) => reject(err));
         });
     }
-    
+
     static validate(user: ACPUser, token: string): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
             Database.instance.query('SELECT id FROM sokka_acp_sessions WHERE acp_username = ? AND token = ?;', [user.username, token]).then((result) => {
                 resolve(result.length > 0);
+            }).catch((err) => reject(err));
+        });
+    }
+
+    update(): Promise<void> {
+        return new Promise<void>((resolve, reject) => {
+            Database.instance.query('UPDATE sokka_acp_session SET acp_username = ?, token = ? WHERE id = ?;', [this.acp_username, this.token, this.id]).then(() => {
+                resolve(null);
             }).catch((err) => reject(err));
         });
     }

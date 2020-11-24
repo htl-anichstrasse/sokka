@@ -48,7 +48,7 @@ const columns = (deleteHandler: (row: any) => void, changeCallback: (row: any, g
         sortable: true,
     },
     {
-        cell: (row: any) => <ChangeGroupModalComponent row={row} callback={changeCallback} groups={groups}/>,
+        cell: (row: any) => <ChangeGroupModalComponent row={row} callback={changeCallback} groups={groups} />,
         button: true,
     },
     {
@@ -68,13 +68,14 @@ const FilterComponent = (props: FilterComponentProps) => (
 
 const ListUserComponent: FunctionComponent<ListUserComponentProps> = (props) => {
     const [filterText, setFilterText] = React.useState('');
-    const [state, setState] = React.useState({} as {users: Array<User>, groups: Array<Group>});
+    const [state, setState] = React.useState({} as { users: Array<User>, groups: Array<Group> });
 
     let filteredUsers: any[] = [];
     if (state.users) {
         filteredUsers = state.users.filter(item => item.email.toLowerCase().includes(filterText.toLowerCase()));
         for (let i = 0; i < filteredUsers.length; i++) {
             filteredUsers[i].verified = filteredUsers[i].verified === '1' ? 'Yes' : 'No';
+            filteredUsers[i].groupname = state.groups.find((group) => group.group_id === filteredUsers[i].group_id)?.groupname;
         }
     }
 
@@ -84,7 +85,7 @@ const ListUserComponent: FunctionComponent<ListUserComponentProps> = (props) => 
                 email: row.email
             });
             const index = state.users.findIndex((r: any) => r.id === row.id);
-            setState({users: [...state.users.slice(0, index), ...state.users.slice(index + 1)], groups: state.groups});
+            setState({ users: [...state.users.slice(0, index), ...state.users.slice(index + 1)], groups: state.groups });
         }
     }
 
@@ -101,9 +102,8 @@ const ListUserComponent: FunctionComponent<ListUserComponentProps> = (props) => 
                     const index = state.users.findIndex((r: any) => r.id === row.id);
                     let user = state.users[index];
                     user.group_id = group_id;
-                    user.groupname = groupObject.groupname;
                     let newUsers = [...state.users.slice(0, index), user, ...state.users.slice(index + 1)];
-                    setState({users: newUsers, groups: state.groups});
+                    setState({ users: newUsers, groups: state.groups });
                 } else {
                     alert('Group not found');
                 }
@@ -119,7 +119,7 @@ const ListUserComponent: FunctionComponent<ListUserComponentProps> = (props) => 
 
     const load = () => {
         Promise.all([sendRequest('/acp/getusers', 'GET', true, {}), sendRequest('/acp/getgroups', 'GET', true, {})]).then((values) => {
-            setState({users: values[0].data.users, groups: values[1].data.groups});
+            setState({ users: values[0].data.users, groups: values[1].data.groups });
         });
     }
 
@@ -140,7 +140,7 @@ const ListUserComponent: FunctionComponent<ListUserComponentProps> = (props) => 
         </>);
     } else {
         load();
-        return (<h3>Loading...</h3>)
+        return (<h3>Loading...</h3>);
     }
 }
 

@@ -1,9 +1,7 @@
 import Database from "../Database";
 
 class Group implements Model {
-    public static defaultGroup = new Group(1, "Default", 0);
-
-    private constructor(readonly id: number, readonly groupname: string, readonly rebate: number) { }
+    private constructor(readonly id: number, public groupname: string, public rebate: number) { }
 
     static create(groupname, rebate): Promise<Group> {
         return new Promise<Group>((resolve, reject) => {
@@ -41,6 +39,14 @@ class Group implements Model {
         return new Promise<string[]>((resolve, reject) => {
             Database.instance.query('SELECT * FROM sokka_groups;').then((result) => {
                 resolve(result);
+            }).catch((err) => reject(err));
+        });
+    }
+
+    update(): Promise<void> {
+        return new Promise<void>((resolve, reject) => {
+            Database.instance.query('UPDATE sokka_groups SET groupname = ?, rebate = ? WHERE group_id = ?;', [this.id, this.groupname, this.rebate]).then(() => {
+                resolve(null);
             }).catch((err) => reject(err));
         });
     }

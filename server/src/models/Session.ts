@@ -4,7 +4,7 @@ import Database from "../Database";
 import User from "./User";
 
 class Session implements Model {
-    private constructor(readonly id: number, readonly user_id: number, readonly token: string) { }
+    private constructor(readonly id: number, public user_id: number, public token: string) { }
 
     static create(user: User): Promise<Session> {
         return new Promise<Session>((resolve, reject) => {
@@ -53,6 +53,14 @@ class Session implements Model {
     static deleteAll(user: User): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             Database.instance.query('DELETE FROM sokka_sessions WHERE user_id = ?;', [user.id]).then(() => {
+                resolve(null);
+            }).catch((err) => reject(err));
+        });
+    }
+
+    update(): Promise<void> {
+        return new Promise<void>((resolve, reject) => {
+            Database.instance.query('UPDATE sokka_sessions SET user_id = ?, token = ? WHERE id = ?;', [this.user_id, this.token, this.id]).then(() => {
                 resolve(null);
             }).catch((err) => reject(err));
         });

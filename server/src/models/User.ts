@@ -1,13 +1,12 @@
 import Database from "../Database";
-import Group from "./Group";
 
 class User implements Model {
-    private constructor(public id: number, public email: string, public verified: boolean, public group: Group, public password: string) { }
+    private constructor(readonly id: number, public email: string, public verified: boolean, public group_id: number, public password: string) { }
 
     static create(email: string, password: string): Promise<User> {
         return new Promise<User>((resolve, reject) => {
             Database.instance.query(`INSERT INTO sokka_users (email, pwhash) VALUES (?, ?);`, [email, password]).then((result) => {
-                resolve(new User(result.insertId, email, false, Group.defaultGroup, password));
+                resolve(new User(result.insertId, email, false, 1, password));
             }).catch((err) => reject(err));
         });
     }
@@ -24,9 +23,7 @@ class User implements Model {
         return new Promise<User>((resolve, reject) => {
             Database.instance.query('SELECT * FROM sokka_users WHERE id = ?;', [id]).then((result) => {
                 if (result.length > 0) {
-                    Group.getById(result[0].group_id).then((group) => {
-                        resolve(new User(result[0].id, result[0].email, result[0].verified, group, result[0].pwhash));
-                    }).catch((err) => reject(err));
+                    resolve(new User(result[0].id, result[0].email, result[0].verified, result[0].group_id, result[0].pwhash));
                 } else {
                     reject('User not found');
                 }
@@ -38,9 +35,7 @@ class User implements Model {
         return new Promise<User>((resolve, reject) => {
             Database.instance.query('SELECT * FROM sokka_users WHERE email = ?;', [email]).then((result) => {
                 if (result.length > 0) {
-                    Group.getById(result[0].group_id).then((group) => {
-                        resolve(new User(result[0].id, result[0].email, result[0].verified, group, result[0].pwhash));
-                    }).catch((err) => reject(err));
+                    resolve(new User(result[0].id, result[0].email, result[0].verified, result[0].group_id, result[0].pwhash));
                 } else {
                     reject('User not found');
                 }
@@ -48,17 +43,21 @@ class User implements Model {
         });
     }
 
-    static getAll(): Promise<string[]> {
-        return new Promise<string[]>((resolve, reject) => {
-            Database.instance.query('SELECT * FROM sokka_users AS su INNER JOIN sokka_groups AS sg ON su.group_id = sg.group_id;').then((result) => {
-                resolve(result);
+    static getAll(): Promise<User[]> {
+        return new Promise<User[]>((resolve, reject) => {
+            Database.instance.query('SELECT * FROM sokka_users;').then((result) => {
+                let users = [];
+                for (let user of result) {
+                    users.push(new User(user.id, user.email, user.verified, user.group_id, user.pwhash));
+                }
+                resolve(users);
             }).catch((err) => reject(err));
         });
     }
 
     update(): Promise<void> {
         return new Promise<void>((resolve, reject) => {
-            Database.instance.query('UPDATE sokka_users SET email = ?, verified = ?, group_id = ?, pwhash = ? WHERE id = ?;', [this.email, this.verified, this.group.id, this.password, this.id]).then(() => {
+            Database.instance.query('UPDATE sokka_users SET email = ?, verified = ?, group_id = ?, pwhash = ? WHERE id = ?;', [this.email, this.verified, this.group_id, this.password, this.id]).then(() => {
                 resolve(null);
             }).catch((err) => reject(err));
         });

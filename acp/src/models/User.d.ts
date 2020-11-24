@@ -1,7 +1,7 @@
 declare class User {
+    id: number
     email: string
     verified: boolean
     group_id: number
-    groupname: string
-    pwhash: string
+    password: string
 }
