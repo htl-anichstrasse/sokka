@@ -46,7 +46,7 @@ const ChangeGroupModalComponent: FunctionComponent<ChangeGroupModalComponentProp
                 </Modal.Header>
                 <Modal.Body>Enter desired group of user '{props.row.email}' here</Modal.Body>
                 <Form>
-                    <Form.Group controlId="exampleForm.ControlSelect1">
+                    <Form.Group controlId="changeGroup.ControlSelect1">
                         <Form.Label>Select group</Form.Label>
                         <Form.Control ref={inputRef} as="select">
                             {options}

@@ -1,4 +1,7 @@
 import React, { FunctionComponent } from 'react';
+import CreateGroupButton from './CreateGroupButton';
+import './GroupsPage.css';
+import ListGroupsComponent from './ListGroupsComponent';
 
 interface GroupsPageProps {
 
@@ -11,7 +14,8 @@ const GroupsPage: FunctionComponent<GroupsPageProps> = (props) => {
             <div className="row">
                 <div className="col">
                     <h1><i className="fa fa-star mr-2" aria-hidden="true"></i>Groups</h1>
-                    <p>There will be groups here one day.</p>
+                    <ListGroupsComponent />
+                    <CreateGroupButton />
                 </div>
             </div>
         </div>

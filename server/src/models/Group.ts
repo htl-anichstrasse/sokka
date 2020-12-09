@@ -53,7 +53,7 @@ class Group implements Model {
 
     delete(): Promise<void> {
         return new Promise<void>((resolve, reject) => {
-            Database.instance.query('DELETE FROM sokka_groups WHERE id = ?;', [this.id]).then(() => {
+            Database.instance.query('DELETE FROM sokka_groups WHERE group_id = ?;', [this.id]).then(() => {
                 resolve(null);
             }).catch((err) => reject(err));
         });

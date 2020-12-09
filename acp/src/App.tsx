@@ -6,7 +6,7 @@ import Navbar from './components/Navbar';
 import LoginPage from './login/LoginPage';
 import ConfigPage from './pages/config/ConfigPage';
 import FourZeroFour from './pages/FourZeroFour';
-import GroupsPage from './pages/GroupsPage';
+import GroupsPage from './pages/groups/GroupsPage';
 import HomePage from './pages/HomePage';
 import MenusPage from './pages/MenusPage';
 import ProductsPage from './pages/ProductsPage';
