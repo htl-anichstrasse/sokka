@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Button } from 'react-bootstrap';
 import DataTable from 'react-data-table-component';
 import { sendRequest } from '../../Util';
+import ChangeGroupButton from './ChangeGroupButton';
 
 interface ListGroupsComponentProps {
 
@@ -24,7 +25,7 @@ const customStyle = {
     }
 }
 
-const columns = (deleteHandler: (row: any) => void, groups: Group[]) => [
+const columns = (deleteHandler: (row: any) => void, changeCallback: (row: any, group_id: number, groupname: string, rebate: number) => void) => [
     {
         name: '#',
         selector: 'group_id',
@@ -42,7 +43,7 @@ const columns = (deleteHandler: (row: any) => void, groups: Group[]) => [
     },
     {
         name: "Change",
-        cell: (row: any) => <p>Modal</p>,
+        cell: (row: any) => <ChangeGroupButton row={row} callback={changeCallback} />,
         button: true,
     },
     {
@@ -83,6 +84,25 @@ const ListGroupsComponent: FunctionComponent<ListGroupsComponentProps> = (props)
         }
     }
 
+    const changeCallback = (row: any, group_id: number, groupname: string, rebate: number) => {
+        sendRequest('/acp/updategroup', 'POST', true, {
+            group_id: group_id,
+            groupname: groupname,
+            rebate: rebate
+        }).then((response) => {
+            if (response.data.success) {
+                const index = state.groups.findIndex((r: any) => r.group_id === row.group_id);
+                let group = state.groups[index];
+                group.groupname = groupname;
+                group.rebate = rebate;
+                let newGroups = [...state.groups.slice(0, index), group, ...state.groups.slice(index + 1)];
+                setState({ groups: newGroups });
+            } else {
+                alert('An error occured');
+            }
+        });
+    }
+
     const subHeaderComponentMemo = React.useMemo(() => {
         return <FilterComponent onFilter={(e: any) => setFilterText(e.target.value)} filterText={filterText} />;
     }, [filterText]);
@@ -98,7 +118,7 @@ const ListGroupsComponent: FunctionComponent<ListGroupsComponentProps> = (props)
             <p>You can manage Sokka groups and manage their rebate here.</p>
             <DataTable
                 noHeader={true}
-                columns={columns(deleteHandler, state.groups) as any}
+                columns={columns(deleteHandler, changeCallback) as any}
                 data={filteredGroups}
                 pagination={true}
                 paginationPerPage={5}

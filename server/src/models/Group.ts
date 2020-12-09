@@ -45,7 +45,7 @@ class Group implements Model {
 
     update(): Promise<void> {
         return new Promise<void>((resolve, reject) => {
-            Database.instance.query('UPDATE sokka_groups SET groupname = ?, rebate = ? WHERE group_id = ?;', [this.id, this.groupname, this.rebate]).then(() => {
+            Database.instance.query('UPDATE sokka_groups SET groupname = ?, rebate = ? WHERE group_id = ?;', [this.groupname, this.rebate, this.id]).then(() => {
                 resolve(null);
             }).catch((err) => reject(err));
         });
