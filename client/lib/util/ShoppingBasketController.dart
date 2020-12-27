@@ -5,7 +5,7 @@ class ShoppingBasketController {
     static ShoppingBasketController _instance = new ShoppingBasketController.internal();
     factory ShoppingBasketController() => _instance;
 
-    List _basket;   
+    List _basket = [];   
 
 
     List getBasket() {
