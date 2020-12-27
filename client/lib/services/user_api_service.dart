@@ -6,7 +6,7 @@ class UserAPIService {
 
     static const String LOGIN_ROUTE = 'https://api.sokka.me/user/login';
     static const String LOGOUT_ROUTE = 'https://api.sokka.me/user/logout';
-    static const String SIGNUP_ROUTE = 'https://api.sokka.com/user/signup';
+    static const String SIGNUP_ROUTE = 'https://api.sokka.me/user/signup';
     static const String VALIDATE_ROUTE = 'https://api.sokka.me/user/validate';
 
     Future<String> loginUser(final String email, final String password) async {
