@@ -82,6 +82,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                         }),
                                 },
                             ),
+                            new Center(
+                                child: new InkWell(
+                                    child: new Text('Not a user yet? Sign up here!'),
+                                    onTap: () => Navigator.of(context).popAndPushNamed('/signup')
+                                ),
+                            ),
                         ],
                     ),
                 ),
