@@ -1,27 +1,10 @@
 import 'package:client/models/menu.dart';
 
-class MenuHandler {
-    static MenuHandler _instance;
+class MenuController {
+    static MenuController _instance = new MenuController.internal();
+    factory MenuController() => _instance;
+    
     List<Menu> _menus;
-
-    MenuHandler() {
-        if (MenuHandler._instance != null) {
-            throw new Exception('Handler has already been instantiated!');
-        }
-        _instance = this;
-        this._menus = [
-            new Menu(0, false, 'Veggie', 'Green salad', 'Spring rolls', 'Vanilla muffin', 4.50),
-            new Menu(1, false, 'Meat Love', 'Chicken soup with croutons', 'Meat loaf', 'Chocolate molten lava cake', 5.50),
-        ];
-    }
-
-    static MenuHandler getInstance() {
-        if (MenuHandler._instance != null) {
-            return MenuHandler._instance;
-        }
-        MenuHandler._instance = new MenuHandler();
-        return MenuHandler._instance;
-    }
 
     List<Menu> getMenus() {
         return this._menus;
@@ -56,4 +39,6 @@ class MenuHandler {
     void resetMenus() {
         this._menus.clear();
     }
+
+    MenuController.internal();
 }
