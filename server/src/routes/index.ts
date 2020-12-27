@@ -3,6 +3,7 @@ export { default as ACPLogoutRoute } from './acp/ACPLogoutRoute';
 export { default as ACPValidateRoute } from './acp/ACPValidateRoute';
 export { default as ACPDeleteACPUserRoute } from './acp/config/ACPDeleteACPUserRoute';
 export { default as ACPGetACPUsersRoute } from './acp/config/ACPGetACPUsersRoute';
+export { default as ACPGetConfigRoute } from './acp/config/ACPGetConfigRoute';
 export { default as ACPSignupRoute } from './acp/config/ACPSignupRoute';
 export { default as ACPCreateGroupRoute } from './acp/groups/ACPCreateGroupRoute';
 export { default as ACPDeleteGroupRoute } from './acp/groups/ACPDeleteGroupRoute';

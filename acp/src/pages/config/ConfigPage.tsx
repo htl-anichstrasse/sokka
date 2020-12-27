@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react';
 import './ConfigPage.css';
 import CreateUserComponent from './CreateUserComponent';
 import ListACPUserComponent from './ListACPUserComponent';
+import ListConfigValuesComponent from './ListConfigValuesComponent';
 
 interface ConfigPageProps {
 
@@ -14,7 +15,7 @@ const ConfigPage: FunctionComponent<ConfigPageProps> = (props) => {
             <div className="row">
                 <div className="col">
                     <h1><i className="fa fa-cog mr-2" aria-hidden="true"></i>Config</h1>
-                    <p>There will be config values here one day.</p>
+                    <ListConfigValuesComponent />
                 </div>
                 <div className="col">
                     <CreateUserComponent />

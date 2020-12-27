@@ -51,7 +51,7 @@ function load(): void {
         }
         users = tableRows;
         setLoaded(0);
-    }).catch();
+    });
 }
 
 function onDeleteClicked(username: string): void {
