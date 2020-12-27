@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:client/models/menu.dart';
-import 'package:client/handlers/basket_handler/basket_handler.dart';
+import 'package:client/util/ShoppingBasketController.dart';
 
 /// ----------------------------------------------------------------------
 /// Render-Widget for displaying a menu as foldable expansion panel in the
@@ -16,6 +16,7 @@ class MenuPanel extends StatefulWidget {
 }
 
 class _MenuPanelState extends State<MenuPanel> {
+    final ShoppingBasketController _shoppingBasketController = new ShoppingBasketController();
     final Menu _menu;
 
     _MenuPanelState(this._menu);
@@ -77,7 +78,7 @@ class _MenuPanelState extends State<MenuPanel> {
                     ),
                     new FlatButton.icon(
                         onPressed: () => {
-                            BasketHandler.getInstance().appendMenuToBasket(menu),
+                            this._shoppingBasketController.appendMenuToBasket(menu),
                             Scaffold.of(context).showSnackBar(new SnackBar(
                                 content: new Text('Menu: "${menu.getTitle}" has been added to your basket!'),
                                 // duration: new Duration(seconds: 1),

@@ -1,4 +1,4 @@
-import 'package:client/handlers/menu_handler/menu_handler.dart';
+import 'package:client/util/MenuController.dart';
 import 'package:client/views/menu/panel/menu_panel.dart';
 import 'package:flutter/material.dart';
 
@@ -8,11 +8,13 @@ class MenuView extends StatefulWidget {
 }
 
 class _MenuViewState extends State<MenuView> {
+    final MenuController _menuController = new MenuController();
+
     @override
     Widget build(BuildContext context) {
         return new ListView.builder(
-            itemCount: MenuHandler.getInstance().getMenus().length,
-            itemBuilder: (BuildContext context, int index) => new MenuPanel((MenuHandler.getInstance().getMenus()[index])),
+            itemCount: this._menuController.getMenus().length,
+            itemBuilder: (BuildContext context, int index) => new MenuPanel((this._menuController.getMenus()[index])),
         );
     }
 }
