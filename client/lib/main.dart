@@ -2,7 +2,7 @@ import 'package:client/services/UserAPIService.dart';
 import 'package:client/util/routes.dart';
 import 'package:client/util/SessionTokenStorage.dart';
 import 'package:flutter/material.dart';
-import 'package:client/styles/theme/app_themes.dart';
+import 'package:client/styles/theme/AppThemes.dart';
 import 'package:flutter/services.dart';
 
 void main() async => runApp(Sokka());
