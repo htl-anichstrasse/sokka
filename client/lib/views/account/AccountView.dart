@@ -1,4 +1,4 @@
-import 'package:client/views/home_screen.dart';
+import 'package:client/views/HomeScreen.dart';
 import 'package:flutter/material.dart';
 
 class Account extends StatefulWidget {
