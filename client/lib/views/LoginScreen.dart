@@ -1,4 +1,4 @@
-import 'package:client/services/user_api_service.dart';
+import 'package:client/services/UserAPIService.dart';
 import 'package:client/util/SessionTokenStorage.dart';
 import 'package:flutter/material.dart';
 

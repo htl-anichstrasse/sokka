@@ -1,6 +1,6 @@
-import 'package:client/services/user_api_service.dart';
+import 'package:client/services/UserAPIService.dart';
 import 'package:client/util/SessionTokenStorage.dart';
-import 'package:client/views/menu/menu_view.dart';
+import 'package:client/views/menu/MenuView.dart';
 import 'package:flutter/material.dart';
 import 'package:client/views/account/AccountView.dart';
 import 'package:client/views/basket/BasketView.dart';

@@ -1,5 +1,5 @@
 import 'package:client/util/MenuController.dart';
-import 'package:client/views/menu/panel/menu_panel.dart';
+import 'package:client/views/menu/panel/MenuPanel.dart';
 import 'package:flutter/material.dart';
 
 class MenuView extends StatefulWidget {
