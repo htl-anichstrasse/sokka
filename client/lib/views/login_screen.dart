@@ -73,10 +73,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                             print(token),
                                             if (token != null) {
                                                 this._sessionTokenStorage.storeNewSessionToken('sessionToken', token),
-                                                Navigator.pushNamed(context, '/'),
+                                                Navigator.popAndPushNamed(context, '/'),
                                             } else {
                                                 Scaffold.of(context).showSnackBar(new SnackBar(
-                                                    content: new Text('Email and password do not match, please try again!'),
+                                                    content: new Text('There was an error trying to login. Please try again!'),
                                                 ))
                                             }
                                         }),
