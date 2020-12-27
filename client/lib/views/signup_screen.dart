@@ -14,10 +14,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     final TextEditingController _emailController = new TextEditingController();
     final TextEditingController _passwordController = new TextEditingController();
 
-    final FocusNode _emailFocusNode = new FocusNode();
-    final FocusNode _passwordFocusNode = new FocusNode();
-
-
     String _email;
     String _password;
     String _sessionToken;
