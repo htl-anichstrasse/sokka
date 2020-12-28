@@ -18,7 +18,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     String _email;
     String _password;
-    String _repeatedPassword;
+    String _repeatPassword;
     String _sessionToken;
 
     @override 
@@ -159,8 +159,106 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                         color: Colors.white,
                                                     ),
                                                 ),
-                                                onPressed: () => null,                                        
-                                            )
+                                                onPressed: () => {
+                                                    this._email = this._emailController.text,
+                                                    this._password = this._passwordController.text,
+                                                    this._repeatPassword = this._repeatPasswordController.text,
+
+                                                    if (this._email.isEmpty || this._password.isEmpty || this._repeatPassword.isEmpty) {
+                                                        showDialog(
+                                                            context: context,
+                                                            builder: (BuildContext context) {
+                                                                return new AlertDialog(
+                                                                    title: new Column(
+                                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                                        children: <Widget>[
+                                                                            new Image(
+                                                                                image: new AssetImage('lib/styles/images/SadSokka.png'),
+                                                                                width: 150.0,
+                                                                            ),
+                                                                            new Text(
+                                                                                'All fields are required and need to be filled!',
+                                                                                style: GoogleFonts.montserrat(
+                                                                                    fontSize: 12.0
+                                                                                ),
+                                                                            ),
+                                                                            new Container(
+                                                                                margin: new EdgeInsets.only(top: 15.0),
+                                                                                child: new FlatButton(
+                                                                                    child: new Text(
+                                                                                        'Close',
+                                                                                        style: GoogleFonts.montserrat(
+                                                                                            fontSize: 14.0,
+                                                                                            color: Colors.black
+                                                                                        ),
+                                                                                    ),
+                                                                                    onPressed: () => Navigator.of(context).pop(),
+                                                                                ),
+                                                                            ),
+                                                                        ],
+                                                                    ),
+                                                                );
+                                                            }
+                                                        ),
+                                                    },
+
+                                                    if (this._password != this._repeatPassword) {
+                                                        showDialog(
+                                                            context: context,
+                                                            builder: (BuildContext context) {
+                                                                return new AlertDialog(
+                                                                    title: new Column(
+                                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                                        children: <Widget>[
+                                                                            new Image(
+                                                                                image: new AssetImage('lib/styles/images/SadSokka.png'),
+                                                                                width: 150.0,
+                                                                            ),
+                                                                            new Text(
+                                                                                'The entered passwords do not match!',
+                                                                                style: GoogleFonts.montserrat(
+                                                                                    fontSize: 14.0,
+                                                                                    color: Colors.black,
+                                                                                ),
+                                                                            ),
+                                                                            new Container(
+                                                                                margin: new EdgeInsets.only(top: 15.0),
+                                                                                child: new FlatButton(
+                                                                                    child: new Text(
+                                                                                        'Close',
+                                                                                        style: GoogleFonts.montserrat(
+                                                                                            fontSize: 14.0,
+                                                                                            color: Colors.black
+                                                                                        ),
+                                                                                    ),
+                                                                                    onPressed: () => Navigator.of(context).pop(),
+                                                                                ),
+                                                                            ),
+                                                                        ],
+                                                                    )
+                                                                );
+                                                            },
+                                                        ),
+                                                    },
+
+                                                    this._userAPIService.signUpUser(this._email, this._password)
+                                                        .then((token) => {
+                                                            if (token != null) {
+                                                                this._sessionTokenStorage.storeNewSessionToken('sessionToken', this._sessionToken),
+                                                                Navigator.of(context).popAndPushNamed('/'),
+                                                            } else {
+                                                                Scaffold.of(context).showSnackBar(new SnackBar(
+                                                                    content: new Text(
+                                                                        'There was a problem creating a new user.\nPlease try again!',
+                                                                        style: GoogleFonts.montserrat(),
+                                                                    )
+                                                                ))
+                                                            }
+                                                        })
+
+
+                                                },                                        
+                                            ),
                                         ),
                                         new Container(
                                             margin: new EdgeInsets.only(top: 100.0, left: 200.0),
