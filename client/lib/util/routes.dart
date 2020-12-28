@@ -1,4 +1,4 @@
-import 'package:client/views/signup/SignUpScreen.dart';
+import 'package:client/views/SignUpScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:client/views/HomeScreen.dart';
 import 'package:client/views/LoginScreen.dart';
