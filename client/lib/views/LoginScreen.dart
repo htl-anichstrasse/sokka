@@ -1,6 +1,7 @@
 import 'package:client/services/UserAPIService.dart';
 import 'package:client/util/SessionTokenStorage.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreen extends StatefulWidget {
     @override
@@ -13,6 +14,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
     final SessionTokenStorage _sessionTokenStorage = new SessionTokenStorage();
     final UserAPIService _userAPIService = new UserAPIService(); 
+
+    String _email;
+    String _password;
     
     @override
     void initState() {
@@ -22,74 +26,206 @@ class _LoginScreenState extends State<LoginScreen> {
     @override
     Widget build(BuildContext context) {
         return new Scaffold(
+            resizeToAvoidBottomPadding: false,
             body: new Builder(
-                builder: (context) => new Container(
-                    padding: new EdgeInsets.all(20.0),
-                    child: new Column(
-                        children: <Widget>[
-                            new SizedBox(height: 20.0),
-                            new Text(
-                                'Login Credentials',
-                            ), 
-                            new SizedBox(height: 20.0),
-                            new TextFormField(
-                                controller: this._emailController,
-                                keyboardType: TextInputType.emailAddress,
-                                keyboardAppearance: Brightness.dark,
-                                decoration: new InputDecoration(
-                                    labelText: 'Email address',
-                                ),
+                builder: (context) => new Stack(
+                    children: <Widget>[
+                        new Container(
+                            decoration: new BoxDecoration(
+                                image: new DecorationImage(
+                                    image: new AssetImage('lib/styles/images/LoginBackground.png'),
+                                    fit: BoxFit.cover,
+                                )
                             ),
-                            new TextFormField(
-                                controller: this._passwordController,
-                                obscureText: true,
-                                decoration: new InputDecoration(
-                                    labelText: 'Password',
-                                ),
-                            ),
-                            new SizedBox(height: 20.0),
-                            new RaisedButton(
-                                child: new Text('Submit'),
-                                onPressed: () => {
-                                    if (this._emailController.text.isEmpty || this._passwordController.text.isEmpty) {
-                                        showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                                return new AlertDialog(
-                                                    title: new Text('Email / password field may not be empty!'),
-                                                    actions: <Widget>[
-                                                        new FlatButton(
-                                                            child: new Text('OK'),
-                                                            onPressed: () => Navigator.pop(context),
+                        ),
+                        new Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.max,
+                            children: <Widget> [
+                                new Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                        new Container(
+                                            margin: new EdgeInsets.only(top: 130.0, right: 160.0),
+                                            child: new Text(
+                                                'WELCOME\nBACK',
+                                                style: GoogleFonts.montserrat(
+                                                    fontSize: 36.0,
+                                                    color: Colors.white
+                                                ),
+                                            )
+                                        ),
+                                        new Container(
+                                            margin: new EdgeInsets.only(top: 100.0, right: 200.0),
+                                            child: new Text(
+                                                'USER SIGN IN',
+                                                style: GoogleFonts.montserrat(
+                                                    fontSize: 20.0,
+                                                    color: Colors.white
+                                                )
+                                            )
+                                        ),
+                                        new Container(
+                                            margin: new EdgeInsets.only(top: 10.0, right: 70.0),
+                                            width: 230.0,
+                                            child: new TextFormField(
+                                                controller: this._emailController,
+                                                obscureText: false,
+                                                keyboardType: TextInputType.emailAddress,
+                                                keyboardAppearance: Brightness.dark,
+                                                decoration: new InputDecoration(
+                                                    labelText: 'EMAIL ADDRESS',
+                                                    labelStyle: GoogleFonts.montserrat(
+                                                        fontSize: 10.0,
+                                                        color: new Color(0xFF80FFFFFF)
+                                                    ),
+                                                    enabledBorder: new UnderlineInputBorder(
+                                                        borderSide:  new BorderSide(color: new Color(0xFF80FFFFFF))
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                        new Container(
+                                            margin: new EdgeInsets.only(top: 10.0, right: 70.0),
+                                            width: 230.0,
+                                            child: new TextFormField(
+                                                controller: this._passwordController,
+                                                obscureText: true,
+                                                keyboardAppearance: Brightness.dark,
+                                                decoration: new InputDecoration(
+                                                    labelText: 'PASSWORD',
+                                                    labelStyle: GoogleFonts.montserrat(
+                                                        fontSize: 10.0,
+                                                        color: new Color(0xFF80FFFFFF)
+                                                    ),
+                                                    enabledBorder: new UnderlineInputBorder(
+                                                        borderSide:  new BorderSide(color: new Color(0xFF80FFFFFF))
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                        new Container(
+                                            margin: new EdgeInsets.only(top: 30.0, left: 30.0),
+                                            decoration: new BoxDecoration(
+                                                boxShadow: [
+                                                    new BoxShadow(
+                                                        color: Colors.black.withOpacity(0.3),
+                                                        spreadRadius: 0.5,
+                                                        blurRadius: 5,
+                                                        offset: new Offset(3, 3),
+                                                    ),
+                                                ],
+                                            ),
+                                            width: 140.0,
+                                            height: 42.0,
+                                            child: new RaisedButton(
+                                                shape: new RoundedRectangleBorder(
+                                                    borderRadius: new BorderRadius.circular(15),
+                                                ),
+                                                color: new Color(0xFFFF8D4A),
+                                                child: new Text(
+                                                    'SUBMIT',
+                                                    style: GoogleFonts.montserrat(
+                                                        fontSize: 12.0,
+                                                        color: Colors.white,
+                                                    ),
+                                                ),
+                                                onPressed: () => {
+                                                    this._email = this._emailController.text,
+                                                    this._password = this._passwordController.text,
+
+                                                    if (this._email.isEmpty || this._password.isEmpty) {
+                                                        showDialog(
+                                                            context: context,
+                                                            builder: (BuildContext context) {
+                                                                return new AlertDialog(
+                                                                    title: new Column(
+                                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                                        children: <Widget>[
+                                                                            new Image(
+                                                                                image: new AssetImage('lib/styles/images/SadSokka.png'),
+                                                                                width: 150.0,
+                                                                            ),
+                                                                            new Text(
+                                                                                'All fields are required and need to be filled!',
+                                                                                style: GoogleFonts.montserrat(
+                                                                                    fontSize: 12.0
+                                                                                ),
+                                                                            ),
+                                                                            new Container(
+                                                                                margin: new EdgeInsets.only(top: 15.0),
+                                                                                child: new FlatButton(
+                                                                                    child: new Text(
+                                                                                        'Close',
+                                                                                        style: GoogleFonts.montserrat(
+                                                                                            fontSize: 14.0,
+                                                                                            color: Colors.black
+                                                                                        ),
+                                                                                    ),
+                                                                                    onPressed: () => Navigator.of(context).pop(),
+                                                                                ),
+                                                                            ),
+                                                                        ],
+                                                                    ),
+                                                                );
+                                                            }
                                                         ),
-                                                    ]
-                                                );
-                                            }
-                                        )
-                                    },
-                                    this._sessionTokenStorage.storeNewSessionToken('email', this._emailController.text),
-                                    this._userAPIService.loginUser(this._emailController.text, this._passwordController.text)
-                                        .then((token) => {
-                                            print(token),
-                                            if (token != null) {
-                                                this._sessionTokenStorage.storeNewSessionToken('sessionToken', token),
-                                                Navigator.popAndPushNamed(context, '/'),
-                                            } else {
-                                                Scaffold.of(context).showSnackBar(new SnackBar(
-                                                    content: new Text('There was an error trying to login. Please try again!'),
-                                                ))
-                                            }
-                                        }),
-                                },
-                            ),
-                            new Center(
-                                child: new InkWell(
-                                    child: new Text('Not a user yet? Sign up here!'),
-                                    onTap: () => Navigator.of(context).pushNamed('/signup')
+                                                    },
+
+                                                    this._userAPIService.loginUser(this._email, this._password)
+                                                        .then((token) => {
+                                                            if (token != null) {
+                                                                this._sessionTokenStorage.storeNewSessionToken('sessionToken', token),
+                                                                Navigator.of(context).popAndPushNamed('/'),
+                                                            } else {
+                                                                Scaffold.of(context).showSnackBar(new SnackBar(
+                                                                    content: new Text('There was an error signing you in.\nPlease check your credentials and try again!',
+                                                                        style: GoogleFonts.montserrat(),
+                                                                    ),
+                                                                ))
+                                                            }
+                                                        })
+                                                },
+                                            ),
+                                        ),
+                                    ],
                                 ),
-                            ),
-                        ],
-                    ),
+                            ],
+                        ),
+                        new Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                                new Container(
+                                    margin: new EdgeInsets.only(top: 680.0, left: 60.0),
+                                    child: new InkWell(
+                                        child: new Text(
+                                            'Sign up',
+                                            style: GoogleFonts.montserrat(
+                                                color: Colors.white,
+                                                fontSize: 16.0,
+                                            ),
+                                        ),
+                                        onTap: () => Navigator.of(context).pushNamed('/signup'),
+                                    ),
+                                ),
+                                new Container(
+                                    margin: new EdgeInsets.only(left: 120.0),
+                                    child: new InkWell(
+                                        child: new Text(
+                                            'Forgot Password',
+                                            style: GoogleFonts.montserrat(
+                                                color: Colors.white,
+                                                fontSize: 16.0,
+                                            ),
+                                        ),
+                                        onTap: null,
+                                    ),
+                                ),
+                            ],
+                        ),
+                    ],
                 ),
             ),
         );
