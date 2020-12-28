@@ -263,10 +263,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             margin: new EdgeInsets.only(top: 100.0, left: 200.0),
                                             child: new InkWell(
                                                 child: new Text(
-                                                    'Sign in here!',
+                                                    'Sign in',
                                                     style: GoogleFonts.montserrat(
                                                         fontSize: 16.0,
-                                                        decoration: TextDecoration.underline,
                                                     ),
                                                 ),
                                                 onTap: () => Navigator.of(context).pushNamed('/login'),    
