@@ -82,6 +82,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             child: new TextFormField(
                                                 controller: this._emailController,
                                                 obscureText: false,
+                                                keyboardType: TextInputType.emailAddress,
                                                 keyboardAppearance: Brightness.dark,
                                                 decoration: new InputDecoration(
                                                     labelText: 'EMAIL ADDRESS',
