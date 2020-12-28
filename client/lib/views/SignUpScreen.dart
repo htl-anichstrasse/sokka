@@ -19,7 +19,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     String _email;
     String _password;
     String _repeatPassword;
-    String _sessionToken;
 
     @override 
     Widget build(BuildContext context) {
@@ -245,7 +244,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                     this._userAPIService.signUpUser(this._email, this._password)
                                                         .then((token) => {
                                                             if (token != null) {
-                                                                this._sessionTokenStorage.storeNewSessionToken('sessionToken', this._sessionToken),
+                                                                this._sessionTokenStorage.storeNewSessionToken('sessionToken', token),
                                                                 Navigator.of(context).popAndPushNamed('/'),
                                                             } else {
                                                                 Scaffold.of(context).showSnackBar(new SnackBar(
