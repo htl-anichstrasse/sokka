@@ -14,164 +14,172 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     final TextEditingController _emailController = new TextEditingController();
     final TextEditingController _passwordController = new TextEditingController();
+    final TextEditingController _repeatPasswordController = new TextEditingController();
 
     String _email;
     String _password;
+    String _repeatedPassword;
     String _sessionToken;
 
-        @override 
+    @override 
     Widget build(BuildContext context) {
         return new Scaffold(
             resizeToAvoidBottomPadding: false,
             body: new Builder(
-                builder: (context) => new SingleChildScrollView(
-                    child: new Center(
-                        child: new Container(
-                            padding: EdgeInsets.all(10.0),
-                            child: Column(
-                                children: <Widget>[
-                                    new  Container(
-                                        margin: new EdgeInsets.only(top: 30.0),
-                                        child: new Text(
-                                            'WELCOME TO',
-                                            style: GoogleFonts.firaCode(
-                                                fontSize: 15.0,
-                                            ),
+                builder: (context) => new Stack(
+                    children: <Widget>[
+                        new Container(
+                            decoration: new BoxDecoration(
+                                image: new DecorationImage(
+                                    image: new AssetImage('lib/styles/images/SignUpBackground.png'),
+                                    fit: BoxFit.cover,
+                                ),
+                            ),
+                        ),
+                        new Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.max,
+                            children: <Widget>[
+                                new Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                        new Image(
+                                            image: new AssetImage('lib/styles/images/SokkaDropShadow.png'),
+                                            width: 250.0,
                                         ),
-                                    ),
-                                    new Container(
-                                        margin: new EdgeInsets.only(top: 5.0),
-                                        decoration: new BoxDecoration(
-                                        
-                                        ),
-                                        child: new Text(
-                                            'SOKKA',
-                                            style: GoogleFonts.firaCode(
-                                                fontWeight: FontWeight.bold,
-                                                letterSpacing: 5.0,
-                                                fontSize: 55.0,
-                                            ),
-                                        ),
-                                    ),
-                                    new Container(
-                                        child: new Image(
-                                            image: AssetImage('lib/styles/images/sokka.png'),
-                                            color: Colors.white, width: 280.0
-                                        ),
-                                    ),
-                                    new Stack(
-                                        alignment: Alignment.center,
-                                        children: <Widget>[
-                                            new Container(
-                                                height: 60.0,
-                                                width: 60.0,
-                                                decoration: new BoxDecoration(
-                                                    borderRadius: new BorderRadius.circular(50.0),
-                                                    color: Colors.tealAccent[100],
-                                                ),
-                                                child: new Icon(Icons.fastfood),
-                                            ),
-                                            new Container(
-                                                margin: new EdgeInsets.only(top: 60.0, right: 75.0),
-                                                height: 60.0,
-                                                width: 60.0,
-                                                decoration: new BoxDecoration(
-                                                    borderRadius: new BorderRadius.circular(50.0),
-                                                    color: Colors.tealAccent[700],
-                                                ),
-                                                child: new Icon(Icons.restaurant_menu, color: Colors.white)
-                                            ),
-                                            new Container(
-                                                margin: new EdgeInsets.only(top: 90.0, left: 25.0),
-                                                height: 60.0,
-                                                width: 60.0,
-                                                decoration: new BoxDecoration(
-                                                    borderRadius: new BorderRadius.circular(50.0),
-                                                    color: Colors.teal,
-                                                ),
-                                                child: new Icon(Icons.restaurant, color: Colors.white),
-                                            ),
-                                            new Container(
-                                                margin: new EdgeInsets.only(top: 15.0, left: 95.0),
-                                                height: 60.0,
-                                                width: 60.0,
-                                                decoration: new BoxDecoration(
-                                                    borderRadius: new BorderRadius.circular(50.0),
-                                                    color: Colors.tealAccent,
-                                                ),
-                                                child: Icon(Icons.shopping_basket),
-                                            ),
-                                        ],
-                                    ),
-
                                         new Container(
-                                            margin: EdgeInsets.only(top: 25.0),
-                                            width: 200,
+                                            child:new Text(
+                                            'WELCOME TO',
+                                                style: GoogleFonts.montserrat(
+                                                    fontSize: 16.0,
+                                                    letterSpacing: 2.0,
+                                                ),
+                                            ),
+                                        ),
+                                        new Container(
+                                            child: new Text(
+                                            'SOKKA',
+                                                style: GoogleFonts.montserrat(
+                                                    fontSize: 36.0,
+                                                    fontWeight: FontWeight.bold,
+                                                    letterSpacing: 10.0,
+                                                ),
+                                            ),
+                                        ),
+                                        new Container(
+                                            margin: new EdgeInsets.only(top: 80.0, right: 160.0),
+                                            alignment: Alignment.bottomLeft,
+                                            child: new Text(
+                                                'USER SIGN UP',
+                                                style: GoogleFonts.montserrat(
+                                                    fontSize: 20
+                                                ),
+                                            )
+                                        ),
+                                        new Container(
+                                            margin: new EdgeInsets.only(top: 10.0, right: 50.0),
+                                            width: 230.0,
                                             child: new TextFormField(
-                                                controller: _emailController,
-                                                keyboardType: TextInputType.emailAddress,
+                                                controller: this._emailController,
+                                                obscureText: false,
                                                 keyboardAppearance: Brightness.dark,
                                                 decoration: new InputDecoration(
                                                     labelText: 'EMAIL ADDRESS',
-                                                    labelStyle: new TextStyle(fontSize: 13.0),
+                                                    labelStyle: GoogleFonts.montserrat(
+                                                        fontSize: 10.0,
+                                                        color: new Color(0xFF80FFFFFF)
+                                                    ),
+                                                    enabledBorder: new UnderlineInputBorder(
+                                                        borderSide:  new BorderSide(color: new Color(0xFF80FFFFFF))
+                                                    ),
                                                 ),
                                             ),
                                         ),
-                                    new Container(
-                                        width: 200,
-                                        child: new TextFormField(
-                                            controller: _passwordController,
-                                            obscureText: true,
-                                            keyboardAppearance: Brightness.dark,
-                                            decoration: new InputDecoration(
-                                                labelText: 'PASSWORD',
-                                                labelStyle: new TextStyle(fontSize: 13.0),
+                                        new Container(
+                                            margin: new EdgeInsets.only(top: 10.0, right: 50.0),
+                                            width: 230.0,
+                                            child: new TextFormField(
+                                                controller: this._passwordController,
+                                                obscureText: true,
+                                                keyboardAppearance: Brightness.dark,
+                                                decoration: new InputDecoration(
+                                                    labelText: 'PASSWORD',
+                                                    labelStyle: GoogleFonts.montserrat(
+                                                        fontSize: 10.0,
+                                                        color: new Color(0xFF80FFFFFF)
+                                                    ),
+                                                    enabledBorder: new UnderlineInputBorder(
+                                                        borderSide:  new BorderSide(color: new Color(0xFF80FFFFFF))
+                                                    ),
+                                                ),
                                             ),
                                         ),
-                                    ),
-                                    new Container(
-                                        child: new FlatButton(
-                                            child: new Text('SUBMIT'),
-                                            onPressed: () => {
-                                                this._email = this._emailController.text,
-                                                this._password = this._passwordController.text,
-
-                                                if (this._emailController.text.isEmpty || this._passwordController.text.isEmpty) {
-                                                    showDialog(
-                                                        context: context,
-                                                        builder: (BuildContext context) {
-                                                            return new AlertDialog(
-                                                                title: new Text('Email / password field may not be empty!'),
-                                                                actions: <Widget>[
-                                                                    new FlatButton(
-                                                                        child: new Text('OK'),
-                                                                        onPressed: () => Navigator.pop(context),
-                                                                    ),
-                                                                ]
-                                                            );
-                                                        }
-                                                    )
-                                                },
-
-                                                this._userAPIService.signUpUser(this._email, this._password)
-                                                    .then((token) => {
-                                                        if (token != null) {
-                                                            this._sessionTokenStorage.storeNewSessionToken('sessionToken', this._sessionToken),
-                                                            Navigator.of(context).popAndPushNamed('/'),        
-                                                        } else {
-                                                            Scaffold.of(context).showSnackBar(new SnackBar(
-                                                                    content: new Text('There was a problem creating a new user.\nPlease try again!'),
-                                                                )
-                                                            ),
-                                                        },
-                                                    }),
-                                            },
+                                        new Container(
+                                            margin: new EdgeInsets.only(top: 10.0, right: 50.0),
+                                            width: 230.0,
+                                            child: new TextFormField(
+                                                controller: this._repeatPasswordController,
+                                                obscureText: true,
+                                                keyboardAppearance: Brightness.dark,
+                                                decoration: new InputDecoration(
+                                                    labelText: 'REPEAT PASSWORD',
+                                                    labelStyle: GoogleFonts.montserrat(
+                                                        fontSize: 10.0,
+                                                        color: new Color(0xFF80FFFFFF)
+                                                    ),
+                                                    enabledBorder: new UnderlineInputBorder(
+                                                        borderSide:  new BorderSide(color: new Color(0xFF80FFFFFF))
+                                                    ),
+                                                ),
+                                            ),
                                         ),
-                                    ),
-                                ],
-                            ),
+                                        new Container(
+                                            margin: new EdgeInsets.only(top: 40.0, left: 50.0),
+                                            decoration: new BoxDecoration(
+                                                boxShadow: [
+                                                    new BoxShadow(
+                                                        color: Colors.black.withOpacity(0.3),
+                                                        spreadRadius: 0.5,
+                                                        blurRadius: 5,
+                                                        offset: new Offset(3, 3),
+                                                    ),
+                                                ],
+                                            ),
+                                            width: 140.0,
+                                            height: 42.0,
+                                            child: new RaisedButton(
+                                                shape: new RoundedRectangleBorder(
+                                                    borderRadius: new BorderRadius.circular(15),
+                                                ),
+                                                color: new Color(0xFFFF8D4A),
+                                                child: new Text(
+                                                    'SUBMIT',
+                                                    style: GoogleFonts.montserrat(
+                                                        fontSize: 12.0,
+                                                        color: Colors.white,
+                                                    ),
+                                                ),
+                                                onPressed: () => null,                                        
+                                            )
+                                        ),
+                                        new Container(
+                                            margin: new EdgeInsets.only(top: 100.0, left: 200.0),
+                                            child: new InkWell(
+                                                child: new Text(
+                                                    'Sign in here!',
+                                                    style: GoogleFonts.montserrat(
+                                                        fontSize: 16.0,
+                                                        decoration: TextDecoration.underline,
+                                                    ),
+                                                ),
+                                                onTap: () => Navigator.of(context).pushNamed('/login'),    
+                                            ),
+                                        ),
+                                    ],
+                                ),
+                            ],
                         ),
-                    ),
+                    ],
                 ),
             ),
         );
