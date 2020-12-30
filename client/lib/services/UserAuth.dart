@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:client/util/NetworkWrapper.dart';
 
-class UserAPIService {
+class UserAuth {
     final NetworkWrapper _networkWrapper = new NetworkWrapper();
 
     static const String LOGIN_ROUTE = 'https://api.sokka.me/user/login';
