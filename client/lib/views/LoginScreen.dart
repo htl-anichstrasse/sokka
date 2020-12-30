@@ -1,5 +1,5 @@
-import 'package:client/services/UserAPIService.dart';
-import 'package:client/util/SessionTokenStorage.dart';
+import 'package:client/services/UserAuth.dart';
+import 'package:client/util/CookieStorage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -12,8 +12,8 @@ class _LoginScreenState extends State<LoginScreen> {
     final TextEditingController _emailController = new TextEditingController();
     final TextEditingController _passwordController = new TextEditingController();
 
-    final SessionTokenStorage _sessionTokenStorage = new SessionTokenStorage();
-    final UserAPIService _userAPIService = new UserAPIService(); 
+    final CookieStorage _cookieStorage = new CookieStorage();
+    final UserAuth _userAuth = new UserAuth(); 
 
     String _email;
     String _password;
@@ -172,10 +172,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                                         ),
                                                     },
 
-                                                    this._userAPIService.loginUser(this._email, this._password)
+                                                    this._userAuth.loginUser(this._email, this._password)
                                                         .then((token) => {
                                                             if (token != null) {
-                                                                this._sessionTokenStorage.storeNewSessionToken('sessionToken', token),
+                                                                this._cookieStorage.storeSessionToken(token),
+                                                                this._cookieStorage.storeEmail(this._email),
                                                                 Navigator.of(context).popAndPushNamed('/'),
                                                             } else {
                                                                 Scaffold.of(context).showSnackBar(new SnackBar(

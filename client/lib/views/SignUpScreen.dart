@@ -1,5 +1,5 @@
-import 'package:client/services/UserAPIService.dart';
-import 'package:client/util/SessionTokenStorage.dart';
+import 'package:client/services/UserAuth.dart';
+import 'package:client/util/CookieStorage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -9,8 +9,8 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-    final UserAPIService _userAPIService = new UserAPIService();
-    final SessionTokenStorage _sessionTokenStorage = new SessionTokenStorage();
+    final UserAuth _userAuth = new UserAuth();
+    final CookieStorage _cookieStorage = new CookieStorage();
 
     final TextEditingController _emailController = new TextEditingController();
     final TextEditingController _passwordController = new TextEditingController();
@@ -241,10 +241,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                         ),
                                                     },
 
-                                                    this._userAPIService.signUpUser(this._email, this._password)
+                                                    this._userAuth.signUpUser(this._email, this._password)
                                                         .then((token) => {
                                                             if (token != null) {
-                                                                this._sessionTokenStorage.storeNewSessionToken('sessionToken', token),
+                                                                this._cookieStorage.storeSessionToken(token),
                                                                 Navigator.of(context).popAndPushNamed('/'),
                                                             } else {
                                                                 Scaffold.of(context).showSnackBar(new SnackBar(
