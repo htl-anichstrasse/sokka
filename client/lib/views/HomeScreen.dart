@@ -53,18 +53,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                     onTap:() => null,
                                     onLongPress: () => null,
                                 ),
-                                new ListTile(
-                                    leading: new Icon(Icons.check, color: Colors.white),
-                                    title: new Text('Check Session-Token'),
-                                    onTap: () => this._cookieStorage.getSessionToken().then((token)
-                                    => print('current token:\t$token')),
-                                ),
-                                new ListTile(
-                                    leading: new Icon(Icons.check, color: Colors.white),
-                                    title: new Text('Check Email'),
-                                    onTap: () => this._cookieStorage.getEmail().then((email)
-                                    => print('email:\t$email')),
-                                ),
                                 new Spacer(),
                                 new Container(
                                     child: new ListTile( 

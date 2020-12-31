@@ -13,9 +13,6 @@ class Sokka extends StatelessWidget {
 
     @override
     Widget build(BuildContext context) {
-        this._cookieStorage.getSessionToken().then((token)
-            => print('token on startup: $token'));
-
         String email;
         String sessionToken;
         bool tokenIsValid = false;
@@ -24,7 +21,6 @@ class Sokka extends StatelessWidget {
 
         this._cookieStorage.getEmail().then((emailAddress)
             => email = emailAddress);
-        print('email: $email');
         this._cookieStorage.getSessionToken().then((token)
             => sessionToken = token);
 
