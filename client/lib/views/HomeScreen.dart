@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 .then((token) => this._userAuth.logoutUser(token)),
                                             this._cookieStorage.deleteValue(CookieStorage.TOKEN_STRING),
 
-                                            Navigator.of(context).pushNamed('/login'),
+                                            Navigator.of(context).popAndPushNamed('/login'),
                                             Scaffold.of(context).showSnackBar(new SnackBar(
                                                 content: new Text('Successfully logged out.')
                                             )),
