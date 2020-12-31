@@ -6,6 +6,4 @@ abstract class Product {
 
     double get getPrice;
     set setPrice(final double price);
-
-
 }
