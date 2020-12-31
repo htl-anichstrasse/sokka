@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:client/util/network_wrapper.dart';
+import 'package:client/util/NetworkWrapper.dart';
 
 class UserAPIService {
     final NetworkWrapper _networkWrapper = new NetworkWrapper();

@@ -1,9 +1,11 @@
+import 'package:client/models/Product.dart';
+
 /// -------------------------------------------------------------------------------
 /// Stores all relevant data, such as the different meals and the price of a menu.
 /// -------------------------------------------------------------------------------
-class Menu {
+class Menu implements Product {
     int _menuIndex;
-    int get getMenuIndex => _menuIndex;
+    int get getIndex => _menuIndex;
 
     bool _expanded;
     bool get getExpanded => _expanded;
@@ -29,7 +31,8 @@ class Menu {
     double get getPrice => _price;
     set setPrice(final double price) => _price = price;
 
-    Menu(final int menuIndex, final bool expanded, final String title, final String appetizer, final String mainCourse, final String dessert, final double price) {
+    Menu(final int menuIndex, final bool expanded, final String title, final String appetizer, final String mainCourse, final String dessert,
+            final double price) {
         this._menuIndex = menuIndex;
         this._expanded = expanded;
         this._title = title;

@@ -1,4 +1,4 @@
-import 'package:client/handlers/basket_handler/basket_handler.dart';
+import 'package:client/util/ShoppingBasketController.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:client/models/menu.dart';
@@ -9,24 +9,26 @@ class BasketView extends StatefulWidget {
 }
 
 class _BasketViewState extends State<BasketView> {
+    final ShoppingBasketController _shoppingBasketController = new ShoppingBasketController();
+
     @override
     Widget build(BuildContext context) {
         return new ListView.builder(
-            itemCount: BasketHandler.getInstance().getBasket().length,
+            itemCount: this._shoppingBasketController.getBasket().length,
             itemBuilder: (BuildContext context, int index) => new Dismissible(
-                key: Key('${BasketHandler.getInstance().getBasket()[index].getTitle} $index'),
+                key: Key('${this._shoppingBasketController.getBasket()[index].getTitle} $index'),
                 onDismissed: (DismissDirection direction) => {
-                    setState(() => BasketHandler.getInstance().getBasket().removeAt(index)),
+                    setState(() => this._shoppingBasketController.getBasket().removeAt(index)),
                     Scaffold.of(context).showSnackBar(new SnackBar(
-                            content: new Text('${BasketHandler.getInstance().getBasket()[index].getTitle} has been removed from your basket'),
+                            content: new Text('${this._shoppingBasketController.getBasket()[index].getTitle} has been removed from your basket'),
                             // duration: new Duration(seconds: 1),
                         )
                     ),
                 },
                 child: new Card(
                     child: new ListTile(
-                        leading: BasketHandler.getInstance().getBasket()[index] is Menu ? Icon(Icons.restaurant_menu) : Icon(Icons.fastfood),
-                        title: new Text('${BasketHandler.getInstance().getBasket()[index].getTitle}'),
+                        leading: this._shoppingBasketController.getBasket()[index] is Menu ? Icon(Icons.restaurant_menu) : Icon(Icons.fastfood),
+                        title: new Text('${this._shoppingBasketController.getBasket()[index].getTitle}'),
                     ),
                 ),
             ),

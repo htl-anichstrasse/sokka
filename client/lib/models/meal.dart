@@ -1,6 +1,8 @@
-class Meal {
+import 'package:client/models/Product.dart';
+
+class Meal implements Product {
     int _mealIndex;
-    int get getMealIndex => _mealIndex;
+    int get getIndex => _mealIndex;
 
     String _title;
     String get getTitle => _title;

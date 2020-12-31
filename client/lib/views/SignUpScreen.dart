@@ -1,6 +1,7 @@
-import 'package:client/services/user_api_service.dart';
-import 'package:client/util/session_token_storage.dart';
+import 'package:client/services/UserAPIService.dart';
+import 'package:client/util/SessionTokenStorage.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SignUpScreen extends StatefulWidget {
     @override
@@ -33,8 +34,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         margin: new EdgeInsets.only(top: 30.0),
                                         child: new Text(
                                             'WELCOME TO',
-                                            style: new TextStyle(
-                                                fontFamily: 'Fira Code',
+                                            style: GoogleFonts.firaCode(
                                                 fontSize: 15.0,
                                             ),
                                         ),
@@ -46,8 +46,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         ),
                                         child: new Text(
                                             'SOKKA',
-                                            style: new TextStyle(
-                                                fontFamily: 'Fira Code',
+                                            style: GoogleFonts.firaCode(
                                                 fontWeight: FontWeight.bold,
                                                 letterSpacing: 5.0,
                                                 fontSize: 55.0,
