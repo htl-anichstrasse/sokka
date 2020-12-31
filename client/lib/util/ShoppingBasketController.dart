@@ -7,7 +7,6 @@ class ShoppingBasketController {
 
     List _basket = [];   
 
-
     List getBasket() {
         return this._basket;
     }
