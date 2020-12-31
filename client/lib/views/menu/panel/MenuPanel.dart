@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:client/models/menu.dart';
 import 'package:client/util/ShoppingBasketController.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 /// ----------------------------------------------------------------------
 /// Render-Widget for displaying a menu as foldable expansion panel in the
@@ -48,6 +49,9 @@ class _MenuPanelState extends State<MenuPanel> {
                 return new ListTile(
                     title: new Text(
                         '${menu.getTitle} ${menu.getIndex != null ? menu.getIndex + 1 : ''}',
+                        style: GoogleFonts.montserrat(
+                            color: Colors.black,
+                        ),
                     ),
                 );
             },
@@ -63,29 +67,71 @@ class _MenuPanelState extends State<MenuPanel> {
                 children: <Widget>[
                     new Row(
                         children: <Widget>[
-                            new Text(menu.getAppetizer),
+                            new Text(
+                                menu.getAppetizer,
+                                style: GoogleFonts.montserrat(
+                                    color: Colors.black,
+                                ),
+                            ),
                         ],
                     ),
                     new Row(
                         children: <Widget>[
-                            new Text(menu.getMainCourse),
+                            new Text(
+                                menu.getMainCourse,
+                                style: GoogleFonts.montserrat(
+                                    color: Colors.black,
+                                ),
+                            ),
                         ],
                     ),
                     new Row(
                         children: <Widget>[
-                            new Text(menu.getDessert),
+                            new Text(
+                                menu.getDessert,
+                                style: GoogleFonts.montserrat(
+                                    color: Colors.black,
+                                ),
+                            ),
                         ],
                     ),
-                    new FlatButton.icon(
-                        onPressed: () => {
-                            this._shoppingBasketController.appendMenuToBasket(menu),
-                            Scaffold.of(context).showSnackBar(new SnackBar(
-                                content: new Text('Menu: "${menu.getTitle}" has been added to your basket!'),
-                                // duration: new Duration(seconds: 1),
-                            ))
-                        },
-                        label: new Text('${menu.getPrice.toStringAsFixed(2)} €', style: new TextStyle(color: Colors.grey),),
-                        icon: new Icon(Icons.shopping_basket, color: Colors.grey,),
+                    new Container(
+                        margin: new EdgeInsets.only(top: 5.0),
+                        child: new Row(
+                            children: <Widget>[
+                                new Text(
+                                    '${menu.getPrice.toStringAsFixed(2)} €',
+                                    style: GoogleFonts.montserrat(
+                                        color: Colors.black
+                                    ),
+                                ),
+                            ],
+                        ),
+                    ),
+                    new Container(
+                        alignment: Alignment.center,
+                        margin: new EdgeInsets.only(top: 10.0),
+                        child: new FlatButton.icon(
+                            onPressed: () => {
+                                this._shoppingBasketController.appendMenuToBasket(menu),
+                                Scaffold.of(context).showSnackBar(new SnackBar(
+                                    content: new Text(
+                                        'Menu: "${menu.getTitle}" has been added to your basket!',
+                                        style: GoogleFonts.montserrat()
+                                    ),
+                                ))
+                            },
+                            label: new Text(
+                                'Add to basket',
+                                style: GoogleFonts.montserrat(
+                                    color: new Color(0xFF008C78),
+                                ),
+                            ),
+                            icon: new Icon(
+                                Icons.shopping_basket,
+                                color: new Color(0xFF008C78),
+                            ),
+                        ),
                     ),
                 ],
             ),
