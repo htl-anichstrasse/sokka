@@ -23,10 +23,15 @@ class ACPConfigValue implements Model {
         });
     }
 
-    delete(): Promise<void> {
-        throw new Error("Method not implemented.");
-    }
     update(): Promise<void> {
+        return new Promise<void>((resolve, reject) => {
+            Database.instance.query('UPDATE sokka_config SET friendlyName = ?, type = ?, configValue = ? WHERE configKey = ?;', [this.friendlyName, this.type, this.configValue, this.configKey]).then(() => {
+                resolve(null);
+            }).catch((err) => reject(err));
+        });
+    }
+
+    delete(): Promise<void> {
         throw new Error("Method not implemented.");
     }
 }

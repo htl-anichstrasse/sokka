@@ -44,6 +44,10 @@ form {
     display: inline;
 }
 
+.config-value-input input {
+    width: 6.5rem
+}
+
 /*
 React Passwort Strength Override
 */

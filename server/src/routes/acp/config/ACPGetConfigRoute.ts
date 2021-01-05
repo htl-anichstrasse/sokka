@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import ACPConfigValue from '../../../models/acp/ACPConfigValue';
+import ACPSession from '../../../models/acp/ACPSession';
 import Route from '../../../Route';
 
 class ACPGetConfigRoute implements Route {
@@ -20,11 +21,16 @@ class ACPGetConfigRoute implements Route {
             res.send({ success: false, message: 'Authorization required' });
             return;
         }
-        ACPConfigValue.getAll().then((value) => {
-            res.send({ success: true, data: value });
-        }).catch((err) => {
-            res.status(500);
-            res.send({ success: false, message: err });
+        ACPSession.get(req.token).then(() => {
+            ACPConfigValue.getAll().then((value) => {
+                res.send({ success: true, data: value });
+            }).catch((err) => {
+                res.status(500);
+                res.send({ success: false, message: err });
+            });
+        }).catch(() => {
+            res.status(401);
+            res.send({ success: false, message: 'Authorization required' });
         });
     }
 }
