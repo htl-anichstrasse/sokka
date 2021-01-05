@@ -19,12 +19,12 @@ const ListConfigValuesComponent: FunctionComponent<ListConfigValuesComponentProp
     let vals = [];
     for (let configValue of configData) {
         vals.push(
-            <div className="row">
-                <div className="col">
-                    {configValue.friendlyName}
+            <div className="row config-value-row">
+                <div className="col-8 config-name-col">
+                    <span className="config-friendly-name">{configValue.friendlyName}</span> <pre className="config-key">({configValue.configKey})</pre>
                 </div>
-                <div className="col">
-                    {configValue.configValue}
+                <div className="col-2 config-val-col">
+                    <ConfigValueInput configValue={configValue}/>
                 </div>
             </div>
         );
@@ -32,6 +32,10 @@ const ListConfigValuesComponent: FunctionComponent<ListConfigValuesComponentProp
     return (<div className="configValues">
         {vals}
     </div>);
+}
+
+function ConfigValueInput(props: any) {
+    return <div>{props.configValue.configValue}</div>;
 }
 
 export default ListConfigValuesComponent;
