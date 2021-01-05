@@ -27,6 +27,27 @@ form {
     text-align: center;
 }
 
+.config-value-row {
+    margin-bottom: 5px;
+}
+
+.config-friendly-name {
+    font-weight: bold;
+    float: left;
+}
+
+.config-key {
+    padding-left: 5px;
+    margin-bottom: 0;
+    font-size: 100%;
+    overflow: hidden;
+    display: inline;
+}
+
+.config-value-input input {
+    width: 6.5rem
+}
+
 /*
 React Passwort Strength Override
 */
