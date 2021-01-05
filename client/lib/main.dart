@@ -1,5 +1,7 @@
+import 'dart:ui' as UI;
 import 'package:client/services/UserAuth.dart';
 import 'package:client/util/routes.dart';
+import 'package:client/views/LoadingSplashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:client/styles/theme/AppThemes.dart';
 import 'package:flutter/services.dart';
@@ -23,7 +25,13 @@ class Sokka extends StatelessWidget {
                         routes: routes
                     );
                 } else {
-                    return new CircularProgressIndicator();
+                    return new MediaQuery(
+                        data: new MediaQueryData.fromWindow(UI.window),
+                        child: new Directionality(
+                            textDirection: TextDirection.ltr,
+                            child: new LoadingSplashScreen(),
+                        ),
+                    );
                 }
             },
         );
