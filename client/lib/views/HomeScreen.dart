@@ -1,5 +1,5 @@
-import 'package:client/services/UserAPIService.dart';
-import 'package:client/util/SessionTokenStorage.dart';
+import 'package:client/services/UserAuth.dart';
+import 'package:client/util/CookieStorage.dart';
 import 'package:client/views/menu/MenuView.dart';
 import 'package:flutter/material.dart';
 import 'package:client/views/account/AccountView.dart';
@@ -11,8 +11,8 @@ class HomeScreen extends StatefulWidget {
 }       
 
 class _HomeScreenState extends State<HomeScreen> {
-    final SessionTokenStorage _sessionTokenStorage = new SessionTokenStorage();
-    final UserAPIService _userAPIService = new UserAPIService();
+    final CookieStorage _cookieStorage = new CookieStorage();
+    final UserAuth _userAuth = new UserAuth();
     final List<String> _days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
     @override
@@ -48,14 +48,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                     onLongPress: () => null,
                                 ),
                                 new ListTile(
-                                    leading: new Icon(Icons.account_balance_wallet, color:Colors.white),
+                                    leading: new Icon(Icons.account_balance_wallet, color: Colors.white),
                                     title: new Text('Wallet'),
                                     onTap:() => null,
                                     onLongPress: () => null,
                                 ),
                                 new Spacer(),
                                 new Container(
-                                    child: new ListTile(
+                                    child: new ListTile( 
                                         leading: new Icon(Icons.settings, color: Colors.white),
                                         title: new Text('Settings'),
                                         onTap: () => null,
@@ -69,11 +69,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                         leading: new Icon(Icons.exit_to_app, color: Colors.white),
                                         title: new Text('Log out'),
                                         onTap: () => {
-                                            this._sessionTokenStorage.getSessionToken('sessionToken')
-                                                .then((token) => this._userAPIService.logoutUser(token)),
-                                            this._sessionTokenStorage.deleteSessionToken('sessionToken'),
+                                            this._cookieStorage.getSessionToken()
+                                                .then((token) => this._userAuth.logoutUser(token)),
+                                            this._cookieStorage.deleteValue(CookieStorage.TOKEN_STRING),
 
-                                            Navigator.of(context).pushNamed('/login'),
+                                            Navigator.of(context).popAndPushNamed('/login'),
                                             Scaffold.of(context).showSnackBar(new SnackBar(
                                                 content: new Text('Successfully logged out.')
                                             )),

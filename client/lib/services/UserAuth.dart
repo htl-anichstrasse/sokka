@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'package:client/util/CookieStorage.dart';
 import 'package:client/util/NetworkWrapper.dart';
 
-class UserAPIService {
+class UserAuth {
     final NetworkWrapper _networkWrapper = new NetworkWrapper();
+    final CookieStorage _cookieStorage = new CookieStorage();
 
     static const String LOGIN_ROUTE = 'https://api.sokka.me/user/login';
     static const String LOGOUT_ROUTE = 'https://api.sokka.me/user/logout';
@@ -73,5 +75,12 @@ class UserAPIService {
             .then((response) {
                 return response['success'];
             });
+    }
+
+    Future<bool> validateSession() async {
+        String email = await this._cookieStorage.getEmail();
+        String token = await this._cookieStorage.getSessionToken();
+
+        return await this.validateSessionToken(token, email);
     }
 }
