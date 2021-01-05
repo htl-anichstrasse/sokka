@@ -93,6 +93,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                         borderSide:  new BorderSide(color: new Color(0xFF80FFFFFF))
                                                     ),
                                                 ),
+                                                style: GoogleFonts.montserrat(
+                                                    color: Colors.white,
+                                                ),
                                             ),
                                         ),
                                         new Container(
@@ -112,6 +115,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                         borderSide:  new BorderSide(color: new Color(0xFF80FFFFFF))
                                                     ),
                                                 ),
+                                                style: GoogleFonts.montserrat(
+                                                    color: Colors.white,
+                                                ),
                                             ),
                                         ),
                                         new Container(
@@ -130,6 +136,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                     enabledBorder: new UnderlineInputBorder(
                                                         borderSide:  new BorderSide(color: new Color(0xFF80FFFFFF))
                                                     ),
+                                                ),
+                                                style: GoogleFonts.montserrat(
+                                                    color: Colors.white,
                                                 ),
                                             ),
                                         ),

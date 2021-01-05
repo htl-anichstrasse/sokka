@@ -4,6 +4,7 @@ import 'package:client/views/menu/MenuView.dart';
 import 'package:flutter/material.dart';
 import 'package:client/views/account/AccountView.dart';
 import 'package:client/views/basket/BasketView.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatefulWidget {
     @override
@@ -16,18 +17,16 @@ class _HomeScreenState extends State<HomeScreen> {
     final List<String> _days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
     @override
-    void initState() {
-        super.initState();
-    }
-
-    @override
     Widget build(BuildContext context) {
         return new Builder(
             builder: (context) => new DefaultTabController(
                 length: 4,
                 child: new Scaffold(
                     appBar: new AppBar(
-                        title: new Text('${_days[new DateTime.now().weekday - 1]} - ${new DateTime.now().day}.${new DateTime.now().month}.${new DateTime.now().year}'),
+                        title: new Text(
+                            '${_days[new DateTime.now().weekday - 1]} - ${new DateTime.now().day}.${new DateTime.now().month}.${new DateTime.now().year}',
+                            style: GoogleFonts.montserrat()
+                        ),
                         centerTitle: true,
                         iconTheme: new IconThemeData(color: Colors.white),
                     ),
@@ -38,7 +37,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                     decoration: new BoxDecoration(color: Colors.tealAccent[700]),
                                     child: new Align(
                                         alignment: Alignment.topCenter,
-                                        child: new Text('SOKKA'),
+                                        child: new Column(
+                                            children: <Widget>[
+                                                new Text(
+                                                    'SOKKA',
+                                                    style: GoogleFonts.montserrat(
+                                                        fontSize: 20.0,
+                                                    ),
+                                                ),
+                                            ],
+                                        ),
                                     ),
                                 ),
                                 new ListTile(
@@ -91,6 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             indicatorSize: TabBarIndicatorSize.tab,
                             indicatorPadding: new EdgeInsets.all(5.0),
                             indicatorColor: Colors.tealAccent[100],
+                            labelStyle: GoogleFonts.montserrat(),
                             tabs: [
                                 new Tab(text: 'Menus', icon: Icon(Icons.restaurant_menu)),
                                 new Tab(text: 'Meals', icon: Icon(Icons.fastfood)),
