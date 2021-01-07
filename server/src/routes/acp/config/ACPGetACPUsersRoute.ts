@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, Router } from 'express';
-import ACPSession from '../../../models/acp/ACPSession';
 import ACPUser from '../../../models/acp/ACPUser';
 import Route from '../../../Route';
+import { AuthorizationType, NeedsAuthorization } from '../../NeedsAuthorization';
 
 class ACPGetACPUsersRoute implements Route {
     readonly router: Router;
@@ -15,20 +15,11 @@ class ACPGetACPUsersRoute implements Route {
         this.fullpath = '/acp/getacpusers';
     }
 
+    @NeedsAuthorization(AuthorizationType.ACP)
     private get(req: Request, res: Response, next: NextFunction): void {
-        if (!req.token) {
-            res.status(401);
-            res.send({ success: false, message: 'Authorization required' });
+        ACPUser.getAll().then((users) => {
+            res.send({ success: true, users });
             return;
-        }
-        ACPSession.get(req.token).then(() => {
-            ACPUser.getAll().then((users) => {
-                res.send({ success: true, users });
-                return;
-            });
-        }).catch(() => {
-            res.status(401);
-            res.send({ success: false, message: 'Authorization required' });
         });
     }
 }

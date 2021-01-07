@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response, Router } from 'express';
-import ACPSession from '../../../models/acp/ACPSession';
 import Group from '../../../models/Group';
 import User from '../../../models/User';
 import Route from '../../../Route';
@@ -17,12 +16,6 @@ class ACPUpdateUserRoute implements Route {
     }
 
     private post(req: Request, res: Response, next: NextFunction): void {
-        if (!req.token) {
-            res.status(401);
-            res.send({ success: false, message: 'Authorization required' });
-            return;
-        }
-
         if (!(req.body.email && req.body.user)) {
             res.status(400);
             res.send({ success: false, message: 'Invalid parameters' });
@@ -42,38 +35,33 @@ class ACPUpdateUserRoute implements Route {
             });
         }
 
-        ACPSession.get(req.token).then(() => {
-            User.getByEmail(req.body.email).then((user) => {
-                if (req.body.user.email) {
-                    user.email = req.body.user.email;
-                }
-                if (req.body.user.password) {
-                    user.password = req.body.user.password;
-                }
-                if (req.body.user.verified) {
-                    user.verified = req.body.user.veriifed;
-                }
+        User.getByEmail(req.body.email).then((user) => {
+            if (req.body.user.email) {
+                user.email = req.body.user.email;
+            }
+            if (req.body.user.password) {
+                user.password = req.body.user.password;
+            }
+            if (req.body.user.verified) {
+                user.verified = req.body.user.veriifed;
+            }
 
-                // Check if group exists & set group for user
-                updateGroup(user, req).then((user) => {
-                    console.log(user);
-                    user.update().then(() => {
-                        res.send({ success: true, message: 'User updated' });
-                    }).catch(() => {
-                        res.status(500);
-                        res.send({ success: false, message: `Could not update user '${req.body.email}'` });
-                    });
+            // Check if group exists & set group for user
+            updateGroup(user, req).then((user) => {
+                console.log(user);
+                user.update().then(() => {
+                    res.send({ success: true, message: 'User updated' });
                 }).catch(() => {
-                    res.status(400);
-                    res.send({ success: false, message: 'This group does not exist' });
+                    res.status(500);
+                    res.send({ success: false, message: `Could not update user '${req.body.email}'` });
                 });
-            }).catch((err) => {
+            }).catch(() => {
                 res.status(400);
-                res.send({ success: false, message: err.message });
+                res.send({ success: false, message: 'This group does not exist' });
             });
-        }).catch(() => {
-            res.status(401);
-            res.send({ success: false, message: 'Authorization required' });
+        }).catch((err) => {
+            res.status(400);
+            res.send({ success: false, message: err.message });
         });
     }
 }

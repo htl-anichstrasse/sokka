@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import ACPConfigValue from '../../../models/acp/ACPConfigValue';
-import ACPSession from '../../../models/acp/ACPSession';
 import Route from '../../../Route';
+import { AuthorizationType, NeedsAuthorization } from '../../NeedsAuthorization';
 
 class ACPGetConfigRoute implements Route {
     readonly router: Router;
@@ -15,22 +15,13 @@ class ACPGetConfigRoute implements Route {
         this.fullpath = '/acp/getconfig';
     }
 
+    @NeedsAuthorization(AuthorizationType.ACP)
     private get(req: Request, res: Response, next: NextFunction): void {
-        if (!req.token) {
-            res.status(401);
-            res.send({ success: false, message: 'Authorization required' });
-            return;
-        }
-        ACPSession.get(req.token).then(() => {
-            ACPConfigValue.getAll().then((value) => {
-                res.send({ success: true, data: value });
-            }).catch((err) => {
-                res.status(500);
-                res.send({ success: false, message: err });
-            });
-        }).catch(() => {
-            res.status(401);
-            res.send({ success: false, message: 'Authorization required' });
+        ACPConfigValue.getAll().then((value) => {
+            res.send({ success: true, data: value });
+        }).catch((err) => {
+            res.status(500);
+            res.send({ success: false, message: err });
         });
     }
 }

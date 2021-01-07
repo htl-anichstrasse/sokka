@@ -2,9 +2,9 @@ import * as bcrypt from 'bcrypt';
 import { NextFunction, Request, Response, Router } from 'express';
 import * as log4js from 'log4js';
 import config from '../../../Config';
-import ACPSession from '../../../models/acp/ACPSession';
 import ACPUser from '../../../models/acp/ACPUser';
 import Route from '../../../Route';
+import { AuthorizationType, NeedsAuthorization } from '../../NeedsAuthorization';
 
 class ACPSignupRoute implements Route {
     readonly router: Router;
@@ -19,33 +19,24 @@ class ACPSignupRoute implements Route {
         this.fullpath = '/acp/signup';
     }
 
+    @NeedsAuthorization(AuthorizationType.ACP)
     private post(req: Request, res: Response, next: NextFunction): void {
-        if (!req.token) {
-            res.status(401);
-            res.send({ success: false, message: 'Authorization required' });
+        if (!(req.body.username && req.body.password)) {
+            res.status(400);
+            res.send({ success: false, message: 'Invalid parameters' });
             return;
         }
-        ACPSession.get(req.token).then(() => {
-            if (!(req.body.username && req.body.password)) {
-                res.status(400);
-                res.send({ success: false, message: 'Invalid parameters' });
+        ACPUser.exists(req.body.username).then((exists) => {
+            if (exists) {
+                res.send({ success: false, message: 'User already exists' });
                 return;
             }
-            ACPUser.exists(req.body.username).then((exists) => {
-                if (exists) {
-                    res.send({ success: false, message: 'User already exists' });
-                    return;
-                }
-                bcrypt.hash(req.body.password, parseInt(config.readConfigValueSync('SALT_ROUNDS')), (err, hash) => {
-                    if (err) throw err;
-                    ACPUser.create(req.body.username, hash).then((user) => {
-                        res.send({ success: true, message: `Successfully created user ${user.username}` });
-                    }).catch((err) => ACPSignupRoute.handleUnsuccessfulSignup(req, res, err));
+            bcrypt.hash(req.body.password, parseInt(config.readConfigValueSync('SALT_ROUNDS')), (err, hash) => {
+                if (err) throw err;
+                ACPUser.create(req.body.username, hash).then((user) => {
+                    res.send({ success: true, message: `Successfully created user ${user.username}` });
                 }).catch((err) => ACPSignupRoute.handleUnsuccessfulSignup(req, res, err));
-            });
-        }).catch(() => {
-            res.status(401);
-            res.send({ success: false, message: 'Authorization required' });
+            }).catch((err) => ACPSignupRoute.handleUnsuccessfulSignup(req, res, err));
         });
     }
 
