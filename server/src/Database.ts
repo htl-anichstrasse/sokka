@@ -17,7 +17,10 @@ class Database {
         });
         this.logger.info('Connecting to MySQL...');
         this.connection.connect((err) => {
-            if (err) throw err;
+            if (err) {
+                this.logger.fatal(`Connection to MySQL failed, shutting down. ${err}`);
+                process.exit(-1);
+            }
             this.logger.info('Successfully connected to MySQL');
             callback();
         });
@@ -26,7 +29,7 @@ class Database {
     static create(): Promise<Database> {
         return new Promise<Database>((resolve) => {
             if (Database.instance) {
-                throw 'Database already created!';
+                throw new Error('Database already created!');
             }
             let callback = () => {
                 resolve(Database.instance);

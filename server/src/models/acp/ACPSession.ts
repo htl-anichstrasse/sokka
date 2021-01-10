@@ -10,7 +10,7 @@ class ACPSession implements Model {
         return new Promise<ACPSession>((resolve, reject) => {
             ACPSession.count(user).then((count) => {
                 if (count >= parseInt(config.readConfigValueSync('MAX_ACP_USER_SESSIONS'))) {
-                    reject('Max number of sessions reached');
+                    reject(new Error('Max number of sessions reached'));
                     return;
                 }
                 // TODO: token has unique index, there is a VERY SMALL chance that this will fail -> loop
@@ -28,7 +28,7 @@ class ACPSession implements Model {
                 if (result.length > 0) {
                     resolve(new ACPSession(result[0].id, result[0].acp_username, result[0].token));
                 } else {
-                    reject('ACP Session not found');
+                    reject(new Error('ACP Session not found'));
                 }
             }).catch((err) => reject(err));
         });

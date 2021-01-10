@@ -1,4 +1,5 @@
-import { NextFunction, Request, Response, Router } from 'express';
+import { Request, Response, Router } from 'express';
+import * as log4js from 'log4js';
 import ACPConfigValue from '../../../models/acp/ACPConfigValue';
 import Route from '../../../Route';
 import { AuthorizationType, NeedsAuthorization } from '../../NeedsAuthorization';
@@ -7,6 +8,7 @@ class ACPGetConfigRoute implements Route {
     readonly router: Router;
     readonly path: string;
     readonly fullpath: string;
+    readonly logger = log4js.getLogger('ACPGetConfigRoute');
 
     constructor() {
         this.router = Router();
@@ -16,13 +18,15 @@ class ACPGetConfigRoute implements Route {
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)
-    private get(req: Request, res: Response, next: NextFunction): void {
-        ACPConfigValue.getAll().then((value) => {
-            res.send({ success: true, data: value });
-        }).catch((err) => {
+    private async get(req: Request, res: Response): Promise<void> {
+        try {
+            let configEntry = await ACPConfigValue.getAll();
+            res.send({ success: true, data: configEntry });
+        } catch (err) {
             res.status(500);
-            res.send({ success: false, message: err });
-        });
+            res.send({ success: false, message: 'An unknown error occurred while fetching config entries' });
+            this.logger.error(`An unknown error occured while fetching config entries: ${err}`);
+        }
     }
 }
 

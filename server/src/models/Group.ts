@@ -17,7 +17,7 @@ class Group implements Model {
                 if (result.length > 0) {
                     resolve(new Group(result[0].group_id, result[0].groupname, result[0].rebate));
                 } else {
-                    reject('Group not found');
+                    reject(new Error('Group not found'));
                 }
             }).catch((err) => reject(err));
         });
@@ -29,7 +29,7 @@ class Group implements Model {
                 if (result.length > 0) {
                     resolve(new Group(result[0].group_id, result[0].groupname, result[0].rebate));
                 } else {
-                    reject('Group not found');
+                    reject(new Error('Group not found'));
                 }
             }).catch((err) => reject(err));
         });

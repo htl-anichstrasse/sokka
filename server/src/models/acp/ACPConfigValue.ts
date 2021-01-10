@@ -6,7 +6,11 @@ class ACPConfigValue implements Model {
     static get(configKey: string): Promise<ACPConfigValue> {
         return new Promise<ACPConfigValue>((resolve, reject) => {
             Database.instance.query('SELECT * FROM sokka_config WHERE configKey = ?;', [configKey]).then((result) => {
-                resolve(new ACPConfigValue(result[0].configKey, result[0].friendlyName, result[0].type, result[0].configValue));
+                if (result.length > 0) {
+                    resolve(new ACPConfigValue(result[0].configKey, result[0].friendlyName, result[0].type, result[0].configValue));
+                } else {
+                    reject(new Error('Config entry not found'));
+                }
             }).catch((err) => reject(err));
         });
     }

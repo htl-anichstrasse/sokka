@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response, Router } from 'express';
+import { Request, Response, Router } from 'express';
 import * as log4js from 'log4js';
 import Session from '../../models/Session';
 import User from '../../models/User';
@@ -8,7 +8,7 @@ class ValidateRoute implements Route {
     readonly router: Router;
     readonly path: string;
     readonly fullpath: string;
-    private static readonly logger = log4js.getLogger('ValidateRoute');
+    readonly logger = log4js.getLogger('ValidateRoute');
 
     constructor() {
         this.router = Router();
@@ -17,31 +17,30 @@ class ValidateRoute implements Route {
         this.fullpath = '/user/validate';
     }
 
-    private post(req: Request, res: Response, next: NextFunction): void {
+    private async post(req: Request, res: Response): Promise<void> {
         if (!req.body.token || !req.body.email) {
             res.status(400);
             res.send({ success: false, message: 'Invalid parameters' });
             return;
         }
-
-        User.getByEmail(req.body.email).then((user) => {
-            Session.validate(user, req.body.token).then((result) => {
-                if (result) {
-                    res.send({ success: true, message: 'Token for this email is valid' });
-                } else {
-                    res.send({ success: false, message: `Could not validate token for email '${req.body.email}'` });
-                }
-            }).catch((err) => ValidateRoute.handleInvalidToken(req, res, err));
-        }).catch((err) => ValidateRoute.handleInvalidToken(req, res, err));
-    }
-
-    private static handleInvalidToken(req: Request, res: Response, err?: Error): void {
-        let requestedEmail = req.body.email;
-        if (err) {
-            ValidateRoute.logger.warn(`Unsuccessful token validation for '${requestedEmail}' with error: ${err}`);
+        try {
+            let user = await User.getByEmail(req.body.email);
+            let result = await Session.validate(user, req.body.token);
+            if (result) {
+                res.send({ success: true, message: 'Token for this email is valid' });
+            } else {
+                res.send({ success: false, message: `Could not validate token for email '${req.body.email}'` });
+            }
+        } catch (err) {
+            if (err.message === 'User not found') {
+                res.status(400);
+                res.send({ success: false, message: err.message });
+                return;
+            }
+            res.status(500);
+            res.send({ success: false, message: 'An unknwon error occurred while validating session token' });
+            this.logger.error(`An unknwon error occurred while validating session token: ${err}`);
         }
-        res.status(500);
-        res.send({ success: false, message: `Could not validate token for email '${requestedEmail}'` });
     }
 }
 

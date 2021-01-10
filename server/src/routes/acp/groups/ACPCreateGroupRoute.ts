@@ -1,4 +1,5 @@
-import { NextFunction, Request, Response, Router } from 'express';
+import { Request, Response, Router } from 'express';
+import * as log4js from 'log4js';
 import Group from '../../../models/Group';
 import Route from '../../../Route';
 import { AuthorizationType, NeedsAuthorization } from '../../NeedsAuthorization';
@@ -7,6 +8,7 @@ class ACPCreateGroupRoute implements Route {
     readonly router: Router;
     readonly path: string;
     readonly fullpath: string;
+    readonly logger = log4js.getLogger('ACPCreateGroupRoute');
 
     constructor() {
         this.router = Router();
@@ -16,19 +18,20 @@ class ACPCreateGroupRoute implements Route {
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)
-    private post(req: Request, res: Response, next: NextFunction): void {
+    private async post(req: Request, res: Response): Promise<void> {
         if (!req.body.groupname || !req.body.rebate) {
             res.status(400);
             res.send({ success: false, message: 'Invalid parameters' });
             return;
         }
-
-        Group.create(req.body.groupname, req.body.rebate).then((group) => {
-            res.send({ success: true, message: `Created group with id ${group.id}` });
-        }).catch((err) => {
+        try {
+            let group = await Group.create(req.body.groupname, req.body.rebate);
+            res.send({ success: true, message: `Successfully created group with id '${group.id}'` });
+        } catch (err) {
             res.status(500);
-            res.send({ success: false, message: err.message });
-        });
+            res.send({ success: false, message: 'An unknown error occurred while creating group' });
+            this.logger.error(`An unknown error occured while creating group with name '${req.body.groupname}': ${err}`);
+        }
     }
 }
 

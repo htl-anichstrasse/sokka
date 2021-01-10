@@ -1,4 +1,5 @@
-import { NextFunction, Request, Response, Router } from 'express';
+import { Request, Response, Router } from 'express';
+import * as log4js from 'log4js';
 import ACPUser from '../../../models/acp/ACPUser';
 import Route from '../../../Route';
 import { AuthorizationType, NeedsAuthorization } from '../../NeedsAuthorization';
@@ -7,6 +8,7 @@ class ACPGetACPUsersRoute implements Route {
     readonly router: Router;
     readonly path: string;
     readonly fullpath: string;
+    readonly logger = log4js.getLogger('ACPGetACPUsersRoute');
 
     constructor() {
         this.router = Router();
@@ -16,11 +18,15 @@ class ACPGetACPUsersRoute implements Route {
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)
-    private get(req: Request, res: Response, next: NextFunction): void {
-        ACPUser.getAll().then((users) => {
+    private async get(req: Request, res: Response): Promise<void> {
+        try {
+            let users = await ACPUser.getAll();
             res.send({ success: true, users });
-            return;
-        });
+        } catch (err) {
+            res.status(500);
+            res.send({ success: false, message: 'An unknown error occurred while fetching users' });
+            this.logger.error(`An unknown error occurred while fetching users: ${err}`);
+        }
     }
 }
 

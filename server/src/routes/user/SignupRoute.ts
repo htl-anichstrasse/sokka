@@ -1,18 +1,18 @@
 import * as bcrypt from 'bcrypt';
-import { NextFunction, Request, Response, Router } from 'express';
+import { Request, Response, Router } from 'express';
 import * as log4js from 'log4js';
+import config from '../../Config';
 import Session from '../../models/Session';
 import User from '../../models/User';
 import Route from '../../Route';
 import VerificationService from '../../VerificationService';
 import rateLimit = require('express-rate-limit');
-import config from '../../Config';
 
 class SignupRoute implements Route {
     readonly router: Router;
     readonly path: string;
     readonly fullpath: string;
-    private static readonly logger = log4js.getLogger('SignupRoute');
+    readonly logger = log4js.getLogger('SignupRoute');
 
     constructor() {
         this.router = Router();
@@ -26,49 +26,37 @@ class SignupRoute implements Route {
         this.fullpath = '/user/signup';
     }
 
-    private post(req: Request, res: Response, next: NextFunction): void {
+    private async post(req: Request, res: Response): Promise<void> {
         if (!(req.body.email && req.body.password)) {
             res.status(400);
             res.send({ success: false, message: 'Invalid parameters' });
             return;
         }
-
         if (!req.body.tos || !req.body.privacypolicy) {
-            res.send({ sucess: false, message: 'Please accept our terms of service and privacy policy!' });
+            res.send({ sucess: false, message: 'Please accept our terms of service and privacy policy' });
             return;
         }
-
-        User.exists(req.body.email).then((exists) => {
-            if (exists) {
-                res.send({ success: false, message: 'User already exists' });
+        let exists = await User.exists(req.body.email);
+        if (exists) {
+            res.send({ success: false, message: 'User already exists' });
+            return;
+        }
+        try {
+            let hash = await bcrypt.hash(req.body.password, parseInt(config.readConfigValueSync('SALT_ROUNDS')));
+            let user = await User.create(req.body.email, hash);
+            let session = await Session.create(user);
+            let smtpResponse = await VerificationService.sendVerification(user);
+            if (smtpResponse.rejected.length > 0) {
+                res.send({ success: false, message: 'Could not send verification mail to the provided email address' });
+                this.logger.error(`Could not send verification mail for user '${user.email}'`);
                 return;
             }
-
-            bcrypt.hash(req.body.password, parseInt(config.readConfigValueSync('SALT_ROUNDS')), (err, hash) => {
-                if (err) throw err;
-                User.create(req.body.email, hash).then((user) => {
-                    Session.create(user).then((session) => {
-                        VerificationService.sendVerification(user).then((smtpResponse) => {
-                            if (smtpResponse.rejected.lengt > 0) {
-                                SignupRoute.handleUnsuccessfulSignup(req, res, err);
-                                SignupRoute.logger.error(`SEVERE: Could not send verification mail for user '${user.email}'`);
-                                return;
-                            }
-                            res.send({ success: true, message: 'Successfully created user', token: session.token });
-                        }).catch((err) => SignupRoute.handleUnsuccessfulSignup(req, res, err));
-                    }).catch((err) => SignupRoute.handleUnsuccessfulSignup(req, res, err));
-                }).catch((err) => SignupRoute.handleUnsuccessfulSignup(req, res, err));
-            });
-        });
-    }
-
-    private static handleUnsuccessfulSignup(req: Request, res: Response, err?: Error): void {
-        let requestedEmail = req.body.email;
-        if (err) {
-            SignupRoute.logger.warn(`Unsuccessful signup attempt for email '${requestedEmail}' with error: ${err.message}`);
+            res.send({ success: true, message: 'Successfully created user', token: session.token });
+        } catch (err) {
+            res.status(500);
+            res.send({ success: false, message: 'An unknown error occurred while signing up ACP user' });
+            this.logger.error(`An unknown error occurred while signing up user '${req.body.username}' with error: ${err}`);
         }
-        res.status(500);
-        res.send({ success: false, message: `Could not sign up user for email '${requestedEmail}'` });
     }
 }
 

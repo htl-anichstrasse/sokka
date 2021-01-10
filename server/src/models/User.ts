@@ -25,7 +25,7 @@ class User implements Model {
                 if (result.length > 0) {
                     resolve(new User(result[0].id, result[0].email, result[0].verified, result[0].group_id, result[0].pwhash));
                 } else {
-                    reject('User not found');
+                    reject(new Error('User not found'));
                 }
             }).catch((err) => reject(err));
         });
@@ -37,7 +37,7 @@ class User implements Model {
                 if (result.length > 0) {
                     resolve(new User(result[0].id, result[0].email, result[0].verified, result[0].group_id, result[0].pwhash));
                 } else {
-                    reject('User not found');
+                    reject(new Error('User not found'));
                 }
             }).catch((err) => reject(err));
         });

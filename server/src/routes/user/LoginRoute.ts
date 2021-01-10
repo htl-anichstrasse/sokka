@@ -1,5 +1,5 @@
 import * as bcrypt from 'bcrypt';
-import { NextFunction, Request, Response, Router } from 'express';
+import { Request, Response, Router } from 'express';
 import * as log4js from 'log4js';
 import Session from '../../models/Session';
 import User from '../../models/User';
@@ -10,7 +10,7 @@ class LoginRoute implements Route {
     readonly router: Router;
     readonly path: string;
     readonly fullpath: string;
-    private static readonly logger = log4js.getLogger('LoginRoute');
+    readonly logger = log4js.getLogger('LoginRoute');
 
     constructor() {
         this.router = Router();
@@ -24,36 +24,34 @@ class LoginRoute implements Route {
         this.fullpath = '/user/login';
     }
 
-    private post(req: Request, res: Response, next: NextFunction): void {
+    private async post(req: Request, res: Response): Promise<void> {
         if (!req.body.email || !req.body.password) {
             res.status(400);
             res.send({ success: false, message: 'Invalid parameters' });
             return;
         }
-
-        User.getByEmail(req.body.email).then((user) => {
-            bcrypt.compare(req.body.password, user.password, (err, same) => {
-                if (err) {
-                    res.status(500);
-                    LoginRoute.handleUnsuccessfulLogin(req, res, err);
-                    LoginRoute.logger.error(`Password comparison failed for user ${user.id}`);
-                    return;
+        try {
+            let user = await User.getByEmail(req.body.email);
+            let same = await bcrypt.compare(req.body.password, user.password);
+            if (same) {
+                try {
+                    let session = await Session.create(user);
+                    res.send({ success: true, message: 'Credentials validated', token: session.token });
+                } catch (err) {
+                    this.handleUnsuccessfulLogin(req, res, err)
                 }
-                if (same) {
-                    Session.create(user).then((session) => {
-                        res.send({ success: true, message: 'Credentials validated', token: session.token });
-                    }).catch((err) => LoginRoute.handleUnsuccessfulLogin(req, res, err));
-                } else {
-                    LoginRoute.handleUnsuccessfulLogin(req, res);
-                }
-            });
-        }).catch((err) => LoginRoute.handleUnsuccessfulLogin(req, res, err));
+            } else {
+                this.handleUnsuccessfulLogin(req, res);
+            }
+        } catch (err) {
+            this.handleUnsuccessfulLogin(req, res, err);
+        }
     }
 
-    private static handleUnsuccessfulLogin(req: Request, res: Response, err?: Error): void {
+    private handleUnsuccessfulLogin(req: Request, res: Response, err?: Error): void {
         let requestedEmail = req.body.email;
         if (err) {
-            LoginRoute.logger.warn(`Unsuccessful login attempt for requested user '${requestedEmail}' with error: ${err}`);
+            this.logger.warn(`An unknown error occurred while logging in user '${requestedEmail}': ${err}`);
         }
         res.send({ success: false, message: `Could not retrieve user for email '${requestedEmail}'` });
     }

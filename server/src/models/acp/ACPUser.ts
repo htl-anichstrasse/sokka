@@ -17,7 +17,7 @@ class ACPUser implements Model {
                 if (result.length > 0) {
                     resolve(new ACPUser(result[0].username, result[0].pwhash));
                 } else {
-                    reject('ACP user not found');
+                    reject(new Error('ACP user not found'));
                 }
             }).catch((err) => reject(err));
         });

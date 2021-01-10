@@ -1,5 +1,5 @@
-import { NextFunction, Request, Response, Router } from 'express';
-import ACPSession from '../../../models/acp/ACPSession';
+import { Request, Response, Router } from 'express';
+import * as log4js from 'log4js';
 import Group from '../../../models/Group';
 import Route from '../../../Route';
 import { AuthorizationType, NeedsAuthorization } from '../../NeedsAuthorization';
@@ -8,6 +8,7 @@ class ACPGetGroupsRoute implements Route {
     readonly router: Router;
     readonly path: string;
     readonly fullpath: string;
+    readonly logger = log4js.getLogger('ACPGetGroupsRoute');
 
     constructor() {
         this.router = Router();
@@ -17,11 +18,15 @@ class ACPGetGroupsRoute implements Route {
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)
-    private get(req: Request, res: Response, next: NextFunction): void {
-        Group.getAll().then((groups) => {
+    private async get(req: Request, res: Response): Promise<void> {
+        try {
+            let groups = await Group.getAll();
             res.send({ success: true, groups });
-            return;
-        });
+        } catch (err) {
+            this.logger.error(err);
+            res.status(500);
+            res.send({ success: false, message: 'An unknown error occurred while fetching groups' });
+        }
     }
 }
 
