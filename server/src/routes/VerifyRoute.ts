@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response, Router } from 'express';
+import { Request, Response, Router } from 'express';
 import * as log4js from 'log4js';
 import Route from '../Route';
 import VerificationService from '../VerificationService';
@@ -16,24 +16,24 @@ class VerifyRoute implements Route {
         this.fullpath = '/verify';
     }
 
-    private get(req: Request, res: Response, next: NextFunction): void {
+    private async get(req: Request, res: Response): Promise<void> {
         if (!req.query.id) {
             res.status(400);
             res.send({ success: false, message: 'Invalid verification token' });
             return;
         }
-
-        VerificationService.isVerificationIDValid(req.query.id.toString()).then((exists) => {
+        try {
+            let exists = await VerificationService.isVerificationIDValid(req.query.id.toString());
             if (exists) {
-                VerificationService.getVerificationUserForToken(req.query.id.toString()).then((user) => {
-                    VerificationService.verifyUser(user).then(() => {
-                        res.send({ success: true, message: 'Successfully verified user' });
-                    }).catch((err) => VerifyRoute.handleInvalidToken(req, res, err));
-                }).catch((err) => VerifyRoute.handleInvalidToken(req, res, err));
+                let user = await VerificationService.getVerificationUserForToken(req.query.id.toString());
+                await VerificationService.verifyUser(user);
+                res.send({ success: true, message: 'Successfully verified user' });
             } else {
                 VerifyRoute.handleInvalidToken(req, res);
             }
-        }).catch((err) => VerifyRoute.handleInvalidToken(req, res, err));
+        } catch (err) {
+            VerifyRoute.handleInvalidToken(req, res, err)
+        }
     }
 
     private static handleInvalidToken(req: Request, res: Response, err?: Error): void {
