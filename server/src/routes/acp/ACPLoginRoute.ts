@@ -30,7 +30,7 @@ class ACPLoginRoute implements Route {
             if (same) {
                 try {
                     let session = await ACPSession.create(user);
-                    res.send({ success: true, message: 'Credentials validated', token: session.token });
+                    res.send({ success: true, message: 'Credentials validated', token: session.token, username: user.username });
                 } catch (err) {
                     this.handleUnsuccessfulLogin(req, res, err)
                 }

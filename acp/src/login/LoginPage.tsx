@@ -61,7 +61,7 @@ function login(): void {
                 logInFail(loginRef.current);
                 return;
             }
-            new Cookies().set('sokka_username', username);
+            new Cookies().set('sokka_username', response.data.username);
             new Cookies().set('sokka_token', response.data.token);
             window.location.reload();
         }).catch();
