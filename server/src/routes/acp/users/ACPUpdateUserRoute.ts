@@ -3,6 +3,7 @@ import * as log4js from 'log4js';
 import Group from '../../../models/Group';
 import User from '../../../models/User';
 import Route from '../../../Route';
+import { AuthorizationType, NeedsAuthorization, NeedsProperties } from '../../RouteAnnotations';
 
 class ACPUpdateUserRoute implements Route {
     readonly router: Router;
@@ -17,12 +18,9 @@ class ACPUpdateUserRoute implements Route {
         this.fullpath = '/acp/updateuser';
     }
 
+    @NeedsAuthorization(AuthorizationType.ACP)
+    @NeedsProperties({ email: 'string', user: 'object' })
     private async post(req: Request, res: Response): Promise<void> {
-        if (!(req.body.email && req.body.user)) {
-            res.status(400);
-            res.send({ success: false, message: 'Invalid parameters' });
-            return;
-        }
         let user;
         try {
             user = await User.getByEmail(req.body.email);

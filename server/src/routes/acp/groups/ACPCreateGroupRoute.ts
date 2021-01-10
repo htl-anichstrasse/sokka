@@ -2,7 +2,7 @@ import { Request, Response, Router } from 'express';
 import * as log4js from 'log4js';
 import Group from '../../../models/Group';
 import Route from '../../../Route';
-import { AuthorizationType, NeedsAuthorization } from '../../NeedsAuthorization';
+import { AuthorizationType, NeedsAuthorization, NeedsProperties } from '../../RouteAnnotations';
 
 class ACPCreateGroupRoute implements Route {
     readonly router: Router;
@@ -18,12 +18,8 @@ class ACPCreateGroupRoute implements Route {
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)
+    @NeedsProperties({ groupname: 'string', rebate: 'number' })
     private async post(req: Request, res: Response): Promise<void> {
-        if (!req.body.groupname || !req.body.rebate) {
-            res.status(400);
-            res.send({ success: false, message: 'Invalid parameters' });
-            return;
-        }
         try {
             let group = await Group.create(req.body.groupname, req.body.rebate);
             res.send({ success: true, message: `Successfully created group with id '${group.id}'` });

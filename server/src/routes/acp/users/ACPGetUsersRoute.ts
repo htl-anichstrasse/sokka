@@ -2,7 +2,7 @@ import { Request, Response, Router } from 'express';
 import * as log4js from 'log4js';
 import User from '../../../models/User';
 import Route from '../../../Route';
-import { AuthorizationType, NeedsAuthorization } from '../../NeedsAuthorization';
+import { AuthorizationType, NeedsAuthorization } from '../../RouteAnnotations';
 
 class ACPGetUsersRoute implements Route {
     readonly router: Router;

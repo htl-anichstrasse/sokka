@@ -2,7 +2,7 @@ import { Request, Response, Router } from 'express';
 import * as log4js from 'log4js';
 import ACPConfigValue from '../../../models/acp/ACPConfigValue';
 import Route from '../../../Route';
-import { AuthorizationType, NeedsAuthorization } from '../../NeedsAuthorization';
+import { AuthorizationType, NeedsAuthorization, NeedsProperties } from '../../RouteAnnotations';
 
 class ACPUpdateConfigRoute implements Route {
     readonly router: Router;
@@ -18,6 +18,7 @@ class ACPUpdateConfigRoute implements Route {
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)
+    @NeedsProperties({ configKey: 'string' })
     private async post(req: Request, res: Response): Promise<void> {
         if (!req.body.configKey) {
             res.status(400);

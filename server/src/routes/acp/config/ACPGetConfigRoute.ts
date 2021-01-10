@@ -2,7 +2,7 @@ import { Request, Response, Router } from 'express';
 import * as log4js from 'log4js';
 import ACPConfigValue from '../../../models/acp/ACPConfigValue';
 import Route from '../../../Route';
-import { AuthorizationType, NeedsAuthorization } from '../../NeedsAuthorization';
+import { AuthorizationType, NeedsAuthorization } from '../../RouteAnnotations';
 
 class ACPGetConfigRoute implements Route {
     readonly router: Router;

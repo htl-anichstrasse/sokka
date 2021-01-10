@@ -4,7 +4,7 @@ import * as log4js from 'log4js';
 import config from '../../../Config';
 import ACPUser from '../../../models/acp/ACPUser';
 import Route from '../../../Route';
-import { AuthorizationType, NeedsAuthorization } from '../../NeedsAuthorization';
+import { AuthorizationType, NeedsAuthorization, NeedsProperties } from '../../RouteAnnotations';
 
 class ACPCreateUserRoute implements Route {
     readonly router: Router;
@@ -20,6 +20,7 @@ class ACPCreateUserRoute implements Route {
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)
+    @NeedsProperties({ username: 'string', password: 'string' })
     private async post(req: Request, res: Response): Promise<void> {
         if (!(req.body.username && req.body.password)) {
             res.status(400);

@@ -3,6 +3,7 @@ import * as log4js from 'log4js';
 import ACPSession from '../../models/acp/ACPSession';
 import ACPUser from '../../models/acp/ACPUser';
 import Route from '../../Route';
+import { NeedsProperties } from '../RouteAnnotations';
 
 class ACPValidateRoute implements Route {
     readonly router: Router;
@@ -17,12 +18,8 @@ class ACPValidateRoute implements Route {
         this.fullpath = '/acp/validate';
     }
 
+    @NeedsProperties({ token: 'string', username: 'string' })
     private async post(req: Request, res: Response): Promise<void> {
-        if (!req.body.token || !req.body.username) {
-            res.status(400);
-            res.send({ success: false, message: 'Invalid parameters' });
-            return;
-        }
         try {
             let user = await ACPUser.get(req.body.username);
             let result = await ACPSession.validate(user, req.body.token);

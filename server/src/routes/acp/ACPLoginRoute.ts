@@ -4,6 +4,7 @@ import * as log4js from 'log4js';
 import ACPSession from '../../models/acp/ACPSession';
 import ACPUser from '../../models/acp/ACPUser';
 import Route from '../../Route';
+import { NeedsProperties } from '../RouteAnnotations';
 
 class ACPLoginRoute implements Route {
     readonly router: Router;
@@ -18,12 +19,8 @@ class ACPLoginRoute implements Route {
         this.fullpath = '/acp/login';
     }
 
+    @NeedsProperties({ username: 'string', password: 'string' })
     private async post(req: Request, res: Response): Promise<void> {
-        if (!req.body.username || !req.body.password) {
-            res.status(400);
-            res.send({ success: false, message: 'Invalid parameters' });
-            return;
-        }
         try {
             let user = await ACPUser.get(req.body.username);
             let same = await bcrypt.compare(req.body.password, user.password);

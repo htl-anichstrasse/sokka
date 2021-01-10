@@ -2,6 +2,7 @@ import { Request, Response, Router } from 'express';
 import * as log4js from 'log4js';
 import ACPSession from '../../models/acp/ACPSession';
 import Route from '../../Route';
+import { NeedsProperties } from '../RouteAnnotations';
 
 class ACPLogoutRoute implements Route {
     readonly router: Router;
@@ -16,12 +17,8 @@ class ACPLogoutRoute implements Route {
         this.router.post('/logout', this.post);
     }
 
+    @NeedsProperties({ token: 'string' })
     private async post(req: Request, res: Response): Promise<void> {
-        if (!req.body.token) {
-            res.status(400);
-            res.send({ success: false, message: 'Invalid parameters' });
-            return;
-        }
         try {
             let session = await ACPSession.get(req.body.token);
             await session.delete();

@@ -2,7 +2,7 @@ import { Request, Response, Router } from 'express';
 import * as log4js from 'log4js';
 import User from '../../../models/User';
 import Route from '../../../Route';
-import { AuthorizationType, NeedsAuthorization } from '../../NeedsAuthorization';
+import { AuthorizationType, NeedsAuthorization, NeedsProperties } from '../../RouteAnnotations';
 
 class ACPDeleteUserRoute implements Route {
     readonly router: Router;
@@ -18,12 +18,8 @@ class ACPDeleteUserRoute implements Route {
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)
+    @NeedsProperties({ email: 'string' })
     private async post(req: Request, res: Response): Promise<void> {
-        if (!req.body.email) {
-            res.status(400);
-            res.send({ success: false, message: 'Invalid parameters' });
-            return;
-        }
         try {
             let user = await User.getByEmail(req.body.email);
             await user.delete();
