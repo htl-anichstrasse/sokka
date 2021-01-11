@@ -1,19 +1,18 @@
 import { Request, Response, Router } from 'express';
-import * as log4js from 'log4js';
 import User from '../../../models/User';
 import Route from '../../../Route';
 import { AuthorizationType, NeedsAuthorization } from '../../RouteAnnotations';
 
-class ACPGetUsersRoute implements Route {
+class ACPGetUsersRoute extends Route {
     readonly router: Router;
     readonly path: string;
     readonly fullpath: string;
-    readonly logger = log4js.getLogger('ACPGetUsersRoute');
 
     constructor() {
+        super();
         this.router = Router();
         this.path = '/acp';
-        this.router.get('/getusers', this.get);
+        this.router.get('/getusers', this.get.bind(this));
         this.fullpath = '/acp/getusers';
     }
 

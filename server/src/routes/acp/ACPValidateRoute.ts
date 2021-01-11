@@ -1,20 +1,19 @@
 import { Request, Response, Router } from 'express';
-import * as log4js from 'log4js';
 import ACPSession from '../../models/acp/ACPSession';
 import ACPUser from '../../models/acp/ACPUser';
 import Route from '../../Route';
 import { NeedsProperties } from '../RouteAnnotations';
 
-class ACPValidateRoute implements Route {
+class ACPValidateRoute extends Route {
     readonly router: Router;
     readonly path: string;
     readonly fullpath: string;
-    readonly logger = log4js.getLogger('ACPValidateRoute');
 
     constructor() {
+        super();
         this.router = Router();
         this.path = '/acp';
-        this.router.post('/validate', this.post);
+        this.router.post('/validate', this.post.bind(this));
         this.fullpath = '/acp/validate';
     }
 

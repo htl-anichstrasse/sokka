@@ -1,6 +1,5 @@
 import * as bcrypt from 'bcrypt';
 import { Request, Response, Router } from 'express';
-import * as log4js from 'log4js';
 import config from '../../Config';
 import Session from '../../models/Session';
 import User from '../../models/User';
@@ -8,13 +7,13 @@ import Route from '../../Route';
 import VerificationService from '../../VerificationService';
 import rateLimit = require('express-rate-limit');
 
-class SignupRoute implements Route {
+class SignupRoute extends Route {
     readonly router: Router;
     readonly path: string;
     readonly fullpath: string;
-    readonly logger = log4js.getLogger('SignupRoute');
 
     constructor() {
+        super();
         this.router = Router();
         this.path = '/user';
         const signupLimiter = rateLimit({
@@ -22,7 +21,7 @@ class SignupRoute implements Route {
             max: 5,
             message: `{ success: false, message: 'Too many created accounts from this IP, please try again later' }`
         });
-        this.router.post('/signup', this.post, signupLimiter);
+        this.router.post('/signup', this.post.bind(this), signupLimiter);
         this.fullpath = '/user/signup';
     }
 

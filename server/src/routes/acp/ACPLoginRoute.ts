@@ -1,21 +1,20 @@
 import * as bcrypt from 'bcrypt';
 import { Request, Response, Router } from 'express';
-import * as log4js from 'log4js';
 import ACPSession from '../../models/acp/ACPSession';
 import ACPUser from '../../models/acp/ACPUser';
 import Route from '../../Route';
 import { NeedsProperties } from '../RouteAnnotations';
 
-class ACPLoginRoute implements Route {
+class ACPLoginRoute extends Route {
     readonly router: Router;
     readonly path: string;
     readonly fullpath: string;
-    readonly logger = log4js.getLogger('ACPLoginRoute');
 
     constructor() {
+        super();
         this.router = Router();
         this.path = '/acp';
-        this.router.post('/login', this.post);
+        this.router.post('/login', this.post.bind(this));
         this.fullpath = '/acp/login';
     }
 

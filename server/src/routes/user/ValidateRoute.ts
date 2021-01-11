@@ -4,16 +4,17 @@ import Session from '../../models/Session';
 import User from '../../models/User';
 import Route from '../../Route';
 
-class ValidateRoute implements Route {
+class ValidateRoute extends Route {
     readonly router: Router;
     readonly path: string;
     readonly fullpath: string;
     readonly logger = log4js.getLogger('ValidateRoute');
 
     constructor() {
+        super();
         this.router = Router();
         this.path = '/user';
-        this.router.post('/validate', this.post);
+        this.router.post('/validate', this.post.bind(this));
         this.fullpath = '/user/validate';
     }
 

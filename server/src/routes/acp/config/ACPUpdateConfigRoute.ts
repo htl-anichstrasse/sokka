@@ -1,19 +1,18 @@
 import { Request, Response, Router } from 'express';
-import * as log4js from 'log4js';
 import ACPConfigValue from '../../../models/acp/ACPConfigValue';
 import Route from '../../../Route';
 import { AuthorizationType, NeedsAuthorization, NeedsProperties } from '../../RouteAnnotations';
 
-class ACPUpdateConfigRoute implements Route {
+class ACPUpdateConfigRoute extends Route {
     readonly router: Router;
     readonly path: string;
     readonly fullpath: string;
-    readonly logger = log4js.getLogger('ACPUpdateConfigRoute');
 
     constructor() {
+        super();
         this.router = Router();
         this.path = '/acp';
-        this.router.post('/updateconfig', this.post);
+        this.router.post('/updateconfig', this.post.bind(this));
         this.fullpath = '/acp/updateconfig';
     }
 

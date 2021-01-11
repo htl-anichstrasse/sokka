@@ -1,20 +1,19 @@
 import { Request, Response, Router } from 'express';
-import * as log4js from 'log4js';
 import ACPSession from '../../models/acp/ACPSession';
 import Route from '../../Route';
 import { NeedsProperties } from '../RouteAnnotations';
 
-class ACPLogoutRoute implements Route {
+class ACPLogoutRoute extends Route {
     readonly router: Router;
     readonly path: string;
     readonly fullpath: string;
-    readonly logger = log4js.getLogger('ACPLogoutRoute');
 
     constructor() {
+        super();
         this.router = Router();
         this.path = '/acp';
         this.fullpath = '/acp/logout';
-        this.router.post('/logout', this.post);
+        this.router.post('/logout', this.post.bind(this));
     }
 
     @NeedsProperties({ token: 'string' })

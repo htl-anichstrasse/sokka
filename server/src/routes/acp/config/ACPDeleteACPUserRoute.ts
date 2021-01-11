@@ -1,19 +1,18 @@
 import { Request, Response, Router } from 'express';
-import * as log4js from 'log4js';
 import ACPUser from '../../../models/acp/ACPUser';
 import Route from '../../../Route';
 import { AuthorizationType, NeedsAuthorization, NeedsProperties } from '../../RouteAnnotations';
 
-class ACPDeleteACPUserRoute implements Route {
+class ACPDeleteACPUserRoute extends Route {
     readonly router: Router;
     readonly path: string;
     readonly fullpath: string;
-    readonly logger = log4js.getLogger('ACPDeleteACPUserRoute');
 
     constructor() {
+        super();
         this.router = Router();
         this.path = '/acp';
-        this.router.post('/deleteacpuser', this.post);
+        this.router.post('/deleteacpuser', this.post.bind(this));
         this.fullpath = '/acp/deleteacpuser';
     }
 

@@ -1,18 +1,17 @@
 import * as bcrypt from 'bcrypt';
 import { Request, Response, Router } from 'express';
-import * as log4js from 'log4js';
 import Session from '../../models/Session';
 import User from '../../models/User';
 import Route from '../../Route';
 import rateLimit = require('express-rate-limit');
 
-class LoginRoute implements Route {
+class LoginRoute extends Route {
     readonly router: Router;
     readonly path: string;
     readonly fullpath: string;
-    readonly logger = log4js.getLogger('LoginRoute');
 
     constructor() {
+        super();
         this.router = Router();
         this.path = '/user';
         const loginLimiter = rateLimit({
@@ -20,7 +19,7 @@ class LoginRoute implements Route {
             max: 5,
             message: `{ success: false, message: 'Too many login attempts from this IP, please try again later' }`
         });
-        this.router.post('/login', this.post, loginLimiter);
+        this.router.post('/login', this.post.bind(this), loginLimiter);
         this.fullpath = '/user/login';
     }
 

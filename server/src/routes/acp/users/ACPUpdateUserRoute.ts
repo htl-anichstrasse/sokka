@@ -1,20 +1,19 @@
 import { Request, Response, Router } from 'express';
-import * as log4js from 'log4js';
 import Group from '../../../models/Group';
 import User from '../../../models/User';
 import Route from '../../../Route';
 import { AuthorizationType, NeedsAuthorization, NeedsProperties } from '../../RouteAnnotations';
 
-class ACPUpdateUserRoute implements Route {
+class ACPUpdateUserRoute extends Route {
     readonly router: Router;
     readonly path: string;
     readonly fullpath: string;
-    readonly logger = log4js.getLogger('ACPUpdateUserRoute');
 
     constructor() {
+        super();
         this.router = Router();
         this.path = '/acp';
-        this.router.post('/updateuser', this.post);
+        this.router.post('/updateuser', this.post.bind(this));
         this.fullpath = '/acp/updateuser';
     }
 

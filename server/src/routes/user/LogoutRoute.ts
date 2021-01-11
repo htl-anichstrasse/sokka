@@ -1,19 +1,18 @@
 import { Request, Response, Router } from 'express';
-import * as log4js from 'log4js';
 import Session from '../../models/Session';
 import Route from '../../Route';
 
-class LogoutRoute implements Route {
+class LogoutRoute extends Route {
     readonly router: Router;
     readonly path: string;
     readonly fullpath: string;
-    readonly logger = log4js.getLogger('LogoutRoute');
 
     constructor() {
+        super();
         this.router = Router();
         this.path = '/user';
         this.fullpath = '/user/login';
-        this.router.post('/login', this.post);
+        this.router.post('/login', this.post.bind(this));
     }
 
     private async post(req: Request, res: Response): Promise<void> {
