@@ -19,26 +19,21 @@ class ACPCreateUserRoute extends Route {
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)
-    @NeedsProperties({ username: 'string', password: 'string' })
+    @NeedsProperties({ name: 'string', password: 'string' })
     private async post(req: Request, res: Response): Promise<void> {
-        if (!(req.body.username && req.body.password)) {
-            res.status(400);
-            res.send({ success: false, message: 'Invalid parameters' });
-            return;
-        }
-        let exists = await ACPUser.exists(req.body.username);
+        let exists = await ACPUser.exists(req.body.name);
         if (exists) {
             res.send({ success: false, message: 'User already exists' });
             return;
         }
         try {
             let hash = await bcrypt.hash(req.body.password, parseInt(config.readConfigValueSync('SALT_ROUNDS')));
-            let user = await ACPUser.create(req.body.username, hash);
-            res.send({ success: true, message: `Successfully created user ${user.username}` });
+            let user = await ACPUser.create(req.body.name, hash);
+            res.send({ success: true, message: `Successfully created user ${user.name}` });
         } catch (err) {
             res.status(500);
-            res.send({ success: false, message: `An unknown error occurred while signing up ACP user '${req.body.username}'` });
-            this.logger.error(`An unknown error occurred while signing up user '${req.body.username}': ${err}`);
+            res.send({ success: false, message: `An unknown error occurred while signing up ACP user '${req.body.name}'` });
+            this.logger.error(`An unknown error occurred while signing up user '${req.body.name}': ${err}`);
         }
     }
 }

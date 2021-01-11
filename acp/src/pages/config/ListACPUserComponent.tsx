@@ -54,14 +54,14 @@ function load(): void {
     });
 }
 
-function onDeleteClicked(username: string): void {
+function onDeleteClicked(name: string): void {
     let loggedInUser = new Cookies().get('sokka_username');
-    if (loggedInUser === username) {
+    if (loggedInUser === name) {
         // Trying to delete your own user?
         alert('Are you really trying to sabotage yourself like that?');
         return;
     }
-    sendRequest('/acp/deleteacpuser', 'POST', true, { username }).then((response) => {
+    sendRequest('/acp/deleteacpuser', 'POST', true, { name }).then((response) => {
         if (response) {
             window.location.reload();
         } else {

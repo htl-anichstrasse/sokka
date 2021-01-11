@@ -25,7 +25,7 @@ class ACPUpdateUserRoute extends Route {
             user = await User.getByEmail(req.body.email);
         } catch {
             res.status(400);
-            res.send({ success: false, message: `Group with email '${req.body.email}' not found` })
+            res.send({ success: false, message: `Could not find user with email '${req.body.email}'` })
             return;
         }
         if (req.body.user.email) {

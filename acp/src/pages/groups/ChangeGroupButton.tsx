@@ -29,7 +29,7 @@ const ChangeGroupButton: FunctionComponent<ChangeGroupButtonProps> = (props) => 
             alert('Please enter a rebate');
             return;
         }
-        props.callback(props.row, props.row.group_id, groupNameRef.current.value, parseInt(rebateRef.current.value));
+        props.callback(props.row, props.row.id, groupNameRef.current.value, parseInt(rebateRef.current.value));
         handleClose();
     }
 
@@ -41,11 +41,11 @@ const ChangeGroupButton: FunctionComponent<ChangeGroupButtonProps> = (props) => 
                 <Modal.Header closeButton>
                     <Modal.Title>Change group</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Enter new info for group with id '{props.row.group_id}' here</Modal.Body>
+                <Modal.Body>Enter new info for group with id '{props.row.id}' here</Modal.Body>
                 <Form>
                     <Form.Group controlId="createGroup.ControlName">
                         <Form.Label>Select name</Form.Label>
-                        <Form.Control ref={groupNameRef} type="text" placeholder="Enter name" defaultValue={props.row.groupname} />
+                        <Form.Control ref={groupNameRef} type="text" placeholder="Enter name" defaultValue={props.row.name} />
                     </Form.Group>
                     <Form.Group controlId="createGroup.ControlRebate">
                         <Form.Label>Select rebate</Form.Label>

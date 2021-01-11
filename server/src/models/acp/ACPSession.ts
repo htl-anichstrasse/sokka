@@ -4,7 +4,7 @@ import Database from "../../Database";
 import ACPUser from "./ACPUser";
 
 class ACPSession implements Model {
-    private constructor(readonly id: number, public acp_username: string, public token: string) { }
+    private constructor(readonly id: number, public username: string, public token: string) { }
 
     static create(user: ACPUser): Promise<ACPSession> {
         return new Promise<ACPSession>((resolve, reject) => {
@@ -15,8 +15,8 @@ class ACPSession implements Model {
                 }
                 // TODO: token has unique index, there is a VERY SMALL chance that this will fail -> loop
                 let token = crypto.randomBytes(16).toString('base64');
-                Database.instance.query('INSERT INTO sokka_acp_sessions (acp_username, token) VALUES (?, ?);', [user.username, token]).then((result) => {
-                    resolve(new ACPSession(result.insertId, user.username, token));
+                Database.instance.query('INSERT INTO sokka_acp_sessions (acp_username, token) VALUES (?, ?);', [user.name, token]).then((result) => {
+                    resolve(new ACPSession(result.insertId, user.name, token));
                 }).catch((err) => reject(err));
             });
         });
@@ -36,7 +36,7 @@ class ACPSession implements Model {
 
     static count(user: ACPUser): Promise<number> {
         return new Promise<number>((resolve, reject) => {
-            Database.instance.query('SELECT COUNT(id) FROM sokka_acp_sessions WHERE acp_username = ?;', [user.username]).then((result) => {
+            Database.instance.query('SELECT COUNT(id) FROM sokka_acp_sessions WHERE acp_username = ?;', [user.name]).then((result) => {
                 resolve(result[0]);
             }).catch((err) => reject(err));
         });
@@ -44,7 +44,7 @@ class ACPSession implements Model {
 
     static validate(user: ACPUser, token: string): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
-            Database.instance.query('SELECT id FROM sokka_acp_sessions WHERE acp_username = ? AND token = ?;', [user.username, token]).then((result) => {
+            Database.instance.query('SELECT id FROM sokka_acp_sessions WHERE acp_username = ? AND token = ?;', [user.name, token]).then((result) => {
                 resolve(result.length > 0);
             }).catch((err) => reject(err));
         });
@@ -52,7 +52,7 @@ class ACPSession implements Model {
 
     update(): Promise<void> {
         return new Promise<void>((resolve, reject) => {
-            Database.instance.query('UPDATE sokka_acp_session SET acp_username = ?, token = ? WHERE id = ?;', [this.acp_username, this.token, this.id]).then(() => {
+            Database.instance.query('UPDATE sokka_acp_session SET acp_username = ?, token = ? WHERE id = ?;', [this.username, this.token, this.id]).then(() => {
                 resolve(null);
             }).catch((err) => reject(err));
         });

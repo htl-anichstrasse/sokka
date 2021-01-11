@@ -17,20 +17,21 @@ class ACPUpdateConfigRoute extends Route {
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)
-    @NeedsProperties({ configKey: 'string' })
+    @NeedsProperties({ configEntry: 'object' })
     private async post(req: Request, res: Response): Promise<void> {
         try {
-            let configEntry = await ConfigEntry.get(req.body.configKey);
-            if (req.body.configValue) {
-                configEntry.configValue = req.body.configValue;
+            let configEntry = await ConfigEntry.get(req.body.configEntry.key);
+            if (req.body.configEntry.value) {
+                configEntry.value = req.body.configEntry.value;
             }
-            if (req.body.friendlyName) {
-                configEntry.friendlyName = req.body.friendlyName;
+            if (req.body.configEntry.friendlyName) {
+                configEntry.friendlyName = req.body.configEntry.friendlyName;
             }
             if (req.body.type) {
-                configEntry.type = req.body.type;
+                configEntry.type = req.body.configEntry.type;
             }
             await configEntry.update();
+            res.send({ success: true, message: 'Successfully updated config entry' });
         } catch (err) {
             if (err.message === 'Config entry not found') {
                 res.status(400);
@@ -38,8 +39,8 @@ class ACPUpdateConfigRoute extends Route {
                 return;
             }
             res.status(500);
-            res.send({ success: false, message: `An unknown error occurred while updating config entry '${req.body.configKey}'` });
-            this.logger.error(`An unknown error occurred while updating config entry '${req.body.configKey}': ${err}`);
+            res.send({ success: false, message: `An unknown error occurred while updating config entry '${req.body.configEntry.key}'` });
+            this.logger.error(`An unknown error occurred while updating config entry '${req.body.configEntry.key}': ${err}`);
         }
     }
 }

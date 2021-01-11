@@ -17,18 +17,18 @@ class ACPUpdateGroupRoute extends Route {
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)
-    @NeedsProperties({ group_id: 'number', groupname: 'string', rebate: 'number' })
+    @NeedsProperties({ id: 'number', name: 'string', rebate: 'number' })
     private async post(req: Request, res: Response): Promise<void> {
         let group;
         try {
-            group = await Group.getById(req.body.group_id);
+            group = await Group.getById(req.body.id);
         } catch {
             res.status(400);
-            res.send({ success: false, message: `Could not find group with id '${req.body.group_id}'` });
+            res.send({ success: false, message: `Could not find group with id '${req.body.id}'` });
             return;
         }
-        if (req.body.groupname) {
-            group.groupname = req.body.groupname;
+        if (req.body.name) {
+            group.name = req.body.name;
         }
         if (req.body.rebate) {
             group.rebate = req.body.rebate;
@@ -38,8 +38,8 @@ class ACPUpdateGroupRoute extends Route {
             res.send({ success: true, message: 'Successfully updated group' });
         } catch (err) {
             res.status(500);
-            res.send({ success: false, message: `An unknown error occurred while updating group with id '${req.body.group_id}'` });
-            this.logger.error(`An unknown error occurred while updating group with id '${req.body.group_id}': ${err}`);
+            res.send({ success: false, message: `An unknown error occurred while updating group with id '${req.body.id}'` });
+            this.logger.error(`An unknown error occurred while updating group with id '${req.body.id}': ${err}`);
         }
     }
 }

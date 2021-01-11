@@ -1,6 +1,6 @@
 declare class ConfigEntry {
-    configKey: string
+    key: string
     friendlyName: string
     type: 'INTEGER' | 'STRING' | 'TIME'
-    configValue: string
+    value: string
 }

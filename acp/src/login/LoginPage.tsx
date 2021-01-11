@@ -47,21 +47,21 @@ function login(): void {
     if (userRef.current != null && passwordRef.current != null) {
         let usernameElement = userRef.current;
         let passwordElement = passwordRef.current;
-        let username = usernameElement.value;
+        let name = usernameElement.value;
         let password = passwordElement.value;
-        if (username.length === 0 || password.length === 0) {
+        if (name.length === 0 || password.length === 0) {
             logInFail(loginRef.current);
             return;
         }
         sendRequest('/acp/login', 'POST', false, {
-            username,
+            name,
             password
         }).then((response) => {
             if (!response.data.success) {
                 logInFail(loginRef.current);
                 return;
             }
-            new Cookies().set('sokka_username', response.data.username);
+            new Cookies().set('sokka_username', response.data.name);
             new Cookies().set('sokka_token', response.data.token);
             window.location.reload();
         }).catch();

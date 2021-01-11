@@ -1,11 +1,11 @@
 import Database from "../Database";
 
 class ConfigEntry implements Model {
-    private constructor(readonly configKey: string, public friendlyName: string, public type: 'INTEGER' | 'STRING' | 'TIME', public configValue: string) { }
+    private constructor(readonly key: string, public friendlyName: string, public type: 'INTEGER' | 'STRING' | 'TIME', public value: string) { }
 
-    static get(configKey: string): Promise<ConfigEntry> {
+    static get(key: string): Promise<ConfigEntry> {
         return new Promise<ConfigEntry>((resolve, reject) => {
-            Database.instance.query('SELECT * FROM sokka_config WHERE configKey = ?;', [configKey]).then((result) => {
+            Database.instance.query('SELECT * FROM sokka_config WHERE configKey = ?;', [key]).then((result) => {
                 if (result.length > 0) {
                     resolve(new ConfigEntry(result[0].configKey, result[0].friendlyName, result[0].type, result[0].configValue));
                 } else {
@@ -29,7 +29,7 @@ class ConfigEntry implements Model {
 
     update(): Promise<void> {
         return new Promise<void>((resolve, reject) => {
-            Database.instance.query('UPDATE sokka_config SET friendlyName = ?, type = ?, configValue = ? WHERE configKey = ?;', [this.friendlyName, this.type, this.configValue, this.configKey]).then(() => {
+            Database.instance.query('UPDATE sokka_config SET friendlyName = ?, type = ?, configValue = ? WHERE configKey = ?;', [this.friendlyName, this.type, this.value, this.key]).then(() => {
                 resolve(null);
             }).catch((err) => reject(err));
         });

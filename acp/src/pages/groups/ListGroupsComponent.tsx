@@ -25,15 +25,15 @@ const customStyle = {
     }
 }
 
-const columns = (deleteHandler: (row: any) => void, changeCallback: (row: any, group_id: number, groupname: string, rebate: number) => void) => [
+const columns = (deleteHandler: (row: any) => void, changeCallback: (row: any, id: number, name: string, rebate: number) => void) => [
     {
         name: '#',
-        selector: 'group_id',
+        selector: 'id',
         sortable: true,
     },
     {
         name: 'Name',
-        selector: 'groupname',
+        selector: 'name',
         sortable: true,
     },
     {
@@ -68,32 +68,32 @@ const ListGroupsComponent: FunctionComponent<ListGroupsComponentProps> = (props)
 
     let filteredGroups: any[] = [];
     if (state.groups) {
-        filteredGroups = state.groups.filter(item => item.groupname.toLowerCase().includes(filterText.toLowerCase()));
+        filteredGroups = state.groups.filter(item => item.name.toLowerCase().includes(filterText.toLowerCase()));
         for (let i = 0; i < filteredGroups.length; i++) {
-            filteredGroups[i].groupname = state.groups.find((group) => group.group_id === filteredGroups[i].group_id)?.groupname;
+            filteredGroups[i].name = state.groups.find((group) => group.id === filteredGroups[i].id)?.name;
         }
     }
 
     const deleteHandler = (row: any) => {
-        if (window.confirm(`Are you sure you want to delete '${row.groupname}'?`)) {
+        if (window.confirm(`Are you sure you want to delete '${row.name}'?`)) {
             sendRequest('/acp/deletegroup', 'POST', true, {
-                group_id: row.group_id
+                id: row.id
             });
-            const index = state.groups.findIndex((r: any) => r.group_id === row.group_id);
+            const index = state.groups.findIndex((r: any) => r.id === row.id);
             setState({ groups: [...state.groups.slice(0, index), ...state.groups.slice(index + 1)] });
         }
     }
 
-    const changeCallback = (row: any, group_id: number, groupname: string, rebate: number) => {
+    const changeCallback = (row: any, id: number, name: string, rebate: number) => {
         sendRequest('/acp/updategroup', 'POST', true, {
-            group_id: group_id,
-            groupname: groupname,
+            id: id,
+            name: name,
             rebate: rebate
         }).then((response) => {
             if (response.data.success) {
                 const index = state.groups.findIndex((r: any) => r.group_id === row.group_id);
                 let group = state.groups[index];
-                group.groupname = groupname;
+                group.name = name;
                 group.rebate = rebate;
                 let newGroups = [...state.groups.slice(0, index), group, ...state.groups.slice(index + 1)];
                 setState({ groups: newGroups });
@@ -108,8 +108,8 @@ const ListGroupsComponent: FunctionComponent<ListGroupsComponentProps> = (props)
     }, [filterText]);
 
     const load = () => {
-        sendRequest('/acp/getgroups', 'GET', true, {}).then((values) => {
-            setState({ groups: values.data.groups });
+        sendRequest('/acp/getgroups', 'GET', true, {}).then((response) => {
+            setState({ groups: response.data.groups });
         });
     }
 

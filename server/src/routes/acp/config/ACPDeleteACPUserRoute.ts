@@ -17,12 +17,12 @@ class ACPDeleteACPUserRoute extends Route {
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)
-    @NeedsProperties({ username: 'string' })
+    @NeedsProperties({ name: 'string' })
     private async post(req: Request, res: Response): Promise<void> {
         try {
-            let user = await ACPUser.get(req.body.username);
+            let user = await ACPUser.get(req.body.name);
             await user.delete();
-            res.send({ success: true, message: `Successfully deleted ACP user with username '${req.body.username}'` });
+            res.send({ success: true, message: `Successfully deleted ACP user with username '${req.body.name}'` });
         } catch (err) {
             if (err.message === 'ACP user not found') {
                 res.status(400);
@@ -30,8 +30,8 @@ class ACPDeleteACPUserRoute extends Route {
                 return;
             }
             res.status(500);
-            res.send({ success: false, message: `An unknown error occurred while deleting ACP user '${req.body.username}'` });
-            this.logger.error(`An unknown error occurred while deleting ACP user '${req.body.username}': ${err}`);
+            res.send({ success: false, message: `An unknown error occurred while deleting ACP user '${req.body.name}'` });
+            this.logger.error(`An unknown error occurred while deleting ACP user '${req.body.name}': ${err}`);
         }
     }
 }

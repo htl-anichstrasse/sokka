@@ -68,7 +68,7 @@ function createUser(): void {
         }
         setLoaded(1);
         sendRequest('/acp/signup', 'POST', true, {
-            username: userElement.value,
+            name: userElement.value,
             password: passwordElement.value
         }).then(() => {
             window.location.reload()

@@ -77,7 +77,7 @@ const ListUserComponent: FunctionComponent<ListUserComponentProps> = (props) => 
         filteredUsers = state.users.filter(item => item.email.toLowerCase().includes(filterText.toLowerCase()));
         for (let i = 0; i < filteredUsers.length; i++) {
             filteredUsers[i].verified = filteredUsers[i].verified === '1' ? 'Yes' : 'No';
-            filteredUsers[i].groupname = state.groups.find((group) => group.group_id === filteredUsers[i].group_id)?.groupname;
+            filteredUsers[i].groupname = state.groups.find((group) => group.id === filteredUsers[i].group_id)?.name;
         }
     }
 
@@ -99,7 +99,7 @@ const ListUserComponent: FunctionComponent<ListUserComponentProps> = (props) => 
             }
         }).then((response) => {
             if (response.data.success) {
-                let groupObject = state.groups.find((val) => val.group_id === group_id);
+                let groupObject = state.groups.find((val) => val.id === group_id);
                 if (groupObject) {
                     const index = state.users.findIndex((r: any) => r.id === row.id);
                     let user = state.users[index];

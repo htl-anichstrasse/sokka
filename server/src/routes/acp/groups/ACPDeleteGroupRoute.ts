@@ -17,12 +17,12 @@ class ACPDeleteGroupRoute extends Route {
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)
-    @NeedsProperties({ group_id: 'number' })
+    @NeedsProperties({ id: 'number' })
     private async post(req: Request, res: Response): Promise<void> {
         try {
-            let group = await Group.getById(req.body.group_id);
+            let group = await Group.getById(req.body.id);
             await group.delete();
-            res.send({ success: true, message: `Successfully deleted group with id '${req.body.group_id}'` });
+            res.send({ success: true, message: `Successfully deleted group with id '${req.body.id}'` });
         } catch (err) {
             if (err.message === 'Group not found') {
                 res.status(400);
@@ -30,8 +30,8 @@ class ACPDeleteGroupRoute extends Route {
                 return;
             }
             res.status(500);
-            res.send({ success: false, message: `An unknown error occurred while deleting group with id '${req.body.group_id}'` });
-            this.logger.error(`An unknown error occurred while deleting group with id '${req.body.group_id}': ${err}`);
+            res.send({ success: false, message: `An unknown error occurred while deleting group with id '${req.body.id}'` });
+            this.logger.error(`An unknown error occurred while deleting group with id '${req.body.id}': ${err}`);
         }
     }
 }
