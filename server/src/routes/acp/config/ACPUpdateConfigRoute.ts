@@ -11,7 +11,7 @@ class ACPUpdateConfigRoute extends Route {
         super();
         this.router = Router();
         this.path = '/acp';
-        this.router.post('/updateconfig', this.post.bind(this));
+        this.router.post('/config/update', this.post.bind(this));
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)

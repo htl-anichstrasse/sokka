@@ -11,7 +11,7 @@ class ACPCreateGroupRoute extends Route {
         super();
         this.router = Router();
         this.path = '/acp';
-        this.router.post('/creategroup', this.post.bind(this));
+        this.router.post('/group/create', this.post.bind(this));
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)

@@ -13,7 +13,7 @@ class ACPCreateUserRoute extends Route {
         super();
         this.router = Router();
         this.path = '/acp';
-        this.router.post('/signup', this.post.bind(this));
+        this.router.post('/acpuser/create', this.post.bind(this));
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)

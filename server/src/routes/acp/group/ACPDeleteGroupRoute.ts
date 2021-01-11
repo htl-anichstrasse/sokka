@@ -11,7 +11,7 @@ class ACPDeleteGroupRoute extends Route {
         super();
         this.router = Router();
         this.path = '/acp';
-        this.router.post('/deletegroup', this.post.bind(this));
+        this.router.post('/group/delete', this.post.bind(this));
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)

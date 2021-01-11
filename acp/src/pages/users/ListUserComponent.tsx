@@ -83,7 +83,7 @@ const ListUserComponent: FunctionComponent<ListUserComponentProps> = (props) => 
 
     const deleteHandler = (row: any) => {
         if (window.confirm(`Are you sure you want to delete:\r ${row.email}?`)) {
-            sendRequest('/acp/deleteuser', 'POST', true, {
+            sendRequest('/acp/user/delete', 'POST', true, {
                 email: row.email
             });
             const index = state.users.findIndex((r: any) => r.id === row.id);
@@ -92,7 +92,7 @@ const ListUserComponent: FunctionComponent<ListUserComponentProps> = (props) => 
     }
 
     const changeCallback = (row: any, group_id: number) => {
-        sendRequest('/acp/updateuser', 'POST', true, {
+        sendRequest('/acp/user/update', 'POST', true, {
             email: row.email,
             user: {
                 group: group_id
@@ -120,7 +120,7 @@ const ListUserComponent: FunctionComponent<ListUserComponentProps> = (props) => 
     }, [filterText]);
 
     const load = () => {
-        Promise.all([sendRequest('/acp/getusers', 'GET', true, {}), sendRequest('/acp/getgroups', 'GET', true, {})]).then((values) => {
+        Promise.all([sendRequest('/acp/user/get', 'GET', true, {}), sendRequest('/acp/group/get', 'GET', true, {})]).then((values) => {
             setState({ users: values[0].data.users, groups: values[1].data.groups });
         });
     }

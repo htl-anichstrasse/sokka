@@ -11,7 +11,7 @@ class ACPGetConfigRoute extends Route {
         super();
         this.router = Router();
         this.path = '/acp';
-        this.router.get('/getconfig', this.get.bind(this));
+        this.router.get('/config/get', this.get.bind(this));
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)

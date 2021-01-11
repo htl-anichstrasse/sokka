@@ -31,7 +31,7 @@ const CreateGroupButton: FunctionComponent<CreateGroupButtonProps> = (props) => 
         }
 
         // Send to DB
-        sendRequest('/acp/creategroup', 'POST', true,
+        sendRequest('/acp/group/create', 'POST', true,
             { name: groupNameRef.current.value, rebate: parseInt(rebateRef.current.value) }).then(() => {
                 window.location.reload();
             });

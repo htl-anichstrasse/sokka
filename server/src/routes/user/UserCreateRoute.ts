@@ -8,7 +8,7 @@ import VerificationService from '../../VerificationService';
 import { NeedsProperties } from '../RouteAnnotations';
 import rateLimit = require('express-rate-limit');
 
-class SignupRoute extends Route {
+class UserCreateRoute extends Route {
     readonly router: Router;
     readonly path: string;
 
@@ -21,7 +21,7 @@ class SignupRoute extends Route {
             max: 5,
             message: `{ success: false, message: 'Too many created accounts from this IP, please try again later' }`
         });
-        this.router.post('/signup', this.post.bind(this), signupLimiter);
+        this.router.post('/create', this.post.bind(this), signupLimiter);
     }
 
     @NeedsProperties({ email: 'string', password: 'string', tos: 'boolean', privacypolicy: 'boolean' })
@@ -48,10 +48,10 @@ class SignupRoute extends Route {
             res.send({ success: true, message: 'Successfully created user', token: session.token });
         } catch (err) {
             res.status(500);
-            res.send({ success: false, message: 'An unknown error occurred while signing up ACP user' });
+            res.send({ success: false, message: 'An unknown error occurred while signing up user' });
             this.logger.error(`An unknown error occurred while signing up user '${req.body.username}' with error: ${err}`);
         }
     }
 }
 
-export default new SignupRoute();
+export default new UserCreateRoute();

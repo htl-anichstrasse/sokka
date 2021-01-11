@@ -4,7 +4,7 @@ import User from '../../models/User';
 import Route from '../../Route';
 import { NeedsProperties } from '../RouteAnnotations';
 
-class ValidateRoute extends Route {
+class UserValidateRoute extends Route {
     readonly router: Router;
     readonly path: string;
 
@@ -38,4 +38,4 @@ class ValidateRoute extends Route {
     }
 }
 
-export default new ValidateRoute();
+export default new UserValidateRoute();

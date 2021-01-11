@@ -12,7 +12,7 @@ class ACPUpdateUserRoute extends Route {
         super();
         this.router = Router();
         this.path = '/acp';
-        this.router.post('/updateuser', this.post.bind(this));
+        this.router.post('/user/update', this.post.bind(this));
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)

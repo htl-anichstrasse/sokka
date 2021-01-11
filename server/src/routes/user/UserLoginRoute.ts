@@ -6,7 +6,7 @@ import Route from '../../Route';
 import { NeedsProperties } from '../RouteAnnotations';
 import rateLimit = require('express-rate-limit');
 
-class LoginRoute extends Route {
+class UserLoginRoute extends Route {
     readonly router: Router;
     readonly path: string;
 
@@ -52,4 +52,4 @@ class LoginRoute extends Route {
     }
 }
 
-export default new LoginRoute();
+export default new UserLoginRoute();

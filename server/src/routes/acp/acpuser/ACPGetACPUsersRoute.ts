@@ -1,9 +1,9 @@
 import { Request, Response, Router } from 'express';
-import Group from '../../../models/Group';
+import ACPUser from '../../../models/acp/ACPUser';
 import Route from '../../../Route';
 import { AuthorizationType, NeedsAuthorization } from '../../RouteAnnotations';
 
-class ACPGetGroupsRoute extends Route {
+class ACPGetACPUsersRoute extends Route {
     readonly router: Router;
     readonly path: string;
 
@@ -11,20 +11,20 @@ class ACPGetGroupsRoute extends Route {
         super();
         this.router = Router();
         this.path = '/acp';
-        this.router.get('/getgroups', this.get.bind(this));
+        this.router.get('/acpuser/get', this.get.bind(this));
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)
     private async get(req: Request, res: Response): Promise<void> {
         try {
-            let groups = await Group.getAll();
-            res.send({ success: true, groups });
+            let users = await ACPUser.getAll();
+            res.send({ success: true, users });
         } catch (err) {
-            this.logger.error(err);
             res.status(500);
-            res.send({ success: false, message: 'An unknown error occurred while fetching groups' });
+            res.send({ success: false, message: 'An unknown error occurred while fetching users' });
+            this.logger.error(`An unknown error occurred while fetching users: ${err}`);
         }
     }
 }
 
-export default new ACPGetGroupsRoute();
+export default new ACPGetACPUsersRoute();

@@ -3,7 +3,7 @@ import Session from '../../models/Session';
 import Route from '../../Route';
 import { NeedsProperties } from '../RouteAnnotations';
 
-class LogoutRoute extends Route {
+class UserLogoutRoute extends Route {
     readonly router: Router;
     readonly path: string;
 
@@ -33,4 +33,4 @@ class LogoutRoute extends Route {
     }
 }
 
-export default new LogoutRoute();
+export default new UserLogoutRoute();

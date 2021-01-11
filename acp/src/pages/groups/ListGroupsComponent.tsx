@@ -76,7 +76,7 @@ const ListGroupsComponent: FunctionComponent<ListGroupsComponentProps> = (props)
 
     const deleteHandler = (row: any) => {
         if (window.confirm(`Are you sure you want to delete '${row.name}'?`)) {
-            sendRequest('/acp/deletegroup', 'POST', true, {
+            sendRequest('/acp/group/delete', 'POST', true, {
                 id: row.id
             });
             const index = state.groups.findIndex((r: any) => r.id === row.id);
@@ -85,7 +85,7 @@ const ListGroupsComponent: FunctionComponent<ListGroupsComponentProps> = (props)
     }
 
     const changeCallback = (row: any, id: number, name: string, rebate: number) => {
-        sendRequest('/acp/updategroup', 'POST', true, {
+        sendRequest('/acp/group/update', 'POST', true, {
             id: id,
             name: name,
             rebate: rebate
@@ -108,7 +108,7 @@ const ListGroupsComponent: FunctionComponent<ListGroupsComponentProps> = (props)
     }, [filterText]);
 
     const load = () => {
-        sendRequest('/acp/getgroups', 'GET', true, {}).then((response) => {
+        sendRequest('/acp/group/get', 'GET', true, {}).then((response) => {
             setState({ groups: response.data.groups });
         });
     }

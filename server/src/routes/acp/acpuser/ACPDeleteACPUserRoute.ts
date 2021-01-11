@@ -1,9 +1,9 @@
 import { Request, Response, Router } from 'express';
-import User from '../../../models/User';
+import ACPUser from '../../../models/acp/ACPUser';
 import Route from '../../../Route';
 import { AuthorizationType, NeedsAuthorization, NeedsProperties } from '../../RouteAnnotations';
 
-class ACPDeleteUserRoute extends Route {
+class ACPDeleteACPUserRoute extends Route {
     readonly router: Router;
     readonly path: string;
 
@@ -11,27 +11,27 @@ class ACPDeleteUserRoute extends Route {
         super();
         this.router = Router();
         this.path = '/acp';
-        this.router.post('/deleteuser', this.post.bind(this));
+        this.router.post('/acpuser/delete', this.post.bind(this));
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)
-    @NeedsProperties({ email: 'string' })
+    @NeedsProperties({ name: 'string' })
     private async post(req: Request, res: Response): Promise<void> {
         try {
-            let user = await User.getByEmail(req.body.email);
+            let user = await ACPUser.get(req.body.name);
             await user.delete();
-            res.send({ success: true, message: `Successfully deleted user with email '${req.body.email}'` });
+            res.send({ success: true, message: `Successfully deleted ACP user with username '${req.body.name}'` });
         } catch (err) {
-            if (err.message === 'User not found') {
+            if (err.message === 'ACP user not found') {
                 res.status(400);
                 res.send({ success: false, message: err.message });
                 return;
             }
             res.status(500);
-            res.send({ success: false, message: `An unknown error occurred while deleting user '${req.body.email}'` });
-            this.logger.error(`An unknown error occurred while deleting user '${req.body.email}': ${err}`);
+            res.send({ success: false, message: `An unknown error occurred while deleting ACP user '${req.body.name}'` });
+            this.logger.error(`An unknown error occurred while deleting ACP user '${req.body.name}': ${err}`);
         }
     }
 }
 
-export default new ACPDeleteUserRoute();
+export default new ACPDeleteACPUserRoute();

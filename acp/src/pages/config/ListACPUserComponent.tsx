@@ -37,7 +37,7 @@ const ListACPUserComponent: FunctionComponent<ListACPUserComponentProps> = (prop
 }
 
 function load(): void {
-    sendRequest('/acp/getacpusers', 'GET', true, {}).then((response) => {
+    sendRequest('/acp/acpuser/get', 'GET', true, {}).then((response) => {
         let tableRows = [];
         let loggedInUser = new Cookies().get('sokka_username');
         for (let id in response.data.users) {
@@ -61,7 +61,7 @@ function onDeleteClicked(name: string): void {
         alert('Are you really trying to sabotage yourself like that?');
         return;
     }
-    sendRequest('/acp/deleteacpuser', 'POST', true, { name }).then((response) => {
+    sendRequest('/acp/acpuser/delete', 'POST', true, { name }).then((response) => {
         if (response) {
             window.location.reload();
         } else {

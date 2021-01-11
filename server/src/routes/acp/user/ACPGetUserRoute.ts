@@ -3,7 +3,7 @@ import User from '../../../models/User';
 import Route from '../../../Route';
 import { AuthorizationType, NeedsAuthorization } from '../../RouteAnnotations';
 
-class ACPGetUsersRoute extends Route {
+class ACPGetUserRoute extends Route {
     readonly router: Router;
     readonly path: string;
 
@@ -11,7 +11,7 @@ class ACPGetUsersRoute extends Route {
         super();
         this.router = Router();
         this.path = '/acp';
-        this.router.get('/getusers', this.get.bind(this));
+        this.router.get('/user/get', this.get.bind(this));
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)
@@ -27,4 +27,4 @@ class ACPGetUsersRoute extends Route {
     }
 }
 
-export default new ACPGetUsersRoute();
+export default new ACPGetUserRoute();
