@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import ACPConfigValue from '../../../models/acp/ACPConfigValue';
+import ConfigEntry from '../../../models/ConfigEntry';
 import Route from '../../../Route';
 import { AuthorizationType, NeedsAuthorization, NeedsProperties } from '../../RouteAnnotations';
 
@@ -20,7 +20,7 @@ class ACPUpdateConfigRoute extends Route {
     @NeedsProperties({ configKey: 'string' })
     private async post(req: Request, res: Response): Promise<void> {
         try {
-            let configEntry = await ACPConfigValue.get(req.body.configKey);
+            let configEntry = await ConfigEntry.get(req.body.configKey);
             if (req.body.configValue) {
                 configEntry.configValue = req.body.configValue;
             }

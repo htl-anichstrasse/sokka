@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import ACPConfigValue from '../../../models/acp/ACPConfigValue';
+import ConfigEntry from '../../../models/ConfigEntry';
 import Route from '../../../Route';
 import { AuthorizationType, NeedsAuthorization } from '../../RouteAnnotations';
 
@@ -19,8 +19,8 @@ class ACPGetConfigRoute extends Route {
     @NeedsAuthorization(AuthorizationType.ACP)
     private async get(req: Request, res: Response): Promise<void> {
         try {
-            let configEntry = await ACPConfigValue.getAll();
-            res.send({ success: true, data: configEntry });
+            let configEntries = await ConfigEntry.getAll();
+            res.send({ success: true, data: configEntries });
         } catch (err) {
             res.status(500);
             res.send({ success: false, message: 'An unknown error occurred while fetching config entries' });
