@@ -5,14 +5,12 @@ import VerificationService from '../VerificationService';
 class VerifyRoute extends Route {
     readonly router: Router;
     readonly path: string;
-    readonly fullpath: string;
 
     constructor() {
         super();
         this.router = Router();
         this.path = '/';
         this.router.get('/verify', this.get.bind(this));
-        this.fullpath = '/verify';
     }
 
     private async get(req: Request, res: Response): Promise<void> {

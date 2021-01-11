@@ -6,14 +6,12 @@ import { AuthorizationType, NeedsAuthorization } from '../../RouteAnnotations';
 class ACPGetGroupsRoute extends Route {
     readonly router: Router;
     readonly path: string;
-    readonly fullpath: string;
 
     constructor() {
         super();
         this.router = Router();
         this.path = '/acp';
         this.router.get('/getgroups', this.get.bind(this));
-        this.fullpath = '/acp/getgroups';
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)

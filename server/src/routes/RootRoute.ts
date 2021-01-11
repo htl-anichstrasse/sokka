@@ -4,14 +4,12 @@ import Route from '../Route';
 class RootRoute extends Route {
     readonly router: Router;
     readonly path: string;
-    readonly fullpath: string;
 
     constructor() {
         super();
         this.router = Router();
         this.path = '/';
         this.router.get('/', this.get.bind(this));
-        this.fullpath = '/';
     }
 
     private async get(req: Request, res: Response): Promise<void> {

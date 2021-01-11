@@ -6,14 +6,12 @@ import { AuthorizationType, NeedsAuthorization, NeedsProperties } from '../../Ro
 class ACPDeleteGroupRoute extends Route {
     readonly router: Router;
     readonly path: string;
-    readonly fullpath: string;
 
     constructor() {
         super();
         this.router = Router();
         this.path = '/acp';
         this.router.post('/deletegroup', this.post.bind(this));
-        this.fullpath = '/acp/deletegroup';
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)

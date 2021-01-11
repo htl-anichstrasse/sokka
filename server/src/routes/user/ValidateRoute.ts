@@ -1,29 +1,22 @@
 import { Request, Response, Router } from 'express';
-import * as log4js from 'log4js';
 import Session from '../../models/Session';
 import User from '../../models/User';
 import Route from '../../Route';
+import { NeedsProperties } from '../RouteAnnotations';
 
 class ValidateRoute extends Route {
     readonly router: Router;
     readonly path: string;
-    readonly fullpath: string;
-    readonly logger = log4js.getLogger('ValidateRoute');
 
     constructor() {
         super();
         this.router = Router();
         this.path = '/user';
         this.router.post('/validate', this.post.bind(this));
-        this.fullpath = '/user/validate';
     }
 
+    @NeedsProperties({ token: 'string', email: 'string' })
     private async post(req: Request, res: Response): Promise<void> {
-        if (!req.body.token || !req.body.email) {
-            res.status(400);
-            res.send({ success: false, message: 'Invalid parameters' });
-            return;
-        }
         try {
             let user = await User.getByEmail(req.body.email);
             let result = await Session.validate(user, req.body.token);

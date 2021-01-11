@@ -9,7 +9,6 @@ import rateLimit = require('express-rate-limit');
 class LoginRoute extends Route {
     readonly router: Router;
     readonly path: string;
-    readonly fullpath: string;
 
     constructor() {
         super();
@@ -21,7 +20,6 @@ class LoginRoute extends Route {
             message: `{ success: false, message: 'Too many login attempts from this IP, please try again later' }`
         });
         this.router.post('/login', this.post.bind(this), loginLimiter);
-        this.fullpath = '/user/login';
     }
 
     @NeedsProperties({ email: 'string', password: 'string' })

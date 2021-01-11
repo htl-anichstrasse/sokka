@@ -7,14 +7,12 @@ import { NeedsProperties } from '../RouteAnnotations';
 class ACPValidateRoute extends Route {
     readonly router: Router;
     readonly path: string;
-    readonly fullpath: string;
 
     constructor() {
         super();
         this.router = Router();
         this.path = '/acp';
         this.router.post('/validate', this.post.bind(this));
-        this.fullpath = '/acp/validate';
     }
 
     @NeedsProperties({ token: 'string', username: 'string' })

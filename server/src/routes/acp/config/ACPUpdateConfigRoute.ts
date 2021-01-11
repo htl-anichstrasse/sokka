@@ -6,14 +6,12 @@ import { AuthorizationType, NeedsAuthorization, NeedsProperties } from '../../Ro
 class ACPUpdateConfigRoute extends Route {
     readonly router: Router;
     readonly path: string;
-    readonly fullpath: string;
 
     constructor() {
         super();
         this.router = Router();
         this.path = '/acp';
         this.router.post('/updateconfig', this.post.bind(this));
-        this.fullpath = '/acp/updateconfig';
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)

@@ -6,13 +6,11 @@ import { NeedsProperties } from '../RouteAnnotations';
 class ACPLogoutRoute extends Route {
     readonly router: Router;
     readonly path: string;
-    readonly fullpath: string;
 
     constructor() {
         super();
         this.router = Router();
         this.path = '/acp';
-        this.fullpath = '/acp/logout';
         this.router.post('/logout', this.post.bind(this));
     }
 

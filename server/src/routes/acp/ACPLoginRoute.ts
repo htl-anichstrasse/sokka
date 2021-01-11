@@ -8,14 +8,12 @@ import { NeedsProperties } from '../RouteAnnotations';
 class ACPLoginRoute extends Route {
     readonly router: Router;
     readonly path: string;
-    readonly fullpath: string;
 
     constructor() {
         super();
         this.router = Router();
         this.path = '/acp';
         this.router.post('/login', this.post.bind(this));
-        this.fullpath = '/acp/login';
     }
 
     @NeedsProperties({ name: 'string', password: 'string' })

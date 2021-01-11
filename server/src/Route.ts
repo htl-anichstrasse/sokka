@@ -4,7 +4,6 @@ import * as log4js from 'log4js';
 export default class Route {
     readonly router: Router
     readonly path: string
-    readonly fullpath: string
     logger: log4js.Logger;
 
     /**
@@ -13,6 +12,10 @@ export default class Route {
      */
     initialize() {
         this.logger = log4js.getLogger(this.constructor.name);
-        this.logger.info(`Registered for path '${this.fullpath}'`);
+        for (let routerStack of this.router.stack) {
+            for (let method of Object.keys(routerStack.route.methods)) {
+                this.logger.info(`Registered ${method.toUpperCase()} '${(this.path + routerStack.route.path).replace('//', '/')}'`);
+            }
+        }
     }
 }

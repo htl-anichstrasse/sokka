@@ -11,7 +11,6 @@ import rateLimit = require('express-rate-limit');
 class SignupRoute extends Route {
     readonly router: Router;
     readonly path: string;
-    readonly fullpath: string;
 
     constructor() {
         super();
@@ -23,7 +22,6 @@ class SignupRoute extends Route {
             message: `{ success: false, message: 'Too many created accounts from this IP, please try again later' }`
         });
         this.router.post('/signup', this.post.bind(this), signupLimiter);
-        this.fullpath = '/user/signup';
     }
 
     @NeedsProperties({ email: 'string', password: 'string', tos: 'boolean', privacypolicy: 'boolean' })

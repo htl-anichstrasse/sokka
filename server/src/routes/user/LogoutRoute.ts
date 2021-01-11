@@ -6,13 +6,11 @@ import { NeedsProperties } from '../RouteAnnotations';
 class LogoutRoute extends Route {
     readonly router: Router;
     readonly path: string;
-    readonly fullpath: string;
 
     constructor() {
         super();
         this.router = Router();
         this.path = '/user';
-        this.fullpath = '/user/login';
         this.router.post('/login', this.post.bind(this));
     }
 
