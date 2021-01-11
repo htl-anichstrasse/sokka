@@ -39,8 +39,8 @@ class ValidateRoute extends Route {
                 return;
             }
             res.status(500);
-            res.send({ success: false, message: 'An unknwon error occurred while validating session token' });
-            this.logger.error(`An unknwon error occurred while validating session token: ${err}`);
+            res.send({ success: false, message: 'An unknown error occurred while validating session token' });
+            this.logger.error(`An unknown error occurred while validating session token: ${err}`);
         }
     }
 }

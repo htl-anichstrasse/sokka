@@ -3,6 +3,7 @@ import { Request, Response, Router } from 'express';
 import Session from '../../models/Session';
 import User from '../../models/User';
 import Route from '../../Route';
+import { NeedsProperties } from '../RouteAnnotations';
 import rateLimit = require('express-rate-limit');
 
 class LoginRoute extends Route {
@@ -23,12 +24,8 @@ class LoginRoute extends Route {
         this.fullpath = '/user/login';
     }
 
+    @NeedsProperties({ email: 'string', password: 'string' })
     private async post(req: Request, res: Response): Promise<void> {
-        if (!req.body.email || !req.body.password) {
-            res.status(400);
-            res.send({ success: false, message: 'Invalid parameters' });
-            return;
-        }
         try {
             let user = await User.getByEmail(req.body.email);
             let same = await bcrypt.compare(req.body.password, user.password);
@@ -37,22 +34,23 @@ class LoginRoute extends Route {
                     let session = await Session.create(user);
                     res.send({ success: true, message: 'Credentials validated', token: session.token });
                 } catch (err) {
-                    this.handleUnsuccessfulLogin(req, res, err)
+                    res.status(500);
+                    res.send({ success: false, message: `An unknown error occurred while creating a session for '${req.body.username}'` });
+                    this.logger.error(`An unknown error occurred while creating a session for '${req.body.username}': ${err}`);
                 }
             } else {
-                this.handleUnsuccessfulLogin(req, res);
+                res.send({ success: false, message: `Could not retrieve user '${req.body.username}'` });
             }
         } catch (err) {
-            this.handleUnsuccessfulLogin(req, res, err);
+            if (err.message === 'User not found') {
+                res.status(400);
+                res.send({ success: false, message: `Could not retrieve user '${req.body.username}'` });
+                return;
+            }
+            res.status(500);
+            res.send({ success: false, message: `An unknown error occurred while checking credentials for '${req.body.username}'` });
+            this.logger.error(`An unknown error occurred while checking credentials for '${req.body.username}': ${err}`);
         }
-    }
-
-    private handleUnsuccessfulLogin(req: Request, res: Response, err?: Error): void {
-        let requestedEmail = req.body.email;
-        if (err) {
-            this.logger.warn(`An unknown error occurred while logging in user '${requestedEmail}': ${err}`);
-        }
-        res.send({ success: false, message: `Could not retrieve user for email '${requestedEmail}'` });
     }
 }
 

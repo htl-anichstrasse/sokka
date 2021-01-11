@@ -35,11 +35,11 @@ class ACPUpdateGroupRoute extends Route {
         }
         try {
             await group.update();
-            res.send({ success: true, message: 'Group updated' });
+            res.send({ success: true, message: 'Successfully updated group' });
         } catch (err) {
-            this.logger.error(err);
             res.status(500);
-            res.send({ success: false, message: 'An unknown error occurred while updating group' });
+            res.send({ success: false, message: `An unknown error occurred while updating group with id '${req.body.group_id}'` });
+            this.logger.error(`An unknown error occurred while updating group with id '${req.body.group_id}': ${err}`);
         }
     }
 }

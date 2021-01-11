@@ -19,11 +19,6 @@ class ACPUpdateConfigRoute extends Route {
     @NeedsAuthorization(AuthorizationType.ACP)
     @NeedsProperties({ configKey: 'string' })
     private async post(req: Request, res: Response): Promise<void> {
-        if (!req.body.configKey) {
-            res.status(400);
-            res.send({ success: false, message: 'Invalid parameters' });
-            return;
-        }
         try {
             let configEntry = await ACPConfigValue.get(req.body.configKey);
             if (req.body.configValue) {
@@ -43,8 +38,8 @@ class ACPUpdateConfigRoute extends Route {
                 return;
             }
             res.status(500);
-            res.send({ success: false, message: 'An unknown error occurred while updating config entry' });
-            this.logger.error(`An unknown error occurred while updating config entry: ${err}`);
+            res.send({ success: false, message: `An unknown error occurred while updating config entry '${req.body.configKey}'` });
+            this.logger.error(`An unknown error occurred while updating config entry '${req.body.configKey}': ${err}`);
         }
     }
 }

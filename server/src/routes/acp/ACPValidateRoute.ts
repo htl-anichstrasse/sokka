@@ -34,8 +34,8 @@ class ACPValidateRoute extends Route {
                 return;
             }
             res.status(500);
-            res.send({ success: false, message: 'An unknwon error occurred while validating ACP session token' });
-            this.logger.error(`An unknwon error occurred while validating ACP session token: ${err}`);
+            res.send({ success: false, message: 'An unknown error occurred while validating ACP session token' });
+            this.logger.error(`An unknown error occurred while validating ACP session token: ${err}`);
         }
     }
 }

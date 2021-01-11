@@ -28,22 +28,23 @@ class ACPLoginRoute extends Route {
                     let session = await ACPSession.create(user);
                     res.send({ success: true, message: 'Credentials validated', token: session.token, username: user.username });
                 } catch (err) {
-                    this.handleUnsuccessfulLogin(req, res, err)
+                    res.status(500);
+                    res.send({ success: false, message: `An unknown error occurred while creating a session for '${req.body.username}'` });
+                    this.logger.error(`An unknown error occurred while creating a session for '${req.body.username}': ${err}`);
                 }
             } else {
-                this.handleUnsuccessfulLogin(req, res);
+                res.send({ success: false, message: `Could not retrieve ACP user '${req.body.username}'` });
             }
         } catch (err) {
-            this.handleUnsuccessfulLogin(req, res, err)
+            if (err.message === 'ACP user not found') {
+                res.status(400);
+                res.send({ success: false, message: `Could not retrieve ACP user '${req.body.username}'` });
+                return;
+            }
+            res.status(500);
+            res.send({ success: false, message: `An unknown error occurred while checking credentials for '${req.body.username}'` });
+            this.logger.error(`An unknown error occurred while checking credentials for '${req.body.username}': ${err}`);
         }
-    }
-
-    private handleUnsuccessfulLogin(req: Request, res: Response, err?: Error): void {
-        let requestedUsername = req.body.username;
-        if (err) {
-            this.logger.error(`An unknown error occurred while logging in user '${requestedUsername}': ${err}`);
-        }
-        res.send({ success: false, message: `Could not retrieve user '${requestedUsername}'` });
     }
 }
 

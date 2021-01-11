@@ -1,6 +1,7 @@
 import { Request, Response, Router } from 'express';
 import Session from '../../models/Session';
 import Route from '../../Route';
+import { NeedsProperties } from '../RouteAnnotations';
 
 class LogoutRoute extends Route {
     readonly router: Router;
@@ -15,12 +16,8 @@ class LogoutRoute extends Route {
         this.router.post('/login', this.post.bind(this));
     }
 
+    @NeedsProperties({ token: 'string ' })
     private async post(req: Request, res: Response): Promise<void> {
-        if (!req.body.token) {
-            res.status(400);
-            res.send({ success: false, message: 'Invalid parameters' });
-            return;
-        }
         try {
             let session = await Session.get(req.body.token);
             await session.delete();

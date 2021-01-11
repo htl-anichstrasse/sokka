@@ -30,7 +30,7 @@ class ACPDeleteACPUserRoute extends Route {
                 return;
             }
             res.status(500);
-            res.send({ success: false, message: `Could not delete ACP user with username '${req.body.username}'` });
+            res.send({ success: false, message: `An unknown error occurred while deleting ACP user '${req.body.username}'` });
             this.logger.error(`An unknown error occurred while deleting ACP user '${req.body.username}': ${err}`);
         }
     }

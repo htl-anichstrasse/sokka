@@ -30,8 +30,8 @@ class ACPDeleteGroupRoute extends Route {
                 return;
             }
             res.status(500);
-            res.send({ success: false, message: `Could not delete group with id '${req.body.group_id}'` });
-            this.logger.error(`Could not delete group with id'${req.body.group_id}' with error: ${err}`);
+            res.send({ success: false, message: `An unknown error occurred while deleting group with id '${req.body.group_id}'` });
+            this.logger.error(`An unknown error occurred while deleting group with id '${req.body.group_id}': ${err}`);
         }
     }
 }

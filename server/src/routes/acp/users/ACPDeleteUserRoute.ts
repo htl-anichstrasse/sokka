@@ -29,9 +29,9 @@ class ACPDeleteUserRoute extends Route {
                 res.send({ success: false, message: err.message });
                 return;
             }
-            this.logger.error(err);
             res.status(500);
-            res.send({ success: false, message: `Could not delete user '${req.body.email}'` });
+            res.send({ success: false, message: `An unknown error occurred while deleting user '${req.body.email}'` });
+            this.logger.error(`An unknown error occurred while deleting user '${req.body.email}': ${err}`);
         }
     }
 }

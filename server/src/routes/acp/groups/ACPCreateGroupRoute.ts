@@ -24,8 +24,8 @@ class ACPCreateGroupRoute extends Route {
             res.send({ success: true, message: `Successfully created group with id '${group.id}'` });
         } catch (err) {
             res.status(500);
-            res.send({ success: false, message: 'An unknown error occurred while creating group' });
-            this.logger.error(`An unknown error occured while creating group with name '${req.body.groupname}': ${err}`);
+            res.send({ success: false, message: `An unknown error occurred while creating group '${req.body.groupname}'` });
+            this.logger.error(`An unknown error occured while creating group '${req.body.groupname}': ${err}`);
         }
     }
 }

@@ -37,8 +37,8 @@ class ACPCreateUserRoute extends Route {
             res.send({ success: true, message: `Successfully created user ${user.username}` });
         } catch (err) {
             res.status(500);
-            res.send({ success: false, message: 'An unknown error occurred while signing up ACP user' });
-            this.logger.error(`An unknown error occurred while signing up user '${req.body.username}' with error: ${err}`);
+            res.send({ success: false, message: `An unknown error occurred while signing up ACP user '${req.body.username}'` });
+            this.logger.error(`An unknown error occurred while signing up user '${req.body.username}': ${err}`);
         }
     }
 }

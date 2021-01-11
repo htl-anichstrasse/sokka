@@ -5,6 +5,7 @@ import Session from '../../models/Session';
 import User from '../../models/User';
 import Route from '../../Route';
 import VerificationService from '../../VerificationService';
+import { NeedsProperties } from '../RouteAnnotations';
 import rateLimit = require('express-rate-limit');
 
 class SignupRoute extends Route {
@@ -25,12 +26,8 @@ class SignupRoute extends Route {
         this.fullpath = '/user/signup';
     }
 
+    @NeedsProperties({ email: 'string', password: 'string', tos: 'boolean', privacypolicy: 'boolean' })
     private async post(req: Request, res: Response): Promise<void> {
-        if (!(req.body.email && req.body.password)) {
-            res.status(400);
-            res.send({ success: false, message: 'Invalid parameters' });
-            return;
-        }
         if (!req.body.tos || !req.body.privacypolicy) {
             res.send({ sucess: false, message: 'Please accept our terms of service and privacy policy' });
             return;

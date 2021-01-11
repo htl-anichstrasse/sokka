@@ -51,9 +51,9 @@ class ACPUpdateUserRoute extends Route {
             await user.update();
             res.send({ success: true, message: 'User updated' });
         } catch (err) {
-            this.logger.error(err);
             res.status(500);
-            res.send({ success: false, message: 'An unknown error occurred while updating user' });
+            res.send({ success: false, message: `An unknown error occurred while updating user '${req.body.user.email}'` });
+            this.logger.error(`An unknown error occurred while updating user '${req.body.user.email}': ${err}`);
         }
     }
 }

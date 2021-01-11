@@ -1,5 +1,4 @@
 import { Request, Response, Router } from 'express';
-import * as log4js from 'log4js';
 import Route from '../Route';
 import VerificationService from '../VerificationService';
 
@@ -29,20 +28,13 @@ class VerifyRoute extends Route {
                 await VerificationService.verifyUser(user);
                 res.send({ success: true, message: 'Successfully verified user' });
             } else {
-                this.handleInvalidToken(req, res);
+                res.send({ success: false, message: `Invalid token '${req.query.id}'` });
             }
         } catch (err) {
-            this.handleInvalidToken(req, res, err)
+            res.status(500);
+            res.send({ success: false, message: `An unknown error occurred while verifying verification token '${req.query.id}'` });
+            this.logger.error(`An unknown error occurred while verifying verification token '${req.query.id}': ${err}`);
         }
-    }
-
-    private handleInvalidToken(req: Request, res: Response, err?: Error): void {
-        let token = req.query.id;
-        if (err) {
-            this.logger.warn(`Unsuccessful email verification for token ${token} with error: ${err}`);
-        }
-        res.status(500);
-        res.send({ success: false, message: `Invalid token '${token}'` });
     }
 }
 
