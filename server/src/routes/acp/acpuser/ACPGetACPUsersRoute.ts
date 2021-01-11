@@ -1,9 +1,9 @@
 import { Request, Response, Router } from 'express';
-import ConfigEntry from '../../../models/ConfigEntry';
+import ACPUser from '../../../models/acp/ACPUser';
 import Route from '../../../Route';
 import { AuthorizationType, NeedsAuthorization } from '../../RouteAnnotations';
 
-class ACPGetConfigRoute extends Route {
+class ACPGetACPUsersRoute extends Route {
     readonly router: Router;
     readonly path: string;
 
@@ -11,20 +11,20 @@ class ACPGetConfigRoute extends Route {
         super();
         this.router = Router();
         this.path = '/acp';
-        this.router.get('/config/get', this.get.bind(this));
+        this.router.get('/acpuser/get', this.get.bind(this));
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)
     private async get(req: Request, res: Response): Promise<void> {
         try {
-            let configEntries = await ConfigEntry.getAll();
-            res.send({ success: true, data: configEntries });
+            let users = await ACPUser.getAll();
+            res.send({ success: true, users });
         } catch (err) {
             res.status(500);
-            res.send({ success: false, message: 'An unknown error occurred while fetching config entries' });
-            this.logger.error(`An unknown error occured while fetching config entries: ${err}`);
+            res.send({ success: false, message: 'An unknown error occurred while fetching users' });
+            this.logger.error(`An unknown error occurred while fetching users: ${err}`);
         }
     }
 }
 
-export default new ACPGetConfigRoute();
+export default new ACPGetACPUsersRoute();

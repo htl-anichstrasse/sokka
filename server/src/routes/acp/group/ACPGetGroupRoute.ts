@@ -1,9 +1,9 @@
 import { Request, Response, Router } from 'express';
-import ConfigEntry from '../../../models/ConfigEntry';
+import Group from '../../../models/Group';
 import Route from '../../../Route';
 import { AuthorizationType, NeedsAuthorization } from '../../RouteAnnotations';
 
-class ACPGetConfigRoute extends Route {
+class ACPGetGroupRoute extends Route {
     readonly router: Router;
     readonly path: string;
 
@@ -11,20 +11,20 @@ class ACPGetConfigRoute extends Route {
         super();
         this.router = Router();
         this.path = '/acp';
-        this.router.get('/config/get', this.get.bind(this));
+        this.router.get('/group/get', this.get.bind(this));
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)
     private async get(req: Request, res: Response): Promise<void> {
         try {
-            let configEntries = await ConfigEntry.getAll();
-            res.send({ success: true, data: configEntries });
+            let groups = await Group.getAll();
+            res.send({ success: true, groups });
         } catch (err) {
+            this.logger.error(err);
             res.status(500);
-            res.send({ success: false, message: 'An unknown error occurred while fetching config entries' });
-            this.logger.error(`An unknown error occured while fetching config entries: ${err}`);
+            res.send({ success: false, message: 'An unknown error occurred while fetching groups' });
         }
     }
 }
 
-export default new ACPGetConfigRoute();
+export default new ACPGetGroupRoute();

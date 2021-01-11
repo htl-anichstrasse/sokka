@@ -15,13 +15,13 @@ const ChangeGroupModalComponent: FunctionComponent<ChangeGroupModalComponentProp
 
     const handleSubmitClose = (group: any) => {
         if (group) {
-            if (group.value === props.row.groupname) {
+            if (group.value === props.row.name) {
                 alert('Please choose a different group than the one already active!');
                 return;
             }
-            let groupObject = props.groups.find((val) => val.groupname === group.value);
+            let groupObject = props.groups.find((val) => val.name === group.value);
             if (groupObject) {
-                props.callback(props.row, groupObject.group_id);
+                props.callback(props.row, groupObject.id);
             } else {
                 alert('Please choose a valid group!');
                 return;
@@ -33,7 +33,7 @@ const ChangeGroupModalComponent: FunctionComponent<ChangeGroupModalComponentProp
 
     let options = [];
     for (let group of props.groups) {
-        options.push(<option selected={props.row.groupname === group.groupname}>{group.groupname}</option>);
+        options.push(<option selected={props.row.name === group.name}>{group.name}</option>);
     }
 
     return (

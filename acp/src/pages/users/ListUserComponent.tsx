@@ -77,13 +77,13 @@ const ListUserComponent: FunctionComponent<ListUserComponentProps> = (props) => 
         filteredUsers = state.users.filter(item => item.email.toLowerCase().includes(filterText.toLowerCase()));
         for (let i = 0; i < filteredUsers.length; i++) {
             filteredUsers[i].verified = filteredUsers[i].verified === '1' ? 'Yes' : 'No';
-            filteredUsers[i].groupname = state.groups.find((group) => group.group_id === filteredUsers[i].group_id)?.groupname;
+            filteredUsers[i].groupname = state.groups.find((group) => group.id === filteredUsers[i].group_id)?.name;
         }
     }
 
     const deleteHandler = (row: any) => {
         if (window.confirm(`Are you sure you want to delete:\r ${row.email}?`)) {
-            sendRequest('/acp/deleteuser', 'POST', true, {
+            sendRequest('/acp/user/delete', 'POST', true, {
                 email: row.email
             });
             const index = state.users.findIndex((r: any) => r.id === row.id);
@@ -92,14 +92,14 @@ const ListUserComponent: FunctionComponent<ListUserComponentProps> = (props) => 
     }
 
     const changeCallback = (row: any, group_id: number) => {
-        sendRequest('/acp/updateuser', 'POST', true, {
+        sendRequest('/acp/user/update', 'POST', true, {
             email: row.email,
             user: {
                 group: group_id
             }
         }).then((response) => {
             if (response.data.success) {
-                let groupObject = state.groups.find((val) => val.group_id === group_id);
+                let groupObject = state.groups.find((val) => val.id === group_id);
                 if (groupObject) {
                     const index = state.users.findIndex((r: any) => r.id === row.id);
                     let user = state.users[index];
@@ -120,7 +120,7 @@ const ListUserComponent: FunctionComponent<ListUserComponentProps> = (props) => 
     }, [filterText]);
 
     const load = () => {
-        Promise.all([sendRequest('/acp/getusers', 'GET', true, {}), sendRequest('/acp/getgroups', 'GET', true, {})]).then((values) => {
+        Promise.all([sendRequest('/acp/user/get', 'GET', true, {}), sendRequest('/acp/group/get', 'GET', true, {})]).then((values) => {
             setState({ users: values[0].data.users, groups: values[1].data.groups });
         });
     }

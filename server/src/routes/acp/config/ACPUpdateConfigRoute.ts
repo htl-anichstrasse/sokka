@@ -1,56 +1,45 @@
-import { NextFunction, Request, Response, Router } from 'express';
-import ACPConfigValue from '../../../models/acp/ACPConfigValue';
-import ACPSession from '../../../models/acp/ACPSession';
+import { Request, Response, Router } from 'express';
+import ConfigEntry from '../../../models/ConfigEntry';
 import Route from '../../../Route';
+import { AuthorizationType, NeedsAuthorization, NeedsProperties } from '../../RouteAnnotations';
 
-class ACPUpdateConfigRoute implements Route {
+class ACPUpdateConfigRoute extends Route {
     readonly router: Router;
     readonly path: string;
-    readonly fullpath: string;
 
     constructor() {
+        super();
         this.router = Router();
         this.path = '/acp';
-        this.router.post('/updateconfig', this.post);
-        this.fullpath = '/acp/updateconfig';
+        this.router.post('/config/update', this.post.bind(this));
     }
 
-    private post(req: Request, res: Response, next: NextFunction): void {
-        if (!req.token) {
-            res.status(401);
-            res.send({ success: false, message: 'Authorization required' });
-            return;
-        }
-        ACPSession.get(req.token).then(() => {
-            if (!req.body.configKey) {
-                res.status(400);
-                res.send({ success: false, message: 'Invalid parameters' });
-                return;
+    @NeedsAuthorization(AuthorizationType.ACP)
+    @NeedsProperties({ configEntry: 'object' })
+    private async post(req: Request, res: Response): Promise<void> {
+        try {
+            let configEntry = await ConfigEntry.get(req.body.configEntry.key);
+            if (req.body.configEntry.value) {
+                configEntry.value = req.body.configEntry.value;
             }
-            ACPConfigValue.get(req.body.configKey).then((configEntry) => {
-                if (req.body.configValue) {
-                    configEntry.configValue = req.body.configValue;
-                }
-                if (req.body.friendlyName) {
-                    configEntry.friendlyName = req.body.friendlyName;
-                }
-                if (req.body.type) {
-                    configEntry.type = req.body.type;
-                }
-                configEntry.update().then(() => {
-                    res.send({ success: true, message: 'Config entry updated' });
-                }).catch(() => {
-                    res.status(500);
-                    res.send({ success: false, message: `Could not update config entry with key '${req.body.configKey}'` });
-                });
-            }).catch((err) => {
+            if (req.body.configEntry.friendlyName) {
+                configEntry.friendlyName = req.body.configEntry.friendlyName;
+            }
+            if (req.body.type) {
+                configEntry.type = req.body.configEntry.type;
+            }
+            await configEntry.update();
+            res.send({ success: true, message: 'Successfully updated config entry' });
+        } catch (err) {
+            if (err.message === 'Config entry not found') {
                 res.status(400);
                 res.send({ success: false, message: 'This config entry does not exist' });
-            });
-        }).catch(() => {
-            res.status(401);
-            res.send({ success: false, message: 'Authorization required' });
-        });
+                return;
+            }
+            res.status(500);
+            res.send({ success: false, message: `An unknown error occurred while updating config entry '${req.body.configEntry.key}'` });
+            this.logger.error(`An unknown error occurred while updating config entry '${req.body.configEntry.key}': ${err}`);
+        }
     }
 }
 
