@@ -36,7 +36,7 @@ class _MenuPanelState extends State<MenuPanel> {
                         }),
                         children: <ExpansionPanel>[
                             this._buildPanel(this._menu)
-                        ],                 
+                        ],
                     ),
                 ),
             ],
