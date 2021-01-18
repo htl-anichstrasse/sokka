@@ -1,6 +1,6 @@
 import 'dart:ui' as UI;
 import 'package:client/services/UserAuth.dart';
-import 'package:client/util/routes.dart';
+import 'package:client/util/Routes.dart';
 import 'package:client/views/LoadingSplashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:client/styles/theme/AppThemes.dart';

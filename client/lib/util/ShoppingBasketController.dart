@@ -1,5 +1,5 @@
-import 'package:client/models/menu.dart';
-import 'package:client/models/meal.dart';
+import 'package:client/models/Menu.dart';
+import 'package:client/models/Product.dart';
 
 class ShoppingBasketController {
     static ShoppingBasketController _instance = new ShoppingBasketController.internal();
@@ -15,8 +15,8 @@ class ShoppingBasketController {
         this._basket.add(menu);
     }
 
-    void appendMealToBasket(final Meal meal) {
-        this._basket.add(meal);
+    void appendMealToBasket(final Product product) {
+        this._basket.add(product);
     }   
 
     ShoppingBasketController.internal();

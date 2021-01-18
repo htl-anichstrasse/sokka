@@ -1,4 +1,4 @@
-import 'package:client/models/menu.dart';
+import 'package:client/models/Menu.dart';
 
 class MenuController {
     static MenuController _instance = new MenuController.internal();

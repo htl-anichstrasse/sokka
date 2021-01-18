@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:client/models/menu.dart';
+import 'package:client/models/Menu.dart';
 import 'package:client/util/ShoppingBasketController.dart';
 import 'package:google_fonts/google_fonts.dart';
 
