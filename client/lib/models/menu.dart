@@ -1,41 +1,41 @@
-import 'package:client/models/Product.dart';
+import 'package:client/models/Orderable.dart';
 
 /// -------------------------------------------------------------------------------
 /// Stores all relevant data, such as the different meals and the price of a menu.
 /// -------------------------------------------------------------------------------
-class Menu implements Product {
+class Menu implements Orderable {
     int _menuIndex;
-    int get getIndex => _menuIndex;
+    int get getIndex => this._menuIndex;
 
     bool _expanded;
-    bool get getExpanded => _expanded;
-    set setExpanded(final bool expanded) => _expanded = expanded;
+    bool get getExpanded => this._expanded;
+    set setExpanded(final bool expanded) => this._expanded = expanded;
 
-    String _title;
-    String get getTitle => _title;
-    set setTitle(final String title) => _title = title;
+    String name;
+    String get getTitle => this.name;
+    set setTitle(final String name) => this.name = name;
 
     String _appetizer;
-    String get getAppetizer => _appetizer;
-    set setAppetizer(final String appetizer) => _appetizer = appetizer;
+    String get getAppetizer => this._appetizer;
+    set setAppetizer(final String appetizer) => this._appetizer = appetizer;
 
     String _mainCourse;
-    String get getMainCourse => _mainCourse;
-    set setMainCourse(final String mainCourse) => _mainCourse = mainCourse;
+    String get getMainCourse => this._mainCourse;
+    set setMainCourse(final String mainCourse) => this._mainCourse = mainCourse;
 
     String _dessert;
-    String get getDessert => _dessert;
-    set setDessert(final String dessert) => _dessert = dessert;
+    String get getDessert => this._dessert;
+    set setDessert(final String dessert) => this._dessert = dessert;
 
     double _price;
-    double get getPrice => _price;
-    set setPrice(final double price) => _price = price;
+    double get getPrice => this._price;
+    set setPrice(final double price) => this._price = price;
 
-    Menu(final int menuIndex, final bool expanded, final String title, final String appetizer, final String mainCourse, final String dessert,
+    Menu(final int menuIndex, final bool expanded, final String name, final String appetizer, final String mainCourse, final String dessert,
             final double price) {
         this._menuIndex = menuIndex;
         this._expanded = expanded;
-        this._title = title;
+        this.name = name;
         this._appetizer = appetizer;
         this._mainCourse = mainCourse;
         this._dessert = dessert;
