@@ -6,7 +6,7 @@ class CookieStorage {
 
     static const TOKEN_STRING = 'token';
     static const EMAIL_STRING = 'email';
- 
+
     Future<String> getSessionToken() async {
         final SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
         return sharedPrefs.getString(CookieStorage.TOKEN_STRING);
