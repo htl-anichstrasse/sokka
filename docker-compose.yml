@@ -55,6 +55,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: default_schema
+    cap_add:
+      - SYS_NICE
   # API PAGE
   api:
     depends_on:

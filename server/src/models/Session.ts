@@ -10,7 +10,7 @@ class Session implements Model {
         return new Promise<Session>((resolve, reject) => {
             Session.count(user).then((count) => {
                 if (count >= parseInt(config.readConfigValueSync('MAX_USER_SESSIONS'))) {
-                    reject('Max number of sessions reached');
+                    reject(new Error('Max number of sessions reached'));
                     return;
                 }
                 // TODO: token has unique index, there is a VERY SMALL chance that this will fail -> loop
@@ -28,7 +28,7 @@ class Session implements Model {
                 if (result.length > 0) {
                     resolve(new Session(result[0].id, result[0].user_id, result[0].token));
                 } else {
-                    reject('Session not found');
+                    reject(new Error('Session not found'));
                 }
             }).catch((err) => reject(err));
         });

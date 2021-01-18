@@ -1,36 +1,36 @@
 import { Request, Response, Router } from 'express';
-import ACPSession from '../../models/acp/ACPSession';
+import Session from '../../models/Session';
 import Route from '../../Route';
 import { NeedsProperties } from '../RouteAnnotations';
 
-class ACPLogoutRoute extends Route {
+class UserLogoutRoute extends Route {
     readonly router: Router;
     readonly path: string;
 
     constructor() {
         super();
         this.router = Router();
-        this.path = '/acp';
-        this.router.post('/logout', this.post.bind(this));
+        this.path = '/user';
+        this.router.post('/login', this.post.bind(this));
     }
 
-    @NeedsProperties({ token: 'string' })
+    @NeedsProperties({ token: 'string ' })
     private async post(req: Request, res: Response): Promise<void> {
         try {
-            let session = await ACPSession.get(req.body.token);
+            let session = await Session.get(req.body.token);
             await session.delete();
             res.send({ success: true, message: 'Successfully invalidated session' });
         } catch (err) {
-            if (err.message === 'ACP Session not found') {
+            if (err.message === 'Session not found') {
                 res.status(400);
                 res.send({ success: false, message: err.message });
                 return;
             }
             res.status(500);
-            res.send({ success: false, message: 'An unknown error occured while invalidating ACP session token' });
-            this.logger.error(`An unknown error occured while invalidating ACP session token: ${err}`);
+            res.send({ success: false, message: 'An unknown error occured while invalidating session token' });
+            this.logger.error(`An unknown error occured while invalidating session token: ${err}`);
         }
     }
 }
 
-export default new ACPLogoutRoute();
+export default new UserLogoutRoute();

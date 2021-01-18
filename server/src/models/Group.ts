@@ -1,7 +1,7 @@
 import Database from "../Database";
 
 class Group implements Model {
-    private constructor(readonly id: number, public groupname: string, public rebate: number) { }
+    private constructor(readonly id: number, public name: string, public rebate: number) { }
 
     static create(groupname, rebate): Promise<Group> {
         return new Promise<Group>((resolve, reject) => {
@@ -17,7 +17,7 @@ class Group implements Model {
                 if (result.length > 0) {
                     resolve(new Group(result[0].group_id, result[0].groupname, result[0].rebate));
                 } else {
-                    reject('Group not found');
+                    reject(new Error('Group not found'));
                 }
             }).catch((err) => reject(err));
         });
@@ -29,23 +29,27 @@ class Group implements Model {
                 if (result.length > 0) {
                     resolve(new Group(result[0].group_id, result[0].groupname, result[0].rebate));
                 } else {
-                    reject('Group not found');
+                    reject(new Error('Group not found'));
                 }
             }).catch((err) => reject(err));
         });
     }
 
-    static getAll(): Promise<string[]> {
-        return new Promise<string[]>((resolve, reject) => {
+    static getAll(): Promise<Group[]> {
+        return new Promise<Group[]>((resolve, reject) => {
             Database.instance.query('SELECT * FROM sokka_groups;').then((result) => {
-                resolve(result);
+                let groups = [];
+                for (let group of result) {
+                    groups.push(new Group(group.group_id, group.groupname, group.rebate));
+                }
+                resolve(groups);
             }).catch((err) => reject(err));
         });
     }
 
     update(): Promise<void> {
         return new Promise<void>((resolve, reject) => {
-            Database.instance.query('UPDATE sokka_groups SET groupname = ?, rebate = ? WHERE group_id = ?;', [this.groupname, this.rebate, this.id]).then(() => {
+            Database.instance.query('UPDATE sokka_groups SET groupname = ?, rebate = ? WHERE group_id = ?;', [this.name, this.rebate, this.id]).then(() => {
                 resolve(null);
             }).catch((err) => reject(err));
         });

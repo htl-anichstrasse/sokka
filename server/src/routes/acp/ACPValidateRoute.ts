@@ -1,47 +1,40 @@
-import { NextFunction, Request, Response, Router } from 'express';
-import * as log4js from 'log4js';
+import { Request, Response, Router } from 'express';
 import ACPSession from '../../models/acp/ACPSession';
 import ACPUser from '../../models/acp/ACPUser';
 import Route from '../../Route';
+import { NeedsProperties } from '../RouteAnnotations';
 
-class ACPValidateRoute implements Route {
+class ACPValidateRoute extends Route {
     readonly router: Router;
     readonly path: string;
-    readonly fullpath: string;
-    private static readonly logger = log4js.getLogger('ACPValidateRoute');
 
     constructor() {
+        super();
         this.router = Router();
         this.path = '/acp';
-        this.router.post('/validate', this.post);
-        this.fullpath = '/acp/validate';
+        this.router.post('/validate', this.post.bind(this));
     }
 
-    private post(req: Request, res: Response, next: NextFunction): void {
-        if (!req.body.token || !req.body.username) {
-            res.status(400);
-            res.send({ success: false, message: 'Invalid parameters' });
-            return;
+    @NeedsProperties({ token: 'string', username: 'string' })
+    private async post(req: Request, res: Response): Promise<void> {
+        try {
+            let user = await ACPUser.get(req.body.username);
+            let result = await ACPSession.validate(user, req.body.token);
+            if (result) {
+                res.send({ success: true, message: 'ACP token for this email is valid' });
+            } else {
+                res.send({ success: false, message: `Could not validate ACP token for username '${req.body.username}'` })
+            }
+        } catch (err) {
+            if (err.message === 'ACP user not found') {
+                res.status(400);
+                res.send({ success: false, message: err.message });
+                return;
+            }
+            res.status(500);
+            res.send({ success: false, message: 'An unknown error occurred while validating ACP session token' });
+            this.logger.error(`An unknown error occurred while validating ACP session token: ${err}`);
         }
-
-        ACPUser.get(req.body.username).then((user) => {
-            ACPSession.validate(user, req.body.token).then((result) => {
-                if (result) {
-                    res.send({ success: true, message: 'ACP token for this email is valid' });
-                } else {
-                    res.send({ success: false, message: `Could not validate ACP token for username '${req.body.username}'` })
-                }
-            }).catch((err) => ACPValidateRoute.handleInvalidToken(req, res, err));
-        }).catch((err) => ACPValidateRoute.handleInvalidToken(req, res, err));
-    }
-
-    private static handleInvalidToken(req: Request, res: Response, err?: Error): void {
-        let requestedUsername = req.body.username;
-        if (err) {
-            ACPValidateRoute.logger.warn(`Unsuccessful ACP token validation for '${requestedUsername}' with error: ${err}`);
-        }
-        res.status(500);
-        res.send({ success: false, message: `Could not validate ACP token for username '${requestedUsername}'` });
     }
 }
 

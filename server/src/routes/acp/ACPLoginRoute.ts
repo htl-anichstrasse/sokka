@@ -1,55 +1,48 @@
 import * as bcrypt from 'bcrypt';
-import { NextFunction, Request, Response, Router } from 'express';
-import * as log4js from 'log4js';
+import { Request, Response, Router } from 'express';
 import ACPSession from '../../models/acp/ACPSession';
 import ACPUser from '../../models/acp/ACPUser';
 import Route from '../../Route';
+import { NeedsProperties } from '../RouteAnnotations';
 
-class ACPLoginRoute implements Route {
+class ACPLoginRoute extends Route {
     readonly router: Router;
     readonly path: string;
-    readonly fullpath: string;
-    private static readonly logger = log4js.getLogger('ACPLoginRoute');
 
     constructor() {
+        super();
         this.router = Router();
         this.path = '/acp';
-        this.router.post('/login', this.post);
-        this.fullpath = '/acp/login';
+        this.router.post('/login', this.post.bind(this));
     }
 
-    private post(req: Request, res: Response, next: NextFunction): void {
-        if (!req.body.username || !req.body.password) {
-            res.status(400);
-            res.send({ success: false, message: 'Invalid parameters' });
-            return;
-        }
-
-        ACPUser.get(req.body.username).then((user) => {
-            bcrypt.compare(req.body.password, user.password, (err, same) => {
-                if (err) {
+    @NeedsProperties({ name: 'string', password: 'string' })
+    private async post(req: Request, res: Response): Promise<void> {
+        try {
+            let user = await ACPUser.get(req.body.name);
+            let same = await bcrypt.compare(req.body.password, user.password);
+            if (same) {
+                try {
+                    let session = await ACPSession.create(user);
+                    res.send({ success: true, message: 'Credentials validated', token: session.token, name: user.name });
+                } catch (err) {
                     res.status(500);
-                    ACPLoginRoute.handleUnsuccessfulLogin(req, res, err);
-                    ACPLoginRoute.logger.error(`Password comparison failed for ACP user ${user.username}`);
-                    return;
+                    res.send({ success: false, message: `An unknown error occurred while creating a session for '${req.body.name}'` });
+                    this.logger.error(`An unknown error occurred while creating a session for '${req.body.name}': ${err}`);
                 }
-                if (same) {
-                    ACPSession.create(user).then((session) => {
-                        res.send({ success: true, message: 'Credentials validated', token: session.token });
-                    }).catch((err) => ACPLoginRoute.handleUnsuccessfulLogin(req, res, err));
-                } else {
-                    ACPLoginRoute.handleUnsuccessfulLogin(req, res);
-                }
-            });
-        }).catch((err) => ACPLoginRoute.handleUnsuccessfulLogin(req, res, err));
-    }
-
-    private static handleUnsuccessfulLogin(req: Request, res: Response, err?: Error): void {
-        let requestedUsername = req.body.username;
-        if (err) {
-            ACPLoginRoute.logger.warn(`Unsuccessful ACP login attempt for requested user '${requestedUsername}' with error: ${err}`);
+            } else {
+                res.send({ success: false, message: `Could not retrieve ACP user '${req.body.name}'` });
+            }
+        } catch (err) {
+            if (err.message === 'ACP user not found') {
+                res.status(400);
+                res.send({ success: false, message: `Could not retrieve ACP user '${req.body.name}'` });
+                return;
+            }
+            res.status(500);
+            res.send({ success: false, message: `An unknown error occurred while checking credentials for '${req.body.name}'` });
+            this.logger.error(`An unknown error occurred while checking credentials for '${req.body.name}': ${err}`);
         }
-        res.send({ success: false, message: `Could not retrieve user '${requestedUsername}'` });
     }
 }
 

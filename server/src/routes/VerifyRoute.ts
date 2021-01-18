@@ -1,48 +1,38 @@
-import { NextFunction, Request, Response, Router } from 'express';
-import * as log4js from 'log4js';
+import { Request, Response, Router } from 'express';
 import Route from '../Route';
 import VerificationService from '../VerificationService';
 
-class VerifyRoute implements Route {
+class VerifyRoute extends Route {
     readonly router: Router;
     readonly path: string;
-    readonly fullpath: string;
-    private static readonly logger = log4js.getLogger('VerifyRoute');
 
     constructor() {
+        super();
         this.router = Router();
         this.path = '/';
-        this.router.get('/verify', this.get);
-        this.fullpath = '/verify';
+        this.router.get('/verify', this.get.bind(this));
     }
 
-    private get(req: Request, res: Response, next: NextFunction): void {
+    private async get(req: Request, res: Response): Promise<void> {
         if (!req.query.id) {
             res.status(400);
             res.send({ success: false, message: 'Invalid verification token' });
             return;
         }
-
-        VerificationService.isVerificationIDValid(req.query.id.toString()).then((exists) => {
+        try {
+            let exists = await VerificationService.isVerificationIDValid(req.query.id.toString());
             if (exists) {
-                VerificationService.getVerificationUserForToken(req.query.id.toString()).then((user) => {
-                    VerificationService.verifyUser(user).then(() => {
-                        res.send({ success: true, message: 'Successfully verified user' });
-                    }).catch((err) => VerifyRoute.handleInvalidToken(req, res, err));
-                }).catch((err) => VerifyRoute.handleInvalidToken(req, res, err));
+                let user = await VerificationService.getVerificationUserForToken(req.query.id.toString());
+                await VerificationService.verifyUser(user);
+                res.send({ success: true, message: 'Successfully verified user' });
             } else {
-                VerifyRoute.handleInvalidToken(req, res);
+                res.send({ success: false, message: `Invalid token '${req.query.id}'` });
             }
-        }).catch((err) => VerifyRoute.handleInvalidToken(req, res, err));
-    }
-
-    private static handleInvalidToken(req: Request, res: Response, err?: Error): void {
-        let token = req.query.id;
-        if (err) {
-            VerifyRoute.logger.warn(`Unsuccessful email verification for token ${token} with error: ${err}`);
+        } catch (err) {
+            res.status(500);
+            res.send({ success: false, message: `An unknown error occurred while verifying verification token '${req.query.id}'` });
+            this.logger.error(`An unknown error occurred while verifying verification token '${req.query.id}': ${err}`);
         }
-        res.status(500);
-        res.send({ success: false, message: `Invalid token '${token}'` });
     }
 }
 
