@@ -67,21 +67,29 @@ class _MenuPanelState extends State<MenuPanel> {
                 children: <Widget>[
                     new Row(
                         children: <Widget>[
-                            new Text(
-                                menu.getAppetizer,
-                                style: GoogleFonts.montserrat(
-                                    color: Colors.black,
-                                ),
+                            new Column(
+                                children: <Widget>[
+                                    new Text(
+                                        menu.getAppetizer,
+                                        style: GoogleFonts.montserrat(
+                                            color: Colors.black,
+                                        ),
+                                    ),
+                                ],
                             ),
                         ],
                     ),
                     new Row(
                         children: <Widget>[
-                            new Text(
-                                menu.getMainCourse,
-                                style: GoogleFonts.montserrat(
-                                    color: Colors.black,
-                                ),
+                            new Column(
+                                children: <Widget>[
+                                    new Text(
+                                        menu.getMainCourse,
+                                        style: GoogleFonts.montserrat(
+                                            color: Colors.black,
+                                        ),
+                                    ),
+                                ],
                             ),
                         ],
                     ),
@@ -95,18 +103,28 @@ class _MenuPanelState extends State<MenuPanel> {
                             ),
                         ],
                     ),
-                    new Container(
-                        margin: new EdgeInsets.only(top: 5.0),
-                        child: new Row(
-                            children: <Widget>[
-                                new Text(
-                                    '${menu.getPrice.toStringAsFixed(2)} €',
-                                    style: GoogleFonts.montserrat(
-                                        color: Colors.black
-                                    ),
+                    new Divider(
+                        thickness: 0.75,
+                        color: Colors.black
+                    ),
+                    new Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                            new Container(
+                                margin: new EdgeInsets.only(top: 5.0),
+                                child: new Row(
+                                    children: <Widget>[
+                                        new Text(
+                                            '${menu.getPrice.toStringAsFixed(2)} €',
+                                            style: GoogleFonts.montserrat(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w500
+                                            ),
+                                        ),
+                                    ],
                                 ),
-                            ],
-                        ),
+                            ),
+                        ],
                     ),
                     new Container(
                         alignment: Alignment.center,
@@ -119,6 +137,7 @@ class _MenuPanelState extends State<MenuPanel> {
                                         'Menu: "${menu.getTitle}" has been added to your basket!',
                                         style: GoogleFonts.montserrat()
                                     ),
+                                    duration: new Duration(seconds: 1),
                                 ))
                             },
                             label: new Text(
