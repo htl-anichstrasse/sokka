@@ -14,6 +14,7 @@ class _BasketViewState extends State<BasketView> {
     @override
     Widget build(BuildContext context) {
         return new ListView.builder(
+            padding: new EdgeInsets.all(10.0),
             itemCount: this._shoppingBasketController.getBasket().length,
             itemBuilder: (BuildContext context, int index) => new Dismissible(
                 key: Key('${this._shoppingBasketController.getBasket()[index].getTitle}'),
