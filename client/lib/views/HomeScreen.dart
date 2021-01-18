@@ -1,6 +1,7 @@
 import 'package:client/services/UserAuth.dart';
 import 'package:client/util/CookieStorage.dart';
 import 'package:client/views/menu/MenuView.dart';
+import 'package:client/views/product/ProductGrid.dart';
 import 'package:flutter/material.dart';
 import 'package:client/views/account/AccountView.dart';
 import 'package:client/views/basket/BasketView.dart';
@@ -102,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             labelStyle: GoogleFonts.montserrat(),
                             tabs: [
                                 new Tab(text: 'Menus', icon: Icon(Icons.restaurant_menu)),
-                                new Tab(text: 'Meals', icon: Icon(Icons.fastfood)),
+                                new Tab(text: 'Products', icon: Icon(Icons.fastfood)),
                                 new Tab(text: 'Basket', icon: Icon(Icons.shopping_basket)),
                                 new Tab(text: 'Codes', icon: Icon(Icons.code)),
                             ],
@@ -116,8 +117,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: new MenuView(),
                                 ),
                                 new Container(
-                                    // Meal-Grid
-                                    child: new Icon(Icons.fastfood, color: Colors.white),
+                                    // Product-Grid
+                                    child: new ProductGrid(),// new Icon(Icons.fastfood, color: Colors.white),
                                 ),
                                 new Container(
                                     // Basket-View
