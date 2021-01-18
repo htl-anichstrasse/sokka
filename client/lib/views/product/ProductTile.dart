@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
-class MealGridTile extends StatefulWidget {
-    final int _mealTileIndex;
+class ProductTile extends StatefulWidget {
+    final int _productTileIndex;
 
-    MealGridTile(this._mealTileIndex);
+    ProductTile(this._productTileIndex);
 
     @override
-    _MealGridTileState createState() => _MealGridTileState(this._mealTileIndex);
+    _ProductTileState createState() => _ProductTileState(this._productTileIndex);
 }
 
-class _MealGridTileState extends State<MealGridTile> {
-    final int _mealTileIndex;
+class _ProductTileState extends State<ProductTile> {
+    final int _productTileIndex;
 
-    _MealGridTileState(this._mealTileIndex);
+    _ProductTileState(this._productTileIndex);
 
     @override
     Widget build(BuildContext context) {
