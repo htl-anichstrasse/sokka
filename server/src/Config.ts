@@ -40,7 +40,7 @@ const config = {
         });
     },
 
-    readConfigValueSync: (key) => {
+    readConfigValueSync: (key): string => {
         if (process.env.hasOwnProperty(key)) {
             return process.env[key];
         }
