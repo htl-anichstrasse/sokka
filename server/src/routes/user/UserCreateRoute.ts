@@ -30,11 +30,21 @@ class UserCreateRoute extends Route {
             res.send({ sucess: false, message: 'Please accept our terms of service and privacy policy' });
             return;
         }
+
+        // Disallow duplicate user creation
         let exists = await User.exists(req.body.email);
         if (exists) {
             res.send({ success: false, message: 'User already exists' });
             return;
         }
+
+        // Validate user email
+        const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (!regex.test(String(req.body.email).toLowerCase())) {
+            res.send({ success: false, message: 'Please provide a valid email address' });
+            return;
+        }
+
         try {
             let hash = await bcrypt.hash(req.body.password, parseInt(config.readConfigValueSync('SALT_ROUNDS')));
             let user = await User.create(req.body.email, hash);
