@@ -4,19 +4,19 @@ import Database from "../Database";
 import User from "./User";
 
 class Session implements Model {
-    private constructor(readonly id: number, public user_id: number, public token: string) { }
+    private constructor(readonly id: number, public user_id: number, public token: string, readonly timestamp: number) { }
 
     static create(user: User): Promise<Session> {
         return new Promise<Session>((resolve, reject) => {
-            Session.count(user).then((count) => {
-                if (count >= parseInt(config.readConfigValueSync('MAX_USER_SESSIONS'))) {
-                    reject(new Error('Max number of sessions reached'));
-                    return;
+            Session.count(user).then(async (count) => {
+                const maxSessions = parseInt(config.readConfigValueSync('MAX_USER_SESSIONS'));
+                if (count > maxSessions) {
+                    await Session.purge(count - maxSessions);
                 }
                 // TODO: token has unique index, there is a VERY SMALL chance that this will fail -> loop
                 let token = crypto.randomBytes(16).toString('base64');
                 Database.instance.query('INSERT INTO sokka_sessions (user_id, token) VALUES (?, ?);', [user.id, token]).then((result) => {
-                    resolve(new Session(result.insertId, user.id, token));
+                    resolve(new Session(result.insertId, user.id, token, new Date().getTime()));
                 }).catch((err) => reject(err));
             });
         });
@@ -26,7 +26,7 @@ class Session implements Model {
         return new Promise<Session>((resolve, reject) => {
             Database.instance.query('SELECT * FROM sokka_sessions WHERE token = ?;', [token]).then((result) => {
                 if (result.length > 0) {
-                    resolve(new Session(result[0].id, result[0].user_id, result[0].token));
+                    resolve(new Session(result[0].id, result[0].user_id, result[0].token, result[0].timestamp));
                 } else {
                     reject(new Error('Session not found'));
                 }
@@ -37,7 +37,18 @@ class Session implements Model {
     static count(user: User): Promise<number> {
         return new Promise<number>((resolve, reject) => {
             Database.instance.query('SELECT COUNT(id) FROM sokka_sessions WHERE user_id = ?;', [user.id]).then((result) => {
-                resolve(result[0]);
+                resolve((Object.values(result[0]) as number[])[0]);
+            }).catch((err) => reject(err));
+        });
+    }
+
+    static purge(count: number): Promise<void> {
+        return new Promise<void>((resolve, reject) => {
+            Database.instance.query('SELECT id FROM sokka_sessions ORDER BY timestamp ASC LIMIT ?;', [count]).then((result) => {
+                let ids = result.map((val) => val.id).sort();
+                Database.instance.query(`DELETE FROM sokka_sessions WHERE id IN (${ids.join(',')});`).then(() => {
+                    resolve(null);
+                }).catch((err) => reject(err));
             }).catch((err) => reject(err));
         });
     }

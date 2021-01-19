@@ -1,12 +1,12 @@
 import Database from "../../Database";
 
 class ACPUser implements Model {
-    private constructor(readonly name: string, public password: string) { }
+    private constructor(readonly name: string, public password: string, readonly timestamp: number) { }
 
     static create(username: string, password: string): Promise<ACPUser> {
         return new Promise<ACPUser>((resolve, reject) => {
             Database.instance.query(`INSERT INTO sokka_acp_users (username, pwhash) VALUES (?, ?)`, [username, password]).then(() => {
-                resolve(new ACPUser(username, password));
+                resolve(new ACPUser(username, password, new Date().getTime()));
             }).catch((err) => reject(err));
         });
     }
@@ -15,7 +15,7 @@ class ACPUser implements Model {
         return new Promise<ACPUser>((resolve, reject) => {
             Database.instance.query('SELECT * FROM sokka_acp_users WHERE username = ?;', [username]).then((result) => {
                 if (result.length > 0) {
-                    resolve(new ACPUser(result[0].username, result[0].pwhash));
+                    resolve(new ACPUser(result[0].username, result[0].pwhash, result[0].timestamp));
                 } else {
                     reject(new Error('ACP user not found'));
                 }
