@@ -48,7 +48,7 @@ const columns = (deleteHandler: (row: any) => void, changeCallback: (row: any, i
     },
     {
         name: "Delete",
-        cell: (row: any) => <Button title="Delete" variant="danger" onClick={(e => deleteHandler(row))}><i className="fa fa-trash"></i></Button>,
+        cell: (row: any) => <Button disabled={row.id == 1} title="Delete" variant="danger" onClick={(e => deleteHandler(row))}><i className="fa fa-trash"></i></Button>,
         button: true,
     },
 ];

@@ -17,8 +17,19 @@ class ACPDeleteGroupRoute extends Route {
     @NeedsAuthorization(AuthorizationType.ACP)
     @NeedsProperties({ id: 'number' })
     private async post(req: Request, res: Response): Promise<void> {
+        if (req.body.id == 1) {
+            res.status(400);
+            res.send({ success: false, message: 'Cannot delete default group' });
+            return;
+        }
         try {
             let group = await Group.getById(req.body.id);
+            // Set all group members into default group
+            let groupMembers = await group.getMembers();
+            for (let member of groupMembers) {
+                member.group_id = 1;
+                await member.update();
+            }
             await group.delete();
             res.send({ success: true, message: `Successfully deleted group with id '${req.body.id}'` });
         } catch (err) {

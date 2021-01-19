@@ -1,7 +1,7 @@
 import Database from "../Database";
 
 class User implements Model {
-    private constructor(readonly id: number, public email: string, public verified: boolean, public group_id: number, public password: string) { }
+    constructor(readonly id: number, public email: string, public verified: boolean, public group_id: number, public password: string) { }
 
     static create(email: string, password: string): Promise<User> {
         return new Promise<User>((resolve, reject) => {
