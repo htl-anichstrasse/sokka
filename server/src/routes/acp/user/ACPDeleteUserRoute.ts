@@ -19,6 +19,9 @@ class ACPDeleteUserRoute extends Route {
     private async post(req: Request, res: Response): Promise<void> {
         try {
             let user = await User.getByEmail(req.body.email);
+            if (!user) {
+                throw new Error('User not found');
+            }
             await user.delete();
             res.send({ success: true, message: `Successfully deleted user with email '${req.body.email}'` });
         } catch (err) {

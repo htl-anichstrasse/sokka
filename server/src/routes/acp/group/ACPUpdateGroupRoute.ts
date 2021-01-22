@@ -20,9 +20,12 @@ class ACPUpdateGroupRoute extends Route {
         let group;
         try {
             group = await Group.getById(req.body.id);
-        } catch {
+            if (!group) {
+                throw new Error('Group not found');
+            }
+        } catch (err) {
             res.status(400);
-            res.send({ success: false, message: `Could not find group with id '${req.body.id}'` });
+            res.send({ success: false, message: err.message });
             return;
         }
         if (req.body.name) {

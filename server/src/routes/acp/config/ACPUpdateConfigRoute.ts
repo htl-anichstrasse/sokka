@@ -19,6 +19,9 @@ class ACPUpdateConfigRoute extends Route {
     private async post(req: Request, res: Response): Promise<void> {
         try {
             let configEntry = await ConfigEntry.get(req.body.configEntry.key);
+            if (!configEntry) {
+                throw new Error('Config entry not found');
+            }
             if (req.body.configEntry.value) {
                 configEntry.value = req.body.configEntry.value;
             }

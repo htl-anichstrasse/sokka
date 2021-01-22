@@ -18,6 +18,9 @@ class UserLogoutRoute extends Route {
     private async post(req: Request, res: Response): Promise<void> {
         try {
             let session = await Session.get(req.body.token);
+            if (!session) {
+                throw new Error('Session not found');
+            }
             await session.delete();
             res.send({ success: true, message: 'Successfully invalidated session' });
         } catch (err) {

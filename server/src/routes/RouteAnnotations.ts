@@ -28,9 +28,15 @@ export function NeedsAuthorization(authorizationType: AuthorizationType) {
             }
             try {
                 if (authorizationType === AuthorizationType.ACP) {
-                    await ACPSession.get(req.token);
+                    let session = await ACPSession.get(req.token);
+                    if (!session) {
+                        throw new Error('ACP session not found');
+                    }
                 } else {
-                    await Session.get(req.token);
+                    let session = await Session.get(req.token);
+                    if (!session) {
+                        throw new Error('Session not found');
+                    }
                 }
             } catch {
                 res.status(401);

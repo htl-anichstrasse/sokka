@@ -24,6 +24,9 @@ class ACPDeleteGroupRoute extends Route {
         }
         try {
             let group = await Group.getById(req.body.id);
+            if (!group) {
+                throw new Error('Group not found');
+            }
             // Set all group members into default group
             let groupMembers = await group.getMembers();
             for (let member of groupMembers) {

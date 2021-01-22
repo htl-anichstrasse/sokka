@@ -20,7 +20,7 @@ class UserValidateRoute extends Route {
         try {
             let user = await User.getByEmail(req.body.email);
             let result = await Session.validate(user, req.body.token);
-            if (result) {
+            if (user && result) {
                 res.send({ success: true, message: 'Token for this email is valid' });
             } else {
                 res.send({ success: false, message: `Could not validate token for email '${req.body.email}'` });
