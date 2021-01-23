@@ -4,19 +4,12 @@ import ProductCategory from "./ProductCategory";
 class Product implements Model {
     constructor(readonly id: number, public category_id: number, public name: string, public image: Blob, public price: number, public hidden: boolean) { }
 
-    static get(id: number): Promise<Product> {
-        return new Promise<Product>((resolve, reject) => {
-            Database.instance.query('SELECT * FROM sokka_products WHERE id = ?;', [id]).then((result) => {
-                if (result.length > 0) {
-                    resolve(new Product(result[0].id, result[0].category_id, result[0].name, result[0].image, result[0].price, result[0].hidden));
-                } else {
-                    reject(new Error('Product not found'));
-                }
-            }).catch((err) => reject(err));
-        });
+    static async get(id: number): Promise<Product> {
+        let result = await Database.instance.query('SELECT * FROM sokka_products WHERE id = ?;', [id]);
+        return result.length > 0 ? new Product(result[0].id, result[0].category_id, result[0].name, result[0].image, result[0].price, result[0].hidden) : null;
     }
 
-    getCategory(): Promise<ProductCategory> {
+    async getCategory(): Promise<ProductCategory> {
         return ProductCategory.get(this.category_id);
     }
 

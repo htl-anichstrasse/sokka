@@ -3,16 +3,9 @@ import Database from "../../Database";
 class MenuCategory implements Model {
     private constructor(readonly id: number, public name: string) { }
 
-    static get(id: number): Promise<MenuCategory> {
-        return new Promise<MenuCategory>((resolve, reject) => {
-            Database.instance.query('SELECT * FROM sokka_menu_categories WHERE id = ?;', [id]).then((result) => {
-                if (result.length > 0) {
-                    resolve(new MenuCategory(result[0].id, result[0].name));
-                } else {
-                    reject(new Error('MenuCategory not found'));
-                }
-            }).catch((err) => reject(err));
-        });
+    static async get(id: number): Promise<MenuCategory> {
+        let result = await Database.instance.query('SELECT * FROM sokka_menu_categories WHERE id = ?;', [id]);
+        return result.length > 0 ? new MenuCategory(result[0].id, result[0].name) : null;
     }
 
     delete(): Promise<void> {
