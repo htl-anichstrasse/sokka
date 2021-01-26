@@ -31,9 +31,9 @@ class _MenuPanelState extends State<MenuPanel> {
                 new Padding(
                     padding: new EdgeInsets.all(10.0),
                     child: new ExpansionPanelList(
-                        expansionCallback: (final int index, bool isExpanded) => setState(() => {
-                            this._menu.setExpanded = !this._menu.getExpanded
-                        }),
+                        expansionCallback: (final int index, bool isExpanded) => setState(()
+                            => this._menu.setExpanded = !this._menu.getExpanded
+                        ),
                         children: <ExpansionPanel>[
                             this._buildPanel(this._menu)
                         ],
