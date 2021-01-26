@@ -10,50 +10,53 @@ class BasketView extends StatefulWidget {
 
 class _BasketViewState extends State<BasketView> { 
     final ShoppingBasketController _shoppingBasketController = new ShoppingBasketController();
-    double _totalPrice;
+    double _totalPrice = 0.0;
 
     @override
     void initState() {
         super.initState();
-        this._totalPrice = 0.0;
+        this._shoppingBasketController.getBasket().forEach((orderable) => {
+            this._totalPrice += orderable.getPrice
+        });
     }
 
     @override
     Widget build(BuildContext context) {
-        
-        this._shoppingBasketController.getBasket().forEach((orderable) => {
-            this._totalPrice += orderable.getPrice
-        });
-
         return this._shoppingBasketController.getBasket().isNotEmpty ? new Scaffold(
             bottomNavigationBar: new BottomAppBar(
-                color: new Color(0xFF00BFA5),
+                color: new Color(0xFF008C78),
                 child: new Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                        new Padding(
-                            padding: new EdgeInsets.only(right: 100.0),
+                        new Container(
+                            padding: new EdgeInsets.all(10.0),
                             child: new Text(
-                                '${this._totalPrice}',
+                               'TOTAL',
                                 style: GoogleFonts.montserrat(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold
-                                ),
-                            ),
-                        ),
-                        new FlatButton.icon(
-                            icon: new Icon(Icons.payment_outlined, color: Colors.white70),
-                            label: new Text(
-                                'To checkout',
-                                style: GoogleFonts.montserrat(
-                                    color: Colors.white
                                 )
-                            ),
-                            onPressed: null
+                            )
+                        ),
+                        new Container(
+                            padding: new EdgeInsets.all(10.0),
+                            child: new Text(
+                               '${this._totalPrice.toStringAsFixed(2)} €',
+                                style: GoogleFonts.montserrat(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold
+                                )
+                            )
                         ),
                     ],
                 ),
             ),
+            floatingActionButton: new FloatingActionButton(
+                backgroundColor: new Color(0xFFFF8D4A),
+                child: Icon(Icons.payment, color: Colors.white),
+                onPressed: null,
+            ),
+            floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
             body: new ListView.builder(
                 padding: new EdgeInsets.all(10.0),
                 itemCount: this._shoppingBasketController.getBasket().length,
