@@ -16,16 +16,6 @@ class _ProductTileState extends State<ProductTile> {
 
     @override
     Widget build(BuildContext context) {
-        return new GridView.count(
-            crossAxisCount: 2,
-            children: <Widget>[
-                new Center(
-                    child: new Text(
-                        'Josh stinkt',
-                        style: new TextStyle(color: Colors.black),
-                    ),
-                ),
-            ]
-        );
+        return null;
     }
 }
