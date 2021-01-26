@@ -4,19 +4,19 @@ import Database from "../../Database";
 import ACPUser from "./ACPUser";
 
 class ACPSession implements Model {
-    private constructor(readonly id: number, public username: string, public token: string) { }
+    private constructor(readonly id: number, public username: string, public token: string, readonly timestamp: number) { }
 
     static create(user: ACPUser): Promise<ACPSession> {
         return new Promise<ACPSession>((resolve, reject) => {
-            ACPSession.count(user).then((count) => {
-                if (count >= parseInt(config.readConfigValueSync('MAX_ACP_USER_SESSIONS'))) {
-                    reject(new Error('Max number of sessions reached'));
-                    return;
+            ACPSession.count(user).then(async (count) => {
+                const maxSessions = parseInt(config.readConfigValueSync('MAX_ACP_USER_SESSIONS'));
+                if (count > maxSessions) {
+                    await ACPSession.purge(count - maxSessions);
                 }
                 // TODO: token has unique index, there is a VERY SMALL chance that this will fail -> loop
                 let token = crypto.randomBytes(16).toString('base64');
                 Database.instance.query('INSERT INTO sokka_acp_sessions (acp_username, token) VALUES (?, ?);', [user.name, token]).then((result) => {
-                    resolve(new ACPSession(result.insertId, user.name, token));
+                    resolve(new ACPSession(result.insertId, user.name, token, new Date().getTime()));
                 }).catch((err) => reject(err));
             });
         });
@@ -26,7 +26,7 @@ class ACPSession implements Model {
         return new Promise<ACPSession>((resolve, reject) => {
             Database.instance.query('SELECT * FROM sokka_acp_sessions WHERE token = ?;', [token]).then((result) => {
                 if (result.length > 0) {
-                    resolve(new ACPSession(result[0].id, result[0].acp_username, result[0].token));
+                    resolve(new ACPSession(result[0].id, result[0].acp_username, result[0].token, result[0].timestamp));
                 } else {
                     reject(new Error('ACP Session not found'));
                 }
@@ -37,7 +37,18 @@ class ACPSession implements Model {
     static count(user: ACPUser): Promise<number> {
         return new Promise<number>((resolve, reject) => {
             Database.instance.query('SELECT COUNT(id) FROM sokka_acp_sessions WHERE acp_username = ?;', [user.name]).then((result) => {
-                resolve(result[0]);
+                resolve((Object.values(result[0]) as number[])[0]);
+            }).catch((err) => reject(err));
+        });
+    }
+
+    static purge(count: number): Promise<void> {
+        return new Promise<void>((resolve, reject) => {
+            Database.instance.query('SELECT id FROM sokka_acp_sessions ORDER BY timestamp ASC LIMIT ?;', [count]).then((result) => {
+                let ids = result.map((val) => val.id).sort();
+                Database.instance.query(`DELETE FROM sokka_acp_sessions WHERE id IN (${ids.join(',')});`).then(() => {
+                    resolve(null);
+                }).catch((err) => reject(err));
             }).catch((err) => reject(err));
         });
     }

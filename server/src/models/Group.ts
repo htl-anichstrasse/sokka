@@ -1,4 +1,5 @@
 import Database from "../Database";
+import User from "./User";
 
 class Group implements Model {
     private constructor(readonly id: number, public name: string, public rebate: number) { }
@@ -44,6 +45,18 @@ class Group implements Model {
                 }
                 resolve(groups);
             }).catch((err) => reject(err));
+        });
+    }
+
+    getMembers(): Promise<User[]> {
+        return new Promise<User[]>((resolve, reject) => {
+            Database.instance.query('SELECT * FROM sokka_users WHERE group_id = ?;', [this.id]).then((result) => {
+                let users = [];
+                for (let user of result) {
+                    users.push(new User(user.id, user.email, user.verified, user.group_id, user.pwhash, user.timestamp));
+                }
+                resolve(users);
+            }).catch((err) => reject(err))
         });
     }
 
