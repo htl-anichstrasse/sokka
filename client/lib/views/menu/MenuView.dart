@@ -15,9 +15,9 @@ class _MenuViewState extends State<MenuView> {
         return new Scaffold(
             body: ListView.builder(
                 itemCount: this._menuController.getMenus().length,
-                itemBuilder: (BuildContext context, int index) => new MenuPanel((this._menuController.getMenus()[index])),
+                itemBuilder: (BuildContext context, int index)
+                    => new MenuPanel((this._menuController.getMenus()[index])),
             )
         );
-
     }
 }
