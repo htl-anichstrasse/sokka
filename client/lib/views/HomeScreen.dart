@@ -107,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 new Tab(text: 'Menus', icon: Icon(Icons.restaurant_menu)),
                                 new Tab(text: 'Products', icon: Icon(Icons.fastfood)),
                                 new Tab(text: 'Basket', icon: Icon(Icons.shopping_basket)),
-                                new Tab(text: 'Codes', icon: Icon(Icons.code)),
+                                new Tab(text: 'Codes', icon: Icon(Icons.qr_code)),
                             ],
                         ),
                     ),
