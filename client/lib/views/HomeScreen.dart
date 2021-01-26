@@ -10,7 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 class HomeScreen extends StatefulWidget {
     @override
     _HomeScreenState createState() => _HomeScreenState();
-}       
+}
 
 class _HomeScreenState extends State<HomeScreen> {
     final CookieStorage _cookieStorage = new CookieStorage();
@@ -128,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 new Container(
                                     // QR-Codes
-                                    child: new Icon(Icons.code, color: Colors.white),
+                                    child: new Icon(Icons.qr_code, color: Colors.white),
                                 ),
                             ],
                         ),
