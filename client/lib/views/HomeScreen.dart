@@ -19,13 +19,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
     @override
     Widget build(BuildContext context) {
+        final date = DateTime.now();
+        
         return new Builder(
             builder: (context) => new DefaultTabController(
                 length: 4,
                 child: new Scaffold(
                     appBar: new AppBar(
                         title: new Text(
-                            '${_days[new DateTime.now().weekday - 1]} - ${new DateTime.now().day}.${new DateTime.now().month}.${new DateTime.now().year}',
+                            '${_days[date.weekday - 1]} - ${date.day}.${date.month}.${date.year}',
                             style: GoogleFonts.montserrat(
                                 color: Colors.white,
                             )
@@ -55,7 +57,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 new ListTile(
                                     leading: new Icon(Icons.account_circle, color: Colors.white),
                                     title: new Text('Account'),
-                                    onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => new Account())),
+                                    onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)
+                                        => new Account())),
                                     onLongPress: () => null,
                                 ),
                                 new ListTile(
@@ -120,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 new Container(
                                     // Product-Grid
-                                    child: new ProductGrid(),// new Icon(Icons.fastfood, color: Colors.white),
+                                    child: new ProductGrid(),
                                 ),
                                 new Container(
                                     // Basket-View
