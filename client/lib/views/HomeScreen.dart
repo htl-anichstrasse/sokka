@@ -26,7 +26,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     appBar: new AppBar(
                         title: new Text(
                             '${_days[new DateTime.now().weekday - 1]} - ${new DateTime.now().day}.${new DateTime.now().month}.${new DateTime.now().year}',
-                            style: GoogleFonts.montserrat()
+                            style: GoogleFonts.montserrat(
+                                color: Colors.white,
+                            )
                         ),
                         centerTitle: true,
                         iconTheme: new IconThemeData(color: Colors.white),
