@@ -61,14 +61,14 @@ class _BasketViewState extends State<BasketView> {
                 padding: new EdgeInsets.all(10.0),
                 itemCount: this._shoppingBasketController.getBasket().length,
                 itemBuilder: (BuildContext context, int index) => new Dismissible(
-                    key: new UniqueKey(), // Key('${this._shoppingBasketController.getBasket()[index].getTitle}'),
+                    key: new UniqueKey(),
                     onDismissed: (DismissDirection direction) => {
                         setState(() => this._shoppingBasketController.getBasket().removeAt(index)),
                         Scaffold.of(context).showSnackBar(new SnackBar(
                                 content: new Text(
                                     '${this._shoppingBasketController.getBasket()[index].getTitle} has been removed from your basket',
                                     style: GoogleFonts.montserrat(),
-                                ),      // duration: new Duration(seconds: 1),
+                                ),
                             ),
                         ),
                     },
@@ -82,7 +82,7 @@ class _BasketViewState extends State<BasketView> {
                                 style: GoogleFonts.montserrat(
                                     color: Colors.black,
                                 ),
-                            ),                    
+                            ),
                             trailing: new Text(
                                 '${this._shoppingBasketController.getBasket()[index].getPrice.toStringAsFixed(2)} €',
                                 style: GoogleFonts.montserrat(
