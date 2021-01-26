@@ -48,7 +48,7 @@ class _MenuPanelState extends State<MenuPanel> {
             headerBuilder: (BuildContext context, bool isExpanded) {
                 return new ListTile(
                     title: new Text(
-                        '${menu.getTitle} ${menu.getIndex != null ? menu.getIndex + 1 : ''}',
+                        '${menu.getTitle} ${menu.getIndex + 1 ?? ''}',
                         style: GoogleFonts.montserrat(
                             color: Colors.black,
                         ),

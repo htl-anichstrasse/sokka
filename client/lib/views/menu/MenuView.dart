@@ -12,9 +12,12 @@ class _MenuViewState extends State<MenuView> {
 
     @override
     Widget build(BuildContext context) {
-        return new ListView.builder(
-            itemCount: this._menuController.getMenus().length,
-            itemBuilder: (BuildContext context, int index) => new MenuPanel((this._menuController.getMenus()[index])),
+        return new Scaffold(
+            body: ListView.builder(
+                itemCount: this._menuController.getMenus().length,
+                itemBuilder: (BuildContext context, int index) => new MenuPanel((this._menuController.getMenus()[index])),
+            )
         );
+
     }
 }
