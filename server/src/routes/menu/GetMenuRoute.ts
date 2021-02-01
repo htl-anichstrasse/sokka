@@ -1,40 +1,41 @@
 import { Request, Response, Router } from 'express';
-import Product from '../../models/product/Product';
+import Menu from '../../models/menu/Menu';
 import Route from '../../Route';
 import { AuthorizationType, NeedsAuthorization } from '../RouteAnnotations';
 
-class GetProductRoute extends Route {
+class GetMenuRoute extends Route {
     readonly router: Router;
     readonly path: string;
 
     constructor() {
         super();
         this.router = Router();
-        this.path = '/product';
+        this.path = '/menu';
         this.router.get('/get', this.get.bind(this));
     }
 
     @NeedsAuthorization(AuthorizationType.App)
     private async get(req: Request, res: Response): Promise<void> {
-        let products;
+        let menus;
         const id = parseInt(String(req.query.id));
         if (!isNaN(id)) {
-            products = [await Product.get(id)];
+            menus = [await Menu.get(id)];
         } else {
-            products = await Product.getAll();
+            menus = await Menu.getAll();
         }
-        for (let i = 0; i < products.length; i++) {
-            products[i]['category'] = await products[i].getCategory();
-            delete products[i]['category_id'];
+        for (let i = 0; i < menus.length; i++) {
+            menus[i]['category'] = await menus[i].getCategory();
+            menus[i]['entries'] = await menus[i].getEntries();
+            delete menus[i]['category_id'];
             if (Boolean(req.query.noimage) === true) {
-                delete products[i].image;
+                delete menus[i].image;
             }
         }
         res.send({
             success: true,
-            data: products
+            data: menus
         });
     }
 }
 
-export default new GetProductRoute();
+export default new GetMenuRoute();

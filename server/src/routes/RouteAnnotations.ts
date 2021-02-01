@@ -61,15 +61,17 @@ export function NeedsAuthorization(authorizationType: AuthorizationType) {
  * ... this annotation will deem the request as invalid and respond with a HTTP 400.
  * 
  * @param properties the needed properties in the format { <propertyName>: <propertyType: string>, ... }
+ * @param useQuery if the properties in the req.query object should be checked instead of body parameters (no type checking!)
  */
-export function NeedsProperties(properties: any) {
+export function NeedsProperties(properties: any, useQuery?: boolean) {
     return (target, propertyKey, descriptor) => {
         const originalFunction = descriptor.value;
         descriptor.value = async function (req: Request, res: Response) {
+            const checkObject = useQuery ? req.query : req.body;
             for (let property of Object.keys(properties)) {
-                if (Object.keys(properties).length !== Object.keys(req.body).length
-                    || !req.body[property]
-                    || typeof req.body[property] !== properties[property]) {
+                if (Object.keys(properties).length !== Object.keys(checkObject).length
+                    || !checkObject[property]
+                    || (!useQuery && typeof checkObject[property] !== properties[property])) {
                     res.status(400);
                     res.send({ success: false, message: 'Invalid parameters' });
                     return;
