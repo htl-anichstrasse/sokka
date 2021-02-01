@@ -18,4 +18,4 @@ export { default as UserCreateRoute } from './user/UserCreateRoute';
 export { default as UserLoginRoute } from './user/UserLoginRoute';
 export { default as UserValidateRoute } from './user/UserValidateRoute';
 export { default as VerifyRoute } from './VerifyRoute';
-
+export { default as GetProductRoute } from './product/GetProductRoute';
