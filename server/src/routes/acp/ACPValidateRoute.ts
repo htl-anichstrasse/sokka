@@ -20,7 +20,7 @@ class ACPValidateRoute extends Route {
         try {
             let user = await ACPUser.get(req.body.username);
             let result = await ACPSession.validate(user, req.body.token);
-            if (result) {
+            if (user && result) {
                 res.send({ success: true, message: 'ACP token for this email is valid' });
             } else {
                 res.send({ success: false, message: `Could not validate ACP token for username '${req.body.username}'` })

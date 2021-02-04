@@ -21,9 +21,12 @@ class ACPUpdateUserRoute extends Route {
         let user;
         try {
             user = await User.getByEmail(req.body.email);
-        } catch {
+            if (!user) {
+                throw new Error('User not found');
+            }
+        } catch (err) {
             res.status(400);
-            res.send({ success: false, message: `Could not find user with email '${req.body.email}'` })
+            res.send({ success: false, message: err.message })
             return;
         }
         if (req.body.user.email) {
@@ -38,10 +41,13 @@ class ACPUpdateUserRoute extends Route {
         if (req.body.user.group) {
             try {
                 let group = await Group.getById(req.body.user.group);
+                if (!group) {
+                    throw new Error('Group not found')
+                }
                 user.group_id = group.id;
-            } catch {
+            } catch (err) {
                 res.status(400);
-                res.send({ success: false, message: `Group with id '${req.body.user.group}' not found` });
+                res.send({ success: false, message: err.message });
                 return;
             }
         }

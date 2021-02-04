@@ -3,40 +3,26 @@ import Database from "../Database";
 class ConfigEntry implements Model {
     private constructor(readonly key: string, public friendlyName: string, public type: 'INTEGER' | 'STRING' | 'TIME', public value: string) { }
 
-    static get(key: string): Promise<ConfigEntry> {
-        return new Promise<ConfigEntry>((resolve, reject) => {
-            Database.instance.query('SELECT * FROM sokka_config WHERE configKey = ?;', [key]).then((result) => {
-                if (result.length > 0) {
-                    resolve(new ConfigEntry(result[0].configKey, result[0].friendlyName, result[0].type, result[0].configValue));
-                } else {
-                    reject(new Error('Config entry not found'));
-                }
-            }).catch((err) => reject(err));
-        });
+    static async get(key: string): Promise<ConfigEntry> {
+        let result = await Database.instance.query('SELECT * FROM sokka_config WHERE configKey = ?;', [key]);
+        return result.length > 0 ? new ConfigEntry(result[0].configKey, result[0].friendlyName, result[0].type, result[0].configValue) : null;
     }
 
-    static getAll(): Promise<ConfigEntry[]> {
-        return new Promise<ConfigEntry[]>((resolve, reject) => {
-            Database.instance.query('SELECT * FROM sokka_config;').then((result) => {
-                let returnArray = [];
-                for (let entry of result) {
-                    returnArray.push(new ConfigEntry(entry.configKey, entry.friendlyName, entry.type, entry.configValue));
-                }
-                resolve(returnArray);
-            }).catch((err) => reject(err));
-        });
+    static async getAll(): Promise<ConfigEntry[]> {
+        let result = await Database.instance.query('SELECT * FROM sokka_config;');
+        let configEntries = [];
+        for (let configEntry of result) {
+            configEntries.push(new ConfigEntry(configEntry.configKey, configEntry.friendlyName, configEntry.type, configEntry.configValue));
+        }
+        return configEntries;
     }
 
-    update(): Promise<void> {
-        return new Promise<void>((resolve, reject) => {
-            Database.instance.query('UPDATE sokka_config SET friendlyName = ?, type = ?, configValue = ? WHERE configKey = ?;', [this.friendlyName, this.type, this.value, this.key]).then(() => {
-                resolve(null);
-            }).catch((err) => reject(err));
-        });
+    async update(): Promise<void> {
+        await Database.instance.query('UPDATE sokka_config SET friendlyName = ?, type = ?, configValue = ? WHERE configKey = ?;', [this.friendlyName, this.type, this.value, this.key]);
     }
 
-    delete(): Promise<void> {
-        throw new Error("Method not implemented.");
+    async delete(): Promise<void> {
+        await Database.instance.query('DELETE FROM sokka_config WHERE key = ?;', [this.key]);
     }
 }
 

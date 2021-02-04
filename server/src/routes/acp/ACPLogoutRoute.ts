@@ -18,6 +18,9 @@ class ACPLogoutRoute extends Route {
     private async post(req: Request, res: Response): Promise<void> {
         try {
             let session = await ACPSession.get(req.body.token);
+            if (!session) {
+                throw new Error('ACP Session not found');
+            }
             await session.delete();
             res.send({ success: true, message: 'Successfully invalidated session' });
         } catch (err) {

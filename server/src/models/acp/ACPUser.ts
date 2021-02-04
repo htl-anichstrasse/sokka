@@ -3,56 +3,41 @@ import Database from "../../Database";
 class ACPUser implements Model {
     private constructor(readonly name: string, public password: string, readonly timestamp: number) { }
 
-    static create(username: string, password: string): Promise<ACPUser> {
-        return new Promise<ACPUser>((resolve, reject) => {
-            Database.instance.query(`INSERT INTO sokka_acp_users (username, pwhash) VALUES (?, ?)`, [username, password]).then(() => {
-                resolve(new ACPUser(username, password, new Date().getTime()));
-            }).catch((err) => reject(err));
-        });
+    static async create(username: string, password: string): Promise<ACPUser> {
+        await Database.instance.query(`INSERT INTO sokka_acp_users (username, pwhash) VALUES (?, ?)`, [username, password]);
+        return await new ACPUser(username, password, new Date().getTime());
     }
 
-    static get(username: string): Promise<ACPUser> {
-        return new Promise<ACPUser>((resolve, reject) => {
-            Database.instance.query('SELECT * FROM sokka_acp_users WHERE username = ?;', [username]).then((result) => {
-                if (result.length > 0) {
-                    resolve(new ACPUser(result[0].username, result[0].pwhash, result[0].timestamp));
-                } else {
-                    reject(new Error('ACP user not found'));
-                }
-            }).catch((err) => reject(err));
-        });
+    static async get(username: string): Promise<ACPUser> {
+        let result = await Database.instance.query('SELECT * FROM sokka_acp_users WHERE username = ?;', [username]);
+        return result.length > 0 ? new ACPUser(result[0].username, result[0].pwhash, result[0].timestamp) : null;
     }
 
-    static exists(username: string): Promise<Boolean> {
-        return new Promise<Boolean>((resolve) => {
-            Database.instance.query('SELECT username FROM sokka_acp_users WHERE username = ?;', [username]).then((result) => {
-                resolve(result.length > 0);
-            });
-        });
+    static async exists(username: string): Promise<Boolean> {
+        return (await Database.instance.query('SELECT username FROM sokka_acp_users WHERE username = ?;', [username])).length > 0;
     }
 
-    static getAll(): Promise<string[]> {
-        return new Promise<string[]>((resolve, reject) => {
-            Database.instance.query('SELECT username FROM sokka_acp_users;').then((result) => {
-                resolve(result);
-            }).catch((err) => reject(err));
-        });
+    static async getAll(): Promise<ACPUser[]> {
+        let result = await Database.instance.query('SELECT * FROM sokka_acp_users;');
+        let acpUsers = [];
+        for (let acpUser of result) {
+            acpUsers.push(new ACPUser(acpUser.username, acpUser.pwhash, acpUser.timestamp));
+        }
+        return acpUsers;
     }
 
-    update(): Promise<void> {
-        return new Promise<void>((resolve, reject) => {
-            Database.instance.query('UPDATE sokka_acp_users SET password = ? WHERE username = ?;', [this.password, this.name]).then(() => {
-                resolve(null);
-            }).catch((err) => reject(err));
-        });
+    /**
+     * {@inheritdoc}
+     */
+    async update(): Promise<void> {
+        await Database.instance.query('UPDATE sokka_acp_users SET password = ? WHERE username = ?;', [this.password, this.name]);
     }
 
-    delete(): Promise<void> {
-        return new Promise<void>((resolve, reject) => {
-            Database.instance.query('DELETE FROM sokka_acp_users WHERE username = ?;', [this.name]).then(() => {
-                resolve(null);
-            }).catch((err) => reject(err));
-        });
+    /**
+     * {@inheritdoc}
+     */
+    async delete(): Promise<void> {
+        await Database.instance.query('DELETE FROM sokka_acp_users WHERE username = ?;', [this.name]);
     }
 }
 
