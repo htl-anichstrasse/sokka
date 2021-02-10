@@ -1,3 +1,4 @@
+import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
 import config from '../../Config';
 import Database from "../../Database";
@@ -18,18 +19,26 @@ class ACPSession implements Model {
             await ACPSession.purge(count - maxSessions);
         }
         let token = crypto.randomBytes(24).toString('base64'); // SHA-1 collisions are very unlikely
-        let result = await Database.instance.query('INSERT INTO sokka_acp_sessions (acp_username, token) VALUES (?, ?);', [user.name, token]);
+        let hashedToken = await bcrypt.hash(token, parseInt(await config.readConfigValue('SALT_ROUNDS')));
+        let result = await Database.instance.query('INSERT INTO sokka_acp_sessions (acp_username, token) VALUES (?, ?);', [user.name, hashedToken]);
         return new ACPSession(result.insertId, user.name, token, new Date().getTime());
     }
 
     /**
-     * Gets an ACP session for an ACP session token
+     * Gets an ACP session for an ACP user and ACP token
+     * @param user the ACP user
      * @param token the ACP session token
      * @returns the ACP session for the provided ACP session token
     */
-    static async get(token: string): Promise<ACPSession> {
-        let result = await Database.instance.query('SELECT * FROM sokka_acp_sessions WHERE token = ?;', [token]);
-        return result.length > 0 ? new ACPSession(result[0].id, result[0].acp_username, result[0].token, result[0].timestamp) : null;
+    static async get(user: ACPUser, token: string): Promise<ACPSession> {
+        let result = (await Database.instance.query('SELECT * FROM sokka_acp_sessions WHERE acp_username = ?', [user.name]));
+        for (let entry of result) {
+            let isMatch = await bcrypt.compare(token, entry.token);
+            if (isMatch) {
+                return new ACPSession(entry.id, entry.acp_username, entry.token, entry.timestamp);
+            }
+        }
+        return null;
     }
 
     /**
@@ -57,7 +66,12 @@ class ACPSession implements Model {
      * @returns true, if the provided ACP session token is valid for the provided ACP user, false otherwise
      */
     static async validate(user: ACPUser, token: string): Promise<boolean> {
-        return (await Database.instance.query('SELECT id FROM sokka_acp_sessions WHERE acp_username = ? AND token = ?;', [user.name, token])).length > 0;
+        let hashes = (await Database.instance.query('SELECT token FROM sokka_acp_sessions WHERE acp_username = ?', [user.name])).map((rdp) => rdp.token);
+        let callbacks = [];
+        for (let hash of hashes) {
+            callbacks.push(bcrypt.compare(token, hash));
+        }
+        return (await Promise.all(callbacks)).some((v) => v === true);
     }
 
     /**
