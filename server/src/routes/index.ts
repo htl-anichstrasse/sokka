@@ -13,6 +13,9 @@ export { default as ACPUpdateGroupRoute } from './acp/group/ACPUpdateGroupRoute'
 export { default as ACPDeleteUserRoute } from './acp/user/ACPDeleteUserRoute';
 export { default as ACPGetUserRoute } from './acp/user/ACPGetUserRoute';
 export { default as ACPUpdateUserRoute } from './acp/user/ACPUpdateUserRoute';
+export { default as GetMenuRoute } from './menu/GetMenuRoute';
+export { default as GetMenuTitleROute } from './menu/GetMenuTitleRoute';
+export { default as GetProductRoute } from './product/GetProductRoute';
 export { default as RootRoute } from './RootRoute';
 export { default as UserCreateRoute } from './user/UserCreateRoute';
 export { default as UserLoginRoute } from './user/UserLoginRoute';

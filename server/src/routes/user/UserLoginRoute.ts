@@ -27,7 +27,7 @@ class UserLoginRoute extends Route {
         try {
             let user = await User.getByEmail(req.body.email);
             let same = await bcrypt.compare(req.body.password, user.password);
-            if (same) {
+            if (user && same) {
                 try {
                     let session = await Session.create(user);
                     res.send({ success: true, message: 'Credentials validated', token: session.token });

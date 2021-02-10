@@ -4,76 +4,40 @@ import User from "./User";
 class Group implements Model {
     private constructor(readonly id: number, public name: string, public rebate: number) { }
 
-    static create(groupname, rebate): Promise<Group> {
-        return new Promise<Group>((resolve, reject) => {
-            Database.instance.query(`INSERT INTO sokka_groups (groupname, rebate) VALUES (?, ?);`, [groupname, rebate]).then((result) => {
-                resolve(new Group(result.insertId, groupname, rebate));
-            }).catch((err) => reject(err));
-        });
+    static async create(name, rebate): Promise<Group> {
+        let result = await Database.instance.query(`INSERT INTO sokka_groups (groupname, rebate) VALUES (?, ?);`, [name, rebate]);
+        return new Group(result.insertId, name, rebate);
     }
 
-    static getById(id: string): Promise<Group> {
-        return new Promise<Group>((resolve, reject) => {
-            Database.instance.query('SELECT * FROM sokka_groups WHERE group_id = ?;', [id]).then((result) => {
-                if (result.length > 0) {
-                    resolve(new Group(result[0].group_id, result[0].groupname, result[0].rebate));
-                } else {
-                    reject(new Error('Group not found'));
-                }
-            }).catch((err) => reject(err));
-        });
+    static async getById(id: number): Promise<Group> {
+        let result = await Database.instance.query('SELECT * FROM sokka_groups WHERE group_id = ?;', [id]);
+        return result.length > 0 ? new Group(result[0].group_id, result[0].groupname, result[0].rebate) : null;
     }
 
-    static getByName(name: string): Promise<Group> {
-        return new Promise<Group>((resolve, reject) => {
-            Database.instance.query('SELECT * FROM sokka_groups WHERE groupname = ?;', [name]).then((result) => {
-                if (result.length > 0) {
-                    resolve(new Group(result[0].group_id, result[0].groupname, result[0].rebate));
-                } else {
-                    reject(new Error('Group not found'));
-                }
-            }).catch((err) => reject(err));
-        });
+    static async getAll(): Promise<Group[]> {
+        let result = await Database.instance.query('SELECT * FROM sokka_groups;');
+        let groups = [];
+        for (let group of result) {
+            groups.push(new Group(group.group_id, group.groupname, group.rebate));
+        }
+        return groups;
     }
 
-    static getAll(): Promise<Group[]> {
-        return new Promise<Group[]>((resolve, reject) => {
-            Database.instance.query('SELECT * FROM sokka_groups;').then((result) => {
-                let groups = [];
-                for (let group of result) {
-                    groups.push(new Group(group.group_id, group.groupname, group.rebate));
-                }
-                resolve(groups);
-            }).catch((err) => reject(err));
-        });
+    async getMembers(): Promise<User[]> {
+        let result = await Database.instance.query('SELECT * FROM sokka_users WHERE group_id = ?;', [this.id]);
+        let users = [];
+        for (let user of result) {
+            users.push(new User(user.id, user.email, user.verified, user.group_id, user.pwhash, user.timestamp));
+        }
+        return users;
     }
 
-    getMembers(): Promise<User[]> {
-        return new Promise<User[]>((resolve, reject) => {
-            Database.instance.query('SELECT * FROM sokka_users WHERE group_id = ?;', [this.id]).then((result) => {
-                let users = [];
-                for (let user of result) {
-                    users.push(new User(user.id, user.email, user.verified, user.group_id, user.pwhash, user.timestamp));
-                }
-                resolve(users);
-            }).catch((err) => reject(err))
-        });
+    async update(): Promise<void> {
+        await Database.instance.query('UPDATE sokka_groups SET groupname = ?, rebate = ? WHERE group_id = ?;', [this.name, this.rebate, this.id]);
     }
 
-    update(): Promise<void> {
-        return new Promise<void>((resolve, reject) => {
-            Database.instance.query('UPDATE sokka_groups SET groupname = ?, rebate = ? WHERE group_id = ?;', [this.name, this.rebate, this.id]).then(() => {
-                resolve(null);
-            }).catch((err) => reject(err));
-        });
-    }
-
-    delete(): Promise<void> {
-        return new Promise<void>((resolve, reject) => {
-            Database.instance.query('DELETE FROM sokka_groups WHERE group_id = ?;', [this.id]).then(() => {
-                resolve(null);
-            }).catch((err) => reject(err));
-        });
+    async delete(): Promise<void> {
+        await Database.instance.query('DELETE FROM sokka_groups WHERE group_id = ?;', [this.id]);
     }
 }
 

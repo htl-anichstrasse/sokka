@@ -1,3 +1,6 @@
+/**
+ * Default interface for database models
+ */
 interface Model {
     /**
      * Deletes this model object from the database

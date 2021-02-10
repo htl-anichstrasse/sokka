@@ -6,83 +6,72 @@ import User from "./User";
 class Session implements Model {
     private constructor(readonly id: number, public user_id: number, public token: string, readonly timestamp: number) { }
 
-    static create(user: User): Promise<Session> {
-        return new Promise<Session>((resolve, reject) => {
-            Session.count(user).then(async (count) => {
-                const maxSessions = parseInt(config.readConfigValueSync('MAX_USER_SESSIONS'));
-                if (count > maxSessions) {
-                    await Session.purge(count - maxSessions);
-                }
-                // TODO: token has unique index, there is a VERY SMALL chance that this will fail -> loop
-                let token = crypto.randomBytes(16).toString('base64');
-                Database.instance.query('INSERT INTO sokka_sessions (user_id, token) VALUES (?, ?);', [user.id, token]).then((result) => {
-                    resolve(new Session(result.insertId, user.id, token, new Date().getTime()));
-                }).catch((err) => reject(err));
-            });
-        });
+    /**
+     * Creates a new user session and stores it in the database
+     * @param user the user to create the session for
+     * @returns the created session
+     */
+    static async create(user: User): Promise<Session> {
+        let count = await Session.count(user);
+        const maxSessions = parseInt(config.readConfigValueSync('MAX_USER_SESSIONS'));
+        if (count > maxSessions) {
+            await Session.purge(count - maxSessions);
+        }
+        let token = crypto.randomBytes(24).toString('base64'); // SHA-1 collisions are very unlikely
+        let result = await Database.instance.query('INSERT INTO sokka_sessions (user_id, token) VALUES (?, ?);', [user.id, token]);
+        return new Session(result.insertId, user.id, token, new Date().getTime());
     }
 
-    static get(token: string): Promise<Session> {
-        return new Promise<Session>((resolve, reject) => {
-            Database.instance.query('SELECT * FROM sokka_sessions WHERE token = ?;', [token]).then((result) => {
-                if (result.length > 0) {
-                    resolve(new Session(result[0].id, result[0].user_id, result[0].token, result[0].timestamp));
-                } else {
-                    reject(new Error('Session not found'));
-                }
-            }).catch((err) => reject(err));
-        });
+    /**
+     * Gets a session for a session token
+     * @param token the session token
+     * @returns the session for the provided session token
+     */
+    static async get(token: string): Promise<Session> {
+        let result = await Database.instance.query('SELECT * FROM sokka_sessions WHERE token = ?;', [token]);
+        return result.length > 0 ? new Session(result[0].id, result[0].user_id, result[0].token, result[0].timestamp) : null;
     }
 
-    static count(user: User): Promise<number> {
-        return new Promise<number>((resolve, reject) => {
-            Database.instance.query('SELECT COUNT(id) FROM sokka_sessions WHERE user_id = ?;', [user.id]).then((result) => {
-                resolve((Object.values(result[0]) as number[])[0]);
-            }).catch((err) => reject(err));
-        });
+    /**
+     * Counts the amount of active sessions for a user
+     * @param user the user whose sessions will be counted
+     * @returns the amount of active sessions for the provided user
+     */
+    static async count(user: User): Promise<number> {
+        return (Object.values((await Database.instance.query('SELECT COUNT(id) FROM sokka_sessions WHERE user_id = ?;', [user.id]))[0]) as number[])[0];
     }
 
-    static purge(count: number): Promise<void> {
-        return new Promise<void>((resolve, reject) => {
-            Database.instance.query('SELECT id FROM sokka_sessions ORDER BY timestamp ASC LIMIT ?;', [count]).then((result) => {
-                let ids = result.map((val) => val.id).sort();
-                Database.instance.query(`DELETE FROM sokka_sessions WHERE id IN (${ids.join(',')});`).then(() => {
-                    resolve(null);
-                }).catch((err) => reject(err));
-            }).catch((err) => reject(err));
-        });
+    /**
+     * Invalidates old sessions, used to make free sessions when MAX_USER_SESSIONS config value is hit
+     * @param count the amount of sessions to be purged
+     */
+    static async purge(count: number): Promise<void> {
+        let ids = (await Database.instance.query('SELECT id FROM sokka_sessions ORDER BY timestamp ASC LIMIT ?;', [count])).map((val) => val.id);
+        await Database.instance.query(`DELETE FROM sokka_sessions WHERE id IN (${ids.join(',')});`);
     }
 
-    static validate(user: User, token: string): Promise<boolean> {
-        return new Promise<boolean>((resolve, reject) => {
-            Database.instance.query('SELECT id FROM sokka_sessions WHERE user_id = ? AND token = ?;', [user.id, token]).then((result) => {
-                resolve(result.length > 0);
-            }).catch((err) => reject(err));
-        });
+    /**
+     * Validates a session token for a user
+     * @param user the user to be checked
+     * @param token the session token to be checked
+     * @returns true, if the provided session token is valid for the provided user, false otherwise
+     */
+    static async validate(user: User, token: string): Promise<boolean> {
+        return (await Database.instance.query('SELECT id FROM sokka_sessions WHERE user_id = ? AND token = ?;', [user.id, token])).length > 0;
     }
 
-    static deleteAll(user: User): Promise<void> {
-        return new Promise<void>((resolve, reject) => {
-            Database.instance.query('DELETE FROM sokka_sessions WHERE user_id = ?;', [user.id]).then(() => {
-                resolve(null);
-            }).catch((err) => reject(err));
-        });
+    /**
+     * {@inheritdoc}
+     */
+    async update(): Promise<void> {
+        await Database.instance.query('UPDATE sokka_sessions SET user_id = ?, token = ? WHERE id = ?;', [this.user_id, this.token, this.id]);
     }
 
-    update(): Promise<void> {
-        return new Promise<void>((resolve, reject) => {
-            Database.instance.query('UPDATE sokka_sessions SET user_id = ?, token = ? WHERE id = ?;', [this.user_id, this.token, this.id]).then(() => {
-                resolve(null);
-            }).catch((err) => reject(err));
-        });
-    }
-
-    delete(): Promise<void> {
-        return new Promise<void>((resolve, reject) => {
-            Database.instance.query('DELETE FROM sokka_sessions WHERE id = ?;', [this.id]).then(() => {
-                resolve(null);
-            }).catch((err) => reject(err));
-        });
+    /**
+     * {@inheritdoc}
+     */
+    async delete(): Promise<void> {
+        await Database.instance.query('DELETE FROM sokka_sessions WHERE id = ?;', [this.id]);
     }
 }
 

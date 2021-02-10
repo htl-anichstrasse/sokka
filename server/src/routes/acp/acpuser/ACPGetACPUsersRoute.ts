@@ -18,6 +18,7 @@ class ACPGetACPUsersRoute extends Route {
     private async get(req: Request, res: Response): Promise<void> {
         try {
             let users = await ACPUser.getAll();
+            users.forEach((v) => delete v.password);
             res.send({ success: true, users });
         } catch (err) {
             res.status(500);

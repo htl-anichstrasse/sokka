@@ -21,7 +21,7 @@ class ACPLoginRoute extends Route {
         try {
             let user = await ACPUser.get(req.body.name);
             let same = await bcrypt.compare(req.body.password, user.password);
-            if (same) {
+            if (user && same) {
                 try {
                     let session = await ACPSession.create(user);
                     res.send({ success: true, message: 'Credentials validated', token: session.token, name: user.name });
