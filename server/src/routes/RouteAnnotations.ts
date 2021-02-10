@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import ACPSession from "../models/acp/ACPSession";
 import ACPUser from "../models/acp/ACPUser";
+import User from "../models/User";
 import Session from "../models/Session";
 
 export enum AuthorizationType {
@@ -38,7 +39,8 @@ export function NeedsAuthorization(authorizationType: AuthorizationType) {
                         throw new Error('ACP session not found');
                     }
                 } else {
-                    let session = await Session.get(req.token);
+                    let splitAuth = Buffer.from(req.token, 'base64').toString('utf-8').split(':');
+                    let session = await Session.get(await User.getByEmail(splitAuth[0]), splitAuth[1]);
                     if (!session) {
                         throw new Error('Session not found');
                     }

@@ -66,7 +66,7 @@ class ACPSession implements Model {
      * @returns true, if the provided ACP session token is valid for the provided ACP user, false otherwise
      */
     static async validate(user: ACPUser, token: string): Promise<boolean> {
-        let hashes = (await Database.instance.query('SELECT token FROM sokka_acp_sessions WHERE acp_username = ?', [user.name])).map((rdp) => rdp.token);
+        let hashes = (await Database.instance.query('SELECT token FROM sokka_acp_sessions WHERE acp_username = ?;', [user.name])).map((rdp) => rdp.token);
         let callbacks = [];
         for (let hash of hashes) {
             callbacks.push(bcrypt.compare(token, hash));
