@@ -8,7 +8,7 @@ class UserAuth {
 
     static const String LOGIN_ROUTE = 'https://api.sokka.me/user/login';
     static const String LOGOUT_ROUTE = 'https://api.sokka.me/user/logout';
-    static const String SIGNUP_ROUTE = 'https://api.sokka.me/user/signup';
+    static const String SIGNUP_ROUTE = 'https://api.sokka.me/user/create';
     static const String VALIDATE_ROUTE = 'https://api.sokka.me/user/validate';
 
     Future<String> loginUser(final String email, final String password) async {
@@ -28,7 +28,7 @@ class UserAuth {
             });
     }
 
-    Future<void> logoutUser(final String sessionToken) async {
+    Future<void> logoutUser(final String sessionToken, final String email) async {
         await this._networkWrapper
             .post(
                 LOGOUT_ROUTE,
@@ -37,6 +37,7 @@ class UserAuth {
                 },
                 body: {
                     'token': sessionToken,
+                    'email': email
                 },
             );
     }
