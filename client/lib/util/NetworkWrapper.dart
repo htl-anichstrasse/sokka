@@ -19,7 +19,7 @@ class NetworkWrapper {
         });
     }
 
-    Future<dynamic> post(final String url, {final Map<String, String> headers, body, encoding}) async {
+    Future<dynamic> post(final String url, { final Map<String, String> headers, body, encoding }) async {
         return await http
             .post(
                 url,
