@@ -1,3 +1,4 @@
+import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
 import config from '../Config';
 import Database from "../Database";
@@ -23,13 +24,20 @@ class Session implements Model {
     }
 
     /**
-     * Gets a session for a session token
+     * Gets a session for a user and session token
+     * @param user the user
      * @param token the session token
      * @returns the session for the provided session token
      */
-    static async get(token: string): Promise<Session> {
-        let result = await Database.instance.query('SELECT * FROM sokka_sessions WHERE token = ?;', [token]);
-        return result.length > 0 ? new Session(result[0].id, result[0].user_id, result[0].token, result[0].timestamp) : null;
+    static async get(user: User, token: string): Promise<Session> {
+        let result = await Database.instance.query('SELECT * FROM sokka_sessions WHERE user_id = ?;', [user.id]);
+        for (let entry of result) {
+            let isMatch = await bcrypt.compare(token, entry.token);
+            if (isMatch) {
+                return new Session(entry.id, entry.user_id, entry.token, entry.timestamp)
+            }
+        }
+        return null;
     }
 
     /**
@@ -57,7 +65,12 @@ class Session implements Model {
      * @returns true, if the provided session token is valid for the provided user, false otherwise
      */
     static async validate(user: User, token: string): Promise<boolean> {
-        return (await Database.instance.query('SELECT id FROM sokka_sessions WHERE user_id = ? AND token = ?;', [user.id, token])).length > 0;
+        let hashes = (await Database.instance.query('SELECT id FROM sokka_sessions WHERE user_id = ?;', [user.id])).map((rdp) => rdp.token);
+        let callbacks = [];
+        for (let hash of hashes) {
+            callbacks.push(bcrypt.compare(token, hash));
+        }
+        return (await Promise.all(callbacks)).some((v) => v === true);
     }
 
     /**

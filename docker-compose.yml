@@ -15,8 +15,8 @@ services:
     volumes:
       - "/var/run/docker.sock:/tmp/docker.sock:ro"
       - "certs-volume:/etc/nginx/certs:ro"
-      - "/etc/nginx/vhost.d"
       - "/usr/share/nginx/html"
+      - "./vhost.conf:/etc/nginx/vhost.d"
       - "./proxy.conf:/etc/nginx/conf.d"
   nginx-letsencrypt-companion:
     depends_on:

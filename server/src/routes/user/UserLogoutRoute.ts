@@ -1,5 +1,6 @@
 import { Request, Response, Router } from 'express';
 import Session from '../../models/Session';
+import User from '../../models/User';
 import Route from '../../Route';
 import { NeedsProperties } from '../RouteAnnotations';
 
@@ -11,13 +12,13 @@ class UserLogoutRoute extends Route {
         super();
         this.router = Router();
         this.path = '/user';
-        this.router.post('/login', this.post.bind(this));
+        this.router.post('/logout', this.post.bind(this));
     }
 
-    @NeedsProperties({ token: 'string ' })
+    @NeedsProperties({ email: 'string', token: 'string ' })
     private async post(req: Request, res: Response): Promise<void> {
         try {
-            let session = await Session.get(req.body.token);
+            let session = await Session.get(await User.getByEmail(req.body.email), req.body.token);
             if (!session) {
                 throw new Error('Session not found');
             }

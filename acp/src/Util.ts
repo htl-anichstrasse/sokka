@@ -16,12 +16,14 @@ function animateCSS(node: HTMLElement, animation: string, prefix = 'animate__'):
 
 function sendRequest(node: string, reqMethod: "GET" | "POST", authNeeded: boolean, reqData: {}): Promise<AxiosResponse> {
     return new Promise<AxiosResponse>((resolve, reject) => {
-        let bearer = new Cookies().get('sokka_token');
-        if (authNeeded && !bearer) {
-            reject('Auth token not available');
+        let cookies = new Cookies();
+        let bearer = cookies.get('sokka_token');
+        let username = cookies.get('sokka_username');
+        if (authNeeded && (!bearer || !username)) {
+            reject('Auth token or username not available');
             return;
         }
-        let reqHeaders = authNeeded ? { 'Authorization': `Bearer ${bearer}` } : {};
+        let reqHeaders = authNeeded ? { 'Authorization': `Bearer ${btoa(username + ':' + bearer)}` } : {};
         Axios({
             url: `${isDebug() ? 'http://localhost:3001' : 'https://api.sokka.me'}${node}`,
             method: reqMethod,

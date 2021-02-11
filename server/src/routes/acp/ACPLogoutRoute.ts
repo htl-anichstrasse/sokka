@@ -1,5 +1,6 @@
 import { Request, Response, Router } from 'express';
 import ACPSession from '../../models/acp/ACPSession';
+import ACPUser from '../../models/acp/ACPUser';
 import Route from '../../Route';
 import { NeedsProperties } from '../RouteAnnotations';
 
@@ -14,10 +15,10 @@ class ACPLogoutRoute extends Route {
         this.router.post('/logout', this.post.bind(this));
     }
 
-    @NeedsProperties({ token: 'string' })
+    @NeedsProperties({ username: 'string', token: 'string' })
     private async post(req: Request, res: Response): Promise<void> {
         try {
-            let session = await ACPSession.get(req.body.token);
+            let session = await ACPSession.get(await ACPUser.get(req.body.username), req.body.token);
             if (!session) {
                 throw new Error('ACP Session not found');
             }
