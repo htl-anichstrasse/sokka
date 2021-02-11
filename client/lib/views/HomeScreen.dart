@@ -17,6 +17,18 @@ class _HomeScreenState extends State<HomeScreen> {
     final UserAuth _userAuth = new UserAuth();
     final List<String> _days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
+    String _email; 
+    String _sessionToken;
+
+    @override
+    void initState() {
+        super.initState();
+        setState(() async => {
+            this._email = await this._cookieStorage.getEmail(),
+            this._sessionToken = await this._cookieStorage.getSessionToken()
+        });
+    }
+    
     @override
     Widget build(BuildContext context) {
         final date = DateTime.now();
@@ -30,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             '${_days[date.weekday - 1]} - ${date.day}.${date.month}.${date.year}',
                             style: GoogleFonts.montserrat(
                                 color: Colors.white,
-                            )
+                            ),
                         ),
                         centerTitle: true,
                         iconTheme: new IconThemeData(color: Colors.white),
@@ -83,8 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         leading: new Icon(Icons.exit_to_app, color: Colors.white),
                                         title: new Text('Log out'),
                                         onTap: () => {
-                                            this._cookieStorage.getSessionToken()
-                                                .then((token) => this._userAuth.logoutUser(token)),
+                                            this._userAuth.logoutUser(this._sessionToken, this._email),
                                             this._cookieStorage.deleteValue(CookieStorage.TOKEN_STRING),
 
                                             Navigator.of(context).popAndPushNamed('/login'),
