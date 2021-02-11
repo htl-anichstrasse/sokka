@@ -12,7 +12,7 @@ class UserLogoutRoute extends Route {
         super();
         this.router = Router();
         this.path = '/user';
-        this.router.post('/login', this.post.bind(this));
+        this.router.post('/logout', this.post.bind(this));
     }
 
     @NeedsProperties({ email: 'string', token: 'string ' })
