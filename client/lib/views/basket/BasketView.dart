@@ -16,9 +16,7 @@ class _BasketViewState extends State<BasketView> {
     @override
     void initState() {
         super.initState();
-        this._shoppingBasketController.getBasket().forEach((orderable) => {
-            this._totalPrice += orderable.getPrice
-        });
+        this._updateTotalPrice();
     }
 
     @override
@@ -35,9 +33,9 @@ class _BasketViewState extends State<BasketView> {
                                'TOTAL',
                                 style: GoogleFonts.montserrat(
                                     color: Colors.white,
-                                    fontWeight: FontWeight.bold
-                                )
-                            )
+                                    fontWeight: FontWeight.bold,
+                                ),
+                            ),
                         ),
                         new Container(
                             padding: new EdgeInsets.all(10.0),
@@ -45,9 +43,9 @@ class _BasketViewState extends State<BasketView> {
                                '${this._totalPrice.toStringAsFixed(2)} €',
                                 style: GoogleFonts.montserrat(
                                     color: Colors.white,
-                                    fontWeight: FontWeight.bold
-                                )
-                            )
+                                    fontWeight: FontWeight.bold,
+                                ),
+                            ),
                         ),
                     ],
                 ),
@@ -55,7 +53,62 @@ class _BasketViewState extends State<BasketView> {
             floatingActionButton: new FloatingActionButton(
                 backgroundColor: new Color(0xFFFF8D4A),
                 child: Icon(Icons.payment, color: Colors.white),
-                onPressed: null,
+                onPressed: () => {
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (BuildContext context) => new Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                                new ListTile(
+                                    leading: new Icon(
+                                        Icons.credit_card,
+                                        color: Colors.white,
+                                    ),
+                                    title: new Text(
+                                        'Pay with credit card',
+                                        style: GoogleFonts.montserrat(
+                                            color: Colors.white,
+                                        ),
+                                    ),
+                                    onTap: null,
+                                ),
+                                new ListTile(
+                                    leading: new Icon(
+                                        Icons.money,
+                                        color: Colors.white,
+                                    ),
+                                    title: new Text(
+                                        'Pay with cash',
+                                        style: GoogleFonts.montserrat(
+                                            color: Colors.white,
+                                        ),
+                                    ),
+                                    onTap: null,
+                                ),
+                                new Spacer(),
+                                new Container(
+                                    decoration: new BoxDecoration(
+                                        color: Colors.red,
+                                    ),
+                                    child: new ListTile(
+                                        leading: new Icon(
+                                            Icons.cancel_outlined,
+                                            color: Colors.white,
+                                        ),
+                                        title: new Text(
+                                            'Cancel',
+                                            style: GoogleFonts.montserrat(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold
+                                            ),
+                                        ),
+                                        onTap: () => Navigator.of(context).pop(),
+                                    ),
+                                ),
+                            ],
+                        ),
+                    ),
+                },
             ),
             floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
             body: new ListView.builder(
@@ -65,6 +118,7 @@ class _BasketViewState extends State<BasketView> {
                     key: new UniqueKey(),
                     onDismissed: (DismissDirection direction) => {
                         setState(() => this._shoppingBasketController.getBasket().removeAt(index)),
+                        this._updateTotalPrice(),
                         Scaffold.of(context).showSnackBar(new SnackBar(
                                 content: new Text(
                                     '${this._shoppingBasketController.getBasket()[index].getTitle} has been removed from your basket',
@@ -93,7 +147,7 @@ class _BasketViewState extends State<BasketView> {
                         ),
                     ),
                 ),
-            )
+            ),
         )
         : new Scaffold(
             body: new SizedBox.expand(
@@ -121,5 +175,12 @@ class _BasketViewState extends State<BasketView> {
                 ),
             ),
         );
+    }
+
+    void _updateTotalPrice() {
+        this._totalPrice = 0.0;
+        this._shoppingBasketController.getBasket().forEach((orderable) => {
+            this._totalPrice += orderable.getPrice
+        });
     }
 }
