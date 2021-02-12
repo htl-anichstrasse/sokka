@@ -66,6 +66,9 @@ class Session implements Model {
      */
     static async validate(user: User, token: string): Promise<boolean> {
         let hashes = (await Database.instance.query('SELECT id FROM sokka_sessions WHERE user_id = ?;', [user.id])).map((rdp) => rdp.token);
+        if (hashes.length === 0) {
+            return false;
+        }
         let callbacks = [];
         for (let hash of hashes) {
             callbacks.push(bcrypt.compare(token, hash));
