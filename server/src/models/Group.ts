@@ -4,7 +4,7 @@ import User from "./User";
 class Group implements Model {
     private constructor(readonly id: number, public name: string, public rebate: number) { }
 
-    static async create(name, rebate): Promise<Group> {
+    static async create(name: string, rebate: number): Promise<Group> {
         let result = await Database.instance.query(`INSERT INTO sokka_groups (groupname, rebate) VALUES (?, ?);`, [name, rebate]);
         return new Group(result.insertId, name, rebate);
     }

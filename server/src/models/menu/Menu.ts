@@ -6,6 +6,11 @@ import MenuTitle from "./MenuTitle";
 class Menu implements Model {
     private constructor(readonly id: number, public category_id: number, public name: string, public image: Blob, public price: number) { }
 
+    static async create(category_id: number, name: string, image: Blob, price: number) {
+        let result = await Database.instance.query(`INSERT INTO sokka_menus (category_id, name, image, price) VALUES (?, ?, ?, ?, ?)`, [name, category_id, image, price]);
+        return new Menu(result.insertId, category_id, name, image, price);
+    }
+
     static async get(id: number): Promise<Menu> {
         let result = await Database.instance.query('SELECT * FROM sokka_menus WHERE id = ?;', [id]);
         return result.length > 0 ? new Menu(result[0].id, result[0].category_id, result[0].name, result[0].image, result[0].price) : null;
@@ -19,6 +24,7 @@ class Menu implements Model {
         }
         return menus;
     }
+
     async getEntries(): Promise<MenuEntry[]> {
         let result = await Database.instance.query('SELECT * FROM sokka_menus_products_connector WHERE menu_id = ?;', [this.id]);
         let entries = [];
