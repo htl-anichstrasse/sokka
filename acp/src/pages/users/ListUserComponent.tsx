@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Spinner } from 'react-bootstrap';
 import DataTable from 'react-data-table-component';
 import { sendRequest } from '../../Util';
 import ChangeGroupModalComponent from './ChangeGroupModalComponent';
@@ -141,7 +141,9 @@ const ListUserComponent: FunctionComponent<ListUserComponentProps> = (props) => 
         </>);
     } else {
         load();
-        return (<h3>Loading...</h3>);
+        return (<Spinner animation="border" role="status">
+            <span className="sr-only">Loading...</span>
+        </Spinner>);
     }
 }
 

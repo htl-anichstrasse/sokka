@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FunctionComponent, useState } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Spinner } from 'react-bootstrap';
 import { sendRequest } from '../../Util';
 
 interface ListConfigEntriesProps {
@@ -35,7 +35,9 @@ const ListConfigEntries: FunctionComponent<ListConfigEntriesProps> = (props) => 
     // Initially load data from API
     if (configEntries.length <= 0) {
         load();
-        return null;
+        return (<Spinner animation="border" role="status">
+            <span className="sr-only">Loading...</span>
+        </Spinner>);
     }
 
     // Loop over received data and create and array of config entries

@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useState } from 'react';
+import { Spinner } from 'react-bootstrap';
 import Cookies from 'universal-cookie';
 import { sendRequest } from '../../Util';
 
@@ -31,7 +32,9 @@ const ListACPUserComponent: FunctionComponent<ListACPUserComponentProps> = (prop
     } else {
         load();
         return (<div className="box">
-            <h3>Loading...</h3>
+            <Spinner animation="border" role="status">
+                <span className="sr-only">Loading...</span>
+            </Spinner>
         </div>)
     }
 }

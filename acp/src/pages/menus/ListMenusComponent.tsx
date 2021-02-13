@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { CardColumns } from 'react-bootstrap';
+import { CardColumns, Spinner } from 'react-bootstrap';
 import { sendRequest } from '../../Util';
 import Menu from './Menu';
 
@@ -25,7 +25,9 @@ const ListMenusComponent: FunctionComponent<ListMenusComponentProps> = (props) =
         </>);
     } else {
         load();
-        return (<h3>Loading...</h3>);
+        return (<Spinner animation="border" role="status">
+            <span className="sr-only">Loading...</span>
+        </Spinner>);
     }
 }
 

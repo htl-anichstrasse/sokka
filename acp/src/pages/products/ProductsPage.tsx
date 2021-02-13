@@ -9,7 +9,7 @@ interface ProductsPageProps {
 const ProductsPage: FunctionComponent<ProductsPageProps> = (props) => {
     document.title = 'Products | Sokka ACP';
     return (<div className="app">
-        <div className="container mt-4">
+        <div className="container">
             <div className="row">
                 <div className="col">
                     <h1><i className="fa fa-shopping-cart mr-2" aria-hidden="true"></i>Products</h1>
