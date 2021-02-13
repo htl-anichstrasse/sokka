@@ -38,7 +38,7 @@ const ChangeGroupModalComponent: FunctionComponent<ChangeGroupModalComponentProp
 
     return (
         <>
-            <Button title="Change group" variant="light" onClick={handleShow}><i className="fa fa-star"></i></Button>
+            <Button title="Change group" variant="light" onClick={handleShow}><i className="fa fa-pencil"></i></Button>
 
             <Modal show={show} onHide={handleClose} className="change-group-modal">
                 <Modal.Header closeButton>
