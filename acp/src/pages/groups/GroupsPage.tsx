@@ -14,6 +14,7 @@ const GroupsPage: FunctionComponent<GroupsPageProps> = (props) => {
             <div className="row">
                 <div className="col">
                     <h1><i className="fa fa-star mr-2" aria-hidden="true"></i>Groups</h1>
+                    <p>You can manage Sokka groups and manage their rebate here.</p>
                     <ListGroupsComponent />
                     <CreateGroupButton />
                 </div>

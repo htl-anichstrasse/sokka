@@ -115,7 +115,6 @@ const ListGroupsComponent: FunctionComponent<ListGroupsComponentProps> = (props)
 
     if (state.groups) {
         return (<>
-            <p>You can manage Sokka groups and manage their rebate here.</p>
             <DataTable
                 noHeader={true}
                 columns={columns(deleteHandler, changeCallback) as any}

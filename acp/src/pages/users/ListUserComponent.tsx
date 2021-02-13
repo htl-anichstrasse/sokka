@@ -127,7 +127,6 @@ const ListUserComponent: FunctionComponent<ListUserComponentProps> = (props) => 
 
     if (state.users) {
         return (<>
-            <p>You can manage Sokka users and manually remove them from the database here.</p>
             <DataTable
                 noHeader={true}
                 columns={columns(deleteHandler, changeCallback, state.groups) as any}
