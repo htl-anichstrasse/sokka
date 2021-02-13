@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Spinner } from 'react-bootstrap';
 import DataTable from 'react-data-table-component';
 import { sendRequest } from '../../Util';
 import ChangeGroupButton from './ChangeGroupButton';
@@ -115,7 +115,6 @@ const ListGroupsComponent: FunctionComponent<ListGroupsComponentProps> = (props)
 
     if (state.groups) {
         return (<>
-            <p>You can manage Sokka groups and manage their rebate here.</p>
             <DataTable
                 noHeader={true}
                 columns={columns(deleteHandler, changeCallback) as any}
@@ -130,7 +129,9 @@ const ListGroupsComponent: FunctionComponent<ListGroupsComponentProps> = (props)
         </>);
     } else {
         load();
-        return (<h3>Loading...</h3>);
+        return (<Spinner animation="border" role="status">
+            <span className="sr-only">Loading...</span>
+        </Spinner>);
     }
 }
 

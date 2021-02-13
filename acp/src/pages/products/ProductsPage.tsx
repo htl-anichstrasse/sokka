@@ -1,4 +1,6 @@
+import './ProductsPage.css';
 import React, { FunctionComponent } from 'react';
+import ListProductsComponent from './ListProductsComponent';
 
 interface ProductsPageProps {
 
@@ -11,7 +13,8 @@ const ProductsPage: FunctionComponent<ProductsPageProps> = (props) => {
             <div className="row">
                 <div className="col">
                     <h1><i className="fa fa-shopping-cart mr-2" aria-hidden="true"></i>Products</h1>
-                    <p>There will be products here one day.</p>
+                    <p>You can manage available products in the system here.</p>
+                    <ListProductsComponent />
                 </div>
             </div>
         </div>
