@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Button, Spinner } from 'react-bootstrap';
 import DataTable from 'react-data-table-component';
 import { sendRequest } from '../../Util';
-import ChangeGroupModalComponent from './ChangeGroupModalComponent';
+import ChangeUserButton from './ChangeUserButton';
 import './UsersPage.css';
 
 interface ListUserComponentProps {
@@ -49,7 +49,7 @@ const columns = (deleteHandler: (row: any) => void, changeCallback: (row: any, g
     },
     {
         name: "Change",
-        cell: (row: any) => <ChangeGroupModalComponent row={row} callback={changeCallback} groups={groups} />,
+        cell: (row: any) => <ChangeUserButton row={row} callback={changeCallback} groups={groups} />,
         button: true,
     },
     {
