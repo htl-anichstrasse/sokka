@@ -1,3 +1,4 @@
+import 'package:client/util/MenuController.dart';
 import 'package:flutter/material.dart';
 import 'package:client/models/Menu.dart';
 import 'package:client/util/ShoppingBasketController.dart';
@@ -22,6 +23,151 @@ class _MenuPanelState extends State<MenuPanel> {
 
     _MenuPanelState(this._menu);
 
+    @override
+    Widget build(BuildContext context) {
+        return new Card(
+            shape: new RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(20.0),
+            ),
+            clipBehavior: Clip.antiAlias,
+            child: new Container(
+                child: new Row(
+                    children: <Widget>[
+                        new SizedBox(
+                            child: new Column(
+                                children: <Widget>[
+                                    new ListTile(
+                                        title: new Text(this._menu.getTitle)
+                                    )
+                                ],
+                            ),
+                        ),
+                    ],
+                ),
+                    /*new Column(
+                        
+                        children: <Widget>[
+                            new ListTile(
+                                contentPadding: EdgeInsets.only(left: 15.0),
+                                title: new Text(
+                                    this._menu.getTitle,
+                                    style: GoogleFonts.montserrat(
+                                        fontSize: 18.0
+                                    ),
+                                ),
+                            ),
+                            new Padding(
+                                padding: EdgeInsets.only(bottom: 10.0, left: 25.0),
+                                child: new Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                        new Text(
+                                            '${this._menu.getAppetizer}',
+                                            style: GoogleFonts.montserrat(
+                                                fontSize: 14.0,
+                                                color: Colors.black
+                                            ),
+                                        ),
+                                        new Text(
+                                            '${this._menu.getMainCourse}',
+                                            style: GoogleFonts.montserrat(
+                                                fontSize: 14.0,
+                                                color: Colors.black
+                                            ),
+                                        ),
+                                        new Text(
+                                            '${this._menu.getDessert}',
+                                            style: GoogleFonts.montserrat(
+                                                fontSize: 14.0,
+                                                color: Colors.black
+                                            ),
+                                        ),
+                                    ],
+                                ),
+                            ),
+                        ],
+                    ),
+                    new SizedBox(
+                        child: new Column(
+                            children: <Widget>[
+                                new Image(
+                                    image: new AssetImage('lib/styles/images/SadSokka.png'),
+                                    width: 170.0,
+                                ),
+                            ],
+                        ),
+                    ),
+                    new Divider(
+                        color: Colors.black,
+                        thickness: 100.0
+                    )
+                ],*/
+            ),
+            /*new Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                    new Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                            new ListTile(
+                                contentPadding: EdgeInsets.only(left: 25.0),
+                                title: new Text(
+                                    this._menu.getTitle,
+                                    style: GoogleFonts.montserrat(
+                                        fontSize: 18.0
+                                    ),
+                                ),
+                            ),
+                            new Padding(
+                                padding: EdgeInsets.only(bottom: 10.0, left: 35.0),
+                                child: new Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                        new Text(
+                                            '- ${this._menu.getAppetizer}',
+                                            style: GoogleFonts.montserrat(
+                                                fontSize: 14.0,
+                                                color: Colors.black
+                                            ),
+                                        ),
+                                        new Text(
+                                            '- ${this._menu.getMainCourse}',
+                                            style: GoogleFonts.montserrat(
+                                                fontSize: 14.0,
+                                                color: Colors.black
+                                            ),
+                                        ),
+                                        new Text(
+                                            '- ${this._menu.getDessert}',
+                                            style: GoogleFonts.montserrat(
+                                                fontSize: 14.0,
+                                                color: Colors.black
+                                            ),
+                                        ),
+                                    ],
+                                ),
+                            ),
+                            new Divider(
+                                indent: 25,
+                                endIndent: 25,
+                                color: Colors.black,
+                                thickness: 1,
+                            ),
+                        ]
+                    ),
+                    new Column(
+                        children: <Widget>[
+                            new Text('')
+                        ],
+                    ),
+                ],
+            ),*/
+        );
+    }
+
+
+
+    /*
     @override
     Widget build(BuildContext context) {
         return ListView(
@@ -156,4 +302,5 @@ class _MenuPanelState extends State<MenuPanel> {
             ),
         );
     }
+    */
 }
