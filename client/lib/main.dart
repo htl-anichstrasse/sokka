@@ -3,7 +3,6 @@ import 'package:client/services/UserAuth.dart';
 import 'package:client/util/Routes.dart';
 import 'package:client/views/LoadingSplashScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:client/util/CookieStorage.dart';
 import 'package:client/styles/theme/AppThemes.dart';
 import 'package:flutter/services.dart';
 
@@ -20,7 +19,6 @@ class Sokka extends StatelessWidget {
             future: this._userAuth.validateSession(),
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                 if (snapshot.hasData) {
-                    
                     return new MaterialApp( 
                         debugShowCheckedModeBanner: true,
                         theme: AppThemes.getDarkModeAppTheme,
@@ -40,4 +38,3 @@ class Sokka extends StatelessWidget {
         );
     }
 }
-
