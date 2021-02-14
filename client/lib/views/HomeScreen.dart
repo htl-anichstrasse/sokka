@@ -21,15 +21,6 @@ class _HomeScreenState extends State<HomeScreen> {
     String _sessionToken;
 
     @override
-    void initState() {
-        super.initState();
-        setState(() async => {
-            this._email = await this._cookieStorage.getEmail(),
-            this._sessionToken = await this._cookieStorage.getSessionToken()
-        });
-    }
-    
-    @override
     Widget build(BuildContext context) {
         final date = DateTime.now();
         

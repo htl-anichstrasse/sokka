@@ -1,0 +1,13 @@
+.menu-image {
+    max-height: 150px;
+    width: auto;
+}
+
+.card-header {
+    background-color: #fff;
+    text-align: center;
+}
+
+.card-body {
+    background-color: rgb(250, 250, 250);
+}

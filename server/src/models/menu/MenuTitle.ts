@@ -8,6 +8,15 @@ class MenuTitle implements Model {
         return result.length > 0 ? new MenuTitle(result[0].id, result[0].name) : null;
     }
 
+    static async getAll(): Promise<MenuTitle[]> {
+        let result = await Database.instance.query('SELECT * FROM sokka_menus_titles;');
+        let menuTitles = [];
+        for (let menuTitle of result) {
+            menuTitles.push(new MenuTitle(menuTitle.id, menuTitle.name));
+        }
+        return menuTitles;
+    }
+
     delete(): Promise<void> {
         throw new Error("Method not implemented.");
     }

@@ -8,8 +8,8 @@ import ConfigPage from './pages/config/ConfigPage';
 import FourZeroFour from './pages/FourZeroFour';
 import GroupsPage from './pages/groups/GroupsPage';
 import HomePage from './pages/HomePage';
-import MenusPage from './pages/MenusPage';
-import ProductsPage from './pages/ProductsPage';
+import MenusPage from './pages/menus/MenusPage';
+import ProductsPage from './pages/products/ProductsPage';
 import UsersPage from './pages/users/UsersPage';
 import { sendRequest } from './Util';
 

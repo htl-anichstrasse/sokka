@@ -1,13 +1,13 @@
 import React, { FunctionComponent } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 
-interface ChangeGroupModalComponentProps {
+interface ChangeUserButtonProps {
     row: any
     groups: Group[]
     callback: (row: any, group_id: number) => void
 }
 
-const ChangeGroupModalComponent: FunctionComponent<ChangeGroupModalComponentProps> = (props) => {
+const ChangeUserButton: FunctionComponent<ChangeUserButtonProps> = (props) => {
     const [show, setShow] = React.useState(false);
 
     const handleClose = () => setShow(false);
@@ -38,7 +38,7 @@ const ChangeGroupModalComponent: FunctionComponent<ChangeGroupModalComponentProp
 
     return (
         <>
-            <Button title="Change group" variant="light" onClick={handleShow}><i className="fa fa-star"></i></Button>
+            <Button title="Change group" variant="light" onClick={handleShow}><i className="fa fa-pencil"></i></Button>
 
             <Modal show={show} onHide={handleClose} className="change-group-modal">
                 <Modal.Header closeButton>
@@ -66,4 +66,4 @@ const ChangeGroupModalComponent: FunctionComponent<ChangeGroupModalComponentProp
     );
 }
 
-export default ChangeGroupModalComponent;
+export default ChangeUserButton;

@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Spinner } from 'react-bootstrap';
 import DataTable from 'react-data-table-component';
 import { sendRequest } from '../../Util';
-import ChangeGroupModalComponent from './ChangeGroupModalComponent';
+import ChangeUserButton from './ChangeUserButton';
 import './UsersPage.css';
 
 interface ListUserComponentProps {
@@ -49,7 +49,7 @@ const columns = (deleteHandler: (row: any) => void, changeCallback: (row: any, g
     },
     {
         name: "Change",
-        cell: (row: any) => <ChangeGroupModalComponent row={row} callback={changeCallback} groups={groups} />,
+        cell: (row: any) => <ChangeUserButton row={row} callback={changeCallback} groups={groups} />,
         button: true,
     },
     {
@@ -127,7 +127,6 @@ const ListUserComponent: FunctionComponent<ListUserComponentProps> = (props) => 
 
     if (state.users) {
         return (<>
-            <p>You can manage Sokka users and manually remove them from the database here.</p>
             <DataTable
                 noHeader={true}
                 columns={columns(deleteHandler, changeCallback, state.groups) as any}
@@ -142,7 +141,9 @@ const ListUserComponent: FunctionComponent<ListUserComponentProps> = (props) => 
         </>);
     } else {
         load();
-        return (<h3>Loading...</h3>);
+        return (<Spinner animation="border" role="status">
+            <span className="sr-only">Loading...</span>
+        </Spinner>);
     }
 }
 

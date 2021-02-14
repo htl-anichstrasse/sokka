@@ -12,12 +12,15 @@ const GroupsPage: FunctionComponent<GroupsPageProps> = (props) => {
     return (<div className="app">
         <div className="container">
             <div className="row">
-                <div className="col">
+                <div className="col-10">
                     <h1><i className="fa fa-star mr-2" aria-hidden="true"></i>Groups</h1>
-                    <ListGroupsComponent />
+                    <p>You can manage Sokka groups and manage their rebate here.</p>
+                </div>
+                <div className="col-2">
                     <CreateGroupButton />
                 </div>
             </div>
+            <ListGroupsComponent />
         </div>
     </div>);
 }

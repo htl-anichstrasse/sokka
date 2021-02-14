@@ -8,6 +8,15 @@ class MenuCategory implements Model {
         return result.length > 0 ? new MenuCategory(result[0].id, result[0].name) : null;
     }
 
+    static async getAll(): Promise<MenuCategory[]> {
+        let result = await Database.instance.query('SELECT * FROM sokka_menus_categories;');
+        let menuCategories = [];
+        for (let menuCategory of result) {
+            menuCategories.push(new MenuCategory(menuCategory.id, menuCategory.name));
+        }
+        return menuCategories;
+    }
+
     delete(): Promise<void> {
         throw new Error("Method not implemented.");
     }
