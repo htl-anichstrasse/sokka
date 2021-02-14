@@ -37,13 +37,7 @@ class Sokka extends StatelessWidget {
                     );
                 }
             },
-        );/*
-        return new MaterialApp(
-            debugShowCheckedModeBanner: true,
-            theme: AppThemes.getDarkModeAppTheme,
-            initialRoute: '/',
-            routes: routes
-        );*/
+        );
     }
 }
 
