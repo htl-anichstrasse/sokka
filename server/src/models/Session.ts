@@ -19,7 +19,8 @@ class Session implements Model {
             await Session.purge(count - maxSessions);
         }
         let token = crypto.randomBytes(24).toString('base64'); // SHA-1 collisions are very unlikely
-        let result = await Database.instance.query('INSERT INTO sokka_sessions (user_id, token) VALUES (?, ?);', [user.id, token]);
+        let hashedToken = await bcrypt.hash(token, parseInt(await config.readConfigValue('SALT_ROUNDS')));
+        let result = await Database.instance.query('INSERT INTO sokka_sessions (user_id, token) VALUES (?, ?);', [user.id, hashedToken]);
         return new Session(result.insertId, user.id, token, new Date().getTime());
     }
 
