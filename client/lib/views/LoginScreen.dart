@@ -17,11 +17,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
     String _email;
     String _password;
-    
-    @override
-    void initState() {
-        super.initState();
-    }
 
     @override
     Widget build(BuildContext context) {
