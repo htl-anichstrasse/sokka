@@ -66,7 +66,7 @@ class Session implements Model {
      * @returns true, if the provided session token is valid for the provided user, false otherwise
      */
     static async validate(user: User, token: string): Promise<boolean> {
-        let hashes = (await Database.instance.query('SELECT id FROM sokka_sessions WHERE user_id = ?;', [user.id])).map((rdp) => rdp.token);
+        let hashes = (await Database.instance.query('SELECT token FROM sokka_sessions WHERE user_id = ?;', [user.id])).map((rdp) => rdp.token);
         if (hashes.length === 0) {
             return false;
         }
