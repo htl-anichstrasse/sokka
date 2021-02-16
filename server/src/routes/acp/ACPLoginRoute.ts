@@ -1,5 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import { Request, Response, Router } from 'express';
+import rateLimit = require('express-rate-limit');
 import ACPSession from '../../models/acp/ACPSession';
 import ACPUser from '../../models/acp/ACPUser';
 import Route from '../../Route';
@@ -13,7 +14,12 @@ class ACPLoginRoute extends Route {
         super();
         this.router = Router();
         this.path = '/acp';
-        this.router.post('/login', this.post.bind(this));
+        const loginLimiter = rateLimit({
+            windowMs: 1 * 1000 * 60, // 5 minutes
+            max: 5,
+            message: `{ success: false, message: 'Too many failed login attempts, please try again later' }`
+        })
+        this.router.post('/login', this.post.bind(this), loginLimiter);
     }
 
     @NeedsProperties({ name: 'string', password: 'string' })
