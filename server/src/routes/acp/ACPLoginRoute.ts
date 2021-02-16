@@ -18,6 +18,7 @@ class ACPLoginRoute extends Route {
             windowMs: 1 * 1000 * 60, // 5 minutes
             max: 5,
             handler: (req, res) => {
+                res.header({ "Content-Type": "application/json" });
                 res.send({ success: false, message: 'Too many failed login attempts, please try again later' });
             }
         });

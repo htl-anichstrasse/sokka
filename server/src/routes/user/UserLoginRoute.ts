@@ -18,6 +18,7 @@ class UserLoginRoute extends Route {
             windowMs: 10 * 60 * 1000, // 10 minutes
             max: 5,
             handler: (req, res) => {
+                res.header({ "Content-Type": "application/json" });
                 res.send({ success: false, message: 'Too many login attempts, please try again later' });
             }
         });
