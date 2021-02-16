@@ -18,8 +18,8 @@ class ACPLoginRoute extends Route {
             windowMs: 1 * 1000 * 60, // 5 minutes
             max: 5,
             message: `{ success: false, message: 'Too many failed login attempts, please try again later' }`
-        })
-        this.router.post('/login', this.post.bind(this), loginLimiter);
+        });
+        this.router.post('/login', loginLimiter, this.post.bind(this));
     }
 
     @NeedsProperties({ name: 'string', password: 'string' })

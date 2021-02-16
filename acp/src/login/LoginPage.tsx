@@ -45,7 +45,6 @@ const LoginPage: FunctionComponent<LoginPageProps> = (props) => {
     }
 
     const logInFail = (element: HTMLDivElement | null) => {
-        console.log(element);
         if (element && element !== null) {
             animateCSS(element, 'shakeX');
         }
