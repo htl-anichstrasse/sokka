@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:client/util/MenuController.dart';
 import 'package:flutter/material.dart';
 import 'package:client/models/Menu.dart';
 import 'package:client/util/ShoppingBasketController.dart';
@@ -10,20 +9,20 @@ import 'package:google_fonts/google_fonts.dart';
 /// Render-Widget for displaying a menu as foldable expansion panel in the
 /// menus section in the app.
 /// ----------------------------------------------------------------------
-class MenuPanel extends StatefulWidget {
+class MenuCard extends StatefulWidget {
     final Menu _menu;
 
-    MenuPanel(this._menu);
+    MenuCard(this._menu);
 
     @override
-    _MenuPanelState createState() => _MenuPanelState(this._menu);
+    _MenuCardState createState() => _MenuCardState(this._menu);
 }
 
-class _MenuPanelState extends State<MenuPanel> {
+class _MenuCardState extends State<MenuCard> {
     final ShoppingBasketController _shoppingBasketController = new ShoppingBasketController();
     final Menu _menu;
 
-    _MenuPanelState(this._menu);
+    _MenuCardState(this._menu);
 
     @override
     Widget build(BuildContext context) {
@@ -73,36 +72,8 @@ class _MenuPanelState extends State<MenuPanel> {
                                                             child: new Column(
                                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                                 children: <Widget>[
-                                                                    new Container(
-                                                                        padding: EdgeInsets.only(bottom: 5.0),
-                                                                        child: new Text(
-                                                                            this._menu.getAppetizer,
-                                                                            style: GoogleFonts.montserrat(
-                                                                                color: Colors.black,
-                                                                                fontSize: 14
-                                                                            ),
-                                                                        ),
-                                                                    ),
-                                                                    new Container(
-                                                                        padding: EdgeInsets.only(bottom: 5.0),
-                                                                        child: new Text(
-                                                                            this._menu.getMainCourse,
-                                                                            style: GoogleFonts.montserrat(
-                                                                                color: Colors.black,
-                                                                                fontSize: 14
-                                                                            ),
-                                                                        ),    
-                                                                    ),
-                                                                    new Container(
-                                                                        padding: EdgeInsets.only(bottom: 5.0),
-                                                                        child: new Text(
-                                                                            this._menu.getDessert,
-                                                                            style: GoogleFonts.montserrat(
-                                                                                color: Colors.black,
-                                                                                fontSize: 14
-                                                                            ),
-                                                                        ),
-                                                                    ),
+                                                                    for (String item in this._menu.getEntries)
+                                                                        this._createItemContainer(item),                                                                                
                                                                 ],
                                                             ),
                                                         ),
@@ -156,6 +127,19 @@ class _MenuPanelState extends State<MenuPanel> {
                                 ],
                             ),
                     ),
+                ),
+            ),
+        );
+    }
+
+    Widget _createItemContainer(final String item) {
+        return new Container(
+            padding: EdgeInsets.only(bottom: 5.0),
+            child: new Text(
+                item,
+                style: GoogleFonts.montserrat(
+                    color: Colors.black,
+                    fontSize: 14
                 ),
             ),
         );

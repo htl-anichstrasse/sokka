@@ -5,8 +5,8 @@ class MenuController {
     factory MenuController() => _instance;
     
     List<Menu> _menus = [
-        new Menu(0, false, 'Veggie', 'Green salad', 'Spring rolls', 'Vanilla muffin', 4.50),
-        new Menu(1, false, 'Meat Love', 'Chicken soup with croutons', 'Meat loaf', 'Chocolate molten lava cake', 5.50),
+        new Menu(0, 'Veggie', ['Green salad', 'Spring rolls', 'Vanilla muffin'], 4.50),
+        new Menu(1, 'Meat Love', ['Chicken soup with croutons', 'Meat loaf', 'Chocolate molten lava cake'], 5.50),
     ];
 
     List<Menu> getMenus() {
