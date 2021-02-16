@@ -19,6 +19,17 @@ input[type="button"] {
     margin-top: 10px;
 }
 
+.branding-container {
+    width: 8rem;
+    height: 8rem;
+    margin: 0 auto;
+}
+
 #logo {
-    width: 35%;
+    width: 100%;
+}
+
+#logo-spinner {
+    width: 6rem;
+    height: 6rem;
 }

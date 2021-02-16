@@ -35,7 +35,6 @@ class ACPLoginRoute extends Route {
             }
         } catch (err) {
             if (err.message === 'ACP user not found') {
-                res.status(400);
                 res.send({ success: false, message: `Could not retrieve ACP user '${req.body.name}'` });
                 return;
             }

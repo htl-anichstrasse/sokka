@@ -10,7 +10,10 @@ class ACPUser implements Model {
 
     static async get(username: string): Promise<ACPUser> {
         let result = await Database.instance.query('SELECT * FROM sokka_acp_users WHERE username = ?;', [username]);
-        return result.length > 0 ? new ACPUser(result[0].username, result[0].pwhash, result[0].timestamp) : null;
+        if (result.length === 0) {
+            throw new Error('ACP user not found');
+        }
+        return new ACPUser(result[0].username, result[0].pwhash, result[0].timestamp);
     }
 
     static async exists(username: string): Promise<Boolean> {

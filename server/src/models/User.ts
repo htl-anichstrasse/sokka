@@ -14,12 +14,18 @@ class User implements Model {
 
     static async getById(id: number): Promise<User> {
         let result = await Database.instance.query('SELECT * FROM sokka_users WHERE id = ?;', [id]);
-        return result.length > 0 ? new User(result[0].id, result[0].email, result[0].verified, result[0].group_id, result[0].pwhash, result[0].timestamp) : null;
+        if (result.length === 0) {
+            throw new Error('User not found');
+        }
+        return new User(result[0].id, result[0].email, result[0].verified, result[0].group_id, result[0].pwhash, result[0].timestamp)l;
     }
 
     static async getByEmail(email: string): Promise<User> {
         let result = await Database.instance.query('SELECT * FROM sokka_users WHERE email = ?;', [email]);
-        return result.length > 0 ? new User(result[0].id, result[0].email, result[0].verified, result[0].group_id, result[0].pwhash, result[0].timestamp) : null;
+        if (result.length === 0) {
+            throw new Error('User not found');
+        }
+        return new User(result[0].id, result[0].email, result[0].verified, result[0].group_id, result[0].pwhash, result[0].timestamp);
     }
 
     static async getAll(): Promise<User[]> {

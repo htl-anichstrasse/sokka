@@ -41,7 +41,6 @@ class UserLoginRoute extends Route {
             }
         } catch (err) {
             if (err.message === 'User not found') {
-                res.status(400);
                 res.send({ success: false, message: `Could not retrieve user '${req.body.username}'` });
                 return;
             }
