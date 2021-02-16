@@ -17,9 +17,6 @@ class _HomeScreenState extends State<HomeScreen> {
     final UserAuth _userAuth = new UserAuth();
     final List<String> _days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
-    String _email; 
-    String _sessionToken;
-
     @override
     Widget build(BuildContext context) {
         final date = DateTime.now();
@@ -86,13 +83,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                         leading: new Icon(Icons.exit_to_app, color: Colors.white),
                                         title: new Text('Log out'),
                                         onTap: () => {
-                                            this._userAuth.logoutUser(this._sessionToken, this._email),
+                                            this._userAuth.logoutUser(this._cookieStorage.getSessionTokenSync(),
+                                                this._cookieStorage.getEmailSync()),
                                             this._cookieStorage.deleteValue(CookieStorage.TOKEN_STRING),
 
                                             Navigator.of(context).popAndPushNamed('/login'),
-                                            Scaffold.of(context).showSnackBar(new SnackBar(
-                                                content: new Text('Successfully logged out.')
-                                            )),
                                         },
                                     ),
                                 ),

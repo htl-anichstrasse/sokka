@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:client/util/MenuController.dart';
 import 'package:flutter/material.dart';
 import 'package:client/models/Menu.dart';
 import 'package:client/util/ShoppingBasketController.dart';
@@ -24,135 +27,136 @@ class _MenuPanelState extends State<MenuPanel> {
 
     @override
     Widget build(BuildContext context) {
-        return ListView(
-            shrinkWrap: true,
-            physics: ClampingScrollPhysics(),
-            children: <Padding>[
-                new Padding(
-                    padding: new EdgeInsets.all(10.0),
-                    child: new ExpansionPanelList(
-                        expansionCallback: (final int index, bool isExpanded) => setState(()
-                            => this._menu.setExpanded = !this._menu.getExpanded
-                        ),
-                        children: <ExpansionPanel>[
-                            this._buildPanel(this._menu)
-                        ],
+        return new Card(
+            color: Colors.transparent,
+            shape: new RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(20.0),
+            ),
+            clipBehavior: Clip.antiAlias,
+            child: new ClipRRect(
+                child: new BackdropFilter(
+                    filter: new ImageFilter.blur(sigmaX: 16.0, sigmaY: 16.0),
+                        child: new Container(
+                            decoration: new BoxDecoration(
+                                gradient: new LinearGradient(
+                                    colors: <Color>[
+                                        Colors.white.withOpacity(0.7),
+                                        Colors.white.withOpacity(0.05),
+                                    ],
+                                    stops: [0.0, 1.0],
+                                    begin: FractionalOffset.topLeft,
+                                    end: FractionalOffset.bottomRight,
+                                    tileMode: TileMode.repeated
+                                ),
+                            ),
+                            child: new Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget> [
+                                    new Row(
+                                        children: <Widget>[
+                                            new SizedBox(
+                                                width: MediaQuery.of(context).size.width * 0.50,
+                                                child: new Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: <Widget>[
+                                                        new ListTile(
+                                                            title: new Text(
+                                                                this._menu.getTitle,
+                                                                style: GoogleFonts.montserrat(
+                                                                    color: Colors.black,
+                                                                    fontSize: 18.0,
+                                                                ),
+                                                            ),
+                                                        ),
+                                                        new Padding(
+                                                            padding: new EdgeInsets.only(left: 30.0, bottom: 10.0),
+                                                            child: new Column(
+                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                children: <Widget>[
+                                                                    new Container(
+                                                                        padding: EdgeInsets.only(bottom: 5.0),
+                                                                        child: new Text(
+                                                                            this._menu.getAppetizer,
+                                                                            style: GoogleFonts.montserrat(
+                                                                                color: Colors.black,
+                                                                                fontSize: 14
+                                                                            ),
+                                                                        ),
+                                                                    ),
+                                                                    new Container(
+                                                                        padding: EdgeInsets.only(bottom: 5.0),
+                                                                        child: new Text(
+                                                                            this._menu.getMainCourse,
+                                                                            style: GoogleFonts.montserrat(
+                                                                                color: Colors.black,
+                                                                                fontSize: 14
+                                                                            ),
+                                                                        ),    
+                                                                    ),
+                                                                    new Container(
+                                                                        padding: EdgeInsets.only(bottom: 5.0),
+                                                                        child: new Text(
+                                                                            this._menu.getDessert,
+                                                                            style: GoogleFonts.montserrat(
+                                                                                color: Colors.black,
+                                                                                fontSize: 14
+                                                                            ),
+                                                                        ),
+                                                                    ),
+                                                                ],
+                                                            ),
+                                                        ),
+                                                    ],
+                                                ),
+                                            ),
+                                            new SizedBox(
+                                                width: MediaQuery.of(context).size.width * 0.45,
+                                                child: new Image(
+                                                    image: new AssetImage('lib/styles/images/SadSokka.png'),
+                                                )
+                                            ),
+                                        ],
+                                    ),
+                                    new Divider(
+                                        thickness: 1.0,
+                                        color: Colors.black,
+                                        indent: 20.0,
+                                        endIndent: 20.0,
+                                    ),
+                                    new Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: <Widget>[
+                                            new Container(
+                                                padding: EdgeInsets.only(left: 15.0, bottom: 5.0),
+                                                child: new FlatButton.icon(
+                                                    onPressed: () => {
+                                                        this._shoppingBasketController.appendMenuToBasket(this._menu),
+                                                        Scaffold.of(context).showSnackBar(new SnackBar(
+                                                            content: new Text(
+                                                                'Menu: "${this._menu.getTitle}" has been added to your basket!',
+                                                                style: GoogleFonts.montserrat()
+                                                            ),
+                                                            duration: new Duration(seconds: 1),
+                                                        ))
+                                                    },
+                                                    label: new Text(
+                                                        'Add to basket',
+                                                        style: GoogleFonts.montserrat(
+                                                            color: Colors.black,
+                                                        ),
+                                                    ),
+                                                    icon: new Icon(
+                                                        Icons.shopping_basket,
+                                                        color: Colors.black,
+                                                    ),
+                                                ),
+                                            ),
+                                        ],
+                                    ),
+                                ],
+                            ),
                     ),
                 ),
-            ],
-        );
-    }
-
-    ExpansionPanel _buildPanel(final Menu menu) {
-        return new ExpansionPanel(
-            headerBuilder: (BuildContext context, bool isExpanded) {
-                return new ListTile(
-                    title: new Text(
-                        '${menu.getTitle} ${menu.getIndex + 1 ?? ''}',
-                        style: GoogleFonts.montserrat(
-                            color: Colors.black,
-                        ),
-                    ),
-                );
-            },
-            isExpanded: menu.getExpanded,  
-            body: this._buildPanelBody(menu)
-        );
-    }
-
-    Widget _buildPanelBody(final Menu menu) {
-        return new Padding(
-            padding: new EdgeInsets.only(right: 20.0, left: 20.0, bottom: 20.0),
-            child: new Column(
-                children: <Widget>[
-                    new Row(
-                        children: <Widget>[
-                            new Column(
-                                children: <Widget>[
-                                    new Text(
-                                        menu.getAppetizer,
-                                        style: GoogleFonts.montserrat(
-                                            color: Colors.black,
-                                        ),
-                                    ),
-                                ],
-                            ),
-                        ],
-                    ),
-                    new Row(
-                        children: <Widget>[
-                            new Column(
-                                children: <Widget>[
-                                    new Text(
-                                        menu.getMainCourse,
-                                        style: GoogleFonts.montserrat(
-                                            color: Colors.black,
-                                        ),
-                                    ),
-                                ],
-                            ),
-                        ],
-                    ),
-                    new Row(
-                        children: <Widget>[
-                            new Text(
-                                menu.getDessert,
-                                style: GoogleFonts.montserrat(
-                                    color: Colors.black,
-                                ),
-                            ),
-                        ],
-                    ),
-                    new Divider(
-                        thickness: 0.75,
-                        color: Colors.black
-                    ),
-                    new Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                            new Container(
-                                margin: new EdgeInsets.only(top: 5.0),
-                                child: new Row(
-                                    children: <Widget>[
-                                        new Text(
-                                            '${menu.getPrice.toStringAsFixed(2)} €',
-                                            style: GoogleFonts.montserrat(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.w500
-                                            ),
-                                        ),
-                                    ],
-                                ),
-                            ),
-                        ],
-                    ),
-                    new Container(
-                        alignment: Alignment.center,
-                        margin: new EdgeInsets.only(top: 10.0),
-                        child: new FlatButton.icon(
-                            onPressed: () => {
-                                this._shoppingBasketController.appendMenuToBasket(menu),
-                                Scaffold.of(context).showSnackBar(new SnackBar(
-                                    content: new Text(
-                                        'Menu: "${menu.getTitle}" has been added to your basket!',
-                                        style: GoogleFonts.montserrat()
-                                    ),
-                                    duration: new Duration(seconds: 1),
-                                ))
-                            },
-                            label: new Text(
-                                'Add to basket',
-                                style: GoogleFonts.montserrat(
-                                    color: new Color(0xFF008C78),
-                                ),
-                            ),
-                            icon: new Icon(
-                                Icons.shopping_basket,
-                                color: new Color(0xFF008C78),
-                            ),
-                        ),
-                    ),
-                ],
             ),
         );
     }

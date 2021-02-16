@@ -13,11 +13,20 @@ class _MenuViewState extends State<MenuView> {
     @override
     Widget build(BuildContext context) {
         return new Scaffold(
-            body: ListView.builder(
-                itemCount: this._menuController.getMenus().length,
-                itemBuilder: (BuildContext context, int index)
-                    => new MenuPanel((this._menuController.getMenus()[index])),
-            )
+            body: new Container(
+                decoration: new BoxDecoration(
+                    image: new DecorationImage(
+                        image: new AssetImage('lib/styles/images/LoginBackground.png'),
+                        fit: BoxFit.cover,
+                    ),
+                ),
+                padding: EdgeInsets.all(5.0),
+                child: new ListView.builder(
+                    itemCount: this._menuController.getMenus().length,
+                    itemBuilder: (BuildContext context, int index)
+                        => new MenuPanel((this._menuController.getMenus()[index])),
+                ),
+            ),
         );
     }
 }

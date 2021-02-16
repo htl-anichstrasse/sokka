@@ -4,12 +4,25 @@ class CookieStorage {
     static CookieStorage _instance = new CookieStorage.internal();
     factory CookieStorage() => _instance;
 
+    Map<String, String> _cookieCache = new Map<String, String>();
+
     static const TOKEN_STRING = 'token';
     static const EMAIL_STRING = 'email';
+
+    void initializeCache() {
+        (() async {
+            this._cookieCache[TOKEN_STRING] = await this.getSessionToken();
+            this._cookieCache[EMAIL_STRING] = await this.getEmail();
+        })();
+    }
 
     Future<String> getSessionToken() async {
         final SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
         return sharedPrefs.getString(CookieStorage.TOKEN_STRING);
+    }
+
+    String getSessionTokenSync() {
+        return this._cookieCache[TOKEN_STRING];
     }
 
     void storeSessionToken(final String token) async {
@@ -20,6 +33,10 @@ class CookieStorage {
     Future<String> getEmail() async {
         final SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
         return sharedPrefs.getString(CookieStorage.EMAIL_STRING);
+    }
+
+    String getEmailSync() {
+        return this._cookieCache[EMAIL_STRING];
     }
 
     void storeEmail(final String email) async {

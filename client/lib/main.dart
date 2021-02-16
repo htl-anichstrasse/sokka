@@ -14,11 +14,12 @@ class Sokka extends StatelessWidget {
     @override
     Widget build(BuildContext context) {
         SystemChrome.setEnabledSystemUIOverlays([]);
+        
         return new FutureBuilder(
             future: this._userAuth.validateSession(),
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                 if (snapshot.hasData) {
-                    return new MaterialApp(
+                    return new MaterialApp( 
                         debugShowCheckedModeBanner: true,
                         theme: AppThemes.getDarkModeAppTheme,
                         initialRoute: snapshot.data ? '/' : '/login',
@@ -37,4 +38,3 @@ class Sokka extends StatelessWidget {
         );
     }
 }
-
