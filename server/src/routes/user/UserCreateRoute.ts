@@ -20,7 +20,7 @@ class UserCreateRoute extends Route {
             windowMs: 30 * 60 * 1000, // 30 minutes
             max: 5,
             handler: (req, res) => {
-                res.header({ "Content-Type": "application/json" });
+                res.set('Content-Type', 'application/json');
                 res.send({ success: false, message: 'Too many created accounts, please try again later' });
             }
         });
