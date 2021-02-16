@@ -1,10 +1,10 @@
 import * as bcrypt from 'bcrypt';
 import { Request, Response, Router } from 'express';
-import rateLimit = require('express-rate-limit');
 import ACPSession from '../../models/acp/ACPSession';
 import ACPUser from '../../models/acp/ACPUser';
 import Route from '../../Route';
 import { NeedsProperties } from '../RouteAnnotations';
+import rateLimit = require('express-rate-limit');
 
 class ACPLoginRoute extends Route {
     readonly router: Router;
@@ -17,7 +17,9 @@ class ACPLoginRoute extends Route {
         const loginLimiter = rateLimit({
             windowMs: 1 * 1000 * 60, // 5 minutes
             max: 5,
-            message: `{ success: false, message: 'Too many failed login attempts, please try again later' }`
+            handler: (req, res) => {
+                res.send({ success: false, message: 'Too many failed login attempts, please try again later' });
+            }
         });
         this.router.post('/login', loginLimiter, this.post.bind(this));
     }
