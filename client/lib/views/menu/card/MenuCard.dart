@@ -83,7 +83,7 @@ class _MenuCardState extends State<MenuCard> {
                                             new SizedBox(
                                                 width: MediaQuery.of(context).size.width * 0.45,
                                                 child: new Image(
-                                                    image: new AssetImage('lib/styles/images/SadSokka.png'),
+                                                    image: this._menu.getImage,
                                                 )
                                             ),
                                         ],

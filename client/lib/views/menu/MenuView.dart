@@ -1,5 +1,5 @@
 import 'package:client/util/MenuController.dart';
-import 'package:client/views/menu/panel/MenuPanel.dart';
+import 'package:client/views/menu/card/MenuCard.dart';
 import 'package:flutter/material.dart';
 
 class MenuView extends StatefulWidget {
@@ -24,7 +24,7 @@ class _MenuViewState extends State<MenuView> {
                 child: new ListView.builder(
                     itemCount: this._menuController.getMenus().length,
                     itemBuilder: (BuildContext context, int index)
-                        => new MenuPanel((this._menuController.getMenus()[index])),
+                        => new MenuCard((this._menuController.getMenus()[index])),
                 ),
             ),
         );

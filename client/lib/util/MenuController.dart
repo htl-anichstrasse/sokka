@@ -1,12 +1,13 @@
 import 'package:client/models/Menu.dart';
+import 'package:flutter/material.dart';
 
 class MenuController {
     static MenuController _instance = new MenuController.internal();
     factory MenuController() => _instance;
     
     List<Menu> _menus = [
-        new Menu(0, 'Veggie', ['Green salad', 'Spring rolls', 'Vanilla muffin'], 4.50),
-        new Menu(1, 'Meat Love', ['Chicken soup with croutons', 'Meat loaf', 'Chocolate molten lava cake'], 5.50),
+        new Menu(0, 'Veggie', ['Green salad', 'Spring rolls', 'Vanilla muffin'], new AssetImage('lib/styles/images/SadSokka.png'), 4.50),
+        new Menu(1, 'Meat Love', ['Chicken soup with croutons', 'Meat loaf', 'Chocolate molten lava cake'], new AssetImage('lib/styles/images/SadSokka.png'), 5.50),
     ];
 
     List<Menu> getMenus() {
