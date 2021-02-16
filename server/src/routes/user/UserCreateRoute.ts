@@ -19,9 +19,11 @@ class UserCreateRoute extends Route {
         const signupLimiter = rateLimit({
             windowMs: 30 * 60 * 1000, // 30 minutes
             max: 5,
-            message: `{ success: false, message: 'Too many created accounts, please try again later' }`
+            handler: (req, res) => {
+                res.send({ success: false, message: 'Too many created accounts, please try again later' });
+            }
         });
-        this.router.post('/create', this.post.bind(this), signupLimiter);
+        this.router.post('/create', signupLimiter, this.post.bind(this));
     }
 
     @NeedsProperties({ email: 'string', password: 'string', tos: 'boolean', privacypolicy: 'boolean' })
