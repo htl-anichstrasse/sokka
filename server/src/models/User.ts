@@ -17,7 +17,7 @@ class User implements Model {
         if (result.length === 0) {
             throw new Error('User not found');
         }
-        return new User(result[0].id, result[0].email, result[0].verified, result[0].group_id, result[0].pwhash, result[0].timestamp)l;
+        return new User(result[0].id, result[0].email, result[0].verified, result[0].group_id, result[0].pwhash, result[0].timestamp);
     }
 
     static async getByEmail(email: string): Promise<User> {
