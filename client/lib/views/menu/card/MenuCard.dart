@@ -73,7 +73,7 @@ class _MenuCardState extends State<MenuCard> {
                                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                                 children: <Widget>[
                                                                     for (String item in this._menu.getEntries)
-                                                                        this._createItemContainer(item),                                                                                
+                                                                        this._createItemContainer(item),
                                                                 ],
                                                             ),
                                                         ),
