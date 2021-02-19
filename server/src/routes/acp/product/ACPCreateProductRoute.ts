@@ -15,10 +15,10 @@ class ACPCreateProductRoute extends Route {
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)
-    @NeedsProperties({ name: 'string', category_id: 'number', image: 'Blob', price: 'number', hidden: 'boolean' })
+    @NeedsProperties({ name: 'string', category_id: 'number', image_id: 'string', price: 'number', hidden: 'boolean' })
     private async post(req: Request, res: Response): Promise<void> {
         try {
-            let product = await Product.create(req.body.category_id, req.body.name, req.body.image, req.body.price, req.body.hidden);
+            let product = await Product.create(req.body.category_id, req.body.name, req.body.image_id, req.body.price, req.body.hidden);
             res.send({ success: true, message: `Successfully created product with id '${product.id}'` });
         } catch (err) {
             res.status(500);

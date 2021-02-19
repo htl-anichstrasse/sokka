@@ -18,10 +18,14 @@ class GetProductRoute extends Route {
     private async get(req: Request, res: Response): Promise<void> {
         let products;
         const id = parseInt(String(req.query.id));
-        if (!isNaN(id)) {
-            products = [await Product.get(id)];
-        } else {
-            products = await Product.getAll();
+        try {
+            if (!isNaN(id)) {
+                products = [await Product.get(id)];
+            } else {
+                products = await Product.getAll();
+            }
+        } catch (err) {
+            products = []; // no products found
         }
         for (let i = 0; i < products.length; i++) {
             products[i]['category'] = await products[i].getCategory();

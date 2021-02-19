@@ -9,6 +9,8 @@ import FourZeroFour from './pages/FourZeroFour';
 import GroupsPage from './pages/groups/GroupsPage';
 import HomePage from './pages/HomePage';
 import MenusPage from './pages/menus/MenusPage';
+import AddProductPage from './pages/products/AddProductPage';
+import EditProductPage from './pages/products/EditProductPage';
 import ProductsPage from './pages/products/ProductsPage';
 import UsersPage from './pages/users/UsersPage';
 import { sendRequest } from './Util';
@@ -40,6 +42,8 @@ function App() {
           <Route path="/" exact component={HomePage} />
           <Route path="/config" exact component={ConfigPage} />
           <Route path="/products" exact component={ProductsPage} />
+          <Route path="/products/add" exact component={AddProductPage} />
+          <Route path="/products/:id" exact component={EditProductPage} />
           <Route path="/menus" exact component={MenusPage} />
           <Route path="/groups" exact component={GroupsPage} />
           <Route path="/users" exact component={UsersPage} />

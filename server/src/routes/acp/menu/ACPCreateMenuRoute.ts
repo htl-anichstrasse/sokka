@@ -15,10 +15,10 @@ class ACPCreateMenuRoute extends Route {
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)
-    @NeedsProperties({ name: 'string', category_id: 'number', image: 'Blob', price: 'number' })
+    @NeedsProperties({ name: 'string', category_id: 'number', image_id: 'string', price: 'number' })
     private async post(req: Request, res: Response): Promise<void> {
         try {
-            let menu = await Menu.create(req.body.category_id, req.body.name, req.body.image, req.body.price);
+            let menu = await Menu.create(req.body.category_id, req.body.name, req.body.image_id, req.body.price);
             res.send({ success: true, message: `Successfully created menu with id '${menu.id}'` });
         } catch (err) {
             res.status(500);

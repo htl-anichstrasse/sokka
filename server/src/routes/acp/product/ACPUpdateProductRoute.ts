@@ -15,9 +15,9 @@ class ACPUpdateProductRoute extends Route {
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)
-    @NeedsProperties({ id: 'number' })
+    @NeedsProperties({ id: 'number' }, false, true)
     private async post(req: Request, res: Response): Promise<void> {
-        let product;
+        let product: Product;
         try {
             product = await Product.get(req.body.id);
             if (!product) {
@@ -34,8 +34,8 @@ class ACPUpdateProductRoute extends Route {
         if (req.body.name) {
             product.name = req.body.name;
         }
-        if (req.body.image) {
-            product.image = req.body.image;
+        if (req.body.image_id) {
+            product.image_id = req.body.image_id;
         }
         if (req.body.price) {
             product.price = req.body.price;

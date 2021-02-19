@@ -4,23 +4,23 @@ import MenuCategory from "./MenuCategory";
 import MenuTitle from "./MenuTitle";
 
 class Menu implements Model {
-    private constructor(readonly id: number, public category_id: number, public name: string, public image: Blob, public price: number) { }
+    private constructor(readonly id: number, public category_id: number, public name: string, public image_id: string, public price: number) { }
 
-    static async create(category_id: number, name: string, image: Blob, price: number) {
-        let result = await Database.instance.query(`INSERT INTO sokka_menus (category_id, name, image, price) VALUES (?, ?, ?, ?, ?)`, [name, category_id, image, price]);
-        return new Menu(result.insertId, category_id, name, image, price);
+    static async create(category_id: number, name: string, image_id: string, price: number) {
+        let result = await Database.instance.query(`INSERT INTO sokka_menus (category_id, name, image_id, price) VALUES (?, ?, ?, ?, ?)`, [name, category_id, image_id, price]);
+        return new Menu(result.insertId, category_id, name, image_id, price);
     }
 
     static async get(id: number): Promise<Menu> {
         let result = await Database.instance.query('SELECT * FROM sokka_menus WHERE id = ?;', [id]);
-        return result.length > 0 ? new Menu(result[0].id, result[0].category_id, result[0].name, result[0].image, result[0].price) : null;
+        return result.length > 0 ? new Menu(result[0].id, result[0].category_id, result[0].name, result[0].image_id, result[0].price) : null;
     }
 
     static async getAll(): Promise<Menu[]> {
         let result = await Database.instance.query('SELECT * FROM sokka_menus;');
         let menus = [];
         for (let menu of result) {
-            menus.push(new Menu(menu.id, menu.category_id, menu.name, menu.image, menu.price));
+            menus.push(new Menu(menu.id, menu.category_id, menu.name, menu.image_id, menu.price));
         }
         return menus;
     }
@@ -43,7 +43,7 @@ class Menu implements Model {
     }
 
     async update(): Promise<void> {
-        await Database.instance.query('UPDATE sokka_menus SET category_id = ?, name = ?, image = ?, price = ? WHERE id = ?;', [this.category_id, this.name, this.image, this.price, this.id]);
+        await Database.instance.query('UPDATE sokka_menus SET category_id = ?, name = ?, image_id = ?, price = ? WHERE id = ?;', [this.category_id, this.name, this.image_id, this.price, this.id]);
     }
 }
 

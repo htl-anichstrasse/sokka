@@ -17,7 +17,17 @@ class ACPGetProductRoute extends Route {
     @NeedsAuthorization(AuthorizationType.ACP)
     private async get(req: Request, res: Response): Promise<void> {
         try {
-            let products = await Product.getAll();
+            let products;
+            const id = parseInt(String(req.query.id));
+            try {
+                if (!isNaN(id)) {
+                    products = [await Product.get(id)];
+                } else {
+                    products = await Product.getAll();
+                }
+            } catch (err) {
+                products = []; // no products found
+            }
             res.send({ success: true, products: products });
         } catch (err) {
             this.logger.error(err);
