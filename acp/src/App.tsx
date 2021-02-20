@@ -9,6 +9,7 @@ import FourZeroFour from './pages/FourZeroFour';
 import GroupsPage from './pages/groups/GroupsPage';
 import HomePage from './pages/HomePage';
 import MenusPage from './pages/menus/MenusPage';
+import OrdersPage from './pages/OrdersPage';
 import AddProductPage from './pages/products/AddProductPage';
 import EditProductPage from './pages/products/EditProductPage';
 import ProductsPage from './pages/products/ProductsPage';
@@ -47,6 +48,7 @@ function App() {
           <Route path="/menus" exact component={MenusPage} />
           <Route path="/groups" exact component={GroupsPage} />
           <Route path="/users" exact component={UsersPage} />
+          <Route path="/orders" exact component={OrdersPage} />
           <Route path="**" component={FourZeroFour} />
         </Switch>
       </Router>
