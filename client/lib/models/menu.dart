@@ -11,7 +11,7 @@ class Menu implements Orderable {
 
     List<String> _entries = new List<String>();
     List<String> get getEntries => this._entries;
-    set setEtnries(final List<String> entries) => this._entries = entries;
+    set setEntries(final List<String> entries) => this._entries = entries;
 
     double _price;
     double get getPrice => this._price;
