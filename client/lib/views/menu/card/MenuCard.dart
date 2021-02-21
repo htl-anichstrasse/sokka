@@ -60,7 +60,7 @@ class _MenuCardState extends State<MenuCard> {
                                                     children: <Widget>[
                                                         new ListTile(
                                                             title: new Text(
-                                                                this._menu.getTitle,
+                                                                this._menu.getName,
                                                                 style: GoogleFonts.montserrat(
                                                                     color: Colors.black,
                                                                     fontSize: 18.0,
@@ -104,7 +104,7 @@ class _MenuCardState extends State<MenuCard> {
                                                         this._shoppingBasketController.appendMenuToBasket(this._menu),
                                                         Scaffold.of(context).showSnackBar(new SnackBar(
                                                             content: new Text(
-                                                                'Menu: "${this._menu.getTitle}" has been added to your basket!',
+                                                                'Menu: "${this._menu.getName}" has been added to your basket!',
                                                                 style: GoogleFonts.montserrat()
                                                             ),
                                                             duration: new Duration(seconds: 1),

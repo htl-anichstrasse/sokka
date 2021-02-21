@@ -6,8 +6,9 @@ class MenuController {
     factory MenuController() => _instance;
     
     List<Menu> _menus = [
-        new Menu(0, 'Veggie', ['Green salad', 'Spring rolls', 'Vanilla muffin'], new AssetImage('lib/styles/images/SadSokka.png'), 4.50),
-        new Menu(1, 'Meat Love', ['Chicken soup with croutons', 'Meat loaf', 'Chocolate molten lava cake'], new AssetImage('lib/styles/images/SadSokka.png'), 5.50),
+        new Menu('Veggie', ['Green salad', 'Spring rolls', 'Vanilla muffin'], new AssetImage('lib/styles/images/SadSokka.png'), 4.50),
+        new Menu('Meat Love', ['Chicken soup with croutons', 'Meat loaf', 'Chocolate molten lava cake'], new AssetImage('lib/styles/images/SadSokka.png'), 5.50),
+        new Menu('Meat Love', ['Chicken soup with croutons', 'Meat loaf', 'Chocolate molten lava cake'], new AssetImage('lib/styles/images/SadSokka.png'), 5.50),
     ];
 
     List<Menu> getMenus() {
