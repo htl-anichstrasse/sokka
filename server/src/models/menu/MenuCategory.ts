@@ -9,7 +9,7 @@ class MenuCategory implements Model {
     }
 
     static async getAll(): Promise<MenuCategory[]> {
-        let result = await Database.instance.query('SELECT * FROM sokka_menus_categories;');
+        let result = await Database.instance.query('SELECT * FROM sokka_menu_categories;');
         let menuCategories = [];
         for (let menuCategory of result) {
             menuCategories.push(new MenuCategory(menuCategory.id, menuCategory.name));

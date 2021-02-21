@@ -2,6 +2,6 @@ declare class Menu {
     id: number
     category_id: number
     name: string
-    image: { data, type }
+    image_id: string
     price: number
 }

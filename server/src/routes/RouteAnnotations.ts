@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import ACPSession from "../models/acp/ACPSession";
 import ACPUser from "../models/acp/ACPUser";
-import User from "../models/User";
 import Session from "../models/Session";
+import User from "../models/User";
 
 export enum AuthorizationType {
     ACP,
@@ -69,15 +69,16 @@ export function NeedsAuthorization(authorizationType: AuthorizationType) {
  * 
  * @param properties the needed properties in the format { <propertyName>: <propertyType: string>, ... }
  * @param useQuery if the properties in the req.query object should be checked instead of body parameters (no type checking!)
+ * @param ignoreLength if the check should check the request length
  */
-export function NeedsProperties(properties: any, useQuery?: boolean) {
+export function NeedsProperties(properties: any, useQuery?: boolean, ignoreLength?: boolean) {
     return (target, propertyKey, descriptor) => {
         const originalFunction = descriptor.value;
         descriptor.value = async function (req: Request, res: Response) {
             const checkObject = useQuery ? req.query : req.body;
             for (let property of Object.keys(properties)) {
-                if (Object.keys(properties).length !== Object.keys(checkObject).length
-                    || !checkObject[property]
+                if ((Object.keys(properties).length !== Object.keys(checkObject).length && !ignoreLength)
+                    || checkObject[property] == undefined
                     || (!useQuery && typeof checkObject[property] !== properties[property])) {
                     res.status(400);
                     res.send({ success: false, message: 'Invalid parameters' });

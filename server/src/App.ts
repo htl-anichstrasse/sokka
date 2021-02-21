@@ -6,6 +6,7 @@ import Database from './Database';
 import * as routes from './routes';
 import cors = require('cors');
 import bearerToken = require('express-bearer-token');
+import Images from './Images';
 
 class App {
     server: Server;
@@ -24,8 +25,7 @@ class App {
                 { from: 500, to: 599, level: 'error' }
             ]
         }));
-        this.express.use(bodyParser.json());
-        this.express.use(bodyParser.urlencoded({ extended: false }));
+        this.express.use(bodyParser.json({ limit: '1mb' }));
 
         // Allow CORS
         this.express.use(cors());
@@ -46,6 +46,7 @@ class App {
 
         // Initialize database
         Database.create().then(() => {
+            Images.create();
             this.logger.info('Sokka ready to rumble!');
         });
     }

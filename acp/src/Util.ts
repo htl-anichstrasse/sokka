@@ -2,6 +2,10 @@ import Axios, { AxiosResponse } from "axios";
 import Cookies from "universal-cookie";
 const debug = true;
 
+function getBaseURL() {
+    return `${isDebug() ? 'http://localhost:3001' : 'https://api.sokka.me'}`;
+}
+
 function animateCSS(node: HTMLElement, animation: string, prefix = 'animate__'): Promise<void> {
     return new Promise((resolve, reject) => {
         const animationName = `${prefix}${animation}`;
@@ -23,9 +27,10 @@ function sendRequest(node: string, reqMethod: "GET" | "POST", authNeeded: boolea
             reject('Auth token or username not available');
             return;
         }
-        let reqHeaders = authNeeded ? { 'Authorization': `Bearer ${btoa(username + ':' + bearer)}` } : {};
+        let defaultHeaders = { 'Content-Type': 'application/json' };
+        let reqHeaders = authNeeded ? { 'Authorization': `Bearer ${btoa(username + ':' + bearer)}`, ...defaultHeaders } : defaultHeaders;
         Axios({
-            url: `${isDebug() ? 'http://localhost:3001' : 'https://api.sokka.me'}${node}`,
+            url: `${getBaseURL()}${node}`,
             method: reqMethod,
             headers: reqHeaders,
             data: reqData
@@ -48,5 +53,5 @@ function isDebug(): boolean {
     return debug;
 }
 
-export { animateCSS, sendRequest };
+export { getBaseURL, animateCSS, sendRequest };
 

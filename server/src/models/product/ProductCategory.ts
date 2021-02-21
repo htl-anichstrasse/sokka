@@ -5,11 +5,14 @@ class ProductCategory implements Model {
 
     static async get(id: number): Promise<ProductCategory> {
         let result = await Database.instance.query('SELECT * FROM sokka_product_categories WHERE id = ?;', [id]);
-        return result.length > 0 ? new ProductCategory(result[0].id, result[0].name) : null;
+        if (result.length == 0) {
+            throw new Error('ProductCategory not found');
+        }
+        return new ProductCategory(result[0].id, result[0].name);
     }
 
     static async getAll(): Promise<ProductCategory[]> {
-        let result = await Database.instance.query('SELECT * FROM sokka_menus_categories;');
+        let result = await Database.instance.query('SELECT * FROM sokka_product_categories;');
         let productCategories = [];
         for (let productCategory of result) {
             productCategories.push(new ProductCategory(productCategory.id, productCategory.name));

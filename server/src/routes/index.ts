@@ -1,3 +1,4 @@
+export { default as ACPImageRoute } from './acp/ACPImageRoute';
 export { default as ACPLoginRoute } from './acp/ACPLoginRoute';
 export { default as ACPLogoutRoute } from './acp/ACPLogoutRoute';
 export { default as ACPCreateUserRoute } from './acp/acpuser/ACPCreateUserRoute';
@@ -24,6 +25,7 @@ export { default as ACPGetProductCategoryRoute } from './acp/product/category/AC
 export { default as ACPDeleteUserRoute } from './acp/user/ACPDeleteUserRoute';
 export { default as ACPGetUserRoute } from './acp/user/ACPGetUserRoute';
 export { default as ACPUpdateUserRoute } from './acp/user/ACPUpdateUserRoute';
+export { default as ImageRoute } from './ImageRoute';
 export { default as GetMenuRoute } from './menu/GetMenuRoute';
 export { default as GetMenuTitleROute } from './menu/GetMenuTitleRoute';
 export { default as GetProductRoute } from './product/GetProductRoute';

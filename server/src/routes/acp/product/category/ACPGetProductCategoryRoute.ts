@@ -17,9 +17,18 @@ class ACPGetProductCategory extends Route {
     @NeedsAuthorization(AuthorizationType.ACP)
     private async get(req: Request, res: Response): Promise<void> {
         try {
-            let productcategories = await ProductCategory.getAll();
+            let productcategories;
+            if (req.query.id) {
+                productcategories = await ProductCategory.get(parseInt(String(req.query.id)));
+            } else {
+                productcategories = await ProductCategory.getAll();
+            }
             res.send({ success: true, productcategories: productcategories });
         } catch (err) {
+            if (err.message === 'ProductCategory not found') {
+                res.send({ success: false, message: err.message });
+                return;
+            }
             this.logger.error(err);
             res.status(500);
             res.send({ success: false, message: 'An unknown error occurred while fetching product categories' });

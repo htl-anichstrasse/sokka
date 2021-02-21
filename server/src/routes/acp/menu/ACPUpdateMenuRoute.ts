@@ -34,8 +34,8 @@ class ACPUpdateMenuRoute extends Route {
         if (req.body.name) {
             menu.name = req.body.name;
         }
-        if (req.body.image) {
-            menu.image = req.body.image;
+        if (req.body.image_id) {
+            menu.image_id = req.body.image_id;
         }
         if (req.body.price) {
             menu.price = req.body.price;

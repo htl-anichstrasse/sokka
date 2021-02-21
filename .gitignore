@@ -8,3 +8,5 @@ proxy.conf/
 vhost.conf/
 # fallback configuration
 default/site.conf
+# debug images
+server/images

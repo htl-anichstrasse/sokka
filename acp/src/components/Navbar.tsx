@@ -13,7 +13,8 @@ const items = [
     { link: '/products', label: 'Products' },
     { link: '/menus', label: 'Menus' },
     { link: '/users', label: 'Users' },
-    { link: '/groups', label: 'Groups' }
+    { link: '/groups', label: 'Groups' },
+    { link: '/orders', label: 'Orders' }
 ];
 const configItem = { link: '/config', label: (<i className="fa fa-lg fa-cogs" aria-hidden="true"></i>), alternateLabel: 'Config' };
 
