@@ -1,4 +1,5 @@
 import 'package:client/models/Menu.dart';
+import 'package:client/models/MenuEntry.dart';
 import 'package:client/models/Product.dart';
 import 'package:client/services/BearerAuth.dart';
 import 'package:client/util/MenuController.dart';
@@ -16,19 +17,12 @@ class FetchOrderables {
     static const PRODUCT_ROUTE = 'https://api.sokka.me/product/get';
     static const IMAGE_ROUTE = 'https://api.sokka.me/image';
 
-    final List<Menu> _menus = new List<Menu>();
-    Menu _menu;
-
-    void initializeMenus() {
-        (() async {
-            this._menu = await this.getMenu(1);
-            
-        })();
-        this._menuController.appendToMenus(this._menu);
+    Future<void> initializeMenus() async{
+        await this.appendMenus();
     }
 
-    void initializeProducts() {
-
+    Future<void> initializeProducts() async {
+        await this.appendProducts();
     }
 
     Future<int> getAmountOfMenus() async {
@@ -42,25 +36,39 @@ class FetchOrderables {
         return response['data'].length;
     }
 
-    Future<Menu> getMenu(final int menuID) async {
-        final auth = this._bearerAuth.createBearerAuthToken();
-        print(auth);
+    Future<int> getAmountOfProducts() async {
         final response = await this._networkWrapper
             .get(
-                '$MENU_ROUTE?id=$menuID',
+                PRODUCT_ROUTE,
+                headers: {
+                    'Authorization': this._bearerAuth.createBearerAuthToken()
+                }
+            );
+        return response['data'].length;
+    }
+
+    Future<void> appendMenus() async {
+        final auth = this._bearerAuth.createBearerAuthToken();
+        final response = await this._networkWrapper
+            .get(
+                '$MENU_ROUTE',
                 headers: {
                     'Authorization': auth
                 },
             );
-        final data = response['data'][0];
+        final data = response['data'];
 
-        final List<String> products = [];
-        for (var element in data['entries']) {
-            final productName = await this.getProductName(element['id']);
-            products.add(productName);
+        for (var i = 0; i < data.length; i++) {
+            var menu = data[i];
+            List<MenuEntry> entries = new List<MenuEntry>();
+            for (var entry in data[i]['entries']) {
+                entries.add(new MenuEntry(titleID: entry['title_id'], menuID: entry['menu_id'],
+                    product: await this.getProduct(entry['product_id'])));
+            }
+            this._menuController.appendToMenus(new Menu(name: menu['name'], entries: entries,
+                image: await this.getImage(menu['image_id']), price: menu['price'].toDouble(),
+                isHidden: menu['hidden'] == 1));
         }
-        
-        return new Menu(data['name'], products, new AssetImage('lib/styles/images/SadSokka.png'), data['price'].toDouble());;
     }
 
     Future<String> getProductName(final int productID) async {
@@ -71,7 +79,40 @@ class FetchOrderables {
                     'Authorization': this._bearerAuth.createBearerAuthToken(),
                 },
             );
+        return response['data'].where((product) => product['id'] == productID)['name'];
+    }
 
-        return response['data'][0]['name'];
+    Future<void> appendProducts() async {
+        final response = await this._networkWrapper
+            .get(
+                '$PRODUCT_ROUTE',
+                headers: {
+                    'Authorization': this._bearerAuth.createBearerAuthToken(),
+                },
+            );
+        final data = response['data'];
+
+        for (var product in data) {
+            this._productController.appendToProducts(new Product(name: product['name'], price: product['price'].toDouble(),
+                image: await this.getImage(product['image_id']), isHidden: product['hidden'] == 1));
+        }
+    }
+
+    Future<Product> getProduct(final int productID) async {
+        final response = await this._networkWrapper
+            .get(
+                '$PRODUCT_ROUTE?id=$productID',
+                headers: {
+                    'Authorization': this._bearerAuth.createBearerAuthToken(),
+                },
+            );
+        final data = response['data'].where((product) => product['id'] == productID).toList()[0];
+
+        return new Product(name: data['name'], price: data['price'].toDouble(),
+            image: await this.getImage(data['image_id']), isHidden: data['hidden'] == 1);
+    }
+
+    Future<NetworkImage> getImage(final String imageID) async {
+        return new NetworkImage('$IMAGE_ROUTE?id=$imageID');
     }
 }

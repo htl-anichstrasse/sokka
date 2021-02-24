@@ -121,7 +121,7 @@ class _BasketViewState extends State<BasketView> {
                         this._updateTotalPrice(),
                         Scaffold.of(context).showSnackBar(new SnackBar(
                                 content: new Text(
-                                    '${this._shoppingBasketController.getBasket()[index].getTitle} has been removed from your basket',
+                                    '${this._shoppingBasketController.getBasket()[index].getName} has been removed from your basket',
                                     style: GoogleFonts.montserrat(),
                                 ),
                             ),
@@ -133,7 +133,7 @@ class _BasketViewState extends State<BasketView> {
                                 ? Icon(Icons.restaurant_menu)
                                 : Icon(Icons.fastfood),
                             title: new Text(
-                                '${this._shoppingBasketController.getBasket()[index].getTitle}',
+                                '${this._shoppingBasketController.getBasket()[index].getName}',
                                 style: GoogleFonts.montserrat(
                                     color: Colors.black,
                                 ),

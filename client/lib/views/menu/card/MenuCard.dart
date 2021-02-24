@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:client/models/MenuEntry.dart';
 import 'package:flutter/material.dart';
 import 'package:client/models/Menu.dart';
 import 'package:client/util/ShoppingBasketController.dart';
@@ -72,8 +73,8 @@ class _MenuCardState extends State<MenuCard> {
                                                             child: new Column(
                                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                                 children: <Widget>[
-                                                                    for (String item in this._menu.getEntries)
-                                                                        this._createItemContainer(item),
+                                                                    for (MenuEntry entry in this._menu.getEntries)
+                                                                        this._createItemContainer(entry),
                                                                 ],
                                                             ),
                                                         ),
@@ -132,11 +133,11 @@ class _MenuCardState extends State<MenuCard> {
         );
     }
 
-    Widget _createItemContainer(final String item) {
+    Widget _createItemContainer(final MenuEntry entry) {
         return new Container(
             padding: EdgeInsets.only(bottom: 5.0),
             child: new Text(
-                item,
+                entry.getProduct.getName,
                 style: GoogleFonts.montserrat(
                     color: Colors.black,
                     fontSize: 14
