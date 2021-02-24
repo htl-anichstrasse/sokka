@@ -30,9 +30,6 @@ class GetProductRoute extends Route {
         for (let i = 0; i < products.length; i++) {
             products[i]['category'] = await products[i].getCategory();
             delete products[i]['category_id'];
-            if (Boolean(req.query.noimage) === true) {
-                delete products[i].image;
-            }
         }
         res.send({
             success: true,

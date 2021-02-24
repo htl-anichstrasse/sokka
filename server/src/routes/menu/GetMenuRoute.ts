@@ -27,8 +27,8 @@ class GetMenuRoute extends Route {
             menus[i]['category'] = await menus[i].getCategory();
             menus[i]['entries'] = await menus[i].getEntries();
             delete menus[i]['category_id'];
-            if (Boolean(req.query.noimage) === true) {
-                delete menus[i].image;
+            for (let j = 0; j < menus[i]['entries'].length; j++) {
+                delete menus[i]['entries'][j].id;
             }
         }
         res.send({
