@@ -25,8 +25,8 @@ class Menu implements Orderable {
     bool get isHidden => this._isHidden;
     set setIsHidden(final bool isHidden) => this._isHidden = isHidden;
 
-    Menu(final String name, final List<String> entries, 
-            final AssetImage image, final double price, { bool isHidden = false }) {
+    Menu({ final String name, final List<String> entries, 
+            final AssetImage image, final double price, bool isHidden = false }) {
         this._name = name;
         this._entries = entries;
         this._image = image;
