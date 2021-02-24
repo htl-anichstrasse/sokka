@@ -78,14 +78,30 @@ class _MenuCardState extends State<MenuCard> {
                                                                 ],
                                                             ),
                                                         ),
+                                                        new Padding(
+                                                            padding: new EdgeInsets.only(left: 30.0, top: 5.0),
+                                                            child: new Text(
+                                                                '${this._menu.getPrice.toStringAsFixed(2)} €',
+                                                                style: GoogleFonts.montserrat(
+                                                                    color: Colors.black,
+
+                                                                ),
+                                                            ),
+                                                        ),
                                                     ],
                                                 ),
                                             ),
                                             new SizedBox(
                                                 width: MediaQuery.of(context).size.width * 0.45,
-                                                child: new Image(
-                                                    image: this._menu.getImage,
-                                                )
+                                                child: new Padding(
+                                                    padding: new EdgeInsets.only(right: 12, top: 12),
+                                                    child: new ClipRRect(
+                                                        borderRadius: new BorderRadius.circular(10.0),
+                                                        child: new Image(
+                                                            image: this._menu.getImage
+                                                        ),
+                                                    ),
+                                                ),
                                             ),
                                         ],
                                     ),
@@ -99,7 +115,7 @@ class _MenuCardState extends State<MenuCard> {
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         children: <Widget>[
                                             new Container(
-                                                padding: EdgeInsets.only(left: 15.0, bottom: 5.0),
+                                                padding: new EdgeInsets.only(left: 25.0, bottom: 10.0, right: 25.0),
                                                 child: new FlatButton.icon(
                                                     onPressed: () => {
                                                         this._shoppingBasketController.appendMenuToBasket(this._menu),
@@ -115,6 +131,7 @@ class _MenuCardState extends State<MenuCard> {
                                                         'Add to basket',
                                                         style: GoogleFonts.montserrat(
                                                             color: Colors.black,
+                                                            fontSize: 14.0
                                                         ),
                                                     ),
                                                     icon: new Icon(

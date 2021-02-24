@@ -10,28 +10,27 @@ class ProductGrid extends StatefulWidget {
 
 class _ProductGridState extends State<ProductGrid> {
     final ProductController _productController = new ProductController();
-    final int _itemCount = 26;
 
     @override 
     Widget build(BuildContext context) {
         return new Scaffold(
-            body: new StaggeredGridView.countBuilder(
-                crossAxisCount: 4,
-                itemCount: this._itemCount,
-                itemBuilder: (BuildContext context, int index)
-                    => new Container(
-                        color: new Color(0xFFA7FFEB),
-                        child: new Center(
-                            child: new CircleAvatar(
-                                backgroundColor: new Color(0xFFFF6A00),
-                                child: new Text('${index + 1}')
-                            )
-                        ),
+            body: new Container(
+                decoration: new BoxDecoration(
+                    image: new DecorationImage(
+                        image: new AssetImage('lib/styles/images/LoginBackground.png'),
+                        fit: BoxFit.cover,
                     ),
-                staggeredTileBuilder: (int index)
-                    => new StaggeredTile.count(2, index.isEven ? 2 : 1),
-                mainAxisSpacing: 4.0,
-                crossAxisSpacing: 4.0,
+                ),
+                child: new StaggeredGridView.countBuilder(
+                    crossAxisCount: 4,
+                    itemCount: this._productController.getProducts().length,
+                    itemBuilder: (BuildContext context, int index)
+                        => new ProductTile(this._productController.getProducts()[index]),
+                    staggeredTileBuilder: (int index)
+                        => new StaggeredTile.count(2, index.isEven ? 3.3 : 3.3),
+                    mainAxisSpacing: 4.0,
+                    crossAxisSpacing: 4.0,
+                ),
             ),
         );
     }

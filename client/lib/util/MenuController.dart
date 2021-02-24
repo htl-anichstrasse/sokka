@@ -5,11 +5,7 @@ class MenuController {
     static MenuController _instance = new MenuController.internal();
     factory MenuController() => _instance;
     
-    List<Menu> _menus = [
-        // new Menu(name: 'Veggie', entries: ['Green salad', 'Spring rolls', 'Vanilla muffin'], image: new NetworkImage('https://api.sokka.me/image?id=c731451fba7a79bff570856d290ff01e'), price: 4.50),
-        //new Menu(name: 'Meat Love', entries: ['Chicken soup with croutons', 'Meat loaf', 'Chocolate molten lava cake'], image: new NetworkImage('https://api.sokka.me/image?id=c731451fba7a79bff570856d290ff01e'), price: 5.50),
-        //new Menu(name: 'Meat Love', entries: ['Chicken soup with croutons', 'Meat loaf', 'Chocolate molten lava cake'], image: new NetworkImage('https://api.sokka.me/image?id=c731451fba7a79bff570856d290ff01e'), price: 5.50),
-    ];
+    List<Menu> _menus = new List<Menu>();
 
     List<Menu> getMenus() {
         return this._menus;

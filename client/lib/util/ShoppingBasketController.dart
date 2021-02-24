@@ -5,7 +5,7 @@ class ShoppingBasketController {
     static ShoppingBasketController _instance = new ShoppingBasketController.internal();
     factory ShoppingBasketController() => _instance;
 
-    List _basket = [];
+    List<dynamic> _basket = new List<dynamic>();
 
     List getBasket() {
         return this._basket;
@@ -15,7 +15,7 @@ class ShoppingBasketController {
         this._basket.add(menu);
     }
 
-    void appendMealToBasket(final Product product) {
+    void appendProductToBasket(final Product product) {
         this._basket.add(product);
     }   
 

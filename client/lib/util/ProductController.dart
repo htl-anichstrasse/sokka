@@ -4,7 +4,7 @@ class ProductController {
     static ProductController _instance = new ProductController.internal();
     factory ProductController() => _instance;
 
-    List<Product> _products = [];
+    List<Product> _products = new List<Product>();
 
     List<Product> getProducts() {
         return this._products;
