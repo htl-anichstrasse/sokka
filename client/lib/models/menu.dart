@@ -21,8 +21,12 @@ class Menu implements Orderable {
     AssetImage get getImage => this._image;
     set setImage(final AssetImage image) => this._image = image;
 
+    bool _isHidden;
+    bool get isHidden => this._isHidden;
+    set setIsHidden(final bool isHidden) => this._isHidden = isHidden;
+
     Menu(final String name, final List<String> entries, 
-            final AssetImage image, final double price) {
+            final AssetImage image, final double price, { bool isHidden = false }) {
         this._name = name;
         this._entries = entries;
         this._image = image;

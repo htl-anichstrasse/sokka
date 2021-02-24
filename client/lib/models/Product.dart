@@ -15,11 +15,11 @@ class Product implements Orderable {
     set setPrice(final double price) => this._price = price;
 
     bool _isHidden;
-    bool get getIsHidden => this._isHidden;
+    bool get isHidden => this._isHidden;
     set setIsHidden(final bool isHidden) => this._isHidden = isHidden;
 
-    Product(final String name, final AssetImage image,
-            final double price, { bool isHidden = false }) {
+    Product(final String name, final double price, final AssetImage image,
+            { bool isHidden = false }) {
         this._name = name;
         this._image = image;
         this._price = price;

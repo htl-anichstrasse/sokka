@@ -4,4 +4,7 @@ abstract class Orderable {
 
     double get getPrice;
     set setPrice(final double price);
+
+    bool get isHidden;
+    set setIsHidden(final bool isHidden);
 }
