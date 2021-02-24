@@ -1,5 +1,4 @@
 import 'dart:ui' as UI;
-import 'package:client/services/BearerAuth.dart';
 import 'package:client/services/FetchOrderables.dart';
 import 'package:client/services/UserAuth.dart';
 import 'package:client/util/CookieStorage.dart';
@@ -21,7 +20,7 @@ class Sokka extends StatelessWidget {
         SystemChrome.setEnabledSystemUIOverlays([]);
         this._cookieStorage.initializeCache();
         this._fetchOrderables.initializeMenus();
-        
+
         return new FutureBuilder(
             future: this._userAuth.validateSession(),
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {

@@ -17,29 +17,19 @@ class FetchOrderables {
     static const IMAGE_ROUTE = 'https://api.sokka.me/image';
 
     final List<Menu> _menus = new List<Menu>();
+    Menu _menu;
 
     void initializeMenus() {
-        Menu menu;
         (() async {
-            menu = await this.getMenu(1);
+            this._menu = await this.getMenu(1);
+            
         })();
-        this._menuController.appendToMenus(menu);
+        this._menuController.appendToMenus(this._menu);
     }
 
     void initializeProducts() {
 
     }
-    /*
-    Future<Menu> constructAndAddMenu(final int menuID) async {
-        final String name = await this.getMenuName(menuID);
-        final productIDs = await this.getMenuProducts(menuID);
-        final products = [];
-        productIDs.forEach((id) => products.add(this.getProductName(id)));
-        final price = await this.getMenuPrice(menuID);
-        final image = null;
-        this._menus.add(new Menu(name, products, image, price));
-    }
-    */
 
     Future<int> getAmountOfMenus() async {
         final response = await this._networkWrapper
@@ -63,50 +53,16 @@ class FetchOrderables {
                 },
             );
         final data = response['data'][0];
-        // TODO: somehow get all the product names of a menu.
+
         final List<String> products = [];
-        return new Menu(data['name'], data['entries'], new AssetImage('lib/styles/images/SadSokka.png'), data['price']);
-    }
-
-    /*
-    Future<AssetImage> getImage(final int imageID) async {
-        final response = await this._networkWrapper
-            .get(
-                IMAGE_ROUTE,
-                headers: {} 
-            );
+        for (var element in data['entries']) {
+            final productName = await this.getProductName(element['id']);
+            products.add(productName);
+        }
         
-    }
-    */
-
-
-    /*
-    Future<double> getMenuPrice(final int menuID) async {
-        final response = await this._networkWrapper
-            .get(
-                '$MENU_ROUTE_NOIMAGE?id=$menuID',
-                headers: {
-                    'Authorization': this._bearerAuth.createBearerAuthToken(),
-                },
-            );
-        return response.body['data'][0]['price'];
+        return new Menu(data['name'], products, new AssetImage('lib/styles/images/SadSokka.png'), data['price'].toDouble());;
     }
 
-    Future<List<int>> getMenuProducts(final int menuID) async {
-        final List<int> productIDs = [];
-        final response = await this._networkWrapper
-            .get(
-                '$MENU_ROUTE_NOIMAGE?id=$menuID',
-                headers: {
-                    'Authorization': this._bearerAuth.createBearerAuthToken(),
-                },
-            );
-        response.body['data'][0]['entries'].forEach((element)
-            => productIDs.add(element['id']));
-
-        return productIDs;
-    }
-    */
     Future<String> getProductName(final int productID) async {
         final response = await this._networkWrapper
             .get(
@@ -118,5 +74,4 @@ class FetchOrderables {
 
         return response['data'][0]['name'];
     }
-    
 }
