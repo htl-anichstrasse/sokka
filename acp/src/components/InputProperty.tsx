@@ -1,7 +1,8 @@
 import React from 'react';
 import { Col, Form, Row } from 'react-bootstrap';
+import sokka_question from '../images/sokka_question.png';
 
-enum ProductPropertyType {
+enum InputPropertyType {
     String = 0,
     Image = 1,
     Currency = 2,
@@ -10,15 +11,15 @@ enum ProductPropertyType {
     Enum = 5
 }
 
-interface ProductPropertyProps {
+interface InputPropertyProps {
     onChange: (val: any) => void
     name: string
-    type: ProductPropertyType
+    type: InputPropertyType
     default: any
     selection?: any[]
 }
 
-function ProductProperty(props: ProductPropertyProps) {
+function InputProperty(props: InputPropertyProps) {
     let input;
     let [value, setValue] = React.useState(props.default);
 
@@ -28,7 +29,7 @@ function ProductProperty(props: ProductPropertyProps) {
     }
 
     switch (props.type) {
-        case ProductPropertyType.String:
+        case InputPropertyType.String:
             input = <>
                 <Form.Label column sm={2}>
                     {props.name}
@@ -38,7 +39,7 @@ function ProductProperty(props: ProductPropertyProps) {
                 </Col>
             </>;
             break;
-        case ProductPropertyType.Image:
+        case InputPropertyType.Image:
             input = <>
                 <Form.Label column sm={2}>
                     {props.name}
@@ -64,11 +65,11 @@ function ProductProperty(props: ProductPropertyProps) {
                         }
                         reader.readAsDataURL(file);
                     }} />
-                    <img src={value} width="50px" id={`file-result-${props.name}`}></img>
+                    <img src={value.endsWith('?id=') ? sokka_question : value} width="50px" id={`file-result-${props.name}`}></img>
                 </Col>
             </>;
             break;
-        case ProductPropertyType.Currency:
+        case InputPropertyType.Currency:
             input = <>
                 <Form.Label column sm={2}>
                     {props.name}
@@ -78,7 +79,7 @@ function ProductProperty(props: ProductPropertyProps) {
                 </Col>
             </>;
             break;
-        case ProductPropertyType.Number:
+        case InputPropertyType.Number:
             input = <>
                 <Form.Label column sm={2}>
                     {props.name}
@@ -88,7 +89,7 @@ function ProductProperty(props: ProductPropertyProps) {
                 </Col>
             </>;
             break;
-        case ProductPropertyType.Boolean:
+        case InputPropertyType.Boolean:
             input = <>
                 <Col sm={2}><Form.Check
                     id={`boolean-check-${props.name}`}
@@ -99,7 +100,7 @@ function ProductProperty(props: ProductPropertyProps) {
                 /></Col>
             </>;
             break;
-        case ProductPropertyType.Enum:
+        case InputPropertyType.Enum:
             if (!props.selection) {
                 return <span>No options defined</span>;
             }
@@ -121,5 +122,5 @@ function ProductProperty(props: ProductPropertyProps) {
     </Form.Group>);
 }
 
-export { ProductProperty, ProductPropertyType };
+export { InputProperty, InputPropertyType };
 

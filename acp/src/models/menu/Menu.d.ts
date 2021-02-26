@@ -4,4 +4,5 @@ declare class Menu {
     name: string
     image_id: string
     price: number
+    entries: RawMenuEntry[]
 }

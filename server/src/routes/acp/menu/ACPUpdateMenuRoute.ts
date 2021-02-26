@@ -15,7 +15,7 @@ class ACPUpdateMenuRoute extends Route {
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)
-    @NeedsProperties({ id: 'number' })
+    @NeedsProperties({ id: 'number' }, false, true)
     private async post(req: Request, res: Response): Promise<void> {
         let menu;
         try {
@@ -39,6 +39,9 @@ class ACPUpdateMenuRoute extends Route {
         }
         if (req.body.price) {
             menu.price = req.body.price;
+        }
+        if (req.body.entries) {
+            await menu.setEntries(req.body.entries);
         }
         try {
             await menu.update();

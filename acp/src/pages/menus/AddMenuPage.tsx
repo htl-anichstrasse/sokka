@@ -2,35 +2,35 @@ import dataUriToBuffer from 'data-uri-to-buffer';
 import React, { FunctionComponent } from 'react';
 import { Button, Spinner } from 'react-bootstrap';
 import { sendRequest } from '../../Util';
-import ProductProperties from './components/ProductProperties';
+import MenuProperties from './components/MenuProperties';
 
-interface AddProductPageProps {
+interface AddMenuPageProps {
 
 }
 
-const AddProductPage: FunctionComponent<AddProductPageProps> = (props) => {
-    const [state, setState] = React.useState({} as { categories: Array<ProductCategory> });
+const AddMenuPage: FunctionComponent<AddMenuPageProps> = (props) => {
+    const [state, setState] = React.useState({} as { categories: Array<MenuCategory> });
 
     const load = () => {
-        sendRequest('/acp/product/category/get', 'GET', true, {}).then((response) => {
-            if (!response.data.success || response.data.productcategories.length === 0) {
+        sendRequest('/acp/menu/category/get', 'GET', true, {}).then((response) => {
+            if (!response.data.success || response.data.menucategories.length === 0) {
                 alert(`The API returned an error: ${response.data.message ? response.data.message : 'No categories found'}`);
             }
-            setState({ categories: response.data.productcategories });
+            setState({ categories: response.data.menucategories });
         });
     }
 
-    let product: Product = {
+    let menu: Menu = {
         id: 0,
         name: '',
         category_id: 1,
         image_id: '',
         price: 0,
-        hidden: false
+        entries: []
     };
-    let values = { ...product };
+    let values = { ...menu };
 
-    const addProduct = () => {
+    const addMenu = () => {
         if (values['image_id'] === '') {
             alert('Please choose a image');
             return;
@@ -43,9 +43,9 @@ const AddProductPage: FunctionComponent<AddProductPageProps> = (props) => {
             }
             values['image_id'] = response.data.id;
             let { id, ...sendValues } = values;
-            sendRequest('/acp/product/create', 'POST', true, sendValues).then((response) => {
+            sendRequest('/acp/menu/create', 'POST', true, sendValues).then((response) => {
                 if (response.data.success) {
-                    window.location.href = '/products';
+                    window.location.href = '/menus';
                 } else {
                     alert(`The API returned an error: ${response.data.message}`);
                 }
@@ -53,14 +53,14 @@ const AddProductPage: FunctionComponent<AddProductPageProps> = (props) => {
         });
     }
 
-    document.title = 'Add Product | Sokka ACP';
+    document.title = 'Add Menu | Sokka ACP';
     if (state.categories) {
         return (<div className="app">
             <div className="container">
-                <h1><i className="fa fa-shopping-cart mr-2 mb-4" aria-hidden="true"></i>Add Product</h1>
+                <h1><i className="fa fa-shopping-cart mr-2 mb-4" aria-hidden="true"></i>Add Menu</h1>
                 <div className="container">
-                    <ProductProperties product={product} values={values} categories={state.categories} />
-                    <Button variant="primary" onClick={() => addProduct()}>Add product</Button>
+                    <MenuProperties menu={menu} values={values} categories={state.categories} />
+                    <Button variant="primary" onClick={() => addMenu()}>Add menu</Button>
                 </div>
             </div>
         </div>);
@@ -76,4 +76,4 @@ const AddProductPage: FunctionComponent<AddProductPageProps> = (props) => {
     }
 }
 
-export default AddProductPage;
+export default AddMenuPage;

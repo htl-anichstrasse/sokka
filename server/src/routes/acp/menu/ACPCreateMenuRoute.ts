@@ -15,7 +15,7 @@ class ACPCreateMenuRoute extends Route {
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)
-    @NeedsProperties({ name: 'string', category_id: 'number', image_id: 'string', price: 'number' })
+    @NeedsProperties({ name: 'string', category_id: 'number', image_id: 'string', price: 'number', entries: 'object' })
     private async post(req: Request, res: Response): Promise<void> {
         try {
             let menu = await Menu.create(req.body.category_id, req.body.name, req.body.image_id, req.body.price);

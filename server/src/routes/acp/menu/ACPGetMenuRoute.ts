@@ -17,7 +17,13 @@ class ACPGetMenuRoute extends Route {
     @NeedsAuthorization(AuthorizationType.ACP)
     private async get(req: Request, res: Response): Promise<void> {
         try {
-            let menus = await Menu.getAll();
+            const id = parseInt(String(req.query.id));
+            let menus;
+            if (!isNaN(id)) {
+                menus = [await Menu.get(id)];
+            } else {
+                menus = await Menu.getAll();
+            }
             res.send({ success: true, menus: menus });
         } catch (err) {
             this.logger.error(err);

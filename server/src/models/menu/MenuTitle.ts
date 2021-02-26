@@ -9,7 +9,7 @@ class MenuTitle implements Model {
     }
 
     static async getAll(): Promise<MenuTitle[]> {
-        let result = await Database.instance.query('SELECT * FROM sokka_menus_titles;');
+        let result = await Database.instance.query('SELECT * FROM sokka_menu_titles;');
         let menuTitles = [];
         for (let menuTitle of result) {
             menuTitles.push(new MenuTitle(menuTitle.id, menuTitle.name));

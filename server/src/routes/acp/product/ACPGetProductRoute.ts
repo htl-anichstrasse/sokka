@@ -18,15 +18,21 @@ class ACPGetProductRoute extends Route {
     private async get(req: Request, res: Response): Promise<void> {
         try {
             let products;
-            const id = parseInt(String(req.query.id));
-            try {
-                if (!isNaN(id)) {
-                    products = [await Product.get(id)];
-                } else {
-                    products = await Product.getAll();
+            let productSplit = String(req.query.id).split(',');
+            if (productSplit.length > 1) {
+                let productIds = productSplit.filter((p) => !isNaN(parseInt(p)));
+                products = await Promise.all(productIds.map(async (p) => await Product.get(parseInt(p))));
+            } else {
+                const id = parseInt(String(req.query.id));
+                try {
+                    if (!isNaN(id)) {
+                        products = [await Product.get(id)];
+                    } else {
+                        products = await Product.getAll();
+                    }
+                } catch (err) {
+                    products = []; // no products found
                 }
-            } catch (err) {
-                products = []; // no products found
             }
             res.send({ success: true, products: products });
         } catch (err) {

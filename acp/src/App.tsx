@@ -8,6 +8,8 @@ import ConfigPage from './pages/config/ConfigPage';
 import FourZeroFour from './pages/FourZeroFour';
 import GroupsPage from './pages/groups/GroupsPage';
 import HomePage from './pages/HomePage';
+import AddMenuPage from './pages/menus/AddMenuPage';
+import EditMenuPage from './pages/menus/EditMenuPage';
 import MenusPage from './pages/menus/MenusPage';
 import OrdersPage from './pages/OrdersPage';
 import AddProductPage from './pages/products/AddProductPage';
@@ -46,6 +48,8 @@ function App() {
           <Route path="/products/add" exact component={AddProductPage} />
           <Route path="/products/:id" exact component={EditProductPage} />
           <Route path="/menus" exact component={MenusPage} />
+          <Route path="/menus/add" exact component={AddMenuPage} />
+          <Route path="/menus/:id" exact component={EditMenuPage} />
           <Route path="/groups" exact component={GroupsPage} />
           <Route path="/users" exact component={UsersPage} />
           <Route path="/orders" exact component={OrdersPage} />
