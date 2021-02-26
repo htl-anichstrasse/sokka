@@ -5,7 +5,7 @@ import config from './Config';
 import Database from './Database';
 
 class Images {
-    private readonly pathPrefix = config.readConfigValueSync('DEBUG') ? './images/' : '/images/';
+    private readonly pathPrefix = config.readConfigValueSync('DEBUG') ? './images/' : `${__dirname}/../images`;
     private readonly pathSuffix = '.png';
     private readonly logger: log4js.Logger;
     public static instance: Images;

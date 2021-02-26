@@ -68,7 +68,7 @@ services:
     image: htl-anichstrasse/sokka:v1
     restart: always
     volumes:
-      - ./data/images:/images
+      - ./data/images:/usr/src/server/images
     ports:
       - "8090:8090"
     secrets:

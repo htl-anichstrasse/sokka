@@ -9,4 +9,5 @@ vhost.conf/
 # fallback configuration
 default/site.conf
 # debug images
+data
 server/images
