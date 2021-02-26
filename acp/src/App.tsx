@@ -11,7 +11,7 @@ import HomePage from './pages/HomePage';
 import AddMenuPage from './pages/menus/AddMenuPage';
 import EditMenuPage from './pages/menus/EditMenuPage';
 import MenusPage from './pages/menus/MenusPage';
-import OrdersPage from './pages/OrdersPage';
+import OrdersPage from './pages/orders/OrdersPage';
 import AddProductPage from './pages/products/AddProductPage';
 import EditProductPage from './pages/products/EditProductPage';
 import ProductsPage from './pages/products/ProductsPage';

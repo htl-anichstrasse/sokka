@@ -27,7 +27,7 @@ class Group implements Model {
         let result = await Database.instance.query('SELECT * FROM sokka_users WHERE group_id = ?;', [this.id]);
         let users = [];
         for (let user of result) {
-            users.push(new User(user.id, user.email, user.verified, user.group_id, user.pwhash, user.timestamp));
+            users.push(new User(user.id, user.email, user.verified, user.blocked, user.group_id, user.pwhash, user.timestamp));
         }
         return users;
     }

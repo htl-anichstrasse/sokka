@@ -15,8 +15,10 @@
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.3",
     "react-data-table-component": "^6.11.6",
+    "react-datepicker": "^3.6.0",
     "react-dom": "^17.0.1",
     "react-password-strength": "^2.4.0",
+    "react-qr-code": "^1.1.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.2",
     "styled-components": "^5.2.1",
@@ -43,5 +45,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react-datepicker": "^3.1.5"
   }
 }

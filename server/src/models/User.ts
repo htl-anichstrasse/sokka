@@ -1,11 +1,12 @@
 import Database from "../Database";
+import Order from "./order/Order";
 
 class User implements Model {
-    constructor(readonly id: number, public email: string, public verified: boolean, public group_id: number, public password: string, readonly timestamp: number) { }
+    constructor(readonly id: number, public email: string, public verified: boolean, public blocked: boolean, public group_id: number, public password: string, readonly timestamp: number) { }
 
     static async create(email: string, password: string): Promise<User> {
         let result = await Database.instance.query(`INSERT INTO sokka_users (email, pwhash) VALUES (?, ?);`, [email, password]);
-        return new User(result.insertId, email, false, 1, password, new Date().getTime());
+        return new User(result.insertId, email, false, false, 1, password, new Date().getTime());
     }
 
     static async exists(email: string): Promise<boolean> {
@@ -17,7 +18,7 @@ class User implements Model {
         if (result.length === 0) {
             throw new Error('User not found');
         }
-        return new User(result[0].id, result[0].email, result[0].verified, result[0].group_id, result[0].pwhash, result[0].timestamp);
+        return new User(result[0].id, result[0].email, result[0].verified, result[0].blocked, result[0].group_id, result[0].pwhash, result[0].timestamp);
     }
 
     static async getByEmail(email: string): Promise<User> {
@@ -25,16 +26,24 @@ class User implements Model {
         if (result.length === 0) {
             throw new Error('User not found');
         }
-        return new User(result[0].id, result[0].email, result[0].verified, result[0].group_id, result[0].pwhash, result[0].timestamp);
+        return new User(result[0].id, result[0].email, result[0].verified, result[0].blocked, result[0].group_id, result[0].pwhash, result[0].timestamp);
     }
 
     static async getAll(): Promise<User[]> {
         let result = await Database.instance.query('SELECT * FROM sokka_users;');
         let users = [];
         for (let user of result) {
-            users.push(new User(user.id, user.email, user.verified, user.group_id, user.pwhash, user.timestamp));
+            users.push(new User(user.id, user.email, user.verified, user.blocked, user.group_id, user.pwhash, user.timestamp));
         }
         return users;
+    }
+
+    async getOrders(): Promise<Order[]> {
+        return Order.getForUser(this);
+    }
+
+    isBlocked(): boolean {
+        return !this.verified || this.blocked;
     }
 
     async update(): Promise<void> {
