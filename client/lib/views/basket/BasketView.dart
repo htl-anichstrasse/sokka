@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:client/util/ShoppingBasketController.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -121,27 +123,51 @@ class _BasketViewState extends State<BasketView> {
                         this._updateTotalPrice(),
                         Scaffold.of(context).showSnackBar(new SnackBar(
                                 content: new Text(
-                                    '${this._shoppingBasketController.getBasket()[index].getTitle} has been removed from your basket',
+                                    '${this._shoppingBasketController.getBasket()[index].getName} has been removed from your basket',
                                     style: GoogleFonts.montserrat(),
                                 ),
                             ),
                         ),
                     },
                     child: new Card(
-                        child: new ListTile(
-                            leading: this._shoppingBasketController.getBasket()[index] is Menu
-                                ? Icon(Icons.restaurant_menu)
-                                : Icon(Icons.fastfood),
-                            title: new Text(
-                                '${this._shoppingBasketController.getBasket()[index].getTitle}',
-                                style: GoogleFonts.montserrat(
-                                    color: Colors.black,
-                                ),
-                            ),
-                            trailing: new Text(
-                                '${this._shoppingBasketController.getBasket()[index].getPrice.toStringAsFixed(2)} €',
-                                style: GoogleFonts.montserrat(
-                                    color: Colors.black,
+                        color: Colors.transparent,
+                        shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(15.0),
+                        ),
+                        clipBehavior: Clip.antiAlias,
+                        child: new ClipRRect(
+                            child: new BackdropFilter(
+                                filter: new ImageFilter.blur(sigmaX: 16.0, sigmaY: 16.0),
+                                child: new Container(
+                                    decoration: new BoxDecoration(
+                                        gradient: new LinearGradient(
+                                            colors: <Color>[
+                                                Colors.white.withOpacity(0.7),
+                                                Colors.white.withOpacity(0.05),
+                                            ],
+                                            stops: [0.0, 1.0],
+                                            begin: FractionalOffset.topLeft,
+                                            end: FractionalOffset.bottomRight,
+                                            tileMode: TileMode.repeated
+                                        ),
+                                    ),
+                                    child: new ListTile(
+                                        leading: this._shoppingBasketController.getBasket()[index] is Menu
+                                            ? Icon(Icons.restaurant_menu)
+                                            : Icon(Icons.fastfood),
+                                        title: new Text(
+                                            '${this._shoppingBasketController.getBasket()[index].getName}',
+                                            style: GoogleFonts.montserrat(
+                                                color: Colors.black,
+                                            ),
+                                        ),
+                                        trailing: new Text(
+                                            '${this._shoppingBasketController.getBasket()[index].getPrice.toStringAsFixed(2)} €',
+                                            style: GoogleFonts.montserrat(
+                                                color: Colors.black,
+                                            ),
+                                        ),
+                                    ),
                                 ),
                             ),
                         ),

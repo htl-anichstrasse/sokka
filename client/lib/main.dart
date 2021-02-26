@@ -18,12 +18,13 @@ class Sokka extends StatelessWidget {
     @override
     Widget build(BuildContext context) {
         SystemChrome.setEnabledSystemUIOverlays([]);
-        this._cookieStorage.initializeCache();
-        this._fetchOrderables.initializeMenus();
+        
+        
 
         return new FutureBuilder(
-            future: this._userAuth.validateSession(),
+            future: this._initialize(),
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                
                 if (snapshot.hasData) {
                     return new MaterialApp( 
                         debugShowCheckedModeBanner: true,
@@ -42,5 +43,15 @@ class Sokka extends StatelessWidget {
                 }
             },
         );
+    }
+
+    Future<bool> _initialize() async {
+        final isValid = await this._userAuth.validateSession();
+        if (isValid) {
+            await this._cookieStorage.initializeCache();
+            await this._fetchOrderables.initializeMenus();
+            await this._fetchOrderables.initializeProducts();
+        }
+        return isValid;
     }
 }

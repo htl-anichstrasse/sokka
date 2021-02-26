@@ -6,9 +6,9 @@ class Product implements Orderable {
     String get getName => this._name;
     set setName(final String name) =>this._name = name;
 
-    AssetImage _image;
-    AssetImage get getImage => this._image;
-    set setImage(final AssetImage image) => this._image = image;
+    NetworkImage _image;
+    NetworkImage get getImage => this._image;
+    set setImage(final NetworkImage image) => this._image = image;
 
     double _price;
     double get getPrice => this._price;
@@ -18,7 +18,11 @@ class Product implements Orderable {
     bool get isHidden => this._isHidden;
     set setIsHidden(final bool isHidden) => this._isHidden = isHidden;
 
-    Product({ final String name, final double price, final AssetImage image,
+    String toString() {
+        return 'Product: { name: ${this._name}, price: ${this._price}, isHidden: ${this._isHidden} }';
+    }
+
+    Product({ final String name, final double price, final NetworkImage image,
             bool isHidden = false }) {
         this._name = name;
         this._image = image;

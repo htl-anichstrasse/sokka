@@ -9,11 +9,9 @@ class CookieStorage {
     static const TOKEN_STRING = 'token';
     static const EMAIL_STRING = 'email';
 
-    void initializeCache() {
-        (() async {
-            this._cookieCache[TOKEN_STRING] = await this.getSessionToken();
-            this._cookieCache[EMAIL_STRING] = await this.getEmail();
-        })();
+    Future<void> initializeCache() async {
+        this._cookieCache[TOKEN_STRING] = await this.getSessionToken();
+        this._cookieCache[EMAIL_STRING] = await this.getEmail();
     }
 
     Future<String> getSessionToken() async {
