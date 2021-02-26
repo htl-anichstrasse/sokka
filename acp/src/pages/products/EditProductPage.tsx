@@ -26,7 +26,7 @@ class EditProductPage extends React.Component<EditProductPageProps, EditProductP
     componentDidMount() {
         this.id = this.props.location.pathname.split('/')[2];
         sendRequest(`/acp/product/get?id=${this.id}`, 'GET', true, {}).then((productResponse) => {
-            if (!productResponse.data.success || productResponse.data.products.length === 0) {
+            if (!productResponse.data.success || productResponse.data.products.length === 0 || productResponse.data.products.length > 1) {
                 this.setState({
                     success: false
                 });

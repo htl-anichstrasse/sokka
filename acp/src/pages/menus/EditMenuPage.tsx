@@ -26,7 +26,7 @@ class EditMenuPage extends React.Component<EditMenuPageProps, EditMenuPageState>
     componentDidMount() {
         this.id = this.props.location.pathname.split('/')[2];
         sendRequest(`/acp/menu/get?id=${this.id}`, 'GET', true, {}).then((menuResponse) => {
-            if (!menuResponse.data.success || menuResponse.data.menus.length === 0) {
+            if (!menuResponse.data.success || menuResponse.data.menus.length === 0 || menuResponse.data.menus.length > 1) {
                 this.setState({
                     success: false
                 });
