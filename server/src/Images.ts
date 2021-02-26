@@ -1,10 +1,11 @@
 import * as crypto from 'crypto';
 import * as fs from 'fs';
 import * as log4js from 'log4js';
+import config from './Config';
 import Database from './Database';
 
 class Images {
-    private readonly pathPrefix = './images/';
+    private readonly pathPrefix = config.readConfigValueSync('DEBUG') ? './images/' : '/images/';
     private readonly pathSuffix = '.png';
     private readonly logger: log4js.Logger;
     public static instance: Images;
