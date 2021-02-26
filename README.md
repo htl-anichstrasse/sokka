@@ -9,20 +9,17 @@
   <h3 align="center">Sokka</h3>
 
   <p align="center">
-    A highly functional, configurable and modular mobile ordering and payment system for canteens and restaurants.
+    A modern ordering and payment system for canteens and restaurants.
     <br/>
     <a href="https://github.com/htl-anichstrasse/sokka/releases">Releases</a>
     ·
-    <a href="https://github.com/htl-anichstrasse/sokka/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/htl-anichstrasse/sokka/issues">Request Feature</a>
     ·
     <a href="https://sokka.me/not-there-yet">Thesis</a>
   </p>
 </p>
 
 ## About the project
-Sokka is a diploma project created by students Joshua Winkler and Nicolaus Rossi of the higher technical college HTL Anichstraße in Innsbruck, Austria. It was created for use by the cantina of Innsbruck's tourism schools and supervised by software engineering professor Sabo Rubner.
+Sokka is a diploma project created by students Joshua Winkler and Nicolaus Rossi of the higher technical college HTL Innsbruck Anichstraße in the department of industrial engineering. The project is supervised by software engineering professor Sabo Rubner.
 
 ## Installation
 
