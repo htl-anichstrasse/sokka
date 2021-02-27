@@ -20,9 +20,7 @@ class GetOrderRoute extends Route {
     private async get(req: Request, res: Response): Promise<void> {
         let user = await User.getByEmail(Buffer.from(req.token, 'base64').toString('utf-8').split(':')[0]);
         let order;
-        if (req.query.id && !isNaN(parseInt(String(req.query.id)))) {
-            order = (await Order.get(parseInt(String(req.query.id)))).getDeep();
-        } else if (req.query.date && !isNaN(new Date(String(req.query.date)).getTime())) {
+        if (req.query.date && !isNaN(new Date(String(req.query.date)).getTime())) {
             let date = new Date(String(req.query.date));
             order = await Promise.all((await Order.getForDayAndUser(date, user)).map(async (v) => await v.getDeep()));
         } else {
