@@ -33,7 +33,7 @@ const ChangeUserButton: FunctionComponent<ChangeUserButtonProps> = (props) => {
 
     let options = [];
     for (let group of props.groups) {
-        options.push(<option selected={props.row.name === group.name}>{group.name}</option>);
+        options.push(<option key={group.id}>{group.name}</option>);
     }
 
     return (
@@ -48,7 +48,7 @@ const ChangeUserButton: FunctionComponent<ChangeUserButtonProps> = (props) => {
                 <Form>
                     <Form.Group controlId="changeGroup.ControlSelect1">
                         <Form.Label>Select group</Form.Label>
-                        <Form.Control ref={inputRef} as="select">
+                        <Form.Control defaultValue={props.row.name} ref={inputRef} as="select">
                             {options}
                         </Form.Control>
                     </Form.Group>

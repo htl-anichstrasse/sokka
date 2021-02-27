@@ -18,6 +18,7 @@
     "@types/mysql": "^2.15.17",
     "@types/node": "^14.14.28",
     "@types/nodemailer": "^6.4.0",
+    "@types/os-utils": "^0.0.1",
     "axios": "^0.21.1",
     "bcrypt": "^5.0.0",
     "cors": "^2.8.5",
@@ -28,6 +29,7 @@
     "log4js": "^6.3.0",
     "mysql": "^2.18.1",
     "nodemailer": "^6.4.18",
+    "os-utils": "^0.0.14",
     "typescript": "^4.1.5"
   },
   "devDependencies": {

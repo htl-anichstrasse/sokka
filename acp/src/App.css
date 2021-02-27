@@ -2,6 +2,10 @@
     margin: 20px;
 }
 
+.home-feature-list li {
+    margin-bottom: 8px;
+}
+
 .fourzerofour {
     margin-top: 6%;
     text-align: center;

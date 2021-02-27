@@ -17,20 +17,18 @@ const ListACPUserComponent: FunctionComponent<ListACPUserComponentProps> = (prop
             <Card.Body>
                 <Card.Title>Manage ACP users</Card.Title>
                 <Card.Subtitle className="mb-2">List and delete existing ACP users</Card.Subtitle>
-                <Card.Text>
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Username</th>
-                                <th scope="col">Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {users}
-                        </tbody>
-                    </table>
-                </Card.Text>
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Username</th>
+                            <th scope="col">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {users}
+                    </tbody>
+                </table>
             </Card.Body>
         </Card>);
     } else {
