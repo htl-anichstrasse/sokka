@@ -1,4 +1,5 @@
 import { Request, Response, Router } from "express";
+import ConfigEntry from "../../models/ConfigEntry";
 import { MenuOrder } from "../../models/order/MenuOrder";
 import Order from "../../models/order/Order";
 import { ProductOrder } from "../../models/order/ProductOrder";
@@ -26,6 +27,21 @@ class CreateOrderRoute extends Route {
             res.send({ success: false, message: 'Sorry, you need to verify your account first' });
             return;
         }
+
+        // Check closing time
+        let closingTime = (await ConfigEntry.get('closingTime')).value.split(':');
+        let curDate = new Date();
+        let beforeClosingTime = false;
+        if (curDate.getHours() <= parseInt(closingTime[0])) {
+            if (curDate.getMinutes() < parseInt(closingTime[1])) {
+                beforeClosingTime = true;
+            }
+        }
+        if (!beforeClosingTime) {
+            res.send({ success: false, message: `Ordering is disabled, please try again tomorrow`, timeLimit: closingTime.join(':') });
+            return;
+        }
+
         // Sanity checks ...
         let isInvalid = req.body.products.length === 0 && req.body.menu.length === 0;
         if (typeof req.body.products[Symbol.iterator] === 'function') {
@@ -52,7 +68,6 @@ class CreateOrderRoute extends Route {
         for (let menu of req.body.menus) {
             await MenuOrder.create(order.id, menu.menu_id, menu.quantity);
         }
-
         res.send({ success: true, message: 'Order successfully created' });
     }
 }
