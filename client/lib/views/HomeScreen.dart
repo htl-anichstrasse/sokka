@@ -3,7 +3,7 @@ import 'package:client/util/CookieStorage.dart';
 import 'package:client/views/menu/MenuView.dart';
 import 'package:client/views/product/ProductGrid.dart';
 import 'package:flutter/material.dart';
-import 'package:client/views/account/AccountView.dart';
+import 'dart:math' as MATH;
 import 'package:client/views/basket/BasketView.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -32,67 +32,117 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: Colors.white,
                             ),
                         ),
-                        centerTitle: true,
-                        iconTheme: new IconThemeData(color: Colors.white),
-                    ),
-                    drawer: new Drawer(
-                        child: new Column(
-                            children: <Widget>[
-                                new DrawerHeader(
-                                    decoration: new BoxDecoration(color: Colors.tealAccent[700]),
-                                    child: new Align(
-                                        alignment: Alignment.topCenter,
-                                        child: new Column(
-                                            children: <Widget>[
-                                                new Text(
-                                                    'SOKKA',
-                                                    style: GoogleFonts.montserrat(
-                                                        fontSize: 20.0,
-                                                    ),
+                        leading: new Transform.rotate(
+                            angle: 180 * MATH.pi / 180,
+                            child: new IconButton(
+                                icon: new Icon(Icons.exit_to_app, color: Colors.white),
+                                onPressed: ()
+                                    => showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                            return new AlertDialog(
+                                                backgroundColor: Colors.transparent,
+                                                title: new Stack(
+                                                    children: <Widget>[
+                                                        new Container(
+                                                            padding: new EdgeInsets.only(top: 65.0, right: 20.0, bottom: 20.0, left: 20.0),
+                                                            margin: new EdgeInsets.only(top: 45.0),
+                                                            decoration: new BoxDecoration(
+                                                                color: Colors.white,
+                                                                shape: BoxShape.rectangle,
+                                                                borderRadius: new BorderRadius.circular(20.0),
+                                                                boxShadow: <BoxShadow>[
+                                                                ],
+                                                            ),
+                                                            child: new Column(
+                                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                                children: <Widget>[
+                                                                    new Text(
+                                                                        'ACCOUNT',
+                                                                        style: GoogleFonts.montserrat(
+                                                                            fontSize: 24.0,
+                                                                            fontWeight: FontWeight.bold,
+                                                                            color: Colors.black,
+                                                                        )
+                                                                    ),
+                                                                    new SizedBox(
+                                                                        height: 16.0
+                                                                    ),
+                                                                    new RichText(
+                                                                        textAlign: TextAlign.center,
+                                                                        text: new TextSpan(
+                                                                            text: 'You are logged in as ',
+                                                                            style: GoogleFonts.montserrat(
+                                                                                color: Colors.black,
+                                                                            ),
+                                                                            children: <TextSpan>[
+                                                                                new TextSpan(
+                                                                                    text: '${this._cookieStorage.getEmailSync()}.',
+                                                                                    style: GoogleFonts.montserrat(
+                                                                                        color: Colors.black,
+                                                                                        fontWeight: FontWeight.bold
+                                                                                    ),
+                                                                                ),
+                                                                            ],
+                                                                        ),
+                                                                    ),
+                                                                    new SizedBox(
+                                                                        height: 24.0
+                                                                    ),
+                                                                    new Row(
+                                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                                        children: <Widget>[
+                                                                            new Container(
+                                                                                decoration: new BoxDecoration(
+                                                                                    borderRadius: new BorderRadius.circular(10.0),
+                                                                                    color: Colors.red,
+                                                                                ),
+                                                                                child: new FlatButton.icon(
+                                                                                    icon: new Icon(Icons.exit_to_app, color: Colors.white),
+                                                                                    label: new Text(
+                                                                                        'Log out',
+                                                                                        style: GoogleFonts.montserrat(
+                                                                                            color: Colors.white,
+                                                                                        )
+                                                                                    ),
+                                                                                    onPressed: () => {
+                                                                                        this._userAuth.logoutUser(this._cookieStorage.getSessionTokenSync(),
+                                                                                            this._cookieStorage.getEmailSync()),
+                                                                                        this._cookieStorage.deleteValue(CookieStorage.TOKEN_STRING),
+                                                                                        Navigator.of(context).popAndPushNamed('/login'),
+                                                                                    },
+                                                                                ),
+                                                                            ),
+                                                                        ],
+                                                                    ),
+                                                                ],
+                                                            ),
+                                                        ),
+                                                        new  Positioned(
+                                                            left: 20.0,
+                                                            right: 20.0,
+                                                            child: new CircleAvatar(
+                                                                backgroundColor: Colors.tealAccent[700],
+                                                                radius: 45.0,
+                                                                
+                                                                child: new Image(
+                                                                    image: new AssetImage(
+                                                                        'lib/styles/images/Sokka.png'
+                                                                    ),
+                                                                    width: 150.0,
+                                                                    color: Colors.white
+                                                                ),
+                                                            ),
+                                                        ),
+                                                    ],
                                                 ),
-                                            ],
-                                        ),
-                                    ),
-                                ),
-                                new ListTile(
-                                    leading: new Icon(Icons.account_circle, color: Colors.white),
-                                    title: new Text('Account'),
-                                    onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)
-                                        => new Account())),
-                                    onLongPress: () => null,
-                                ),
-                                new ListTile(
-                                    leading: new Icon(Icons.account_balance_wallet, color: Colors.white),
-                                    title: new Text('Wallet'),
-                                    onTap:() => null,
-                                    onLongPress: () => null,
-                                ),
-                                new Spacer(),
-                                new Container(
-                                    child: new ListTile( 
-                                        leading: new Icon(Icons.settings, color: Colors.white),
-                                        title: new Text('Settings'),
-                                        onTap: () => null,
-                                    ),
-                                ),
-                                new Container(
-                                    decoration: new BoxDecoration(
-                                        color: Colors.red,
-                                    ),
-                                    child: new ListTile(
-                                        leading: new Icon(Icons.exit_to_app, color: Colors.white),
-                                        title: new Text('Log out'),
-                                        onTap: () => {
-                                            this._userAuth.logoutUser(this._cookieStorage.getSessionTokenSync(),
-                                                this._cookieStorage.getEmailSync()),
-                                            this._cookieStorage.deleteValue(CookieStorage.TOKEN_STRING),
-
-                                            Navigator.of(context).popAndPushNamed('/login'),
+                                            );
                                         },
                                     ),
-                                ),
-                            ],
+                            ),
                         ),
+                        centerTitle: true,
+                        iconTheme: new IconThemeData(color: Colors.white),
                     ),
                     bottomNavigationBar: new Container(
                         color: Colors.tealAccent[700],
@@ -107,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 new Tab(text: 'Menus', icon: Icon(Icons.restaurant_menu)),
                                 new Tab(text: 'Products', icon: Icon(Icons.fastfood)),
                                 new Tab(text: 'Basket', icon: Icon(Icons.shopping_basket)),
-                                new Tab(text: 'Codes', icon: Icon(Icons.qr_code)),
+                                new Tab(text: 'Orders', icon: Icon(Icons.qr_code_rounded)),
                             ],
                         ),
                     ),
@@ -115,19 +165,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: new TabBarView(
                             children: <Widget>[
                                 new Container(
-                                    // Menu-View
                                     child: new MenuView(),
                                 ),
                                 new Container(
-                                    // Product-Grid
                                     child: new ProductGrid(),
                                 ),
                                 new Container(
-                                    // Basket-View
                                     child: new BasketView(),
                                 ),
                                 new Container(
-                                    // QR-Codes
                                     child: new Icon(Icons.qr_code, color: Colors.white),
                                 ),
                             ],
