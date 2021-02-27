@@ -18,13 +18,10 @@ class Sokka extends StatelessWidget {
     @override
     Widget build(BuildContext context) {
         SystemChrome.setEnabledSystemUIOverlays([]);
-        
-        
 
         return new FutureBuilder(
             future: this._initialize(),
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                
                 if (snapshot.hasData) {
                     return new MaterialApp( 
                         debugShowCheckedModeBanner: true,
