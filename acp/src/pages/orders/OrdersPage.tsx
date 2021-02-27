@@ -53,7 +53,7 @@ const OrdersPage: FunctionComponent<OrdersPageProps> = (props) => {
         <div className="container">
             <h1><i className="fa fa-qrcode mr-2" aria-hidden="true"></i>Orders</h1>
             <p>You can view orders for specific dates here.</p>
-            <DatePicker  className="mb-4 order-date-picker" wrapperClassName="order-date-picker" selected={date} onChange={onDateChange} /><br />
+            <DatePicker className="mb-4 order-date-picker" wrapperClassName="order-date-picker" selected={date} onChange={onDateChange} /><br />
             {content}
         </div>
     </div>);

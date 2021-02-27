@@ -22,7 +22,7 @@ class ACPGetACPUsersRoute extends Route {
             res.send({ success: true, users });
         } catch (err) {
             res.status(500);
-            res.send({ success: false, message: 'An unknown error occurred while fetching users' });
+            res.send({ success: false, message: 'An unknown error occurred while fetching ACP users' });
             this.logger.error(`An unknown error occurred while fetching users: ${err}`);
         }
     }

@@ -1,4 +1,5 @@
 import Database from "../../Database";
+import Group from "../Group";
 import User from "../User";
 import { DeepMenuOrder, MenuOrder } from "./MenuOrder";
 import { DeepProductOrder, ProductOrder } from "./ProductOrder";
@@ -59,7 +60,13 @@ class Order implements Model {
         } catch (e) {
             productOrders = [];
         }
-        return new DeepOrder(this.id, this.user_id, this.timestamp, this.state, menuOrders, productOrders);
+        let rebate;
+        try {
+            rebate = (await Group.getById((await User.getById(this.user_id)).group_id)).rebate;
+        } catch (e) {
+            rebate = 0;
+        }
+        return new DeepOrder(this.id, this.user_id, this.timestamp, this.state, rebate, menuOrders, productOrders);
     }
 
     async delete(): Promise<void> {
@@ -72,7 +79,7 @@ class Order implements Model {
 }
 
 class DeepOrder extends Order {
-    constructor(readonly id: number, readonly user_id: number, readonly timestamp: number, readonly state: 'VALID' | 'INVALIDATED', readonly menuOrders: DeepMenuOrder[], readonly productOrders: DeepProductOrder[]) {
+    constructor(readonly id: number, readonly user_id: number, readonly timestamp: number, readonly state: 'VALID' | 'INVALIDATED', readonly rebate: number, readonly menuOrders: DeepMenuOrder[], readonly productOrders: DeepProductOrder[]) {
         super(id, user_id, timestamp, state);
     }
 }

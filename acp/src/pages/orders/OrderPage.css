@@ -2,3 +2,8 @@
     width: 100%;
     text-align: center;
 }
+
+.order-list {
+    list-style: none;
+    padding: 0;
+}
