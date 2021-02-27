@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState } from 'react';
-import { Spinner } from 'react-bootstrap';
+import { Card, Spinner } from 'react-bootstrap';
 import Cookies from 'universal-cookie';
 import { sendRequest } from '../../Util';
 
@@ -13,29 +13,35 @@ let users: JSX.Element[];
 const ListACPUserComponent: FunctionComponent<ListACPUserComponentProps> = (props) => {
     [loaded, setLoaded] = useState(1);
     if (loaded === 0) {
-        return (<div className="box">
-            <h3>Manage ACP users</h3>
-            <p className="text-muted">List and delete existing ACP users</p>
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Username</th>
-                        <th scope="col">Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {users}
-                </tbody>
-            </table>
-        </div>);
+        return (<Card className="mb-4">
+            <Card.Body>
+                <Card.Title>Manage ACP users</Card.Title>
+                <Card.Subtitle className="mb-2">List and delete existing ACP users</Card.Subtitle>
+                <Card.Text>
+                    <table className="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Username</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {users}
+                        </tbody>
+                    </table>
+                </Card.Text>
+            </Card.Body>
+        </Card>);
     } else {
         load();
-        return (<div className="box">
-            <Spinner animation="border" role="status">
-                <span className="sr-only">Loading...</span>
-            </Spinner>
-        </div>)
+        return (<Card className="mb-4">
+            <Card.Body>
+                <Spinner animation="border" role="status">
+                    <span className="sr-only">Loading...</span>
+                </Spinner>
+            </Card.Body>
+        </Card>)
     }
 }
 

@@ -45,10 +45,10 @@ const ListConfigEntries: FunctionComponent<ListConfigEntriesProps> = (props) => 
     for (let configEntry of configEntries) {
         entries.push(
             <div key={configEntry.key} className="row config-value-row">
-                <div className="col-8 config-name-col">
+                <div className="col-7 config-name-col">
                     <span className="config-friendly-name">{configEntry.friendlyName}</span> <pre className="config-key">({configEntry.key})</pre>
                 </div>
-                <div className="col-2 config-val-col">
+                <div className="col-md-4 col-sm-5 config-val-col">
                     <ConfigValueInput changeHandler={(entry: any) => onChange(entry)} configEntry={configEntry} />
                 </div>
             </div>
@@ -58,7 +58,7 @@ const ListConfigEntries: FunctionComponent<ListConfigEntriesProps> = (props) => 
     // Add entries and submit button to DOM
     return (<div className="configValues">
         {entries}
-        <Button color="secondary" onClick={() => onSubmit()}>Save changes</Button>
+        <Button className="mb-sm-0 mb-4" color="secondary" onClick={() => onSubmit()}>Save changes</Button>
     </div>);
 }
 
