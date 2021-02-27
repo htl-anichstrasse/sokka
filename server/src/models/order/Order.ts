@@ -32,6 +32,15 @@ class Order implements Model {
         return orders;
     }
 
+    static async getForDayAndUser(date: Date, user: User): Promise<Order[]> {
+        let result = await Database.instance.query(`SELECT * FROM sokka_orders WHERE DATE(timestamp) = ? AND user_id = ?;`, [date.toISOString().slice(0, 10), user.id]);
+        let orders = [];
+        for (let order of result) {
+            orders.push(new Order(order.id, order.user_id, order.timestamp, order.state));
+        }
+        return orders;
+    }
+
     static async create(user_id: number): Promise<Order> {
         let result = await Database.instance.query(`INSERT INTO sokka_orders (user_id) VALUES (?)`, [user_id]);
         return new Order(result.insertId, user_id, new Date().getTime(), 'VALID');
