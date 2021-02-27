@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { sendRequest } from '../../Util';
 import Order from './Order';
+import './OrderPage.css';
 
 interface OrdersPageProps {
 
@@ -38,7 +39,10 @@ const OrdersPage: FunctionComponent<OrdersPageProps> = (props) => {
 
     let content;
     if (orderData.loaded) {
-        content = orderData.data.map((order: Order) => <Order order={order} />);
+        content = orderData.data.map((order: Order) => <Order key={order.id} order={order} />);
+        if (content.length === 0) {
+            content.push(<h4 className="text-muted">There are no orders for this day</h4>);
+        }
     } else {
         load();
         content = (<Spinner animation="border" role="status">
@@ -49,7 +53,7 @@ const OrdersPage: FunctionComponent<OrdersPageProps> = (props) => {
         <div className="container">
             <h1><i className="fa fa-qrcode mr-2" aria-hidden="true"></i>Orders</h1>
             <p>You can view orders for specific dates here.</p>
-            <DatePicker className="mb-2" selected={date} onChange={onDateChange} />
+            <DatePicker  className="mb-4 order-date-picker" wrapperClassName="order-date-picker" selected={date} onChange={onDateChange} /><br />
             {content}
         </div>
     </div>);

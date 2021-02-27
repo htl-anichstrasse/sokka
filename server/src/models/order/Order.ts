@@ -38,8 +38,18 @@ class Order implements Model {
     }
 
     async getDeep(): Promise<DeepOrder> {
-        let menuOrders = await Promise.all((await MenuOrder.get(this.id)).map(async (v) => await v.getDeep()));
-        let productOrders = await Promise.all((await ProductOrder.get(this.id)).map(async (v) => await v.getDeep()));
+        let menuOrders;
+        try {
+            menuOrders = await Promise.all((await MenuOrder.get(this.id)).map(async (v) => await v.getDeep()));
+        } catch (e) {
+            menuOrders = [];
+        }
+        let productOrders;
+        try {
+            productOrders = await Promise.all((await ProductOrder.get(this.id)).map(async (v) => await v.getDeep()));
+        } catch (e) {
+            productOrders = [];
+        }
         return new DeepOrder(this.id, this.user_id, this.timestamp, this.state, menuOrders, productOrders);
     }
 
