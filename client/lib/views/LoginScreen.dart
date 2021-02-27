@@ -1,3 +1,5 @@
+import 'dart:ui' as UI;
+import 'package:client/services/FetchOrderables.dart';
 import 'package:client/services/UserAuth.dart';
 import 'package:client/util/CookieStorage.dart';
 import 'package:flutter/material.dart';
@@ -9,11 +11,12 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-    final TextEditingController _emailController = new TextEditingController();
-    final TextEditingController _passwordController = new TextEditingController();
-
     final CookieStorage _cookieStorage = new CookieStorage();
     final UserAuth _userAuth = new UserAuth(); 
+    final FetchOrderables _fetchOrderables = new FetchOrderables();
+
+    final TextEditingController _emailController = new TextEditingController();
+    final TextEditingController _passwordController = new TextEditingController();
 
     String _email;
     String _password;
@@ -173,20 +176,22 @@ class _LoginScreenState extends State<LoginScreen> {
                                                         ),
                                                     },
 
-                                                    this._userAuth.loginUser(this._email, this._password)
-                                                        .then((token) => {
-                                                            if (token != null) {
-                                                                this._cookieStorage.storeSessionToken(token),
-                                                                this._cookieStorage.storeEmail(this._email),
-                                                                Navigator.of(context).popAndPushNamed('/'),
-                                                            } else {
-                                                                Scaffold.of(context).showSnackBar(new SnackBar(
-                                                                    content: new Text('There was an error signing you in.\nPlease check your credentials and try again!',
-                                                                        style: GoogleFonts.montserrat(),
-                                                                    ),
-                                                                ))
-                                                            }
-                                                        })
+                                                    this._userAuth.loginUser(this._email, this._password).then((token) {
+                                                        if (token != null) {
+                                                            Future.wait([this._cookieStorage.storeSessionToken(token), this._cookieStorage.storeEmail(this._email)])
+                                                                .then((_) => {
+                                                                    this._initialize().then((_) => {
+                                                                        Navigator.of(context).popAndPushNamed('/'),
+                                                                    }),
+                                                                });
+                                                        } else {
+                                                            Scaffold.of(context).showSnackBar(new SnackBar(
+                                                                content: new Text('There was an error signing you in.\nPlease check your credentials and try again!',
+                                                                    style: GoogleFonts.montserrat(),
+                                                                ),
+                                                            ));
+                                                        }
+                                                    }), 
                                                 },
                                             ),
                                         ),
@@ -231,5 +236,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
             ),
         );
+    }
+
+    Future<void> _initialize() async {
+        await this._cookieStorage.initializeCache();
+        await this._fetchOrderables.initializeMenus();
+        await this._fetchOrderables.initializeProducts();
     }
 }

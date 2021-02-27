@@ -1,3 +1,4 @@
+import 'package:client/services/FetchOrderables.dart';
 import 'package:client/services/UserAuth.dart';
 import 'package:client/util/CookieStorage.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
     final UserAuth _userAuth = new UserAuth();
     final CookieStorage _cookieStorage = new CookieStorage();
+    final FetchOrderables _fetchOrderables = new FetchOrderables();
 
     final TextEditingController _emailController = new TextEditingController();
     final TextEditingController _passwordController = new TextEditingController();
@@ -250,20 +252,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                         ),
                                                     },
 
-                                                    this._userAuth.signUpUser(this._email, this._password)
-                                                        .then((token) => {
+                                                    this._userAuth.signUpUser(this._email, this._password).then((token) {
                                                             if (token != null) {
-                                                                this._cookieStorage.storeSessionToken(token),
-                                                                Navigator.of(context).popAndPushNamed('/'),
+                                                                Future.wait([this._cookieStorage.storeSessionToken(token), this._cookieStorage.storeEmail(this._email)])
+                                                                    .then((_) => {
+                                                                        this._initialize().then((_) => {
+                                                                            Navigator.of(context).popAndPushNamed('/'),
+                                                                        }),
+                                                                    });
                                                             } else {
                                                                 Scaffold.of(context).showSnackBar(new SnackBar(
                                                                     content: new Text(
                                                                         'There was a problem creating a new user.\nPlease try again!',
                                                                         style: GoogleFonts.montserrat(),
-                                                                    )
-                                                                ))
+                                                                    ),
+                                                                ));
                                                             }
-                                                        })
+                                                        }),
                                                 },                                        
                                             ),
                                         ),
@@ -287,5 +292,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
             ),
         );
+    }
+
+    Future<void> _initialize() async {
+        await this._cookieStorage.initializeCache();
+        await this._fetchOrderables.initializeMenus();
+        await this._fetchOrderables.initializeProducts();
     }
 }

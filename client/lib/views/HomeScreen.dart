@@ -107,9 +107,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                                     ),
                                                                                     onPressed: () => {
                                                                                         this._userAuth.logoutUser(this._cookieStorage.getSessionTokenSync(),
-                                                                                            this._cookieStorage.getEmailSync()),
-                                                                                        this._cookieStorage.deleteValue(CookieStorage.TOKEN_STRING),
-                                                                                        Navigator.of(context).popAndPushNamed('/login'),
+                                                                                            this._cookieStorage.getEmailSync()).then((_) => {
+                                                                                                this._cookieStorage.deleteValue(CookieStorage.TOKEN_STRING),
+                                                                                                Navigator.of(context).popAndPushNamed('/login'),
+                                                                                            }),
                                                                                     },
                                                                                 ),
                                                                             ),
