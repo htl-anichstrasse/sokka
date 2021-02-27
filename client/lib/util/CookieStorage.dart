@@ -23,7 +23,7 @@ class CookieStorage {
         return this._cookieCache[TOKEN_STRING];
     }
 
-    void storeSessionToken(final String token) async {
+    Future<void> storeSessionToken(final String token) async {
         final SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
         await sharedPrefs.setString(CookieStorage.TOKEN_STRING, token);
     }
@@ -37,7 +37,7 @@ class CookieStorage {
         return this._cookieCache[EMAIL_STRING];
     }
 
-    void storeEmail(final String email) async {
+    Future<void> storeEmail(final String email) async {
         final SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
         await sharedPrefs.setString(CookieStorage.EMAIL_STRING, email);
     }
