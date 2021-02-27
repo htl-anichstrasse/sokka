@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { Card } from "react-bootstrap";
-import { getBaseURL, sendRequest } from "../../Util";
+import { formatCurrency, getBaseURL, sendRequest } from "../../Util";
 
 interface MenuProps {
     menu: Menu
@@ -27,7 +27,7 @@ const Menu: FunctionComponent<MenuProps> = (props) => {
             </div>
             <Card.Body>
                 <Card.Title>{props.menu.name}</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">€ {new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(props.menu.price)}</Card.Subtitle>
+                <Card.Subtitle className="mb-2 text-muted">{formatCurrency(props.menu.price)}</Card.Subtitle>
                 <Card.Text>
                     <Card.Link href={`/menus/${props.menu.id}`}>Edit</Card.Link>
                     <Card.Link href="#" onClick={onDelete}>Delete</Card.Link>

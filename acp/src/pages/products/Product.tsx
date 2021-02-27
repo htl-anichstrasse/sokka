@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { Card } from "react-bootstrap";
-import { getBaseURL, sendRequest } from "../../Util";
+import { formatCurrency, getBaseURL, sendRequest } from "../../Util";
 
 interface ProductProps {
     product: Product
@@ -29,7 +29,7 @@ const Product: FunctionComponent<ProductProps> = (props) => {
                 <Card.Title>
                     {props.product.name} {props.product.hidden ? <span className="text-muted">(Hidden)</span> : null}
                 </Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">€ {new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(props.product.price)}</Card.Subtitle>
+                <Card.Subtitle className="mb-2 text-muted">{formatCurrency(props.product.price)}</Card.Subtitle>
                 <Card.Text>
                     <Card.Link href={`/products/${props.product.id}`}>Edit</Card.Link>
                     <Card.Link href="#" onClick={onDelete}>Delete</Card.Link>

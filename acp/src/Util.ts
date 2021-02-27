@@ -6,6 +6,10 @@ function getBaseURL() {
     return `${isDebug() ? 'http://localhost:3001' : 'https://api.sokka.me'}`;
 }
 
+function formatCurrency(price: number) {
+    return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(price);
+}
+
 function animateCSS(node: HTMLElement, animation: string, prefix = 'animate__'): Promise<void> {
     return new Promise((resolve, reject) => {
         const animationName = `${prefix}${animation}`;
@@ -53,5 +57,5 @@ function isDebug(): boolean {
     return debug;
 }
 
-export { getBaseURL, animateCSS, sendRequest };
+export { formatCurrency, getBaseURL, animateCSS, sendRequest };
 

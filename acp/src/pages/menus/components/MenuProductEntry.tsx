@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { Card } from "react-bootstrap";
-import { getBaseURL } from "../../../Util";
+import { formatCurrency, getBaseURL } from "../../../Util";
 import EditTitleProductToMenuLink from "./EditTitleProductToMenuLink";
 
 interface MenuProductEntryProps {
@@ -25,9 +25,9 @@ const MenuProductEntry: FunctionComponent<MenuProductEntryProps> = (props) => {
             </div>
             <Card.Body>
                 <Card.Title>{props.menuEntry.product.name} {props.menuEntry.product.hidden ? <span className="text-muted">(Hidden)</span> : null}</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">{props.menuEntry.title.name} — € {new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(props.menuEntry.product.price)}</Card.Subtitle>
+                <Card.Subtitle className="mb-2 text-muted">{props.menuEntry.title.name} — {formatCurrency(props.menuEntry.product.price)}</Card.Subtitle>
                 <Card.Text>
-                    <EditTitleProductToMenuLink menuEntry={props.menuEntry} menu={props.menu} onChange={props.onChange}/>
+                    <EditTitleProductToMenuLink menuEntry={props.menuEntry} menu={props.menu} onChange={props.onChange} />
                     <Card.Link href="#" onClick={onDelete}>Delete</Card.Link>
                 </Card.Text>
             </Card.Body>

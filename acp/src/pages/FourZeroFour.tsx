@@ -11,7 +11,7 @@ const FourZeroFour: FunctionComponent<FourZeroFourProps> = (props) => {
         <div className="sokkasad">
             <img src={sokkasad} alt="Sokka Logo sad"/>
         </div>
-        <h1>Big oof</h1>
+        <h1>404</h1>
         <p className="text-muted">Seems like you have reached a dead end. Sorry!</p>
         <a href="/" className="btn btn-secondary">Back to home</a>
     </div >);

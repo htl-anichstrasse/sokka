@@ -1,13 +1,10 @@
 import React, { FunctionComponent } from "react";
 import { Card } from "react-bootstrap";
 import QRCode from "react-qr-code";
+import { formatCurrency } from '../../Util';
 
 interface OrderProps {
     order: Order
-}
-
-function formatCurrency(price: number) {
-    return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(price);
 }
 
 const Order: FunctionComponent<OrderProps> = (props) => {
