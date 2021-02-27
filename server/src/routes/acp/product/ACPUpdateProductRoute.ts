@@ -40,7 +40,7 @@ class ACPUpdateProductRoute extends Route {
         if (req.body.price) {
             product.price = req.body.price;
         }
-        if (req.body.hidden) {
+        if (req.body.hidden != null) {
             product.hidden = req.body.hidden;
         }
         try {

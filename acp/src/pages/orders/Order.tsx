@@ -10,7 +10,7 @@ interface OrderProps {
 const Order: FunctionComponent<OrderProps> = (props) => {
     const generateProductOrders = (order: Order) => {
         if (order.productOrders.length === 0) {
-            return (<p>No product orders</p>);
+            return (<p key={0}>No product orders</p>);
         }
         let productOrders = [];
         let priceTotal = 0;
@@ -18,12 +18,12 @@ const Order: FunctionComponent<OrderProps> = (props) => {
             productOrders.push(<li key={productOrder.product_id}>{productOrder.quantity}x {productOrder.product.name} ({formatCurrency(productOrder.product.price)})</li>);
             priceTotal += productOrder.product.price;
         }
-        productOrders.push(<p>Subtotal: {formatCurrency(priceTotal)}</p>);
+        productOrders.push(<p key={'total'}>Subtotal: {formatCurrency(priceTotal)}</p>);
         return productOrders;
     }
     const generateMenuOrders = (order: Order) => {
         if (order.menuOrders.length === 0) {
-            return (<p>No menu orders</p>);
+            return (<p key={0}>No menu orders</p>);
         }
         let menuOrders = [];
         let priceTotal = 0;
@@ -31,7 +31,7 @@ const Order: FunctionComponent<OrderProps> = (props) => {
             menuOrders.push(<li key={menuOrder.menu_id}>{menuOrder.quantity}x {menuOrder.menu.name} ({formatCurrency(menuOrder.menu.price)})</li>);
             priceTotal += menuOrder.menu.price;
         }
-        menuOrders.push(<p>Subtotal: {formatCurrency(priceTotal)}</p>);
+        menuOrders.push(<p key={'total'}>Subtotal: {formatCurrency(priceTotal)}</p>);
         return menuOrders;
     }
     return (

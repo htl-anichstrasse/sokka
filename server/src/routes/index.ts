@@ -1,6 +1,7 @@
 export { default as ACPImageRoute } from './acp/ACPImageRoute';
 export { default as ACPLoginRoute } from './acp/ACPLoginRoute';
 export { default as ACPLogoutRoute } from './acp/ACPLogoutRoute';
+export { default as ACPStatusRoute } from './acp/ACPStatusRoute';
 export { default as ACPCreateUserRoute } from './acp/acpuser/ACPCreateUserRoute';
 export { default as ACPDeleteACPUserRoute } from './acp/acpuser/ACPDeleteACPUserRoute';
 export { default as ACPGetACPUsersRoute } from './acp/acpuser/ACPGetACPUsersRoute';
