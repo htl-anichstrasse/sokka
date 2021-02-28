@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:client/services/OrderService.dart';
 import 'package:client/util/ShoppingBasketController.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ class BasketView extends StatefulWidget {
 
 class _BasketViewState extends State<BasketView> { 
     final ShoppingBasketController _shoppingBasketController = new ShoppingBasketController();
+    final OrderService _orderService = new OrderService();
     double _totalPrice = 0.0;
 
     @override
@@ -33,7 +35,7 @@ class _BasketViewState extends State<BasketView> {
                             new Container(
                                 padding: new EdgeInsets.all(10.0),
                                 child: new Text(
-                                'TOTAL',
+                                    'TOTAL',
                                     style: GoogleFonts.montserrat(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
@@ -86,7 +88,7 @@ class _BasketViewState extends State<BasketView> {
                                                 color: Colors.white,
                                             ),
                                         ),
-                                        onTap: null,
+                                        onTap: () => this._orderService.createOrder(),
                                     ),
                                     new Spacer(),
                                     new Container(
@@ -127,8 +129,10 @@ class _BasketViewState extends State<BasketView> {
                         itemBuilder: (BuildContext context, int index) => new Dismissible(
                             key: new UniqueKey(),
                             onDismissed: (DismissDirection direction) => {
-                                setState(() => this._shoppingBasketController.getBasket().removeAt(index)),
-                                this._updateTotalPrice(),
+                                setState(() => {
+                                    this._shoppingBasketController.getBasket().removeAt(index),
+                                    this._updateTotalPrice(),
+                                }),
                                 Scaffold.of(context).showSnackBar(new SnackBar(
                                         content: new Text(
                                             '${this._shoppingBasketController.getBasket()[index].getName} has been removed from your basket',
@@ -187,14 +191,12 @@ class _BasketViewState extends State<BasketView> {
             )
             : new Scaffold(
                 body: Container(
-                    /*
                     decoration: new BoxDecoration(
                     image: new DecorationImage(
                             image: new AssetImage('lib/styles/images/BasketBackground.png'),
                             fit: BoxFit.cover,
                         ),
                     ),
-                    */
                     child: new SizedBox.expand(
                         child: new Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -202,12 +204,24 @@ class _BasketViewState extends State<BasketView> {
                                 new Container(
                                     width: 200.0,
                                     height: 200.0,
-                                    child: new Image(
-                                        image: new AssetImage('lib/styles/images/SadSokka.png'),
+                                    decoration: new BoxDecoration(
                                         color: Colors.white,
+                                        shape: BoxShape.circle,
+                                        boxShadow: <BoxShadow>[
+                                            new BoxShadow(blurRadius: 8.0, color: Colors.black, spreadRadius: 1),
+                                        ],
+                                    ),
+                                    child: new CircleAvatar(
+                                        backgroundColor: Colors.tealAccent[700],
+                                        child: new Image(
+                                            image: new AssetImage('lib/styles/images/SadSokka.png'),
+                                            color: Colors.white,
+                                            height: 180.0,
+                                        ),
                                     ),
                                 ),
                                 new Container(
+                                    padding: new EdgeInsets.only(top: 50.0),
                                     child: new Text(
                                         'Your shopping basket is empty!',
                                         style: GoogleFonts.montserrat(
