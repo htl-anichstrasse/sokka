@@ -122,16 +122,30 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         new  Positioned(
                                                             left: 20.0,
                                                             right: 20.0,
-                                                            child: new CircleAvatar(
-                                                                backgroundColor: Colors.tealAccent[700],
-                                                                radius: 45.0,
-                                                                
-                                                                child: new Image(
-                                                                    image: new AssetImage(
-                                                                        'lib/styles/images/Sokka.png'
+                                                            child: new Container(
+                                                                decoration: new BoxDecoration(
+                                                                    color: Colors.white,
+                                                                    shape: BoxShape.circle,
+                                                                    boxShadow: <BoxShadow>[
+                                                                        new BoxShadow(
+                                                                            blurRadius: 4.0,
+                                                                            color: Colors.black,
+                                                                            spreadRadius: 1,
+                                                                            offset: new Offset(0.0, 2.0)
+                                                                        ),
+                                                                    ],
+                                                                ),
+                                                                child: new CircleAvatar(
+                                                                    backgroundColor: Colors.tealAccent[700],
+                                                                    radius: 45.0,
+                                                                    
+                                                                    child: new Image(
+                                                                        image: new AssetImage(
+                                                                            'lib/styles/images/Sokka.png'
+                                                                        ),
+                                                                        width: 150.0,
+                                                                        color: Colors.white
                                                                     ),
-                                                                    width: 150.0,
-                                                                    color: Colors.white
                                                                 ),
                                                             ),
                                                         ),
