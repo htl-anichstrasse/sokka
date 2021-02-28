@@ -19,5 +19,17 @@ class ShoppingBasketController {
         this._basket.add(product);
     }   
 
+    List<Menu> getAllMenus() {
+        List<Menu> menus = new List<Menu>();
+        this._basket.forEach((item) => item is Menu ? menus.add(item) : null);
+        return menus;
+    }
+
+    List<Product> getAllProducts() {
+        List<Product> products = new List<Product>();
+        this._basket.forEach((item) => item is Product ? products.add(item) : null);
+        return products;
+    }
+
     ShoppingBasketController.internal();
 }
