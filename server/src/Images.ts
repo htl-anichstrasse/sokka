@@ -31,7 +31,7 @@ class Images {
     }
 
     private async purge(): Promise<void> {
-        this.logger.info('Start purging images ...');
+        this.logger.debug('Start purging images ...');
         let counter = 0;
         let res = [].concat.apply([], await Promise.all([Database.instance.query('SELECT image_id FROM sokka_products;'), Database.instance.query('SELECT image_id FROM sokka_menus;')])).map(v => v.image_id);
         fs.readdir(this.pathPrefix, (err, files) => {
@@ -44,7 +44,7 @@ class Images {
                     });
                 }
             }
-            this.logger.info(`Purged ${counter} image(s)`);
+            this.logger.debug(`Purged ${counter} image(s)`);
         });
     }
 
