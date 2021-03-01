@@ -27,7 +27,7 @@ class _ProductGridState extends State<ProductGrid> {
                     itemBuilder: (BuildContext context, int index)
                         => new ProductTile(this._productController.getProducts()[index]),
                     staggeredTileBuilder: (int index)
-                        => new StaggeredTile.count(2, index.isEven ? 3.3 : 3.3),
+                        => new StaggeredTile.count(2, 3.5),
                     mainAxisSpacing: 4.0,
                     crossAxisSpacing: 4.0,
                 ),
