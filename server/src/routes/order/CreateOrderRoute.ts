@@ -47,13 +47,15 @@ class CreateOrderRoute extends Route {
         }
 
         // Sanity checks ...
-        let isInvalid = req.body.products.length === 0 && req.body.menu.length === 0;
+        let isInvalid = false;
         if (typeof req.body.products[Symbol.iterator] === 'function') {
+            isInvalid = req.body.products.length === 0;
             for (let product of req.body.products) {
                 isInvalid = Object.keys(product).length === 2 && (!product.hasOwnProperty('product_id') || !product.hasOwnProperty('quantity'));
             }
         }
         if (typeof req.body.menus[Symbol.iterator] === 'function') {
+            isInvalid = req.body.menu.length === 0;
             for (let menu of req.body.menus) {
                 isInvalid = Object.keys(menu).length === 2 && (!menu.hasOwnProperty('menu_id') || !menu.hasOwnProperty('quantity'));
             }
