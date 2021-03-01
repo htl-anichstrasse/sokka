@@ -16,7 +16,7 @@ class _MenuViewState extends State<MenuView> {
             body: new Container(
                 decoration: new BoxDecoration(
                     image: new DecorationImage(
-                        image: new AssetImage('lib/styles/images/LoginBackground.png'),
+                        image: new AssetImage('lib/styles/images/MenuBackground.png'),
                         fit: BoxFit.cover,
                     ),
                 ),

@@ -2,6 +2,10 @@ import 'package:client/models/Orderable.dart';
 import 'package:flutter/material.dart';
 
 class Product implements Orderable {
+    int _productID;
+    int get getID => this._productID;
+    set setID(final int id) => this._productID = id;
+
     String _name;
     String get getName => this._name;
     set setName(final String name) =>this._name = name;
@@ -18,12 +22,9 @@ class Product implements Orderable {
     bool get isHidden => this._isHidden;
     set setIsHidden(final bool isHidden) => this._isHidden = isHidden;
 
-    String toString() {
-        return 'Product: { name: ${this._name}, price: ${this._price}, isHidden: ${this._isHidden} }';
-    }
-
-    Product({ final String name, final double price, final NetworkImage image,
+    Product({ final int productID, final String name, final double price, final NetworkImage image,
             bool isHidden = false }) {
+        this._productID = productID;
         this._name = name;
         this._image = image;
         this._price = price;

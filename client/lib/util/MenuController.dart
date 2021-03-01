@@ -1,5 +1,4 @@
 import 'package:client/models/Menu.dart';
-import 'package:flutter/material.dart';
 
 class MenuController {
     static MenuController _instance = new MenuController.internal();

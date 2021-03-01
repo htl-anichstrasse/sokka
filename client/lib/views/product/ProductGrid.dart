@@ -17,7 +17,7 @@ class _ProductGridState extends State<ProductGrid> {
             body: new Container(
                 decoration: new BoxDecoration(
                     image: new DecorationImage(
-                        image: new AssetImage('lib/styles/images/LoginBackground.png'),
+                        image: new AssetImage('lib/styles/images/ProductBackground.png'),
                         fit: BoxFit.cover,
                     ),
                 ),

@@ -1,8 +1,8 @@
-import 'package:client/views/LoadingSplashScreen.dart';
-import 'package:client/views/SignUpScreen.dart';
+import 'package:client/views/auth/LoadingSplashScreen.dart';
+import 'package:client/views/auth/SignUpScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:client/views/HomeScreen.dart';
-import 'package:client/views/LoginScreen.dart';
+import 'package:client/views/auth/LoginScreen.dart';
 
 final Map<String, WidgetBuilder> routes = {
     '/':        (BuildContext buildContext) => new HomeScreen(),

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 abstract class Orderable {
+    int get getID;
+    set setID(final int id);
+
     String get getName;
     set setName(final String name);
 

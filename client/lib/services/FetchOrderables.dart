@@ -65,7 +65,7 @@ class FetchOrderables {
                 entries.add(new MenuEntry(titleID: entry['title_id'], menuID: entry['menu_id'],
                     product: await this.getProduct(entry['product_id'])));
             }
-            this._menuController.appendToMenus(new Menu(name: menu['name'], entries: entries,
+            this._menuController.appendToMenus(new Menu(menuID: menu['id'], name: menu['name'], entries: entries,
                 image: await this.getImage(menu['image_id']), price: menu['price'].toDouble(),
                 isHidden: menu['hidden'] == 1));
         }
@@ -93,7 +93,7 @@ class FetchOrderables {
         final data = response['data'];
 
         for (var product in data) {
-            this._productController.appendToProducts(new Product(name: product['name'], price: product['price'].toDouble(),
+            this._productController.appendToProducts(new Product(productID: product['id'], name: product['name'], price: product['price'].toDouble(),
                 image: await this.getImage(product['image_id']), isHidden: product['hidden'] == 1));
         }
     }
@@ -108,7 +108,7 @@ class FetchOrderables {
             );
         final data = response['data'].where((product) => product['id'] == productID).toList()[0];
 
-        return new Product(name: data['name'], price: data['price'].toDouble(),
+        return new Product(productID: productID, name: data['name'], price: data['price'].toDouble(),
             image: await this.getImage(data['image_id']), isHidden: data['hidden'] == 1);
     }
 

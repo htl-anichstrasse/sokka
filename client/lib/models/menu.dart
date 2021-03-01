@@ -6,6 +6,10 @@ import 'package:flutter/material.dart';
 /// Stores all relevant data, such as the different meals and the price of a menu.
 /// -------------------------------------------------------------------------------
 class Menu implements Orderable {
+    int _menuID;
+    int get getID => this._menuID;
+    set setID(final int id) => this._menuID = id;
+
     String _name;
     String get getName => this._name;
     set setName(final String name) => this._name = name;
@@ -26,8 +30,9 @@ class Menu implements Orderable {
     bool get isHidden => this._isHidden;
     set setIsHidden(final bool isHidden) => this._isHidden = isHidden;
 
-    Menu({ final String name, final List<MenuEntry> entries, 
+    Menu({ final int menuID, final String name, final List<MenuEntry> entries, 
             final NetworkImage image, final double price, bool isHidden = false }) {
+        this._menuID = menuID;
         this._name = name;
         this._entries = entries;
         this._image = image;
