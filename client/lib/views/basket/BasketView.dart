@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:client/services/OrderService.dart';
+import 'package:client/util/OrderController.dart';
 import 'package:client/util/ShoppingBasketController.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class BasketView extends StatefulWidget {
 
 class _BasketViewState extends State<BasketView> { 
     final ShoppingBasketController _shoppingBasketController = new ShoppingBasketController();
+    final OrderController _orderController = new OrderController();
     final OrderService _orderService = new OrderService();
     double _totalPrice = 0.0;
 
@@ -68,12 +70,12 @@ class _BasketViewState extends State<BasketView> {
                                     new ListTile(
                                         leading: new Icon(
                                             Icons.credit_card,
-                                            color: Colors.white,
+                                            color: Colors.grey,
                                         ),
                                         title: new Text(
                                             'Pay with credit card',
                                             style: GoogleFonts.montserrat(
-                                                color: Colors.white,
+                                                color: Colors.grey,
                                             ),
                                         ),
                                         onTap: null,
@@ -89,13 +91,13 @@ class _BasketViewState extends State<BasketView> {
                                                 color: Colors.white,
                                             ),
                                         ),
-                                        onTap: () => this._orderService.createOrder().then((response) {
+                                        onTap: () => this._orderService.createOrder().then((response) async {
                                             final image = response['success'] ? 'lib/styles/images/Sokka.png' : 'lib/styles/images/SadSokka.png';
-                                            Navigator.of(context).pop();
+                                            // Navigator.of(context).pop();
                                             showDialog(
                                                 context: context,
-                                                builder: (BuildContext context) {
-                                                    return new AlertDialog(
+                                                builder: (BuildContext context)
+                                                    => new AlertDialog(
                                                         backgroundColor: Colors.transparent,
                                                         title: new Stack(
                                                             children: <Widget>[
@@ -151,7 +153,12 @@ class _BasketViewState extends State<BasketView> {
                                                                                                     color: Colors.white,
                                                                                                 )
                                                                                             ),
-                                                                                            onPressed: () => Navigator.of(context).pop(),
+                                                                                            onPressed: () => {
+                                                                                                Navigator.of(context).pop(),
+                                                                                                setState(() => this._shoppingBasketController.clearBasket()),
+                                                                                                setState(() => this._orderController.clearOrders()),
+                                                                                                this._orderService.appendOrders()
+                                                                                            },
                                                                                         ),
                                                                                     ),
                                                                                 ],
@@ -178,12 +185,11 @@ class _BasketViewState extends State<BasketView> {
                                                                         child: new CircleAvatar(
                                                                             backgroundColor: Colors.tealAccent[700],
                                                                             radius: 45.0,
-                                                                            
                                                                             child: new Image(
                                                                                 image: new AssetImage(
-                                                                                    image
+                                                                                    image,
                                                                                 ),
-                                                                                width: 150.0,
+                                                                                width: 80.0,
                                                                                 color: Colors.white
                                                                             ),
                                                                         ),
@@ -191,8 +197,8 @@ class _BasketViewState extends State<BasketView> {
                                                                 ),
                                                             ],
                                                         ),
-                                                    );
-                                                },
+                                                    ),
+                                                    
                                             );
                                         }),
                                     ),

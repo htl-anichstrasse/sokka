@@ -1,5 +1,6 @@
 import 'dart:ui' as UI;
 import 'package:client/services/FetchOrderables.dart';
+import 'package:client/services/OrderService.dart';
 import 'package:client/services/UserAuth.dart';
 import 'package:client/util/CookieStorage.dart';
 import 'package:client/util/Routes.dart';
@@ -14,6 +15,7 @@ class Sokka extends StatelessWidget {
     final UserAuth _userAuth = new UserAuth();
     final FetchOrderables _fetchOrderables = new FetchOrderables();
     final CookieStorage _cookieStorage = new CookieStorage();
+    final OrderService _orderService = new OrderService();
 
     @override
     Widget build(BuildContext context) {
@@ -48,6 +50,7 @@ class Sokka extends StatelessWidget {
             await this._cookieStorage.initializeCache();
             await this._fetchOrderables.initializeMenus();
             await this._fetchOrderables.initializeProducts();
+            await this._orderService.initializeOrders();
         }
         return isValid;
     }

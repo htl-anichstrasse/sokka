@@ -31,5 +31,7 @@ class ShoppingBasketController {
         return products;
     }
 
+    void clearBasket() => this._basket.clear();
+
     ShoppingBasketController.internal();
 }

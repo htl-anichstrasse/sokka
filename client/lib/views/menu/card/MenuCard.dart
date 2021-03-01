@@ -79,12 +79,11 @@ class _MenuCardState extends State<MenuCard> {
                                                             ),
                                                         ),
                                                         new Padding(
-                                                            padding: new EdgeInsets.only(left: 30.0, top: 5.0),
+                                                            padding: new EdgeInsets.only(left: 30.0, top: 15.0),
                                                             child: new Text(
                                                                 '${this._menu.getPrice.toStringAsFixed(2)} €',
                                                                 style: GoogleFonts.montserrat(
                                                                     color: Colors.black,
-
                                                                 ),
                                                             ),
                                                         ),

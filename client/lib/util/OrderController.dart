@@ -10,13 +10,15 @@ class OrderController {
 
     List<Order> getOrders() => this._orders;
 
-    void appendToMenus({ final Order order }) {
+    void appendToOrders({ final Order order }) {
         this._orders.add(order);
     }
 
-    void appendIterableToMenus({ final List<Order> orders }) {
+    void appendIterableToOrders({ final List<Order> orders }) {
         this._orders.addAll(orders);
     }
+
+    void clearOrders() => this._orders.clear();
 
     OrderController.internal();
 }

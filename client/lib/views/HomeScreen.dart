@@ -1,6 +1,7 @@
 import 'package:client/services/UserAuth.dart';
 import 'package:client/util/CookieStorage.dart';
 import 'package:client/views/menu/MenuView.dart';
+import 'package:client/views/orders/OrderView.dart';
 import 'package:client/views/product/ProductGrid.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as MATH;
@@ -189,7 +190,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: new BasketView(),
                                 ),
                                 new Container(
-                                    child: new Icon(Icons.qr_code, color: Colors.white),
+                                    child: new OrderView(),
                                 ),
                             ],
                         ),
