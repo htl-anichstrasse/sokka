@@ -10,8 +10,20 @@ class OrderService {
     final ShoppingBasketController _basketController = new ShoppingBasketController();
 
     static const ORDER_CREATE = 'https://api.sokka.me/order/create';
+    static const ORDER_GET = 'https://api.sokka.me/order/get';
 
-    Future<void> createOrder() async {
+    Future<Map<String, dynamic>> getOrders() async {
+        final response = await this._networkWrapper
+            .get(
+                ORDER_GET,
+                headers: {
+                    'Authorization': this._bearerAuth.createBearerAuthToken(),
+                },
+            );
+        return response;
+    }
+
+    Future<dynamic> createOrder() async {
         final response = await this._networkWrapper
             .post(
                 ORDER_CREATE,
@@ -24,13 +36,13 @@ class OrderService {
                     'menus': await this.loadMenus(),
                 },
             );
-        print(response);
+        return response;
     }
 
     Future<List<Map<String, int>>> loadProducts() async {
         final List<Product> products = this._basketController.getAllProducts();
         final Map<int, int> productIDtoQuantity = new Map<int, int>();
-        final List<Map<String, int>> payload = new List<Map<String, int>>.filled(products.length, new Map());
+        List<Map<String, int>> payload = new List<Map<String, int>>.filled(products.length, new Map());
 
         products.forEach((product) => productIDtoQuantity[product.getID] = !productIDtoQuantity.containsKey(product.getID)
             ? 1
@@ -43,17 +55,19 @@ class OrderService {
             payload[i] = { 'product_id': productIDs[i], 'quantity': quantities[i] };
         }
 
+        payload = payload.where((product) => product['product_id'] != null).toList();
+        print(payload);
         return payload;
     }
 
     Future<List<Map<String, int>>> loadMenus() async {
         final List<Menu> menus = this._basketController.getAllMenus();
         final Map<int, int> menuIDToQuantitiy = new Map<int, int>();
-        final List<Map<String, int>> payload = new List<Map<String, int>>.filled(menus.length, new Map());
+        List<Map<String, int>> payload = new List<Map<String, int>>.filled(menus.length, new Map());
 
-        menus.forEach((product) => menuIDToQuantitiy[product.getID] = !menuIDToQuantitiy.containsKey(product.getID)
+        menus.forEach((menu) => menuIDToQuantitiy[menu.getID] = !menuIDToQuantitiy.containsKey(menu.getID)
             ? 1
-            : menuIDToQuantitiy[product.getID] + 1);
+            : menuIDToQuantitiy[menu.getID] + 1);
 
         final List<int> menuIDs = menuIDToQuantitiy.keys.toList();
         final List<int> quantities = menuIDToQuantitiy.values.toList();
@@ -62,6 +76,8 @@ class OrderService {
             payload[i] = { 'menu_id': menuIDs[i], 'quantity': quantities[i] };
         }
 
+        payload = payload.where((menu) => menu['menu_id'] != null).toList();
+        print(payload);
         return payload;
     }
 }
