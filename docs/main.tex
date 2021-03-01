@@ -9,7 +9,8 @@
 \usepackage{natbib}
 \usepackage{fullpage}
 \usepackage{courier}
-\usepackage{color} 
+\usepackage{color}
+\usepackage{scrhack}
 \bibliographystyle{agsm}
 \graphicspath{{images/}{../images/}} % set correct path to images
 \headsep = 35pt
@@ -42,14 +43,7 @@
 \pagestyle{headings} 
 
 \begin{document}
-\input{pages/titlepage}
-\input{pages/abstract}
-\newpage
-\input{pages/acknowledgements}
-\newpage
-\tableofcontents
-\newpage
-\input{pages/page1}
+\input{parts/index}
 \setcounter{secnumdepth}{1}
 \appendix
 
