@@ -120,6 +120,7 @@ class _ProductTileState extends State<ProductTile> {
                                         },
                                         label: new Text(
                                             'Add to basket',
+                                            maxLines: 2,
                                             style: GoogleFonts.montserrat(
                                                 color: Colors.black,
                                                 fontSize: 14.0
@@ -128,6 +129,7 @@ class _ProductTileState extends State<ProductTile> {
                                         icon: new Icon(
                                             Icons.shopping_basket,
                                             color: Colors.black,
+                                            size: 17,
                                         ),
                                     ),
                                 ),

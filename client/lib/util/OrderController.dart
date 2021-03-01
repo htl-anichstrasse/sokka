@@ -11,7 +11,7 @@ class OrderController {
     List<Order> getOrders() => this._orders;
 
     void appendToOrders({ final Order order }) {
-        this._orders.add(order);
+        this._orders.insert(0, order);
     }
 
     void appendIterableToOrders({ final List<Order> orders }) {

@@ -136,6 +136,7 @@ class _MenuCardState extends State<MenuCard> {
                                                     icon: new Icon(
                                                         Icons.shopping_basket,
                                                         color: Colors.black,
+                                                        size: 17.0,
                                                     ),
                                                 ),
                                             ),
