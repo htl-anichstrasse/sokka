@@ -27,7 +27,7 @@ log4js.configure({
         console: { type: 'console' }
     },
     categories: {
-        default: { appenders: ['console'], level: config.readConfigValueSync('DEBUG') === 'true' ? 'debug' : 'info' }
+        default: { appenders: ['console'], level: config.readConfigValueSync('DEBUG_LOG') === 'true' ? 'debug' : 'info' }
     }
 });
 const logger = log4js.getLogger('Bootstrap');
