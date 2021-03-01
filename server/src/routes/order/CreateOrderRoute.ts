@@ -50,12 +50,12 @@ class CreateOrderRoute extends Route {
         let isInvalid = req.body.products.length === 0 && req.body.menus.length === 0;
         if (typeof req.body.products[Symbol.iterator] === 'function') {
             for (let product of req.body.products) {
-                isInvalid = Object.keys(product).length === 2 && (!product.hasOwnProperty('product_id') || !product.hasOwnProperty('quantity'));
+                isInvalid = Object.keys(product).length !== 2 || !(product.hasOwnProperty('product_id') && product.hasOwnProperty('quantity'));
             }
         }
         if (typeof req.body.menus[Symbol.iterator] === 'function') {
             for (let menu of req.body.menus) {
-                isInvalid = Object.keys(menu).length === 2 && (!menu.hasOwnProperty('menu_id') || !menu.hasOwnProperty('quantity'));
+                isInvalid = Object.keys(menu).length !== 2 || !(menu.hasOwnProperty('menu_id') && menu.hasOwnProperty('quantity'));
             }
         }
         if (isInvalid) {
