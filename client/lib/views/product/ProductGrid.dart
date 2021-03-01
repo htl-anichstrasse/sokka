@@ -1,5 +1,5 @@
 import 'package:client/util/ProductController.dart';
-import 'package:client/views/product/ProductTile.dart';
+import 'package:client/views/product/tile/ProductTile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
