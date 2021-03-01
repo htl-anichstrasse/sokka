@@ -55,7 +55,7 @@ class CreateOrderRoute extends Route {
             }
         }
         if (typeof req.body.menus[Symbol.iterator] === 'function') {
-            isInvalid = req.body.menu.length === 0;
+            isInvalid = req.body.menus.length === 0;
             for (let menu of req.body.menus) {
                 isInvalid = Object.keys(menu).length === 2 && (!menu.hasOwnProperty('menu_id') || !menu.hasOwnProperty('quantity'));
             }
