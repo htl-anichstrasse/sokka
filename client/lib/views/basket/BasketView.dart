@@ -92,8 +92,8 @@ class _BasketViewState extends State<BasketView> {
                                             ),
                                         ),
                                         onTap: () => this._orderService.createOrder().then((response) async {
-                                            final image = response['success'] ? 'lib/styles/images/Sokka.png' : 'lib/styles/images/SadSokka.png';
-                                            // Navigator.of(context).pop();
+                                            final orderWasSuccessful = response['success'];
+                                            final image = orderWasSuccessful ? 'lib/styles/images/Sokka.png' : 'lib/styles/images/SadSokka.png';
                                             showDialog(
                                                 context: context,
                                                 builder: (BuildContext context)
@@ -155,9 +155,11 @@ class _BasketViewState extends State<BasketView> {
                                                                                             ),
                                                                                             onPressed: () => {
                                                                                                 Navigator.of(context).pop(),
-                                                                                                setState(() => this._shoppingBasketController.clearBasket()),
-                                                                                                setState(() => this._orderController.clearOrders()),
-                                                                                                this._orderService.appendOrders()
+                                                                                                if (orderWasSuccessful) {
+                                                                                                    setState(() => this._shoppingBasketController.clearBasket()),
+                                                                                                    setState(() => this._orderController.clearOrders()),
+                                                                                                    this._orderService.appendOrders()
+                                                                                                }
                                                                                             },
                                                                                         ),
                                                                                     ),
@@ -184,12 +186,12 @@ class _BasketViewState extends State<BasketView> {
                                                                         ),
                                                                         child: new CircleAvatar(
                                                                             backgroundColor: Colors.tealAccent[700],
-                                                                            radius: 45.0,
+                                                                            radius: 45.0,   
                                                                             child: new Image(
                                                                                 image: new AssetImage(
                                                                                     image,
                                                                                 ),
-                                                                                width: 80.0,
+                                                                                height: 80.0,
                                                                                 color: Colors.white
                                                                             ),
                                                                         ),
@@ -231,67 +233,68 @@ class _BasketViewState extends State<BasketView> {
                 body: new Builder(
                     builder: (context) => 
                         new Container(
-                        decoration: new BoxDecoration(
-                        image: new DecorationImage(
-                                image: new AssetImage('lib/styles/images/BasketBackground.png'),
-                                fit: BoxFit.cover,
+                            decoration: new BoxDecoration(
+                                image: new DecorationImage(
+                                   image: new AssetImage('lib/styles/images/BasketBackground.png'),
+                                    fit: BoxFit.cover,
+                                ),
                             ),
-                        ),
-                        child: new ListView.builder(
-                            padding: new EdgeInsets.all(10.0),
-                            itemCount: this._shoppingBasketController.getBasket().length,
-                            itemBuilder: (BuildContext context, int index) => new Dismissible(
-                                key: new UniqueKey(),
-                                onDismissed: (DismissDirection direction) => {
-                                    setState(() => {
-                                        this._shoppingBasketController.getBasket().removeAt(index),
-                                        this._updateTotalPrice(),
-                                    }),
-                                    Scaffold.of(context).showSnackBar(new SnackBar(
-                                            content: new Text(
-                                                '${this._shoppingBasketController.getBasket()[index].getName} has been removed from your basket',
-                                                style: GoogleFonts.montserrat(),
+                            child: new ListView.builder(
+                                padding: new EdgeInsets.all(10.0),
+                                itemCount: this._shoppingBasketController.getBasket().length,
+                                itemBuilder: (BuildContext context, int index) => new Dismissible(
+                                    key: new UniqueKey(),
+                                    onDismissed: (DismissDirection direction) => {
+                                        setState(() => {
+                                            this._shoppingBasketController.getBasket().removeAt(index),
+                                            this._updateTotalPrice(),
+                                        }),
+                                        Scaffold.of(context).showSnackBar(new SnackBar(
+                                                content: new Text(
+                                                    '${this._shoppingBasketController.getBasket()[index].getName} has been removed from your basket',
+                                                    style: GoogleFonts.montserrat(),
+                                                ),
                                             ),
                                         ),
-                                    ),
-                                },
-                                child: new Card(
-                                    color: Colors.transparent,
-                                    shape: new RoundedRectangleBorder(
-                                        borderRadius: new BorderRadius.circular(15.0),
-                                    ),
-                                    clipBehavior: Clip.antiAlias,
-                                    child: new ClipRRect(
-                                        child: new BackdropFilter(
-                                            filter: new ImageFilter.blur(sigmaX: 16.0, sigmaY: 16.0),
-                                            child: new Container(
-                                                decoration: new BoxDecoration(
-                                                    gradient: new LinearGradient(
-                                                        colors: <Color>[
-                                                            Colors.white.withOpacity(0.7),
-                                                            Colors.white.withOpacity(0.05),
-                                                        ],
-                                                        stops: [0.0, 1.0],
-                                                        begin: FractionalOffset.topLeft,
-                                                        end: FractionalOffset.bottomRight,
-                                                        tileMode: TileMode.repeated
-                                                    ),
-                                                ),
-                                                child: new ListTile(
-                                                    leading: this._shoppingBasketController.getBasket()[index] is Menu
-                                                        ? Icon(Icons.restaurant_menu)
-                                                        : Icon(Icons.fastfood),
-                                                    title: new Text(
-                                                        '${this._shoppingBasketController.getBasket()[index].getName}',
-                                                        style: GoogleFonts.montserrat(
-                                                            color: Colors.black,
+                                    },
+                                    child: new Card(
+                                        color: Colors.transparent,
+                                        shape: new RoundedRectangleBorder(
+                                            borderRadius: new BorderRadius.circular(15.0),
+                                        ),
+                                        clipBehavior: Clip.antiAlias,
+                                        child: new ClipRRect(
+                                            child: new BackdropFilter(
+                                                filter: new ImageFilter.blur(sigmaX: 16.0, sigmaY: 16.0),
+                                                child: new Container(
+                                                    decoration: new BoxDecoration(
+                                                        gradient: new LinearGradient(
+                                                            colors: <Color>[
+                                                                Colors.white.withOpacity(0.7),
+                                                                Colors.white.withOpacity(0.05),
+                                                            ],
+                                                            stops: [0.0, 1.0],
+                                                            begin: FractionalOffset.topLeft,
+                                                            end: FractionalOffset.bottomRight,
+                                                            tileMode: TileMode.repeated
                                                         ),
                                                     ),
-                                                    trailing: new Text(
-                                                        '${this._shoppingBasketController.getBasket()[index].getPrice.toStringAsFixed(2)} €',
-                                                        style: GoogleFonts.montserrat(
-                                                            color: Colors.black,
-                                                            fontWeight: FontWeight.bold
+                                                    child: new ListTile(
+                                                        leading: this._shoppingBasketController.getBasket()[index] is Menu
+                                                            ? Icon(Icons.restaurant_menu)
+                                                            : Icon(Icons.fastfood),
+                                                        title: new Text(
+                                                            '${this._shoppingBasketController.getBasket()[index].getName}',
+                                                            style: GoogleFonts.montserrat(
+                                                                color: Colors.black,
+                                                            ),
+                                                        ),
+                                                        trailing: new Text(
+                                                            '${this._shoppingBasketController.getBasket()[index].getPrice.toStringAsFixed(2)} €',
+                                                            style: GoogleFonts.montserrat(
+                                                                color: Colors.black,
+                                                                fontWeight: FontWeight.bold
+                                                            ),
                                                         ),
                                                     ),
                                                 ),
@@ -301,11 +304,14 @@ class _BasketViewState extends State<BasketView> {
                                 ),
                             ),
                         ),
-                    ),
                 ),
             )
             : new Scaffold(
-                body: Container(
+                bottomNavigationBar: new BottomAppBar(
+                    color: new Color(0xFF008C78),
+                    child: new Row(),
+                ),
+                body: new Container(
                     decoration: new BoxDecoration(
                     image: new DecorationImage(
                             image: new AssetImage('lib/styles/images/BasketBackground.png'),
