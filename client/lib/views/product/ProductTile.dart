@@ -112,7 +112,7 @@ class _ProductTileState extends State<ProductTile> {
                                             this._shoppingBasketController.appendProductToBasket(this._product),
                                             Scaffold.of(context).showSnackBar(new SnackBar(
                                                 content: new Text(
-                                                    'Menu: "${this._product.getName}" has been added to your basket!',
+                                                    'Product: "${this._product.getName}" has been added to your basket!',
                                                     style: GoogleFonts.montserrat()
                                                 ),
                                                 duration: new Duration(seconds: 1),
