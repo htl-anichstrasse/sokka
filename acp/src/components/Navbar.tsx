@@ -47,7 +47,7 @@ const LogoutButton: FunctionComponent = (props) => {
     const click = () => {
         let cookies = new Cookies();
         sendRequest('/acp/logout', 'POST', false, {
-            username: cookies.get('sokka_username'),
+            name: cookies.get('sokka_username'),
             token: cookies.get('sokka_token')
         }).then(() => {
             cookies.remove('sokka_username');
