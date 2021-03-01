@@ -1,7 +1,7 @@
 import { Request, Response, Router } from "express";
 import ConfigEntry from "../../models/ConfigEntry";
 import { MenuOrder } from "../../models/order/MenuOrder";
-import Order from "../../models/order/Order";
+import { Order } from "../../models/order/Order";
 import { ProductOrder } from "../../models/order/ProductOrder";
 import User from "../../models/User";
 import Route from "../../Route";
@@ -50,12 +50,12 @@ class CreateOrderRoute extends Route {
         let isInvalid = req.body.products.length === 0 && req.body.menus.length === 0;
         if (typeof req.body.products[Symbol.iterator] === 'function') {
             for (let product of req.body.products) {
-                isInvalid = Object.keys(product).length === 2 && (!product.hasOwnProperty('product_id') || !product.hasOwnProperty('quantity'));
+                isInvalid = Object.keys(product).length !== 2 || !(product.hasOwnProperty('product_id') && product.hasOwnProperty('quantity'));
             }
         }
         if (typeof req.body.menus[Symbol.iterator] === 'function') {
             for (let menu of req.body.menus) {
-                isInvalid = Object.keys(menu).length === 2 && (!menu.hasOwnProperty('menu_id') || !menu.hasOwnProperty('quantity'));
+                isInvalid = Object.keys(menu).length !== 2 || !(menu.hasOwnProperty('menu_id') && menu.hasOwnProperty('quantity'));
             }
         }
         if (isInvalid) {

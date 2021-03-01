@@ -1,5 +1,5 @@
 import Database from "../Database";
-import Order from "./order/Order";
+import { Order } from "./order/Order";
 
 class User implements Model {
     constructor(readonly id: number, public email: string, public verified: boolean, public blocked: boolean, public group_id: number, public password: string, readonly timestamp: number) { }

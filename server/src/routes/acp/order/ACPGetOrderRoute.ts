@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import Order from '../../../models/order/Order';
+import { Order } from '../../../models/order/Order';
 import Route from '../../../Route';
 import { AuthorizationType, NeedsAuthorization, NeedsProperties } from '../../RouteAnnotations';
 

@@ -48,13 +48,13 @@ class Order implements Model {
     }
 
     async getDeep(): Promise<DeepOrder> {
-        let menuOrders;
+        let menuOrders: DeepMenuOrder[];
         try {
             menuOrders = await Promise.all((await MenuOrder.get(this.id)).map(async (v) => await v.getDeep()));
         } catch (e) {
             menuOrders = [];
         }
-        let productOrders;
+        let productOrders: DeepProductOrder[];
         try {
             productOrders = await Promise.all((await ProductOrder.get(this.id)).map(async (v) => await v.getDeep()));
         } catch (e) {
@@ -66,7 +66,8 @@ class Order implements Model {
         } catch (e) {
             rebate = 0;
         }
-        return new DeepOrder(this.id, this.user_id, this.timestamp, this.state, rebate, menuOrders, productOrders);
+        let total = menuOrders.reduce((p1, p2) => p1 + p2.menu.price * p2.quantity, 0) + productOrders.reduce((p1, p2) => p1 + p2.product.price * p2.quantity, 0);
+        return new DeepOrder(this.id, this.user_id, this.timestamp, this.state, rebate, total, menuOrders, productOrders);
     }
 
     async delete(): Promise<void> {
@@ -79,9 +80,9 @@ class Order implements Model {
 }
 
 class DeepOrder extends Order {
-    constructor(readonly id: number, readonly user_id: number, readonly timestamp: number, readonly state: 'VALID' | 'INVALIDATED', readonly rebate: number, readonly menuOrders: DeepMenuOrder[], readonly productOrders: DeepProductOrder[]) {
+    constructor(readonly id: number, readonly user_id: number, readonly timestamp: number, readonly state: 'VALID' | 'INVALIDATED', readonly rebate: number, readonly total: number, readonly menuOrders: DeepMenuOrder[], readonly productOrders: DeepProductOrder[]) {
         super(id, user_id, timestamp, state);
     }
 }
 
-export default Order;
+export { DeepOrder, Order };
