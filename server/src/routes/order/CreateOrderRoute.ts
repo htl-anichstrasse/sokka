@@ -1,7 +1,7 @@
 import { Request, Response, Router } from "express";
 import ConfigEntry from "../../models/ConfigEntry";
 import { MenuOrder } from "../../models/order/MenuOrder";
-import Order from "../../models/order/Order";
+import { Order } from "../../models/order/Order";
 import { ProductOrder } from "../../models/order/ProductOrder";
 import User from "../../models/User";
 import Route from "../../Route";

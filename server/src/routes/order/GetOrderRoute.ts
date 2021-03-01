@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import Order from "../../models/order/Order";
+import { DeepOrder, Order } from "../../models/order/Order";
 import User from "../../models/User";
 import Route from "../../Route";
 import { AuthorizationType, NeedsAuthorization } from "../RouteAnnotations";
@@ -19,7 +19,7 @@ class GetOrderRoute extends Route {
     @NeedsAuthorization(AuthorizationType.App)
     private async get(req: Request, res: Response): Promise<void> {
         let user = await User.getByEmail(Buffer.from(req.token, 'base64').toString('utf-8').split(':')[0]);
-        let order;
+        let order: DeepOrder[];
         if (req.query.date && !isNaN(new Date(String(req.query.date)).getTime())) {
             let date = new Date(String(req.query.date));
             order = await Promise.all((await Order.getForDayAndUser(date, user)).map(async (v) => await v.getDeep()));
