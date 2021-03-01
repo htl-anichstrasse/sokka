@@ -29,11 +29,15 @@ class CreateOrderRoute extends Route {
         }
 
         // Check closing time
-        let closingTime = (await ConfigEntry.get('closingTime')).value.split(':');
+        let closingTime = (await ConfigEntry.get('closingTime')).value.split(':').map((v) => parseInt(v));
         let curDate = new Date();
         let beforeClosingTime = false;
-        if (curDate.getHours() <= parseInt(closingTime[0])) {
-            if (curDate.getMinutes() < parseInt(closingTime[1])) {
+        if (curDate.getHours() <= closingTime[0]) {
+            if (curDate.getHours() === closingTime[0]) {
+                if (curDate.getMinutes() < closingTime[1]) {
+                    beforeClosingTime = true;
+                }
+            } else {
                 beforeClosingTime = true;
             }
         }

@@ -80,7 +80,6 @@ const Order: FunctionComponent<OrderProps> = (props) => {
                         </Card.Text>
                     </div>
                 </div>
-
             </Card.Body>
         </Card>
     );
