@@ -66,7 +66,7 @@ class Order implements Model {
         } catch (e) {
             rebate = 0;
         }
-        let total = menuOrders.reduce((p1, p2) => p1 + p2.menu.price, 0) + productOrders.reduce((p1, p2) => p1 + p2.product.price, 0);
+        let total = menuOrders.reduce((p1, p2) => p1 + p2.menu.price * p2.quantity, 0) + productOrders.reduce((p1, p2) => p1 + p2.product.price * p2.quantity, 0);
         return new DeepOrder(this.id, this.user_id, this.timestamp, this.state, rebate, total, menuOrders, productOrders);
     }
 
