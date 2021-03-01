@@ -32,7 +32,6 @@ const CreateUserComponent: FunctionComponent<CreateUserComponentProps> = (props)
                         minScore={2}
                         ref={passwordRef}
                         scoreWords={['too weak', 'weak', 'okay', 'strong', 'perfect']}
-                        changeCallback={changeCallback}
                         inputProps={{ name: "password", placeholder: "Password", autoComplete: "off", id: "password", className: "form-control", onKeyUp: ((event: React.KeyboardEvent) => onKeyUp(event)) }}
                     />
                 </div>
@@ -45,10 +44,6 @@ const CreateUserComponent: FunctionComponent<CreateUserComponentProps> = (props)
             </form>
         </Card.Body>
     </Card>);
-}
-
-function changeCallback(event: { score: number, isValid: boolean, password: string }) {
-    console.log(event);
 }
 
 function onKeyUp(event: React.KeyboardEvent): void {

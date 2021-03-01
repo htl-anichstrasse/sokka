@@ -45,7 +45,6 @@ function sendRequest(node: string, reqMethod: "GET" | "POST", authNeeded: boolea
                 let cookies = new Cookies();
                 cookies.remove('sokka_token');
                 cookies.remove('sokka_username');
-                console.log("yeet");
                 window.location.href = '/'; // redirect to home
                 reject('Logged out');
             }
