@@ -4,7 +4,7 @@ import 'package:client/services/OrderService.dart';
 import 'package:client/services/UserAuth.dart';
 import 'package:client/util/CookieStorage.dart';
 import 'package:client/util/Routes.dart';
-import 'package:client/views/auth/LoadingSplashScreen.dart';
+import 'package:client/screens/auth/LoadingSplashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:client/styles/theme/AppThemes.dart';
 import 'package:flutter/services.dart';
