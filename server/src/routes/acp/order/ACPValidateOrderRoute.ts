@@ -38,7 +38,7 @@ class ACPValidateOrderRoute extends Route {
             let predicateMap = {
                 "Order does not belong to user": order.user_id === user.id,
                 "Order was not created yesterday": `${orderDate.getFullYear()}${orderDate.getMonth()}${orderDate.getDate()}` === `${yesterday.getFullYear()}${yesterday.getMonth()}${yesterday.getDate()}`,
-                "Order was invalidated": order.state === 'VALID'
+                "Order has already been invalidated": order.state === 'VALID'
             }
             if (Object.values(predicateMap).every(v => v)) {
                 res.send({ success: true, valid: true, order: await order.getDeep() });
