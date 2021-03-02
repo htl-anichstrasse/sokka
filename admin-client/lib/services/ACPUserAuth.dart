@@ -6,20 +6,19 @@ class ACPUserAuth {
     final NetworkWrapper _networkWrapper = new NetworkWrapper();
     final CookieStorage _cookieStorage = new CookieStorage();
 
-    static const String LOGIN_ROUTE = 'https://api.sokka.me/user/login';
-    static const String LOGOUT_ROUTE = 'https://api.sokka.me/user/logout';
-    static const String SIGNUP_ROUTE = 'https://api.sokka.me/user/create';
-    static const String VALIDATE_ROUTE = 'https://api.sokka.me/user/validate';
+    static const String ACP_LOGIN_ROUTE = 'https://api.sokka.me/acp/login';
+    static const String ACP_LOGOUT_ROUTE = 'https://api.sokka.me/acp/logout';
+    static const String ACP_VALIDATE_ROUTE = 'https://api.sokka.me/acp/validate';
 
-    Future<String> loginUser(final String email, final String password) async {
+    Future<String> loginACPUser(final String name, final String password) async {
         return await this._networkWrapper
             .post(
-                LOGIN_ROUTE,
+                ACP_LOGIN_ROUTE,
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: {
-                    'email': email,
+                    'name': name,
                     'password': password,
                 }
             )
@@ -28,49 +27,30 @@ class ACPUserAuth {
             });
     }
 
-    Future<void> logoutUser(final String sessionToken, final String email) async {
+    Future<void> logoutACPUser(final String sessionToken, final String name) async {
         await this._networkWrapper
             .post(
-                LOGOUT_ROUTE,
+                ACP_LOGOUT_ROUTE,
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: {
                     'token': sessionToken,
-                    'email': email
+                    'name': name
                 },
             );
     }
-
-    Future<String> signUpUser(final String email, final String password) async {
+    
+    Future<bool> validateACPSessionToken(final String sessionToken, final String name) async {
         return await this._networkWrapper
             .post(
-                SIGNUP_ROUTE,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: {
-                    'email': email,
-                    'password': password,
-                    "tos": true,
-                    "privacypolicy": true,
-                },
-            )
-            .then((response) {
-                return response['token'];
-            });
-    }
-
-    Future<bool> validateSessionToken(final String sessionToken, final String email) async {
-        return await this._networkWrapper
-            .post(
-                VALIDATE_ROUTE,
+                ACP_VALIDATE_ROUTE,
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: {
                     'token': sessionToken,
-                    'email': email
+                    'name': name
                 },
             )
             .then((response) {
@@ -78,10 +58,10 @@ class ACPUserAuth {
             });
     }
 
-    Future<bool> validateSession() async {
-        String email = await this._cookieStorage.getEmail();
+    Future<bool> validateACPSession() async {
+        String email = await this._cookieStorage.getName();
         String token = await this._cookieStorage.getSessionToken();
 
-        return await this.validateSessionToken(token, email);
+        return await this.validateACPSessionToken(token, email);
     }
 }

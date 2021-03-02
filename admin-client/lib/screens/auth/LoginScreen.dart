@@ -12,10 +12,10 @@ class _LoginScreenState extends State<LoginScreen> {
     final CookieStorage _cookieStorage = new CookieStorage();
     final ACPUserAuth _userAuth = new ACPUserAuth(); 
 
-    final TextEditingController _emailController = new TextEditingController();
+    final TextEditingController _userController = new TextEditingController();
     final TextEditingController _passwordController = new TextEditingController();
 
-    String _email;
+    String _name;
     String _password;
 
     @override
@@ -51,9 +51,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                             )
                                         ),
                                         new Container(
-                                            margin: new EdgeInsets.only(top: 100.0, right: 200.0),
+                                            margin: new EdgeInsets.only(top: 100.0, right: 180.0),
                                             child: new Text(
-                                                'USER SIGN IN',
+                                                'ACP USER SIGN IN',
                                                 style: GoogleFonts.montserrat(
                                                     fontSize: 20.0,
                                                     color: Colors.white
@@ -64,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             margin: new EdgeInsets.only(top: 10.0, right: 70.0),
                                             width: 230.0,
                                             child: new TextFormField(
-                                                controller: this._emailController,
+                                                controller: this._userController,
                                                 obscureText: false,
                                                 keyboardType: TextInputType.emailAddress,
                                                 keyboardAppearance: Brightness.dark,                                               
@@ -132,10 +132,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                                     ),
                                                 ),
                                                 onPressed: () => {
-                                                    this._email = this._emailController.text,
+                                                    this._name = this._userController.text,
                                                     this._password = this._passwordController.text,
 
-                                                    if (this._email.isEmpty || this._password.isEmpty) {
+                                                    if (this._name.isEmpty || this._password.isEmpty) {
                                                         showDialog(
                                                             context: context,
                                                             builder: (BuildContext context) {
@@ -173,9 +173,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                                         ),
                                                     },
 
-                                                    this._userAuth.loginUser(this._email, this._password).then((token) {
+                                                    this._userAuth.loginACPUser(this._name, this._password).then((token) {
                                                         if (token != null) {
-                                                            Future.wait([this._cookieStorage.storeSessionToken(token), this._cookieStorage.storeEmail(this._email)])
+                                                            Future.wait([this._cookieStorage.storeSessionToken(token), this._cookieStorage.storeName(this._name)])
                                                                 .then((_) => {
                                                                     this._initialize().then((_) => {
                                                                         Navigator.of(context).popAndPushNamed('/'),
