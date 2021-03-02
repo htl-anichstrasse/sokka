@@ -48,7 +48,7 @@ function load(): void {
         let tableRows = [];
         let loggedInUser = new Cookies().get('sokka_username');
         for (let id in response.data.users) {
-            let username = response.data.users[id].username;
+            let username = response.data.users[id].name;
             let isCurrentUser = loggedInUser === username;
             tableRows.push(<tr key={id}>
                 <th scope="row">{id}</th>

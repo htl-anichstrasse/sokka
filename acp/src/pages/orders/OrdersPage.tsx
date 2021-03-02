@@ -41,7 +41,7 @@ const OrdersPage: FunctionComponent<OrdersPageProps> = (props) => {
     if (orderData.loaded) {
         content = orderData.data.map((order: Order) => <Order key={order.id} order={order} />);
         if (content.length === 0) {
-            content.push(<h4 className="text-muted">There are no orders for this day</h4>);
+            content.push(<h4 key={'no-orders'} className="text-muted">There are no orders for this day</h4>);
         }
     } else {
         load();

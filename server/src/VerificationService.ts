@@ -72,7 +72,7 @@ class VerificationService {
                     from: 'Sokka noreply@sokka.me',
                     to: user.email,
                     subject: 'Verification Mail — Sokka',
-                    text: `Hi, Sokka here. Please click the following URL to activated your account: https://api.sokka.me/verify?id=${token}`
+                    text: `Hi, Sokka here. Please click the following URL to activated your account: ${config.readConfigValueSync('DOMAIN')}/verify?id=${encodeURIComponent(token)}`
                 }, (err, info) => {
                     if (err) reject(err);
                     resolve(info);
