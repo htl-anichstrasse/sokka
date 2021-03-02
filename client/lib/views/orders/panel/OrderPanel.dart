@@ -229,8 +229,8 @@ class _OrderPanelState extends State<OrderPanel> {
                                                             color: Colors.black,
                                                             fontWeight: FontWeight.bold,
                                                         ),
-                                                    )
-                                                )
+                                                    ),
+                                                ),
                                             ],
                                         ),
                                     ],
