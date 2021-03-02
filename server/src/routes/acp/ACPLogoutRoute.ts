@@ -15,10 +15,10 @@ class ACPLogoutRoute extends Route {
         this.router.post('/logout', this.post.bind(this));
     }
 
-    @NeedsProperties({ username: 'string', token: 'string' })
+    @NeedsProperties({ name: 'string', token: 'string' })
     private async post(req: Request, res: Response): Promise<void> {
         try {
-            let session = await ACPSession.get(await ACPUser.get(req.body.username), req.body.token);
+            let session = await ACPSession.get(await ACPUser.get(req.body.name), req.body.token);
             if (!session) {
                 throw new Error('ACP Session not found');
             }

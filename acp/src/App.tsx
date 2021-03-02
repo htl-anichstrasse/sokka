@@ -29,7 +29,7 @@ function App() {
       return;
     }
     sendRequest('/acp/validate', 'POST', false, {
-      username: cookiesUsername,
+      name: cookiesUsername,
       token: cookiesToken
     }).then((response) => {
       setLoggedIn(response.data.success);

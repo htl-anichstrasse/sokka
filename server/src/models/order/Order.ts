@@ -70,6 +70,10 @@ class Order implements Model {
         return new DeepOrder(this.id, this.user_id, this.timestamp, this.state, rebate, total, menuOrders, productOrders);
     }
 
+    async invalidate(): Promise<void> {
+        await Database.instance.query('UPDATE sokka_orders SET state = ? WHERE id = ?;', ['INVALIDATED', this.id]);
+    }
+
     async delete(): Promise<void> {
         throw new Error("Method not implemented.");
     }

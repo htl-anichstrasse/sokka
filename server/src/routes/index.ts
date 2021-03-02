@@ -19,6 +19,8 @@ export { default as ACPUpdateMenuRoute } from './acp/menu/ACPUpdateMenuRoute';
 export { default as ACPGetMenuCategoryRoute } from './acp/menu/category/ACPGetMenuCategoryRoute';
 export { default as ACPGetMenuTitleRoute } from './acp/menu/title/ACPGetMenuTitleRoute';
 export { default as ACPGetOrderRoute } from './acp/order/ACPGetOrderRoute';
+export { default as ACPInvalidateOrderRoute } from './acp/order/ACPInvalidateOrderRoute';
+export { default as ACPValidateOrderRoute } from './acp/order/ACPValidateOrderRoute';
 export { default as ACPCreateProductRoute } from './acp/product/ACPCreateProductRoute';
 export { default as ACPDeleteProductRoute } from './acp/product/ACPDeleteProductRoute';
 export { default as ACPGetProductRoute } from './acp/product/ACPGetProductRoute';
