@@ -18,28 +18,25 @@ class ACPValidateOrderRoute extends Route {
     @NeedsAuthorization(AuthorizationType.ACP)
     @NeedsProperties({ order: 'string' }, true)
     private async get(req: Request, res: Response): Promise<void> {
-        let orderSplit = req.body.order.split(':');
+        let orderSplit = String(req.query.order).split(':');
         if (orderSplit.length != 2) {
             res.status(400);
             res.send({ success: false, message: 'Invalid order' });
             return;
         }
         try {
-            let user = await User.getById(orderSplit[0]);
-            let order = await Order.get(orderSplit[1]);
-            let predicate1 = order.user_id === user.id;
-            let predicate2 = (new Date(order.timestamp).getDay() - new Date().getDay()) === -1;
-            if (predicate1 && predicate2) {
-                // order belongs to user & order was created yesterday
+            let user = await User.getById(parseInt(orderSplit[0]));
+            let order = await Order.get(parseInt(orderSplit[1]));
+            let predicateMap = {
+                "Order does not belong to user": order.user_id === user.id,
+                "Order was not created yesterday": (new Date(order.timestamp).getDay() - new Date().getDay()) === -1,
+                "Order was invalidated": order.state === 'VALID'
+            }
+            if (Object.values(predicateMap).every(v => v)) {
                 res.send({ success: true, valid: true, order: await order.getDeep() });
             } else {
-                if (!predicate1 && !predicate2) {
-                    res.send({ success: true, valid: false, reason: 'Order does not belong to user and order was not created yesterday' });
-                } else if (predicate1) {
-                    res.send({ success: true, valid: false, reason: 'Order was not created yesterday' });
-                } else {
-                    res.send({ success: true, valid: false, reason: 'Order does not belong to user' });
-                }
+                let reasons = Object.keys(predicateMap).filter((v) => !predicateMap[v]);
+                res.send({ success: true, valid: false, reasons });
             }
         } catch (e) {
             res.send({ success: false, message: e.message });

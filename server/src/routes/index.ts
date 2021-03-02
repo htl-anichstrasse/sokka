@@ -37,8 +37,10 @@ export { default as GetOrderRoute } from './order/GetOrderRoute';
 export { default as GetProductRoute } from './product/GetProductRoute';
 export { default as RootRoute } from './RootRoute';
 export { default as UserCreateRoute } from './user/UserCreateRoute';
+export { default as UserDeleteRoute } from './user/UserDeleteRoute';
 export { default as UserLoginRoute } from './user/UserLoginRoute';
 export { default as UserLogoutRoute } from './user/UserLogoutRoute';
+export { default as UserRequestDataRoute } from './user/UserRequestDataRoute';
 export { default as UserValidateRoute } from './user/UserValidateRoute';
 export { default as VerifyRoute } from './VerifyRoute';
 

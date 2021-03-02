@@ -200,7 +200,6 @@ class _BasketViewState extends State<BasketView> {
                                                             ],
                                                         ),
                                                     ),
-                                                    
                                             );
                                         }),
                                     ),

@@ -84,6 +84,7 @@ services:
       - DEBUG=false
       - DEBUG_LOG=true
       - PORT=8090
+      - DOMAIN=https://api.sokka.me/
       - VIRTUAL_PORT=8090
       - VIRTUAL_HOST=api.sokka.me
       - LETSENCRYPT_HOST=api.sokka.me
