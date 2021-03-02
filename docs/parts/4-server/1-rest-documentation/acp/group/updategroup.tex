@@ -1,1 +1,44 @@
 \subsection{/acp/group/update}
+
+\begin{lstlisting}
+    POST /acp/group/update
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Aktualisiert den Namen oder den Rabatt einer Gruppe. Wird genutzt, um Gruppen im ACP änderbar zu machen.
+
+\textbf{Authorization-Typ:} \\
+ACP
+
+\subsubsection{Payload}
+
+\lstinline{id: number} (benötigt) \\
+$\rightarrow$ Die ID der zu aktualisierenden Gruppe
+
+\lstinline{name: string} (optional) \\
+$\rightarrow$ Der Name der zu aktualisierenden Gruppe
+
+\lstinline{rebate: number} (optional) \\
+$\rightarrow$ Der Rabatt der zu aktualisierenden Gruppe
+
+\subsubsection{Beispiel}
+
+\begin{lstlisting}
+    POST /acp/config/update
+    {
+        "id": 3,
+        "rebate": 20
+    }
+\end{lstlisting}
+
+Setzt den Rabatt der Gruppe mit der ID \lstinline{3} zu \SI{20}{\percent}.
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        success: true, 
+        message: "Successfully updated group"
+    }
+\end{lstlisting}

@@ -1,1 +1,37 @@
 \subsection{/acp/group/delete}
+
+\begin{lstlisting}
+    POST /acp/group/delete
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Löscht eine Gruppe. Wird genutzt, um nicht mehr benötigte Gruppen im ACP zu löschen.
+
+\textbf{Authorization-Typ:} \\
+ACP
+
+\subsubsection{Payload}
+
+\lstinline{id: number} (benötigt) \\
+$\rightarrow$ Die ID der zu löschenden Gruppe
+
+\subsubsection{Beispiel}
+
+\begin{lstlisting}
+    POST /acp/config/delete
+    {
+        "id": 3
+    }
+\end{lstlisting}
+
+Löscht die Gruppe mit der ID \lstinline{3}.
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        success: true, 
+        message: "Successfully updated group"
+    }
+\end{lstlisting}

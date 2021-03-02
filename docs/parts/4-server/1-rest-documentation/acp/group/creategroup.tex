@@ -1,1 +1,41 @@
 \subsection{/acp/group/create}
+
+\begin{lstlisting}
+    POST /acp/group/create
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Erstellt eine neue Nutzergruppe. Wird genutzt, um neue Gruppen via ACP zu erstellen.
+
+\textbf{Authorization-Typ:} \\
+ACP
+
+\subsubsection{Payload}
+
+\lstinline{name: string} (benötigt) \\
+$\rightarrow$ Der gewünschte Name des neu anzulegenden ACP-Nutzerkontos
+
+\lstinline{rebate: number} (benötigt) \\
+$\rightarrow$ Das gewünschte Passwort des neu anzulegenden ACP-Nutzerkontos
+
+\subsubsection{Beispiel}
+
+\begin{lstlisting}
+    POST /acp/acpuser/create
+    {
+        "name": "Teachers",
+        "rebate": 25
+    }
+\end{lstlisting}
+
+Erstellt eine Nutzergruppe mit dem Namen \glqq Teachers\grqq und einem Rabatt von \SI{25}{\percent}
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        success: true, 
+        message: "Successfully created group with id '3'"
+    }
+\end{lstlisting}

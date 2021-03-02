@@ -23,7 +23,7 @@ const ListConfigEntries: FunctionComponent<ListConfigEntriesProps> = (props) => 
 
     // Click handler for submit button, performs an update API request
     const onSubmit = () => {
-        Promise.all(configEntries.filter((entry) => changedEntries.includes(entry.key)).map((configEntry) => sendRequest('/acp/config/update', 'POST', true, { configEntry }))).then((values) => {
+        Promise.all(configEntries.filter((entry) => changedEntries.includes(entry.key)).map((configEntry) => sendRequest('/acp/config/update', 'POST', true, { ...configEntry }))).then((values) => {
             if (values.some((response) => !response.data.success)) {
                 alert('Could not update config entries');
             } else {

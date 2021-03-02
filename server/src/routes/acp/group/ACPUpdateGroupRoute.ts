@@ -15,7 +15,7 @@ class ACPUpdateGroupRoute extends Route {
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)
-    @NeedsProperties({ id: 'number' })
+    @NeedsProperties({ id: 'number' }, false, true)
     private async post(req: Request, res: Response): Promise<void> {
         let group;
         try {

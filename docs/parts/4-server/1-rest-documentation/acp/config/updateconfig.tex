@@ -12,10 +12,6 @@ ACP
 
 \subsubsection{Payload}
 
-\lstinline{configEntry: ConfigEntry} (benötigt)
-
-Ein \textit{ConfigEntry} besteht aus:
-
 \lstinline{key: string} (benötigt) \\
 $\rightarrow$ Der Key des zu aktualisierenden Config-Eintrags
 
@@ -34,10 +30,8 @@ $\rightarrow$ Der Wert des zu aktualisierenden Config-Eintrags
 \begin{lstlisting}
     POST /acp/config/update
     {
-        "configEntry": {
-            "key": "closingTime",
-            "value": "17:00"
-        }
+        "key": "closingTime",
+        "value": "17:00"
     }
 \end{lstlisting}
 

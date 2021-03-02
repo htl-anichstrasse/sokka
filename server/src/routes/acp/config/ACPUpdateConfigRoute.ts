@@ -15,24 +15,21 @@ class ACPUpdateConfigRoute extends Route {
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)
-    @NeedsProperties({ configEntry: 'object' })
+    @NeedsProperties({ key: 'string' }, false, true)
     private async post(req: Request, res: Response): Promise<void> {
         try {
-            if (!req.body.configEntry.key) {
-                throw new Error('Config entry not found');
-            }
-            let configEntry = await ConfigEntry.get(req.body.configEntry.key);
+            let configEntry = await ConfigEntry.get(req.body.key);
             if (!configEntry) {
                 throw new Error('Config entry not found');
             }
-            if (req.body.configEntry.value) {
-                configEntry.value = req.body.configEntry.value;
+            if (req.body.value) {
+                configEntry.value = req.body.value;
             }
-            if (req.body.configEntry.friendlyName) {
-                configEntry.friendlyName = req.body.configEntry.friendlyName;
+            if (req.body.friendlyName) {
+                configEntry.friendlyName = req.body.friendlyName;
             }
             if (req.body.type) {
-                configEntry.type = req.body.configEntry.type;
+                configEntry.type = req.body.type;
             }
             await configEntry.update();
             res.send({ success: true, message: 'Successfully updated config entry' });
@@ -43,8 +40,8 @@ class ACPUpdateConfigRoute extends Route {
                 return;
             }
             res.status(500);
-            res.send({ success: false, message: `An unknown error occurred while updating config entry '${req.body.configEntry.key}'` });
-            this.logger.error(`An unknown error occurred while updating config entry '${req.body.configEntry.key}': ${err}`);
+            res.send({ success: false, message: `An unknown error occurred while updating config entry '${req.body.key}'` });
+            this.logger.error(`An unknown error occurred while updating config entry '${req.body.key}': ${err}`);
         }
     }
 }

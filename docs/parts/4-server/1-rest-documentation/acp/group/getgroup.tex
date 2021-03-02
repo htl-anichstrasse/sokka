@@ -1,1 +1,35 @@
 \subsection{/acp/group/get}
+
+\begin{lstlisting}
+    GET /acp/group/get
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Gibt alle im System gespeicherten Nutzergruppen zurück. Wird genutzt, um eine Auflistung aller Gruppen im ACP zu ermöglichen.
+
+\textbf{Authorization-Typ:} \\
+ACP
+
+\subsubsection{Parameter}
+Keine
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        success: true, 
+        groups: [
+            {
+                "id": 1,
+                "name": "Default",
+                "rebate": 0
+            },
+            {
+                "id": 2,
+                "name": "VIP",
+                "rebate": 10
+            }
+        ]
+    }
+\end{lstlisting}
