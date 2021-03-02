@@ -18,19 +18,27 @@ class ACPValidateOrderRoute extends Route {
     @NeedsAuthorization(AuthorizationType.ACP)
     @NeedsProperties({ order: 'string' }, true)
     private async get(req: Request, res: Response): Promise<void> {
-        let orderSplit = req.body.order.split(':');
+        let orderSplit = String(req.query.order).split(':');
         if (orderSplit.length != 2) {
-            res.status(400);
+            res.send({ success: false, message: 'Invalid order' });
+            return;
+        }
+        let userId = parseInt(orderSplit[0]);
+        let orderId = parseInt(orderSplit[1]);
+        if (isNaN(userId) || isNaN(orderId)) {
             res.send({ success: false, message: 'Invalid order' });
             return;
         }
         try {
-            let user = await User.getById(orderSplit[0]);
-            let order = await Order.get(orderSplit[1]);
+            let user = await User.getById(userId);
+            let order = await Order.get(orderId);
+            let orderDate = new Date(order.timestamp);
+            let yesterday = new Date();
+            yesterday.setDate(new Date().getDate() - 1);
             let predicateMap = {
                 "Order does not belong to user": order.user_id === user.id,
-                "Order was not created yesterday": (new Date(order.timestamp).getDay() - new Date().getDay()) === -1,
-                "Order was invalidated": order.state === 'VALID'
+                "Order was not created yesterday": `${orderDate.getFullYear()}${orderDate.getMonth()}${orderDate.getDate()}` === `${yesterday.getFullYear()}${yesterday.getMonth()}${yesterday.getDate()}`,
+                "Order has already been invalidated": order.state === 'VALID'
             }
             if (Object.values(predicateMap).every(v => v)) {
                 res.send({ success: true, valid: true, order: await order.getDeep() });

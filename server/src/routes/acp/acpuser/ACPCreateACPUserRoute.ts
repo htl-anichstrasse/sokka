@@ -5,7 +5,7 @@ import ACPUser from '../../../models/acp/ACPUser';
 import Route from '../../../Route';
 import { AuthorizationType, NeedsAuthorization, NeedsProperties } from '../../RouteAnnotations';
 
-class ACPCreateUserRoute extends Route {
+class ACPCreateACPUserRoute extends Route {
     readonly router: Router;
     readonly path: string;
 
@@ -36,4 +36,4 @@ class ACPCreateUserRoute extends Route {
     }
 }
 
-export default new ACPCreateUserRoute();
+export default new ACPCreateACPUserRoute();
