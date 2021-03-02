@@ -18,7 +18,7 @@ class ACPGetConfigRoute extends Route {
     private async get(req: Request, res: Response): Promise<void> {
         try {
             let configEntries = await ConfigEntry.getAll();
-            res.send({ success: true, data: configEntries });
+            res.send({ success: true, configEntries });
         } catch (err) {
             res.status(500);
             res.send({ success: false, message: 'An unknown error occurred while fetching config entries' });

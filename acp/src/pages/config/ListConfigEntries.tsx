@@ -11,7 +11,7 @@ const ListConfigEntries: FunctionComponent<ListConfigEntriesProps> = (props) => 
     let [changedEntries, setChangedEntries] = useState([] as string[]);
     const load = () => {
         sendRequest('/acp/config/get', 'GET', true, {}).then((result) => {
-            setConfigEntries(result.data.data);
+            setConfigEntries(result.data.configEntries);
         });
     };
 

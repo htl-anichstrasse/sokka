@@ -18,6 +18,9 @@ class ACPUpdateConfigRoute extends Route {
     @NeedsProperties({ configEntry: 'object' })
     private async post(req: Request, res: Response): Promise<void> {
         try {
+            if (!req.body.configEntry.key) {
+                throw new Error('Config entry not found');
+            }
             let configEntry = await ConfigEntry.get(req.body.configEntry.key);
             if (!configEntry) {
                 throw new Error('Config entry not found');

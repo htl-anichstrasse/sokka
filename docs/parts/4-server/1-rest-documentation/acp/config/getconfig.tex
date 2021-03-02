@@ -1,1 +1,33 @@
 \subsection{/acp/config/get}
+
+\begin{lstlisting}
+    GET /acp/config/get
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Gibt alle im System gespeicherten Config-Einträge zurück. Wird genutzt, um eine Auflistung der Config-Einträge im ACP zu ermöglichen.
+
+\textbf{Authorization-Typ:} \\
+ACP
+
+\subsubsection{Parameter}
+Keine
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        success: true, 
+        configEntries: [
+            {
+                "key": "closingTime",
+                "friendlyName": "Closing Time",
+                "type": "TIME",
+                "value": "20:00"
+            }
+        ]
+    }
+\end{lstlisting}
+
+Wobei \lstinline{type} ein Enum aus den Werten \lstinline{INTEGER}, \lstinline{STRING} und \lstinline{TIME} ist.

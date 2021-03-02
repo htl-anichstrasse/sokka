@@ -1,1 +1,54 @@
 \subsection{/acp/config/update}
+
+\begin{lstlisting}
+    POST /acp/config/update
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Aktualisiert einen Config-Eintrag, insbesondere dessen Wert. Wird genutzt, um im ACP die Werte der Config-Einträge änderbar zu machen.
+
+\textbf{Authorization-Typ:} \\
+ACP
+
+\subsubsection{Payload}
+
+\lstinline{configEntry: ConfigEntry} (benötigt)
+
+Ein \textit{ConfigEntry} besteht aus:
+
+\lstinline{key: string} (benötigt) \\
+$\rightarrow$ Der Key des zu aktualisierenden Config-Eintrags
+
+\lstinline{type: string} (optional) \\
+$\rightarrow$ Der Typ des zu aktualisierenden Config-Eintrags
+
+\lstinline{friendlyName: string} (optional) \\
+$\rightarrow$ Der Anzeigename des zu aktualisierenden Config-Eintrags
+
+\lstinline{value: string} (optional) \\
+$\rightarrow$ Der Wert des zu aktualisierenden Config-Eintrags
+
+
+\subsubsection{Beispiel}
+
+\begin{lstlisting}
+    POST /acp/config/update
+    {
+        "configEntry": {
+            "key": "closingTime",
+            "value": "17:00"
+        }
+    }
+\end{lstlisting}
+
+Setzt den Zeitwert vom Config-Eintrag mit dem Key \lstinline{closingTime} auf den Wert \lstinline{17:00}.
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        success: true, 
+        message: "Successfully updated config entry"
+    }
+\end{lstlisting}
