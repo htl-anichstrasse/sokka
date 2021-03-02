@@ -23,9 +23,13 @@ class ACPInvalidateOrderRoute extends Route {
             res.send({ success: false, message: 'Invalid order' });
             return;
         }
-        let order = await Order.get(orderSplit[1]);
-        await order.invalidate();
-        res.send({ success: true, message: 'Invalidated order' });
+        try {
+            let order = await Order.get(orderSplit[1]);
+            await order.invalidate();
+            res.send({ success: true, message: 'Invalidated order' });
+        } catch (e) {
+            res.send({ success: false, message: e.message });
+        }
     }
 }
 
