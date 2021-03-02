@@ -18,15 +18,15 @@ class ACPValidateOrderRoute extends Route {
     @NeedsAuthorization(AuthorizationType.ACP)
     @NeedsProperties({ order: 'string' }, true)
     private async get(req: Request, res: Response): Promise<void> {
-        let orderSplit = req.body.order.split(':');
+        let orderSplit = String(req.query.order).split(':');
         if (orderSplit.length != 2) {
             res.status(400);
             res.send({ success: false, message: 'Invalid order' });
             return;
         }
         try {
-            let user = await User.getById(orderSplit[0]);
-            let order = await Order.get(orderSplit[1]);
+            let user = await User.getById(parseInt(orderSplit[0]));
+            let order = await Order.get(parseInt(orderSplit[1]));
             let predicateMap = {
                 "Order does not belong to user": order.user_id === user.id,
                 "Order was not created yesterday": (new Date(order.timestamp).getDay() - new Date().getDay()) === -1,
