@@ -20,13 +20,18 @@ class ACPValidateOrderRoute extends Route {
     private async get(req: Request, res: Response): Promise<void> {
         let orderSplit = String(req.query.order).split(':');
         if (orderSplit.length != 2) {
-            res.status(400);
+            res.send({ success: false, message: 'Invalid order' });
+            return;
+        }
+        let userId = parseInt(orderSplit[0]);
+        let orderId = parseInt(orderSplit[1]);
+        if (isNaN(userId) || isNaN(orderId)) {
             res.send({ success: false, message: 'Invalid order' });
             return;
         }
         try {
-            let user = await User.getById(parseInt(orderSplit[0]));
-            let order = await Order.get(parseInt(orderSplit[1]));
+            let user = await User.getById(userId);
+            let order = await Order.get(orderId);
             let predicateMap = {
                 "Order does not belong to user": order.user_id === user.id,
                 "Order was not created yesterday": (new Date(order.timestamp).getDay() - new Date().getDay()) === -1,
