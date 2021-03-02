@@ -82,6 +82,7 @@ services:
       - NGINX_HOST=api.sokka.me
       - NGINX_PORT=8090
       - DEBUG=false
+      - DEBUG_LOG=true
       - PORT=8090
       - VIRTUAL_PORT=8090
       - VIRTUAL_HOST=api.sokka.me
