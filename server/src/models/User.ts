@@ -38,6 +38,14 @@ class User implements Model {
         return users;
     }
 
+    async requestData() {
+        let userData = this;
+        let orderData = await Promise.all((await this.getOrders()).map(async (v) => await v.getDeep()));
+        let sessionData = await Database.instance.query('SELECT * FROM sokka_sessions WHERE user_id = ?;', this.id);
+        let verificationData = await Database.instance.query('SELECT * FROM sokka_verification_urls WHERE user_id = ?;', this.id);
+        return { userData, orderData, sessionData, verificationData };
+    }
+
     async getOrders(): Promise<Order[]> {
         return Order.getForUser(this);
     }
