@@ -32,9 +32,12 @@ class ACPValidateOrderRoute extends Route {
         try {
             let user = await User.getById(userId);
             let order = await Order.get(orderId);
+            let orderDate = new Date(order.timestamp);
+            let yesterday = new Date();
+            yesterday.setDate(new Date().getDate() - 1);
             let predicateMap = {
                 "Order does not belong to user": order.user_id === user.id,
-                "Order was not created yesterday": (new Date(order.timestamp).getDay() - new Date().getDay()) === -1,
+                "Order was not created yesterday": `${orderDate.getFullYear()}${orderDate.getMonth()}${orderDate.getDate()}` === `${yesterday.getFullYear()}${yesterday.getMonth()}${yesterday.getDate()}`,
                 "Order was invalidated": order.state === 'VALID'
             }
             if (Object.values(predicateMap).every(v => v)) {
