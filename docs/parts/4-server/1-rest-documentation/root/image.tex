@@ -4,9 +4,10 @@
     GET /image
 \end{lstlisting}
 
-\paragraph{Beschreibung:} Ruft ein Bild via eindeutiger ID aus dem Bildspeicher des Servers ab. Wird genutzt, um Bilder von Produkten und Menüs in der App und im ACP anzuzeigen.
+\textbf{Beschreibung:} \\
+Ruft ein Bild via eindeutiger ID aus dem Bildspeicher des Servers ab. Wird genutzt, um Bilder von Produkten und Menüs in der App und im ACP anzuzeigen.
 
-\paragraph{Authorization-Typ:}
+\textbf{Authorization-Typ:} \\
 Keine
 
 \subsubsection{Parameter}
@@ -24,8 +25,7 @@ Lädt das Bild mit der angegebenen ID vom Server.
 
 \subsubsection{Antwort (bei Erfolg)}
 
-\paragraph{Body}
-Content-Type: image/png
+\lstinline{Content-Type: image/png}
 \begin{lstlisting}
     Binaerdaten des Bildes
 \end{lstlisting}

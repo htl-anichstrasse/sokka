@@ -61,8 +61,8 @@ class UserCreateRoute extends Route {
             res.send({ success: true, message: 'Successfully created user', token: session.token });
         } catch (err) {
             res.status(500);
-            res.send({ success: false, message: 'An unknown error occurred while signing up user' });
-            this.logger.error(`An unknown error occurred while signing up user '${req.body.username}' with error: ${err}`);
+            res.send({ success: false, message: 'An unknown error occurred while creating user' });
+            this.logger.error(`An unknown error occurred while creating user '${req.body.username}' with error: ${err}`);
         }
     }
 }

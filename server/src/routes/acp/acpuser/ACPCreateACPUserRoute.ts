@@ -27,11 +27,11 @@ class ACPCreateACPUserRoute extends Route {
         try {
             let hash = await bcrypt.hash(req.body.password, parseInt(config.readConfigValueSync('SALT_ROUNDS')));
             let user = await ACPUser.create(req.body.name, hash);
-            res.send({ success: true, message: `Successfully created user ${user.name}` });
+            res.send({ success: true, message: `Successfully created ACP user with username '${user.name}'` });
         } catch (err) {
             res.status(500);
-            res.send({ success: false, message: `An unknown error occurred while signing up ACP user '${req.body.name}'` });
-            this.logger.error(`An unknown error occurred while signing up user '${req.body.name}': ${err}`);
+            res.send({ success: false, message: `An unknown error occurred while creating ACP user '${req.body.name}'` });
+            this.logger.error(`An unknown error occurred while creating ACP user '${req.body.name}': ${err}`);
         }
     }
 }

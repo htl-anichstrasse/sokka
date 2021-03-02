@@ -1,1 +1,35 @@
-\subsection{/acp/acpuser/create}
+\subsection{/acp/acpuser/get}
+
+\begin{lstlisting}
+    GET /acp/acpuser/get
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Gibt alle im System gespeicherten ACP-Nutzerkonten zurück.
+
+\textbf{Authorization-Typ:} \\
+ACP
+
+\subsubsection{Parameter}
+Keine
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        success: true, 
+        users: [
+            {
+                "name": "joshua",
+                "timestamp": "2021-03-02T18:22:02.043Z"
+            },
+            {
+                "name": "nicolaus",
+                "timestamp": "2021-03-02T18:23:08.890Z"
+            }
+        ]
+    }
+\end{lstlisting}
+
+Wobei \lstinline{timestamp} der Timestamp der Erstellung des Nutzerkontos im ISO-8601-Format ist.

@@ -4,9 +4,10 @@
     GET /verify
 \end{lstlisting}
 
-\paragraph{Beschreibung:} Überprüft einen E-Mail-Verifizierungs-Token auf Validität. Diesen erhalten Nutzer nach der Erstellung eines Nutzerkontos via E-Mail.
+\textbf{Beschreibung:} \\
+Überprüft einen E-Mail-Verifizierungs-Token auf Validität. Diesen erhalten Nutzer nach der Erstellung eines Nutzerkontos via E-Mail.
 
-\paragraph{Authorization-Typ:}
+\textbf{Authorization-Typ:} \\
 Keine
 
 \subsubsection{Parameter}
@@ -24,8 +25,20 @@ Prüft den angegebenen Verifizierungstoken
 
 \subsubsection{Antwort (bei Erfolg)}
 
-\paragraph{Body}
-Content-Type: application/json
+\lstinline{Content-Type: application/json}
 \begin{lstlisting}
-    { success: true, message: 'Successfully verified user' }
+    {
+        "success": true, 
+        "message": "Successfully verified user"
+    }
+\end{lstlisting}
+
+\subsubsection{Antwort (bei ungültigem Token)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        "success": false, 
+        "message": "Invalid token '9n6g7M7ow4qCNXW2nmkpYEavx8M32c%2BRGk1gyYq2ymJ8MRVfx98Bb0bRqt9VrtC40YcqKWpRk86FAShSH4zhQ%3D%3D'" 
+    }
 \end{lstlisting}

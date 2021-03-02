@@ -1,1 +1,41 @@
 \subsection{/acp/acpuser/create}
+
+\begin{lstlisting}
+    POST /acp/acpuser/create
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Erstellt ein neues ACP-Nutzerkonto. Wird genutzt, um weitere ACP-Nutzerkonten im ACP zu erstellen.
+
+\textbf{Authorization-Typ:} \\
+ACP
+
+\subsubsection{Payload}
+
+\lstinline{name: string} (benötigt) \\
+$\rightarrow$ Der gewünschte Name des neu anzulegenden ACP-Nutzerkontos
+
+\lstinline{password: string} (benötigt) \\
+$\rightarrow$ Das gewünschte Passwort des neu anzulegenden ACP-Nutzerkontos
+
+\subsubsection{Beispiel}
+
+\begin{lstlisting}
+    POST /acp/acpuser/create
+    {
+        "name": "joshua",
+        "password": "sicheresPasswort"
+    }
+\end{lstlisting}
+
+Erstellt ein ACP-Nutzerkonto mit dem Namen \glqq joshua\grqq und dem Passwort \glqq sicheresPasswort\grqq.
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        success: true, 
+        message: "Successfully created ACP user with username 'joshua'"
+    }
+\end{lstlisting}

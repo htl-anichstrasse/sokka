@@ -1,1 +1,37 @@
-\subsection{/acp/acpuser/get}
+\subsection{/acp/acpuser/delete}
+
+\begin{lstlisting}
+    POST /acp/acpuser/delete
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Löscht ein ACP-Nutzerkonto. Wird genutzt, um nicht mehr benötigte ACP-Nutzerkonten im ACP zu löschen.
+
+\textbf{Authorization-Typ:} \\
+ACP
+
+\subsubsection{Payload}
+
+\lstinline{name: string} (benötigt) \\
+$\rightarrow$ Der Name des zu löschenden ACP-Nutzerkontos
+
+\subsubsection{Beispiel}
+
+\begin{lstlisting}
+    POST /acp/acpuser/delete
+    {
+        "name": "joshua"
+    }
+\end{lstlisting}
+
+Löscht das ACP-Nutzerkonto mit dem Namen \glqq joshua\grqq.
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        success: true, 
+        message: "Successfully deleted ACP user with username 'joshua'"
+    }
+\end{lstlisting}
