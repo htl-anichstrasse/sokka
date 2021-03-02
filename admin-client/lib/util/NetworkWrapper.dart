@@ -17,11 +17,11 @@ class NetworkWrapper {
                 headers: headers,
             )
             .then((http.Response response) {
-            if (response.statusCode < 200 || response.statusCode > 400 || json == null) {
-                throw new Exception("Error fetching data from $url with ${response.statusCode}");
-            }
-            return this._jsonDecoder.convert(response.body);
-        });
+                if (response.statusCode < 200 || response.statusCode > 400 || json == null) {
+                    throw new Exception("Error fetching data from $url with ${response.statusCode}");
+                }
+                return this._jsonDecoder.convert(response.body);
+            });
     }
 
     Future<dynamic> post(final String url, { final Map<String, String> headers, body, encoding }) async {
@@ -34,7 +34,7 @@ class NetworkWrapper {
             )
             .then((http.Response response) {
                 if (response.statusCode < 200 || response.statusCode > 400 || json == null) {
-                    throw new Exception("Error fetching data from $url");
+                    throw new Exception("Error fetching data from $url with error ${response.statusCode}");
                 }
                 return this._jsonDecoder.convert(response.body);
             });

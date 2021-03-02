@@ -10,7 +10,7 @@ import 'package:flutter/services.dart';
 void main() async => runApp(Sokka());
 
 class Sokka extends StatelessWidget {
-    final ACPUserAuth _userAuth = new ACPUserAuth();
+    final ACPUserAuth _acpUserAuth = new ACPUserAuth();
     final CookieStorage _cookieStorage = new CookieStorage();
 
     @override
@@ -41,7 +41,7 @@ class Sokka extends StatelessWidget {
     }
 
     Future<bool> _initialize() async {
-        final isValid = await this._userAuth.validateSession();
+        final isValid = await this._acpUserAuth.validateACPSession();
         if (isValid) {
             await this._cookieStorage.initializeCache();
         }
