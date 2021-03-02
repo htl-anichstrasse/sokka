@@ -1,0 +1,45 @@
+\chapter{REST-Route-Dokumentation}
+
+Im folgenden Kapitel werden alle verfügbaren Routes der im Backend-Server eingebauten REST-API so genau wie möglich dokumentiert. Die Routes der API sind nicht für die öffentliche Verwendung, beziehungsweise für die Erstellung benutzerdefinierter Clients gedacht und wurden ausschließlich für die Verwendung in Kombination mit dem \textbf{Sokka-Flutter-Client} konzipiert und umgesetzt.
+
+\section{Authorization}
+
+Um die Zugriffe auf gespeicherte Daten und Nutzerkonten zu sichern, sind einige der REST-Routes durch eine \textit{Bearer-Authorization} (auch bekannt als \textit{Token-Authorization}) geschützt. Diese Routes benötigen in dem Header der Anfrage einen Eintrag mit dem Schlüsselwort \lstinline{Authorization}. Fehlt dieser Eintrag oder ist er ungültig, so wird die Anfrage an die API nicht bearbeitet.
+
+Die Funktionsweise der \textit{Bearer-Authorization} steckt in dessen Namen. Sie gibt dem \glqq Bearer\grqq, zu Deutsch dem \glqq Inhaber\grqq eines Zugriff-Tokens Zugriff auf eine Ressource. \cite{levin2019}
+
+Im Sokka-System gibt es 2 Arten von Tokens, welche für die Authorisierung benötigt werden können: \lstinline{App} und \lstinline{ACP}. Welche der beiden Arten für eine Route benötigt ist, wird bei den einzelnen Routes als \textbf{Authorization-Typ} angegeben.
+
+\begin{itemize}
+    \item Einen \lstinline{App}-Token erhält man durch eine Anmeldung in der App (siehe \nameref{appauth})
+    \item Einen \lstinline{ACP}-Token erhält man durch eine Anmeldung im ACP (siehe \nameref{acpauth})
+\end{itemize}
+
+Damit die Authorisierung dann klappt, muss der empfangene Token gemeinsam mit der Nutzer-E-Mail beziehungsweise dem ACP-Nutzernamen im Format \lstinline{<Name/E-Mail>:<Token>} in Base64-Enkodierung in dem \lstinline{Authorization}-Header der gewünschten API-Anfrage gesendet werden.
+
+Wenn nun beispielsweise eine Anmeldung mit E-Mail und Passwort an die User-Login-Route (\nameref{appauth}) durchgeführt wird, muss der davon erhaltene Token gemeinsam mit der E-Mail immer in dem Header mitgesendet werden.
+
+\begin{lstlisting}[language=JavaScript]
+    let xhr = new XMLHTTPRequest();
+    // btoa() enkodiert einen String in Base64
+    xhr.setRequestHeader('Authorization', btoa(email + ':' + token))
+    xhr.open(method, route);
+\end{lstlisting}
+
+Wenn zum Beispiel die \lstinline{email} und der \lstinline{token} im obigen Code-Beispiel \lstinline{josh@sokka.me} und \lstinline{TXJ9Gb9s5gYIdGpPSDYlq6LnTpg7rRMb} sind, dann ist der finale Header
+
+\begin{lstlisting}
+    Authorization: Bearer am9zaEBzb2trYS5tZTpUWEo5R2I5czVnWUlkR3BQU0RZbHE2TG5UcGc3clJNYg==
+\end{lstlisting}
+
+\input{parts/4-server/1-rest-documentation/root/index}
+
+\input{parts/4-server/1-rest-documentation/acp/index}
+
+\input{parts/4-server/1-rest-documentation/menu/index}
+
+\input{parts/4-server/1-rest-documentation/product/index}
+
+\input{parts/4-server/1-rest-documentation/order/index}
+
+\input{parts/4-server/1-rest-documentation/user/index}

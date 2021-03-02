@@ -1,0 +1,31 @@
+\subsection{/verify}
+
+\begin{lstlisting}
+    GET /verify
+\end{lstlisting}
+
+\paragraph{Beschreibung:} Überprüft einen E-Mail-Verifizierungs-Token auf Validität. Diesen erhalten Nutzer nach der Erstellung eines Nutzerkontos via E-Mail.
+
+\paragraph{Authorization-Typ:}
+Keine
+
+\subsubsection{Parameter}
+
+\lstinline{id: string} (benötigt) \\
+$\rightarrow$ Der Verifizierungs-Token
+
+\subsubsection{Beispiel}
+
+\begin{lstlisting}
+    GET /verify?id=9n6g7M7ow4qCNXW2nmkpYEavx8M32c%2BRGk1gyYq2ymJ8MRVfx98Bb0bRqt9VrtC40YcqKWpRk86FAShSH4zhQ%3D%3D
+\end{lstlisting}
+
+Prüft den angegebenen Verifizierungstoken
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\paragraph{Body}
+Content-Type: application/json
+\begin{lstlisting}
+    { success: true, message: 'Successfully verified user' }
+\end{lstlisting}

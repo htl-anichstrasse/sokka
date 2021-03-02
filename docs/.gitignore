@@ -9,4 +9,5 @@
 *.toc
 *.gz
 *.pdf
+*.out
 __latexindent*

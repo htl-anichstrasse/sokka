@@ -1,0 +1,31 @@
+\subsection{/image}
+
+\begin{lstlisting}
+    GET /image
+\end{lstlisting}
+
+\paragraph{Beschreibung:} Ruft ein Bild via eindeutiger ID aus dem Bildspeicher des Servers ab. Wird genutzt, um Bilder von Produkten und Menüs in der App und im ACP anzuzeigen.
+
+\paragraph{Authorization-Typ:}
+Keine
+
+\subsubsection{Parameter}
+
+\lstinline{id: string} (benötigt) \\
+$\rightarrow$ Die eindeutige ID des gewünschten Bildes
+
+\subsubsection{Beispiel}
+
+\begin{lstlisting}
+    GET /image?id=52af25abdf2ffced06f863b3c7a0bb42
+\end{lstlisting}
+
+Lädt das Bild mit der angegebenen ID vom Server.
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\paragraph{Body}
+Content-Type: image/png
+\begin{lstlisting}
+    Binaerdaten des Bildes
+\end{lstlisting}
