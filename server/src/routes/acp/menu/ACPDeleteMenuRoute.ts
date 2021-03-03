@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import Product from '../../../models/product/Product';
+import Menu from '../../../models/menu/Menu';
 import Route from '../../../Route';
 import { AuthorizationType, NeedsAuthorization, NeedsProperties } from '../../RouteAnnotations';
 
@@ -11,28 +11,28 @@ class ACPDeleteMenuRoute extends Route {
         super();
         this.router = Router();
         this.path = '/acp';
-        this.router.post('/product/delete', this.post.bind(this));
+        this.router.post('/menu/delete', this.post.bind(this));
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)
     @NeedsProperties({ id: 'number' })
     private async post(req: Request, res: Response): Promise<void> {
         try {
-            let product = await Product.get(req.body.id);
-            if (!product) {
-                throw new Error('Product not found');
+            let menu = await Menu.get(req.body.id);
+            if (!menu) {
+                throw new Error('Menu not found');
             }
-            await product.delete();
-            res.send({ success: true, message: `Successfully deleted product with id '${req.body.id}'` });
+            await menu.delete();
+            res.send({ success: true, message: `Successfully deleted menu with id '${req.body.id}'` });
         } catch (err) {
-            if (err.message === 'Product not found') {
+            if (err.message === 'Menu not found') {
                 res.status(400);
                 res.send({ success: false, message: err.message });
                 return;
             }
             res.status(500);
-            res.send({ success: false, message: `An unknown error occurred while deleting product with id '${req.body.id}'` });
-            this.logger.error(`An unknown error occurred while deleting product with id '${req.body.id}': ${err}`);
+            res.send({ success: false, message: `An unknown error occurred while deleting menu with id '${req.body.id}'` });
+            this.logger.error(`An unknown error occurred while deleting menu with id '${req.body.id}': ${err}`);
         }
     }
 }

@@ -1,1 +1,37 @@
 \subsection{/acp/menu/delete}
+
+\begin{lstlisting}
+    POST /acp/menu/delete
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Löscht ein Menü. Wird genutzt, um nicht mehr benötigte Menüs im ACP zu löschen.
+
+\textbf{Authorization-Typ:} \\
+ACP
+
+\subsubsection{Payload}
+
+\lstinline{id: number} (benötigt) \\
+$\rightarrow$ Die ID des zu löschenden Menü
+
+\subsubsection{Beispiel}
+
+\begin{lstlisting}
+    POST /acp/menu/delete
+    {
+        "id": 5
+    }
+\end{lstlisting}
+
+Löscht das Menü mit der ID \lstinline{5}.
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        success: true, 
+        message: "Successfully deleted menu with id '5'"
+    }
+\end{lstlisting}

@@ -1,1 +1,37 @@
 \subsection{/acp/menu/category/get}
+
+\begin{lstlisting}
+    GET /acp/menu/category/get
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Gibt alle im System gespeicherten Menükategorien zurück. Wird genutzt, um eine Auflistung aller Menükategorien auf der Bearbeitungsseite für Menüs im ACP zu ermöglichen.
+
+\textbf{Authorization-Typ:} \\
+ACP
+
+\subsubsection{Parameter}
+Keine
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        success: true, 
+        menucategories: [
+            {
+                "id": 1,
+                "name": "Beverages"
+            },
+            {
+                "id": 2,
+                "name": "Snacks"
+            },
+            {
+                "id": 3,
+                "name": "Burgers"
+            }
+        ]
+    }
+\end{lstlisting}

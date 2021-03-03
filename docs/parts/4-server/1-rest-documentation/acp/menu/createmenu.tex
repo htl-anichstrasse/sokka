@@ -1,1 +1,58 @@
 \subsection{/acp/menu/create}
+
+\begin{lstlisting}
+    POST /acp/menu/create
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Erstellt eine neues Menü. Wird genutzt, um neue Menüs via ACP zu erstellen.
+
+\textbf{Authorization-Typ:} \\
+ACP
+
+\subsubsection{Payload}
+
+\lstinline{name: string} (benötigt) \\
+$\rightarrow$ Der gewünschte Name des neu anzulegenden Menüs
+
+\lstinline{category_id: number} (benötigt) \\
+$\rightarrow$ Die gewünschte Kategorie-ID des neu anzulegenden Menüs
+
+\lstinline{image_id: string} (benötigt) \\
+$\rightarrow$ Die gewünschte Bild-ID des neu anzulegenden Menüs
+
+\lstinline{price: number} (benötigt) \\
+$\rightarrow$ Der gewünschte Preis des neu anzulegenden Menüs
+
+\lstinline{entries: MenuEntry[]} (optional) \\
+$\rightarrow$ Die initialien Einträge des Menüs
+
+\subsubsection{Beispiel}
+
+\begin{lstlisting}
+    POST /acp/menu/create
+    {
+        "name": "Mittagsmenue",
+        "category_id": 25,
+        "image_id": "23c94790921c89f56e0629d1282033f0",
+        "price": 5,
+        "entries": [
+            {
+                "product_id": "3",
+                "title_id": 1
+            }
+        ]
+    }
+\end{lstlisting}
+
+Erstellt ein Menü mit den übertragenen Daten.
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        success: true, 
+        message: "Successfully created menu with id '5'"
+    }
+\end{lstlisting}

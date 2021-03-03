@@ -1,1 +1,56 @@
 \subsection{/acp/menu/get}
+
+\begin{lstlisting}
+    GET /acp/menu/get
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Gibt alle im System gespeicherten Menüs oder nur eines zurück. Wird genutzt, um eine Auflistung aller Menüs im ACP zu ermöglichen.
+
+\textbf{Authorization-Typ:} \\
+ACP
+
+\subsubsection{Parameter}
+
+\lstinline{id: number} (optional)
+$\rightarrow$ Die ID des gewünschten Menüs
+
+\subsubsection{Beispiel}
+
+\begin{lstlisting}
+    GET /acp/menu/get?id=2
+\end{lstlisting}
+
+Gibt das Menü mit der ID 2 zurück.
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        success: true, 
+        menus: [
+            {
+                "id": 2,
+                "category_id": 3,
+                "name": "Cheesy 'n' Coke",
+                "image_id": "23c94790921c89f56e0629d1282033f0",
+                "price": 5,
+                "entries": [
+                    {
+                        "id": 2,
+                        "product_id": 2,
+                        "menu_id": 1,
+                        "title_id": 1
+                    },
+                    {
+                        "id": 3,
+                        "product_id": 8,
+                        "menu_id": 1,
+                        "title_id": 3
+                    }
+                ]
+            }
+        ]
+    }
+\end{lstlisting}

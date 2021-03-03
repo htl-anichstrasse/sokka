@@ -1,1 +1,50 @@
-\subsection{/acp/menu/get}
+\subsection{/acp/menu/update}
+
+\begin{lstlisting}
+    POST /acp/menu/update
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Aktualisiert den Namen, die Kategorie, das Bild, den Preis oder den Inhalt eines Menüs. Wird genutzt, um Menüs im ACP änderbar zu machen.
+
+\textbf{Authorization-Typ:} \\
+ACP
+
+\subsubsection{Payload}
+
+\lstinline{id: number} (benötigt) \\
+$\rightarrow$ Die ID der zu aktualisierenden Menüs
+
+\lstinline{name: string} (optional) \\
+$\rightarrow$ Der Name des zu aktualisierenden Menüs
+
+\lstinline{image_id: string} (optional) \\
+$\rightarrow$ Die Bild-ID des zu aktualisierenden Menüs
+
+\lstinline{category_id: number} (optional) \\
+$\rightarrow$ Die Kategorie-ID des zu aktualisierenden Menüs
+
+\lstinline{price: number} (optional) \\
+$\rightarrow$ Der Preis des zu aktualisierenden Menüs
+
+\subsubsection{Beispiel}
+
+\begin{lstlisting}
+    POST /acp/menu/update
+    {
+        "id": 5,
+        "name": "Abendmenue"
+    }
+\end{lstlisting}
+
+Setzt den Namen des Menüs mit der ID \lstinline{5} zu \glqq Abendmenue\grqq.
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        success: true, 
+        message: "Successfully updated menu"
+    }
+\end{lstlisting}

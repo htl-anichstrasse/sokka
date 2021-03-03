@@ -5,10 +5,13 @@ import MenuEntry from "./MenuEntry";
 class Menu implements Model {
     protected constructor(readonly id: number, public category_id: number, public name: string, public image_id: string, public price: number) { }
 
-    static async create(category_id: number, name: string, image_id: string, price: number, entries?: []): Promise<Menu> {
+    static async create(category_id: number, name: string, image_id: string, price: number, entries?: MenuEntry[]): Promise<Menu> {
         let result = await Database.instance.query(`INSERT INTO sokka_menus (category_id, name, image_id, price) VALUES (?, ?, ?, ?)`, [category_id, name, image_id, price]);
-        let menu = new Menu(result.insertId, category_id, name, image_id, price);;
-        if (entries) {
+        let menu = new Menu(result.insertId, category_id, name, image_id, price);
+        if (entries && entries.length > 0) {
+            for (let i = 0; i < entries.length; i++) {
+                entries[i]['menu_id'] = menu.id;
+            }
             menu.setEntries(entries);
         }
         return menu;

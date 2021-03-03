@@ -3,7 +3,7 @@ import Product from "../product/Product";
 import MenuTitle from "./MenuTitle";
 
 class MenuEntry implements Model {
-    constructor(readonly id, readonly product_id: number, readonly menu_id: number, public title_id: number) { }
+    constructor(readonly id, readonly product_id: number, public menu_id: number, public title_id: number) { }
 
     static async create(product_id: number, menu_id: number, title_id: number): Promise<MenuEntry> {
         let result = await Database.instance.query(`INSERT INTO sokka_menus_products_connector  (product_id, menu_id, title_id) VALUES (?, ?, ?)`, [product_id, menu_id, title_id]);

@@ -1,1 +1,37 @@
 \subsection{/acp/menu/title/get}
+
+\begin{lstlisting}
+    GET /acp/menu/title/get
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Gibt alle im System gespeicherten Menütitel zurück. Wird genutzt, um eine Auflistung aller Menütitel im Bearbeitungsdialog für Menüs im ACP zu ermöglichen.
+
+\textbf{Authorization-Typ:} \\
+ACP
+
+\subsubsection{Parameter}
+Keine
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        success: true, 
+        menutitles: [
+            {
+                "id": 1,
+                "name": "Starter"
+            },
+            {
+                "id": 2,
+                "name": "Main Dish"
+            },
+            {
+                "id": 3,
+                "name": "Dessert"
+            }
+        ]
+    }
+\end{lstlisting}
