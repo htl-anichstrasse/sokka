@@ -1,1 +1,37 @@
 \subsection{/acp/order/invalidate}
+
+\begin{lstlisting}
+    POST /acp/order/invalidate
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Invalidiert eine Bestellung. Wird genutzt, um eingelöste Bestellungen beziehungsweise QR-Codes an der Kasse zu invalidieren. Achtung: Diese Route prüft nicht, ob die Bestellung einlösbar ist. Dafür ist \nameref{validateOrder} zu nutzen.
+
+\textbf{Authorization-Typ:} \\
+ACP
+
+\subsubsection{Payload}
+
+\lstinline{order: string} (benötigt) \\
+$\rightarrow$ Die zu invalidierende Bestellung im Format \glqq userId:orderId\grqq
+
+\subsubsection{Beispiel}
+
+\begin{lstlisting}
+    POST /acp/menu/invalidate
+    {
+        "order": "25:10",
+    }
+\end{lstlisting}
+
+Invalidiert die Bestellung mit der ID \lstinline{10}.
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        "success": true, 
+        "message": "Successfully invalidated order"
+    }
+\end{lstlisting}

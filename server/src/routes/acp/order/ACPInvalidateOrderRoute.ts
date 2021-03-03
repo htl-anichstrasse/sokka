@@ -26,7 +26,7 @@ class ACPInvalidateOrderRoute extends Route {
         try {
             let order = await Order.get(orderSplit[1]);
             await order.invalidate();
-            res.send({ success: true, message: 'Invalidated order' });
+            res.send({ success: true, message: 'Successfully invalidated order' });
         } catch (e) {
             res.send({ success: false, message: e.message });
         }

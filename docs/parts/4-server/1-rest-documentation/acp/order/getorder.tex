@@ -1,1 +1,53 @@
 \subsection{/acp/order/get}
+
+\begin{lstlisting}
+    GET /acp/order/get
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Gibt alle im System gespeicherten Bestellungen für ein bestimmtes Datum zurück. Wird genutzt, um die Bestellungsübersicht im ACP zu ermöglichen.
+
+\textbf{Authorization-Typ:} \\
+ACP
+
+\subsubsection{Parameter}
+
+\lstinline{date: string} (benötigt) \\
+$\rightarrow$ Das gewünsche Bestellungsdatum
+
+\subsubsection{Beispiel}
+
+\begin{lstlisting}
+    GET /acp/order/get?date=2021-03-01
+\end{lstlisting}
+
+Gibt alle Bestellungen, welche am 1. März 2020 getätigt wurden, zurück.
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        "success": true, 
+        "orders": [
+            {
+                "id": 60,
+                "user_id": 26,
+                "timestamp": "2021-03-01T08:29:34.000Z"
+                "state": "VALID",
+                "rebate": 10,
+                "total": 6,
+                "menuOrders": [
+                    "menu_id": 1,
+                    "quantity": 1,
+                    "menu": <Menu Object>
+                ],
+                "productOrders": [
+                    "product_id": 1,
+                    "quantity": 1,
+                    "product": <Product Object>
+                ]
+            }
+        ]
+    }
+\end{lstlisting}

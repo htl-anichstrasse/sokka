@@ -1,1 +1,70 @@
 \subsection{/acp/order/validate}
+\label{validateOrder}
+
+\begin{lstlisting}
+    GET /acp/order/validate
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Prüft die Validität einer Bestellung. Wird genutzt, um im Admin-Client die Bestellung aus einem gelesenen QR-Code zu überprüfen.
+
+\textbf{Authorization-Typ:} \\
+ACP
+
+\subsubsection{Parameter}
+
+\lstinline{order: string} (benötigt) \\
+$\rightarrow$ Die zu validierende Bestellung im Format \glqq userId:orderId\grqq
+
+\subsubsection{Beispiel}
+
+\begin{lstlisting}
+    GET /acp/order/get?validate?order=25:10
+\end{lstlisting}
+
+Validiert die Bestellung mit der ID \lstinline{10} vom Nutzer \lstinline{25}.
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        "success": true, 
+        "valid": true,
+        "order": {
+            "id": 60,
+            "user_id": 26,
+            "timestamp": "2021-03-01T08:29:34.000Z"
+            "state": "VALID",
+            "rebate": 10,
+            "total": 6,
+            "menuOrders": [
+                "menu_id": 1,
+                "quantity": 1,
+                "menu": <Menu Object>
+            ],
+            "productOrders": [
+                "product_id": 1,
+                "quantity": 1,
+                "product": <Product Object>
+            ]
+        }
+    }
+\end{lstlisting}
+
+\subsubsection{Antwort (bei ungültiger Bestellung)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        "success": true, 
+        "valid": false,
+        "reasons": [
+            "Order does not belong to user",
+            "Order was not created yesterday",
+            "Order has already been invalidated"
+        ]
+    }
+\end{lstlisting}
+
+Wobei \lstinline{reasons} immer ein String-Array mit allen zutreffenden Begründungen ist, weshalb der übertragene Code ungültig ist.
