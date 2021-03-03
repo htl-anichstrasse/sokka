@@ -2,9 +2,132 @@
 
 \subsection{Was ist Dart?}
 
-\textit{Dart} ist eine von \textbf{Google} entwickelte Client-optimierte Programmiersprache deren
-Fokus auf der Entwicklung performance-orientierter und plattformunabhängiger Apps liegt.
-\textbf{Google} bietet damit eine der produktivsten Sprachen für die simultane Entwicklung von
-mehreren Plattformen mit einer "[...] flexiblen Ausführungslaufzeitplattform für App-Frameworks".
+\textit{Dart} ist höhere, für den client-optimierte Programmiersprache
+zur Entwicklung von Apps auf mehreren Plattformen.\\
+Sie wird von \textit{Google} entwickelt und wird hauptsächlich zum Entwickeln von
+Servern, (nativen) Mobile-, Desktop- oder Web-Apps verwendet.
+
+Wie viele andere Hochsprachen baut Dart strikt auf dem Konzept der Objekt-Orientierung auf
+und ist damit eine klassenbasierte Programmiersprache mit eingebautem, automatischem
+Garbage-Collector.
+
+Dart ist eine kompilierte Sprache und kann sowohl in Maschinencode als auch in \\
+Vanilla-JavaScript kompiliert werden, wodurch plattformunabhängige Entwicklung ermöglicht 
+wird.
+
+\subsection{Syntax von Dart}
+
+Die Syntax von Dart sieht auf den ersten Blick aus, wie eine Mischung aus \textit{Java}\\
+und \text{JavaScript}.
+
+Ein \textit{Hello-World}-Programm würde in Dart also folgendermaßen aussehen:
+\begin{lstlisting}[language=JavaScript]
+void main(List<String> arguments) {
+    print('Hello, World!');
+}
+\end{lstlisting}
+
+\subsubsection{Variablen}
+
+Die Deklaration von Variablen funktioniert gleich wie anderen Hochsprachen,
+wobei Primitiv- und Referenzdatentypen (int, String, Integer, ...) aus Sprachen wie Java zur Verwendung
+kommen.\\
+Alternativ kann auf das Schlüsselwort \textit{var} aus JavaScript zurückgegriffen werden. Dieses
+ist vergleichbar mit dem \textit{Object}-Datentyp aus Java und "errät" den benötigten
+Typ der entsprechenden Variable.
+
+\begin{lstlisting}[language=JavaScript]
+// Direktes Anlegen eines Integers mit dem Wert 5.
+int x = 5;
+
+// Anlegen eines Integers mit dem Wert 7 mithilfe von "var".
+var y = 7;
+\end{lstlisting}
+
+Nach Dart-Konventionen ist es allerdings üblich, die Angabe des Datentyps für Variablen 
+im lokalen Scope, bspw. innerhalb einer Funktion durch das \textit{var}-Keyword zu ersetzen.
+
+Für \textit{finale} Variablen kann sowohl auf dezidierten Datentyp als auch auf \textit{var} 
+verzichtet werden.
+
+\begin{lstlisting}[language=JavaScript]
+final x = 10;
+\end{lstlisting}
+
+\subsubsection{Funktionen}
+
+
+
+\subsubsection{Klassen}
+
+Ähnlich zu Hochsprachen wie Java oder C\# können auch in Dart einfach Klassen
+erstellt werden, wie nachfolgend zu sehen ist.
+
+\pagebreak
+
+\begin{lstlisting}[language=JavaScript]
+class Point {
+    int _x;
+    int _y;
+    
+    Point(this._x, this._y);
+}
+\end{lstlisting}
+
+Wie auch in JavaScript oder Python gibt es in Dart keine Access-Modifier um den Zugriff
+auf klasseninterne Felder oder Methoden zu regulieren.\\
+Felder und Funktionen sind standardmäßig \textbf{public} und können lediglich durch
+einen Unterstrich zu Beginn des Feld- bzw. Funktionsnamen als \textbf{private} gekennzeichnet
+werden.
+
+Desweiteren stehen in Dart - ebenso wie in C\# - die Schlüsselwörter \textbf{get} und 
+\textbf{set} zur Verfügung, mit deren Verwendung Funktionen als dezidierte Getter- bzw.
+Setter-Funktion für eine Membervariable definiert werden können.
+
+\begin{lstlisting}[language=JavaScript]
+class Foo {
+    String _bar;
+
+    String get getBar => this._bar;
+
+    set setBar(final String bar) => this._bar = bar;
+}
+\end{lstlisting}
+
+In diesem Beispiel werden \textit{getBar} und \textit{setBar} als dezidierte Getter- und\\
+Setter-Funktion für das Feld \textbf{\_bar} festgelegt.
+Auffällig ist ebenso die JavaScript-ähnliche Arrow-Syntax, die ein Return-Statement
+zur Gänze ersetzen kann.\\
+So kann ein \textit{return}, wie es in Java geschrieben wird durch ein Arrow-Statement wie folgt
+ersetzt werden.
+
+\begin{lstlisting}[language=JavaScript]
+// Java
+public String getName() {
+    return this.name;
+}
+
+// Dart
+String get getName => this._name;
+\end{lstlisting}
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Unterschiede zu anderen Hochsprachen}
 
 \subsection{Unterschiede zu JavaScript}
