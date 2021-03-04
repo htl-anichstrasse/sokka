@@ -1,1 +1,40 @@
 \subsection{/acp/image}
+
+\begin{lstlisting}
+    POST /acp/image
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Lädt ein neues Bild hoch. Wird genutzt, um die Bilder-Upload-Funktion im ACP zu ermöglichen.
+
+\textbf{Authorization-Typ:} \\
+ACP
+
+\subsubsection{Payload}
+
+\lstinline{buffer: ArrayBuffer} (benötigt) \\
+$\rightarrow$ Der UInt8Array Buffer aus dem das hochzuladende Bild besteht
+
+\subsubsection{Beispiel}
+
+\begin{lstlisting}
+    POST /acp/image
+    {
+        "buffer": {
+            "type": "Buffer",
+            data: [<Binary Data>]
+        } 
+    }
+\end{lstlisting}
+
+Lädt ein Bild mit den Binärdaten im übergebenen ArrayBuffer hoch.
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        "success": true, 
+        "message": "Image saved successfully"
+    }
+\end{lstlisting}

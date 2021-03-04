@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express';
 import Images from '../../Images';
 import Route from '../../Route';
-import { AuthorizationType, NeedsAuthorization, NeedsProperties } from '../RouteAnnotations';
+import { NeedsProperties } from '../RouteAnnotations';
 
 class ACPImageRoute extends Route {
     readonly router: Router;
@@ -11,26 +11,7 @@ class ACPImageRoute extends Route {
         super();
         this.router = Router();
         this.path = '/acp';
-        this.router.get('/image', this.get.bind(this));
         this.router.post('/image', this.post.bind(this));
-    }
-
-    @NeedsAuthorization(AuthorizationType.ACP)
-    @NeedsProperties({ id: 'number' }, true)
-    private async get(req: Request, res: Response): Promise<void> {
-        try {
-            let image = await Images.instance.readImage(String(req.query.id));
-            res.set({ 'Content-Type': 'image/png' });
-            res.send(image);
-        } catch (err) {
-            if (err.message = 'Image not found') {
-                res.status(404);
-                res.send({ success: false, message: 'Image not found' });
-                return;
-            }
-            res.status(500);
-            res.send({ success: false, message: 'Image could not be loaded' });
-        }
     }
 
     @NeedsProperties({ buffer: 'object' })

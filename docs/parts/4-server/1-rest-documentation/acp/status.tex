@@ -1,1 +1,38 @@
 \subsection{/acp/status}
+
+\begin{lstlisting}
+    GET /acp/status
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Gibt aktuelle Statistiken und Auslastungsdaten des Sokka-Systems zurück. Werte werden maximal alle 5 Sekunden ausgelesen.
+
+\textbf{Authorization-Typ:} \\
+ACP
+
+\subsubsection{Parameter}
+Keine
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        "success": true, 
+        "status": [
+            "users": 11,
+            "ordersToday": 2,
+            "registeredProducts": 25,
+            "registeredMenus": 5,
+            "sysUptime": 21069220,
+            "procUptime": 138350.661,
+            "totalMem": 64314.59375,
+            "freeMem": 515.703125,
+            "platform": "linux",
+            "cpuCount": 12,
+            "cpuUsage": 0.209398186314922169
+        ]
+    }
+\end{lstlisting}
+
+
