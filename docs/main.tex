@@ -16,6 +16,8 @@
 \bibliographystyle{plain}
 \graphicspath{{images/}{../images/}} % set correct path to images
 \headsep = 35pt
+
+% Basic
 \lstset{basicstyle=\ttfamily\scriptsize}
 \lstset{showspaces=false}
 \lstset{showtabs=false}
@@ -29,6 +31,8 @@
 \lstset{numbers=left, numberstyle=\tiny, stepnumber=1, numbersep=5pt}
 \lstset{captionpos=b}
 \lstset{frame=single}
+
+% JavaScript
 \definecolor{lightgray}{rgb}{.9,.9,.9}
 \definecolor{darkgray}{rgb}{.4,.4,.4}
 \definecolor{purple}{rgb}{0.65, 0.12, 0.82}
@@ -46,20 +50,36 @@
   morestring=[b]',
   morestring=[b]"
 }
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95, 0.95, 0.96}
+% Define the codebox
 \lstset{
-   language=JavaScript,
-   backgroundcolor=\color{lightgray},
-   extendedchars=true,
-   basicstyle=\footnotesize\ttfamily,
-   showstringspaces=false,
-   showspaces=false,
-   numbers=left,
-   numberstyle=\footnotesize,
-   numbersep=9pt,
-   tabsize=2,
-   breaklines=true,
-   showtabs=false,
-   captionpos=b
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{
+% Types
+emph=[1]{final, void, var, String, int, List},% Insert here the types you are using
+emphstyle=[1]{\color{codepurple}},
+% Functions
+emph=[2]{main},% Insert here the methods you are using
+emphstyle=[2]{\color{magenta}}%
 }
 
 \DeclareOldFontCommand{\bf}{\normalfont\bfseries}{\mathbf}
