@@ -33,14 +33,14 @@ Die Deklaration von Variablen funktioniert gleich wie anderen Hochsprachen,
 wobei Primitiv- und Referenzdatentypen (int, String, Integer, ...) aus Sprachen wie Java zur Verwendung
 kommen.\\
 Alternativ kann auf das Schlüsselwort \textit{var} aus JavaScript zurückgegriffen werden. Dieses
-ist vergleichbar mit dem \textit{Object}-Datentyp aus Java und "errät" den benötigten
+ist vergleichbar mit dem \textit{Object}-Datentyp aus Java und ''errät'' den benötigten
 Typ der entsprechenden Variable.
 
 \begin{lstlisting}
 // Direktes Anlegen eines Integers mit dem Wert 5.
 int x = 5;
 
-// Anlegen eines Integers mit dem Wert 7 mithilfe von "var".
+// Anlegen eines Integers mit dem Wert 7 mithilfe von ''var''.
 var y = 7;
 \end{lstlisting}
 
@@ -54,16 +54,113 @@ verzichtet werden.
 final x = 10;
 \end{lstlisting}
 
+\subsubsection{Verzweigungen und Schleifen}
+
+Für die Kontrolle des Ablaufs eines Programms werden wie gewohnt \textit{if-else-Statements} und Schleifen
+wie \textit{for / for in / for each} oder \textit{while} verwendet.\\
+Die Syntax jener Kontrollstrukturen ist mit der von JavaScript quasi ident.
+
+\begin{lstlisting}
+// Verzweigung mit zwei Bedingungen
+if (condition 1) {
+    ...
+} else if (condition 2) {
+    ...
+} else {
+    ...
+}
+\end{lstlisting}
+
+\begin{lstlisting}
+final list = [1, 2, 3, 4, 5];
+
+// Standard for-Schleife
+for (var i; i < list.length; i++) {
+    ...
+}
+
+// for-in-Schleife
+for (var value in list) {
+    ...
+}
+
+// forEach-Schleife mit Callback-Funktion
+list.forEach((value) => {
+    ...
+})
+\end{lstlisting}
+
+\begin{lstlisting}
+//while-Schleife
+while(!condition) {
+    ...
+}
+\end{lstlisting}
+
 \subsubsection{Funktionen}
 
+Funktionen in Dart werden auf dieselbe Weise wie in Java deklariert. Die Funktionssignatur 
+bzw. der Funtkionskopf benötigt den Rückgabewert der Funktion, den Namen und die Parameterliste.
 
+\begin{lstlisting}
+// Funktion ohne Rueckgabewert
+void sayHi() {
+    print('Hi!');
+}
+
+int multiply(final int x, final int y) => x * y;
+\end{lstlisting}
+
+Dart bietet in Bezug auf das Übergeben von Parametern an eine Funktion mehrere Mögichkeiten:
+\begin{itemize}
+    \item \textit{positioned, optional parameters}
+    \item \textit{named, optional parameters}
+\end{itemize}
+
+Sogenannte \textit{positionierte und optionale Parameter} werden in der Argumentliste einer Funktion
+mithilfe eckiger Klammern gekennzeichnet und bewirken, wie der Name bereits verrät, dass jene Parameter
+optional und in ihrer Position fixiert sind.
+
+\begin{lstlisting}
+void sendRequest(final String url, final String message, [ final int port = 80 ]) {
+    ...
+}
+\end{lstlisting}
+
+Die Funktion \textit{getHttpUrl()} benötigt neben dem Server und Pfad auch eine Portnummer, welche
+hier als positionierter, optionaler Parameter mit einem Standartwert von 80 festgelegt wird.
+Wird beim Aufruf dieser Funktion der Port-Integer weggelassen, so wird dieser immer auf 80 gesetzt.
+
+\begin{lstlisting}
+// Aufruf mit Port 8080
+getHttpUrl('sokka.me', 'Sokka is awesome!', 8080);
+
+// Aufruf mit Standartport 80
+getHttpUrl('sokka.me', 'Sokka is awesome!');
+\end{lstlisting}
+
+Neben positionierten Parametern gibt es noch ''benannte'', sogenannte \textit{named} Parameter, 
+die mit geschwungenen Klammern in der Parameterliste deklariert werden.\\
+
+\begin{lstlisting}
+sendRequest(final String url, { final String message, final int port }) {
+    ...
+}
+\end{lstlisting}
+
+Neben einer URL benötigt die obige Funktion auch eine Nachricht und eine Port-Nummer,
+um einen gültigen Request zu versenden.\\
+Aufgrund ihrer Deklaration innerhalb der geschwungen Klammern
+werden sie als benannte Parameter interpretiert und werden wie folgt übergeben.
+
+\begin{lstlisting}
+sendRequest('api.sokka.me', message: 'Sokka is awesome!', port: 80);
+\end{lstlisting}
 
 \subsubsection{Klassen}
 
 Ähnlich zu Hochsprachen wie Java oder C\# können auch in Dart einfach Klassen
 erstellt werden, wie nachfolgend zu sehen ist.
-
-\pagebreak
 
 \begin{lstlisting}[language=JavaScript]
 class Point {
@@ -95,10 +192,10 @@ class Foo {
 \end{lstlisting}
 
 In diesem Beispiel werden \textit{getBar} und \textit{setBar} als dezidierte Getter- und\\
-Setter-Funktion für das Feld \textbf{\_bar} festgelegt.
+Setter-Funktion für das Feld \textbf{\_bar} festgelegt.\\
 Auffällig ist ebenso die JavaScript-ähnliche Arrow-Syntax, die ein Return-Statement
-zur Gänze ersetzen kann.\\
-So kann ein \textit{return}, wie es in Java geschrieben wird durch ein Arrow-Statement wie folgt
+zur Gänze ersetzen kann.
+So kann ein \textit{return}, wie es in Java geschrieben wird, durch ein Arrow-Statement wie folgt
 ersetzt werden.
 
 \begin{lstlisting}[language=JavaScript]
@@ -110,24 +207,3 @@ public String getName() {
 // Dart
 String get getName => this._name;
 \end{lstlisting}
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-\subsection{Unterschiede zu anderen Hochsprachen}
-
-\subsection{Unterschiede zu JavaScript}
