@@ -13,7 +13,7 @@
     <br/>
     <a href="https://github.com/htl-anichstrasse/sokka/releases">Releases</a>
     ·
-    <a href="https://sokka.me/not-there-yet">Thesis</a>
+    <a href="https://sokka.me/thesis.pdf">Thesis</a>
   </p>
 </p>
 
