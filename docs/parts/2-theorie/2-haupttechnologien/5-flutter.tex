@@ -116,7 +116,7 @@ Kind-Widget erzeugt.
 Wie bereits erwähnt können durch das Kaskadieren unterschiedlicher Widgets
 relativ einfach komplexe UI-Strukturen erzeugt werden.\\
 Hierfür müssen lediglich die weiteren / inneren Widgets dem 
-\textit{child}- bzw. \textit{children}- Property übergeben werden.
+\textit{child}- bzw. \textit{children}-Property des äußeren Widgets übergeben werden.
 \pagebreak
 \begin{lstlisting}
 ...
@@ -140,26 +140,173 @@ new Container(
 ...
 \end{lstlisting}
 
-% https://flutter.dev/assets/ui/layout/sample-flutter-layout-46c76f6ab08f94fa4204469dbcf6548a968052af102ae5a1ae3c78bc24e0d915.png
 % https://flutter.dev/docs/development/ui/layout
 
 \subsection{Rendern von Widgets}
 
-\subsection{Interaktivität von Widgets}
+Grundsätzlich erfolgt das Rendern eines Widgets über seine eigene \textit{build}-Funktion. Diese wird aufgerufen,
+sobald ein Widget gerendert bzw. neugerendert werden muss und retourniert ein entsprechendes Widget-Objekt,
+der dem Design-Tree des entsprechenden Kontexts hinzugefügt wird.
 
-\subsection{App-States und ephimerale States}
+\begin{lstlisting}
+@override
+Widget build(BuildContext context) {
+    return new Container(
+        child: new Image(
+            image: new AssetImage('path/to/image')
+        ),
+    );
+}
+\end{lstlisting}
+
+Obige Build-Funktion erzeugt einen neuen Container mit einem Bild als Kindelement und übergibt dieses
+an den Widget-Tree des entsprechenden Layouts.
+
+Hierbei gilt allerdings, zwischen zwei Arten von Widgets zu unterscheiden, den sogenannten \textit{Stateless Widgets}
+und \textit{Stateful Widgets}.
+
+Wie der Name bereits verrät, haben Stateless-Widgets einen definierten, statischen Zustand und reagieren nicht
+auf das Verhalten anderer Widgets oder die Interaktion eines Nutzers, beispielsweise Icons, Text oder einfache
+Buttons.
+
+\begin{lstlisting}
+class SokkaLogo extends StatelessWidget {
+    @override
+    Widget build(BuildContext build) {
+        return new ListTile(
+            title: new Text('Sokka is awesome!'),
+            leading: new Icon(
+                Icons.flutter_logo,
+                color: colors.White,
+            ),
+        );
+    }
+}
+\end{lstlisting}
+
+Stateful-Widgets dagegen haben einen internen Zustand, welcher durch Interaktion mit dem Nutzer dynamisch verändert
+werden kann, beispielsweise durch das Tippverhalten des Benutzers.
+
+\subsection{Interaktivität der App}
+
+% https://flutter.dev/docs/development/ui/interactive
+
+Um für Interaktion der App zu sorgen werden, wie eben erwähnt, sogenannte Stateful Widgets benötigt.
+Diese Widgets sind dynamisch und können beispielsweise ihr Aussehen als Reaktion auf Events, Input durch
+den Nutzer der App oder etwa auf den Erhalt von Daten von einer API verändern.
+
+Damit ein solches Widget weiß welchen Zustand es zum aktuellen Zeitpunkt, wird dieser in einem \textit{State}-Objekt vom Typ
+des Widgets gespeichert. Ein solches State-Objekt besteht aus Werten, die den Zustand des entsprechenden Widget beschreiben können,
+beispielsweise ob ein ExpansionPanel (aufklappbare Karte) auf- oder zugeklappt ist oder der welchen Wert ein Slider-Widget
+aktuell hat.
+
+Um den Zustand eines Widgets während der Laufzeit verändern und jene Änderung im Anschluss anzeigen zu können,
+wird hierfür die \textit{setState()}-Funktion verwendet.\\
+Diese überschreibt die entsprechende Variable mit dem neuen Zustandswert und lässt die Flutter-Engine das entsprechende
+Widget neu rendern um die Veränderung direkt erkennbar zu machen.
+
+\begin{lstlisting}
+class LoginScreen extends StatefulWidget {
+    @override
+    _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+    @override
+    Widget build(BuildContext context) {
+        return new Scaffold(
+            body: new Center(
+                ...
+            ),
+        );
+    }
+}
+\end{lstlisting}
+
+Wie anhand der Implementation zu erkennen ist, ruft das Widget \textit{LoginScreen} die Build-Funktion
+seines Zustandwrappers \textit{\_LoginScreenState} auf und erzeugt damit ein neues Widget mit dem entsprechenden
+Zustand.\\
+Ändert sich jener Zustand so wird die Build-Funktion erneut, aber mit einem anderen, entsprechenden Zustand,
+aufgerufen und das Widget wird neu-gerendert.
+
+\subsubsection{App-States und ephemerale States}
+
+% https://flutter.dev/docs/development/data-and-backend/state-mgmt/ephemeral-vs-app
+
+In Bezug auf die Widget-Architektur von Flutter gilt es zwei Arten von Zuständen zu unterscheiden:
+
+\paragraph{Ephemerale Zustände}
+
+Unter sogenannten ephemeralen Zustände, auch UI-Zustand oder lokaler Zustand genannt, versteht man Zustände, welche in
+einem einzelnen Widget gespeichert werden können.
+Ein ephemeraler Zustand ist also vergleichbar mit einer veränderbaren, lokalen Variable einer Klasse oder eines Scopes.
+
+Einfache Beispiele hierfür sind etwa
+\begin{itemize}
+    \item der Fortschritt eines Animationsprozesses
+    \item aktuell ausgewählter Tab in einer BottomNavigationBar
+    \item die aktuelle Zahl an Widgets in einem ListView
+\end{itemize}
+
+\paragraph{App-Zustände}
+
+Im Gegensatz zu ephemeralen Zuständen werden App-Zustände global über die gesamte App gespeichert und
+können daher an jeden Ort in der App abgerufen und verändert werden.
+
+Beispiele im konkreten Fall von Sokka sind unter anderem
+\begin{itemize}
+    \item Email-Adresse und Session-Token der aktuellen Usersitzung
+    \item Aktuell verfügbare Menüs und Produkte
+    \item Gespeicherte Menüs und Produkte im Warenkorb
+    \item alle Bestellungen des angemeldeten Nutzers
+\end{itemize}
 
 \subsection{Navigation und Routing durch die App}
 
+Um zwischen den verschiedenen Screens und Views der App zu wechseln und zu navigieren 
+benötigen wir die \textit{Navigator}-Klasse von Flutter.
 
+Hierfür ist es sinnvoll zuerst eine HashMap mit allen möglichen Routes der App zu definieren
+um so benannte Routen (\textit{named routes}) verwenden zu können.\\
+Diese Routen müssen im Anschluss dem \textit{routes}-Property des MaterialApp-Widgets unserer App übergeben werden.
 
+\begin{lstlisting}
+final Map<String, WidgetBuilder> routes = {
+    '/':        (BuildContext buildContext) => new HomeScreen(),
+    '/login':   (BuildContext buildContext) => new LoginScreen(),
+    '/signup':  (BuildContext buildContext) => new SignUpScreen(),
+    '/loading': (BuildContext buildContext) => new LoadingSplashScreen()
+};
+\end{lstlisting}
 
+\begin{lstlisting}
+return new MaterialApp( 
+    ...
+    routes: routes
+    ...
+);
+\end{lstlisting}
 
+Nun kann mithilfe der Navigator-Klasse und unseren definierten Routen einfach durch die App
+navigiert werden.
 
+Hierfür stehen einige Methoden zur Verfügung:
 
+\begin{lstlisting}
+// Wechselt vom aktuellen Screen zum LoginScreen
+Navigator.of(context).pushNamed('/login');
 
+// Wechselt vom aktuellen Screen zum SignupScreen und schliesst vorherigen.
+Navigator.of(context).popAndPushNamed('/signup');
+\end{lstlisting}
 
+Alternativ kann auch ohne NamedRoutes durch die App mithilfe der (umständlicheren) \textit{push()}-Funktion navigiert 
+werden.
 
+\begin{lstlisting}
+// Erzeugt eine neue, temporaere Route zum HomeScreen und wechselt direkt zu diesem
+Navigator.of(context).push(context, new MaterialPageRoute(builder: (context) => new HomeScreen()));
 
-
-
+// Schliesst HomeScreen und kehrt zu vorherigen Screen zurueck
+Navigator.pop(context);
+\end{lstlisting}
