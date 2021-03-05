@@ -21,6 +21,7 @@ von der eigentlichen App bis hin zum einfachen Text.
     \begin{center}
         \includegraphics[width=0.5\textwidth]{images/Flutter/design-structure.png}
         \caption{Design-Struktur und Widget-Aufbau von Flutter}
+        \cite{flutterDesignArchitecture}
         % https://flutter.dev/docs/resources/architectural-overview
     \end{center}
 \end{figure}
@@ -56,10 +57,13 @@ für iOS.\\
 Das jeweilige Widget-Paket passt sich adaptiv an das Design des entsprechenden Betriebssystem an, um ein einen möglichst
 geringen UI-Kontrast zwischen App und dem Rest des Betriebssystems zu garantieren.
 
+% Kombination von Material & Cupertino oder Default mit Custom Scrolls.
+
 \begin{figure}[H]
     \begin{center}
         \includegraphics[width=0.5\textwidth]{images/Flutter/material-slider.png}
         \caption{Slider-Widget im Material-Design für Android}
+        \cite{flutterMaterialSlider}
         % https://flutter.github.io/assets-for-api-docs/assets/material/slider.png
     \end{center}
 \end{figure}
@@ -68,6 +72,7 @@ geringen UI-Kontrast zwischen App und dem Rest des Betriebssystems zu garantiere
     \begin{center}
         \includegraphics[width=0.5\textwidth]{images/Flutter/cupertino-slider.png}
         \caption{Slider-Widget im Cupertino-Design für iOS}
+        \cite{flutterCupertinoSlider}
         % https://flutter.dev/images/widget-catalog/cupertino-slider.png
     \end{center}
 \end{figure}
@@ -77,22 +82,76 @@ geringen UI-Kontrast zwischen App und dem Rest des Betriebssystems zu garantiere
 Den Kern von Flutters Layout-System bilden, wie bereits erwähnt, die einzelnen Widgets, deren Attribute und ihr
 kaskadierendes Verhalten zueinander.
 
-
 \begin{figure}[H]
     \begin{center}
         \includegraphics[width=0.65\textwidth]{images/Flutter/widget-tree.png}
         \caption{Widget-Tree für ein beispielhaftes Layout}
         % https://flutter.dev/images/widget-catalog/cupertino-slider.png
+        \cite{flutterWidgetTree}
     \end{center}
 \end{figure}
 
+Ähnlich zu anderen Frameworks wie beispielsweise \textit{Bootstrap 4}
+können unter Einsatz von bekannten Standard-Widgets wie Containern, Rows und Columns
+bereits simple Layouts erstellt werden.\\
+
+Ein Widget wird in Flutter mithilfe des entsprechenden Objekt-Konstruktors
+an der gewünschten Stelle erzeugt und mit entsprechenden Attributen befüllt.
+
+\begin{lstlisting}
+...
+new Container(
+    height: 280.0,
+    width: 400.0,
+    padding: new EdgeInsets.only(top: 10.0),
+    child: new Text('Sokka is awesome!')
+),
+...
+\end{lstlisting}
+
+Hiermit wird ein neues Container-Widget mit 280 Pixeln Höhe,
+400 Pixeln Breite, einem Top-Padding von zehn Pixeln und einem Text als
+Kind-Widget erzeugt.
+
+Wie bereits erwähnt können durch das Kaskadieren unterschiedlicher Widgets
+relativ einfach komplexe UI-Strukturen erzeugt werden.\\
+Hierfür müssen lediglich die weiteren / inneren Widgets dem 
+\textit{child}- bzw. \textit{children}- Property übergeben werden.
+\pagebreak
+\begin{lstlisting}
+...
+new Container(
+    child: new Row(
+        children: <Widget>[
+            new Icon(
+                Icons.ac_unit,
+                color: Colors.white,
+            ),
+            new Text(
+                'Sokka is awesome!',
+                color: Colors.white,
+            ),
+            new Container(
+                child: new Image(...)
+            ),
+        ],
+    ),
+),
+...
+\end{lstlisting}
 
 % https://flutter.dev/assets/ui/layout/sample-flutter-layout-46c76f6ab08f94fa4204469dbcf6548a968052af102ae5a1ae3c78bc24e0d915.png
 % https://flutter.dev/docs/development/ui/layout
 
+\subsection{Rendern von Widgets}
+
+\subsection{Interaktivität von Widgets}
+
 \subsection{App-States und ephimerale States}
 
 \subsection{Navigation und Routing durch die App}
+
+
 
 
 

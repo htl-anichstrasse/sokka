@@ -48,7 +48,8 @@ Nach Dart-Konventionen ist es allerdings üblich, die Angabe des Datentyps für 
 im lokalen Scope, bspw. innerhalb einer Funktion durch das \textit{var}-Keyword zu ersetzen.
 
 Für \textit{finale} Variablen kann sowohl auf dezidierten Datentyp als auch auf \textit{var} 
-verzichtet werden.
+verzichtet werden, bei der Deklaration von Referenzdatentypen kann das \textit{new}-Keyword 
+weggelassen werden.
 
 \begin{lstlisting}
 final x = 10;
@@ -108,6 +109,7 @@ void sayHi() {
     print('Hi!');
 }
 
+// Funktion mit Integer als Rueckgabewert
 int multiply(final int x, final int y) => x * y;
 \end{lstlisting}
 
