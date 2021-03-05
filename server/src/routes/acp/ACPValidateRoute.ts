@@ -15,7 +15,7 @@ class ACPValidateRoute extends Route {
         this.router.post('/validate', this.post.bind(this));
     }
 
-    @NeedsProperties({ token: 'string', name: 'string' })
+    @NeedsProperties({ name: 'string', token: 'string' })
     private async post(req: Request, res: Response): Promise<void> {
         try {
             let user = await ACPUser.get(req.body.name);

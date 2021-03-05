@@ -1,1 +1,50 @@
 \subsection{/acp/validate}
+
+\begin{lstlisting}
+    POST /acp/validate
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Prüft, ob der Session-Token eines ACP-Nutzerkontos gültig ist. Wird genutzt, um bei Aufruf des ACPs einen vorhandenen Session-Cookie zu prüfen.
+
+\textbf{Authorization-Typ:} \\
+Keine
+
+\subsubsection{Payload}
+
+\lstinline{name: string} (benötigt) \\
+$\rightarrow$ Der Name des ACP-Nutzerkontos, bei dem die Validierung durchgeführt werden soll
+\lstinline{token: string} (benötigt) \\
+$\rightarrow$ Der Session-Token des ACP-Nutzerkontos, bei dem die Validierung durchgeführt werden soll
+
+\subsubsection{Beispiel}
+
+\begin{lstlisting}
+    POST /acp/validate
+    {
+        "name": "admin",
+        "token": "7sGCYBi5796mvPYe1Jg5pybMuJXBGa%2B4"
+    }
+\end{lstlisting}
+
+Validiert den Session-Token \lstinline{7sGCYBi5796mvPYe1Jg5pybMuJXBGa%2B4} für das ACP-Nutzerkonto mit dem Namen \lstinline{admin}.
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        "success": true, 
+        "message": "ACP token for this email is valid"
+    }
+\end{lstlisting}
+
+\subsubsection{Antwort (bei ungültigen Token)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        "success": true, 
+        "message": "Could not validate ACP token for username 'admin'"
+    }
+\end{lstlisting}

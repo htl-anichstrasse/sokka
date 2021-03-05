@@ -1,2 +1,42 @@
 \subsection{/acp/login}
-\label{acpauth}
+
+\begin{lstlisting}
+    POST /acp/login
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Führt eine Anmeldung im ACP bei einem ACP-Nutzerkonto durch.
+
+\textbf{Authorization-Typ:} \\
+Keine
+
+\subsubsection{Payload}
+
+\lstinline{name: string} (benötigt) \\
+$\rightarrow$ Der Name des ACP-Nutzerkontos, bei dem die Anmeldung durchgeführt werden soll
+\lstinline{password: string} (benötigt) \\
+$\rightarrow$ Das Passwort des ACP-Nutzerkontos, bei dem die Anmeldung durchgeführt werden soll
+
+\subsubsection{Beispiel}
+
+\begin{lstlisting}
+    POST /acp/login
+    {
+        "name": "admin",
+        "password": "securepassword123"
+    }
+\end{lstlisting}
+
+Führt eine Anmeldung für das ACP-Nutzerkonto \lstinline{admin} mit dem Passwort \lstinline{securepassword123} durch und returniert einen generierten Session-Token.
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        "success": true, 
+        "message": "Credentials validated",
+        "token": "7sGCYBi5796mvPYe1Jg5pybMuJXBGa%2B4",
+        "name": "admin"
+    }
+\end{lstlisting}
