@@ -209,3 +209,40 @@ public String getName() {
 // Dart
 String get getName => this._name;
 \end{lstlisting}
+
+\subsubsection{Vererbungsstrukturen}
+
+\paragraph{Abstrakte Klassen}
+
+% https://dart.dev/guides/language/language-tour#abstract-classes
+
+Um eine Klasse als abstrakt zu definieren wird in Dart das \textit{abstract}-Keyword verwendet und mittels
+\textit{extends}-Keyword an andere Klassen vererbt.
+
+\begin{lstlisting}
+abstract class Foo {
+    ...
+}
+
+class Bar extends Foo {
+    ...
+}
+\end{lstlisting}
+
+\paragraph{Interfaces}
+ 
+% https://dart.dev/guides/language/language-tour#implicit-interfaces
+
+Dart unterstützt das Prinzip von sogenannten \textit{impliziten Interfaces}, das heißt, dass jede
+erzeugte Klasse automatisch als ein Interface genutzt und implementiert werden kann.
+
+\begin{lstlisting}
+class Foo {
+    ...
+}
+
+class Bar implements Foo {
+    ...
+}
+\end{lstlisting}
+
