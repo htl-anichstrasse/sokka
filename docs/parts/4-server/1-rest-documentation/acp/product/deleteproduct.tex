@@ -1,1 +1,37 @@
 \subsection{/acp/product/delete}
+
+\begin{lstlisting}
+    POST /acp/product/delete
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Löscht ein Produkt. Wird genutzt, um nicht mehr benötigte Produkte im ACP zu löschen.
+
+\textbf{Authorization-Typ:} \\
+ACP
+
+\subsubsection{Payload}
+
+\lstinline{id: number} (benötigt) \\
+$\rightarrow$ Die ID des zu löschenden Produkts
+
+\subsubsection{Beispiel}
+
+\begin{lstlisting}
+    POST /acp/product/delete
+    {
+        "id": 3
+    }
+\end{lstlisting}
+
+Löscht das Menü mit der ID \lstinline{3}.
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        "success": true, 
+        "message": "Successfully deleted product with id '3'"
+    }
+\end{lstlisting}
