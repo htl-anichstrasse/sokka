@@ -1,1 +1,53 @@
 \subsection{/acp/product/update}
+
+\begin{lstlisting}
+    POST /acp/product/update
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Aktualisiert den Namen, die Kategorie, das Bild, den Preis oder den Versteckt-Status eines Produkts. Wird genutzt, um Produkte im ACP änderbar zu machen.
+
+\textbf{Authorization-Typ:} \\
+ACP
+
+\subsubsection{Payload}
+
+\lstinline{id: number} (benötigt) \\
+$\rightarrow$ Die ID des zu aktualisierenden Produkts
+
+\lstinline{name: string} (optional) \\
+$\rightarrow$ Der Name des zu aktualisierenden Produkts
+
+\lstinline{image_id: string} (optional) \\
+$\rightarrow$ Die Bild-ID des zu aktualisierenden Produkts
+
+\lstinline{category_id: number} (optional) \\
+$\rightarrow$ Die Kategorie-ID des zu aktualisierenden Produkts
+
+\lstinline{price: number} (optional) \\
+$\rightarrow$ Der Preis des zu aktualisierenden Produkts
+
+\lstinline{hidden: boolean} (optional) \\
+$\rightarrow$ Der Versteckt-Status des zu aktualisierenden Produkts
+
+\subsubsection{Beispiel}
+
+\begin{lstlisting}
+    POST /acp/product/update
+    {
+        "id": 3,
+        "price": "4.5"
+    }
+\end{lstlisting}
+
+Setzt den Preis des Produkts mit der ID \lstinline{3} zu 4.50 Euro.
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        "success": true, 
+        "message": "Successfully updated product"
+    }
+\end{lstlisting}

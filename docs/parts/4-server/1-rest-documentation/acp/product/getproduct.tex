@@ -1,1 +1,43 @@
 \subsection{/acp/product/get}
+
+\begin{lstlisting}
+    GET /acp/product/get
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Gibt alle im System gespeicherten Produkte oder nur eines zurück. Wird genutzt, um eine Auflistung aller Produkte im ACP zu ermöglichen.
+
+\textbf{Authorization-Typ:} \\
+ACP
+
+\subsubsection{Parameter}
+
+\lstinline{id: number} (optional)
+$\rightarrow$ Die ID des gewünschten Produkts. Es können auch mehrere Produkte abgefragt werden (mit \lstinline{,} getrennt)
+
+\subsubsection{Beispiel}
+
+\begin{lstlisting}
+    GET /acp/product/get?id=6
+\end{lstlisting}
+
+Gibt das Menü mit der ID 6 zurück.
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        "success": true, 
+        "products": [
+            {
+                "id": 1,
+                "category_id": 2,
+                "name": "Coca-Cola",
+                "image_id": "52af25abdf2ffced06f863b3c7a0bb42",
+                "price": 2.5,
+                "hidden": false
+            }
+        ]
+    }
+\end{lstlisting}

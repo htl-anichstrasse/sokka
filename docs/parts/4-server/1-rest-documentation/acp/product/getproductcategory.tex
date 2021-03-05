@@ -1,1 +1,37 @@
 \subsection{/acp/product/category/get}
+
+\begin{lstlisting}
+    GET /acp/product/category/get
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Gibt alle im System gespeicherten Produktkategorien zurück. Wird genutzt, um eine Auflistung aller Produktkategorien auf der Bearbeitungsseite für Produkte im ACP zu ermöglichen.
+
+\textbf{Authorization-Typ:} \\
+ACP
+
+\subsubsection{Parameter}
+Keine
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        "success": true, 
+        "productcategories": [
+            {
+                "id": 1,
+                "name": "Beverages"
+            },
+            {
+                "id": 2,
+                "name": "Snacks"
+            },
+            {
+                "id": 3,
+                "name": "Burgers"
+            }
+        ]
+    }
+\end{lstlisting}
