@@ -1,59 +1,82 @@
 \section{Controllers}
 
-Mithilfe der Controller-Klassen können benötigte Werte oder Informationen global in der App
-gespeichert und dynamisch geändert und angezeigt werden, beispielsweise die Produkte, die sich 
-im Warenkorb des Nutzers befinden.
+Mithilfe der Controller-Klassen können benötigte Werte oder Informationen eines bestimmten Views
+global in der App gespeichert, dynamisch geändert und angezeigt werden, beispielsweise die Produkte,
+die sich im Warenkorb des Nutzers befinden.
 
-\subsubsection{Models für Controller}
+\subsection{Models für Controller}
 
 \paragraph{Menu}
 
 Im Menu-Model werden alle relevanten Daten zu einem Menü abgespeichert.
 
-\begin{tabular}{l l r l}
-    Integer & \_menuID & $\rightarrow$ & ID des Menüs\\
-    String & \_name & $\rightarrow$ & Name des Menüs\\
-    List$<$MenuEntry$>$ & \_entries & $\rightarrow$ & die Liste mit allen Menü-Einträgen\\
-    Double & \_price & $\rightarrow$ & Preis des Menüs\\
-    NetworkImage & \_image & $\rightarrow$ & Bild des Menüs\\
-    Boolean & \_isHidden & $\rightarrow$ & Status, ob das Menü im View angezeigt werden soll
+\begin{tabular}{l l l}
+    Integer & \_menuID & ID des Menüs\\
+    String & \_name & Name des Menüs\\
+    List$<$MenuEntry$>$ & \_entries & die Liste mit allen Menü-Einträgen\\
+    Double & \_price & Preis des Menüs\\
+    NetworkImage & \_image & Bild des Menüs\\
+    Boolean & \_isHidden & Status, ob das Menü im View angezeigt werden soll
 \end{tabular}
 
 \paragraph{MenuEntry}
 
 Verknüpft alle Produkte mit dem Menü, in dem sie enthalten sind.
 
-\begin{tabular}{l l r l}
-    Integer & \_titleID & $\rightarrow$ & Name des Produkts im Menü\\
-    Integer & \_menuID & $\rightarrow$ & ID des Menüs\\
-    Product & \_product & $\rightarrow$ & das im Menü enthaltene Produkt\\
+\begin{tabular}{l l l}
+    Integer & \_titleID & Name des Produkts im Menü\\
+    Integer & \_menuID & ID des Menüs\\
+    Product & \_product & das im Menü enthaltene Produkt\\
 \end{tabular}
  
 \paragraph{Product}
 
 Im Product-Model werden alle relevanten Daten zu einem Produkt abgespeichert.
 
-\begin{tabular}{l l r l}
-    Integer & \_productID & $\rightarrow$ & ID des Produkts\\
-    String & \_name & $\rightarrow$ & Name des Produkts\\
-    Double & \_price & $\rightarrow$ & Preis des Produkts\\
-    NetworkImage & \_image & $\rightarrow$ & Bild des Produkts\\
-    Boolean & \_isHidden & $\rightarrow$ & Status, ob das Produkt im View angezeigt werden soll
+\begin{tabular}{l l l}
+    Integer & \_productID & ID des Produkts\\
+    String & \_name & Name des Produkts\\
+    Double & \_price & Preis des Produkts\\
+    NetworkImage & \_image & Bild des Produkts\\
+    Boolean & \_isHidden & Status, ob das Produkt im View angezeigt werden soll
 \end{tabular}
-
+\pagebreak
 \paragraph{Order}
 
 Im Order-Model werden alle relevanten Daten zu einer Bestellung abgespeichert.
 
-\begin{tabular}{l l r l}
-    Integer & \_orderID & $\rightarrow$ & ID der Bestellung\\
-    Integer & \_userID & $\rightarrow$ & ID des Nutzers, der die Bestellung getätigt hat\\
-    String & \_timestamp & $\rightarrow$ & Zeitpunkt, an dem die Bestellung erstellt worden ist\\
-    Integer & \_rebate & $\rightarrow$ & Rabatt, der vom Gesamtpreis der Bestellung abgezogen wird\\
-    Double & \_subTotal & $\rightarrow$ & Preis der Bestellung, ohne den Rabatt zu berücksichtigen\\
-    Boolean & \_total & $\rightarrow$ & Preis der Bestellung mit abgezogenem Rabatt\\
-    Map$<$String, int$>$ & \_menuOrders & $\rightarrow$ & Map mit allen bestellten Menüs und ihrer Anzahl\\
-    Map$<$String, int$>$ & \_productOrders & $\rightarrow$ & Map mit allen bestellten Produkten und ihrer Anzahl\\
-    String & \_qrData & $\rightarrow$ & String, aus dem der QR-Code der Bestellung generiert wird\\
+\begin{tabular}{l l l}
+    Integer & \_orderID & ID der Bestellung\\
+    Integer & \_userID & ID des Nutzers, der die Bestellung getätigt hat\\
+    String & \_timestamp & Zeitpunkt, an dem die Bestellung erstellt worden ist\\
+    Integer & \_rebate & Rabatt, der vom Gesamtpreis der Bestellung abgezogen wird\\
+    Double & \_subTotal & Preis der Bestellung, ohne den Rabatt zu berücksichtigen\\
+    Boolean & \_total & Preis der Bestellung mit abgezogenem Rabatt\\
+    Map$<$String, int$>$ & \_menuOrders & Map mit allen bestellten Menüs und ihrer Anzahl\\
+    Map$<$String, int$>$ & \_productOrders & Map mit allen bestellten Produkten und ihrer Anzahl\\
+    String & \_qrData & String, aus dem der QR-Code der Bestellung generiert wird\\
 \end{tabular}
 
+\subsection{MenuController}
+
+Der MenuController speichert alle zum aktuellen Zeitpunkt verfügbaren Menüs in einer internen Liste,
+die zu App-Start per API-Call befüllt wird, ab.\\
+Ebenso wie der \textit{CookieStorage} ist auch der MenuController - sowie alle weiteren Controller -
+als Singleton implementiert.
+
+\subsection{ProductController}
+
+Im ProductController werden alle zum Kauf verfügbaren Produkte abgespeichert. Auch dieser wird
+bei App-Start durch einen Aufruf der API initialisiert.
+
+\subsection{ShoppingBasketController}
+
+In der Liste des ShoppingBasketControllers werden all jene Menüs und Produkte gespeichert, die 
+vom Nutzer zu seinem Warenkorb hinzugefügt worden sind.\\
+Im Gegensatz zu den anderen Controllern ist dieser beim Start der App leer und wird erst durch
+die Interaktion des Users befüllt.
+
+\subsection{OrderController}
+
+Der OrderController verwaltet alle vom Nutzer getätigten Bestellungen und wird gleich wie der
+Menu- und ProductController zu Beginn über die Sokka-API befüllt.
