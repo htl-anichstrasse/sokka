@@ -1,1 +1,35 @@
 \subsection{/acp/user/get}
+
+\begin{lstlisting}
+    GET /acp/user/get
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Gibt alle im System gespeicherten Nutzer zurück. Wird genutzt, um eine Auflistung aller Nutzer im ACP zu ermöglichen.
+
+\textbf{Authorization-Typ:} \\
+ACP
+
+\subsubsection{Parameter}
+
+Keine
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        "success": true, 
+        "users": [
+            {
+                "id": 1,
+                "email": "jos.winkler@tsn.at",
+                "verified": 1,
+                "blocked": 0,
+                "group_id": 3,
+                "timestamp": "2021-01-19T19:42:13.000Z",
+                "password": "$2b$10$MZ2nJ.VvplEZCNRRViTbduQp6ZIoU4rkv4paetQdkEwMDRLDpqSQ6"
+            }
+        ]
+    }
+\end{lstlisting}

@@ -1,1 +1,47 @@
 \subsection{/acp/user/update}
+
+\begin{lstlisting}
+    POST /acp/user/update
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Aktualisiert den E-Mail-Adresse, Verifikationsstatus oder Gruppe eines Nutzerkontos. Wird genutzt, um Nutzerkonten im ACP änderbar zu machen.
+
+\textbf{Authorization-Typ:} \\
+ACP
+
+\subsubsection{Payload}
+
+\lstinline{id: number} (benötigt) \\
+$\rightarrow$ Die ID des zu aktualisierenden Nutzerkontos
+
+\lstinline{email: string} (optional) \\
+$\rightarrow$ Die E-Mail-Adresse des zu aktualisierenden Nutzerkontos
+
+\lstinline{verified: boolean} (optional) \\
+$\rightarrow$ Der Verifikationsstatus des zu aktualisierenden Nutzerkontos
+
+\lstinline{group: number} (optional) \\
+$\rightarrow$ Die Gruppen-ID des zu aktualisierenden Nutzerkontos
+
+\subsubsection{Beispiel}
+
+\begin{lstlisting}
+    POST /acp/user/update
+    {
+        "id": 2,
+        "verified": true
+    }
+\end{lstlisting}
+
+Setzt den Verifikationsstatus des Nutzerkontos mit der ID \lstinline{2} auf \lstinline{true}.
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        "success": true, 
+        "message": "Successfully updated users"
+    }
+\end{lstlisting}

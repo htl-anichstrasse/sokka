@@ -16,11 +16,11 @@ class ACPUpdateUserRoute extends Route {
     }
 
     @NeedsAuthorization(AuthorizationType.ACP)
-    @NeedsProperties({ email: 'string', user: 'object' })
+    @NeedsProperties({ id: 'number' }, false, true)
     private async post(req: Request, res: Response): Promise<void> {
         let user;
         try {
-            user = await User.getByEmail(req.body.email);
+            user = await User.getById(req.body.id);
             if (!user) {
                 throw new Error('User not found');
             }
@@ -29,18 +29,15 @@ class ACPUpdateUserRoute extends Route {
             res.send({ success: false, message: err.message })
             return;
         }
-        if (req.body.user.email) {
-            user.email = req.body.user.email;
+        if (req.body.email) {
+            user.email = req.body.email;
         }
-        if (req.body.user.password) {
-            user.password = req.body.user.password;
+        if (req.body.verified != null) {
+            user.verified = req.body.verified;
         }
-        if (req.body.user.verified) {
-            user.verified = req.body.user.veriifed;
-        }
-        if (req.body.user.group) {
+        if (req.body.group) {
             try {
-                let group = await Group.getById(req.body.user.group);
+                let group = await Group.getById(req.body.group);
                 if (!group) {
                     throw new Error('Group not found')
                 }
@@ -53,11 +50,11 @@ class ACPUpdateUserRoute extends Route {
         }
         try {
             await user.update();
-            res.send({ success: true, message: 'User updated' });
+            res.send({ success: true, message: 'Successfully updated user' });
         } catch (err) {
             res.status(500);
-            res.send({ success: false, message: `An unknown error occurred while updating user '${req.body.user.email}'` });
-            this.logger.error(`An unknown error occurred while updating user '${req.body.user.email}': ${err}`);
+            res.send({ success: false, message: `An unknown error occurred while updating user with id '${req.body.id}'` });
+            this.logger.error(`An unknown error occurred while updating user with id '${req.body.id}': ${err}`);
         }
     }
 }
