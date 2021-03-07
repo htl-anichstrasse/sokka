@@ -1,1 +1,50 @@
 \subsection{/menu/get}
+
+\begin{lstlisting}
+    GET /menu/get
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Gibt alle im System gespeicherten Menüs oder nur eines zurück. Wird genutzt, um eine Auflistung aller Menüs im Client zu ermöglichen.
+
+\textbf{Authorization-Typ:} \\
+App
+
+\subsubsection{Parameter}
+
+\lstinline{id: number} (optional)
+$\rightarrow$ Die ID des gewünschten Menüs.
+
+\subsubsection{Beispiel}
+
+\begin{lstlisting}
+    GET /menu/get?id=4
+\end{lstlisting}
+
+Gibt das Menü mit der ID 4 zurück.
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        "success": true, 
+        "data": [
+            {
+                "id": 6,
+                "category_id": 4,
+                "name": "Cheeseburger Menu",
+                "image_id": "23c94790921c89f56e0629d1282033f0",
+                "price": 3,
+                "entries": [
+                    {
+                        "id": 2,
+                        "product_id": 2,
+                        "menu_id": 1,
+                        "title_id": 1
+                    }
+                ]
+            }
+        ]
+    }
+\end{lstlisting}
