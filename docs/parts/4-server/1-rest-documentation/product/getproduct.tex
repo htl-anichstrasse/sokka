@@ -1,1 +1,43 @@
 \subsection{/product/get}
+
+\begin{lstlisting}
+    GET /product/get
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Gibt alle im System gespeicherten Produkte oder nur eines zurück. Wird genutzt, um eine Auflistung aller Produkte im Client zu ermöglichen.
+
+\textbf{Authorization-Typ:} \\
+App
+
+\subsubsection{Parameter}
+
+\lstinline{id: number} (optional)
+$\rightarrow$ Die ID des gewünschten Produkts.
+
+\subsubsection{Beispiel}
+
+\begin{lstlisting}
+    GET /product/get?id=4
+\end{lstlisting}
+
+Gibt das Produkt mit der ID 4 zurück.
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        "success": true, 
+        "data": [
+            {
+                "id": 1,
+                "category_id": 2,
+                "name": "Coca-Cola",
+                "image_id": "52af25abdf2ffced06f863b3c7a0bb42",
+                "price": 2.5,
+                "hidden": false
+            }
+        ]
+    }
+\end{lstlisting}

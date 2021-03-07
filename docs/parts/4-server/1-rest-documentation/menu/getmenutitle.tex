@@ -1,1 +1,29 @@
 \subsection{/menu/title/get}
+
+\begin{lstlisting}
+    GET /menu/title/get
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Gibt einen im System gespeicherten Menütitel zurück. Wird genutzt, um den Produkten in Menüs im Client den richtigen Titel zuzuordnen.
+
+\textbf{Authorization-Typ:} \\
+App
+
+\subsubsection{Parameter}
+
+\lstinline{id: number} (benötigt)
+$\rightarrow$ Die ID des gewünschten Menütitels.
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        "success": true, 
+        "data": {
+            "id": 1,
+            "name": "Starter"
+        }
+    }
+\end{lstlisting}

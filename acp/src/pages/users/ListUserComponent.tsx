@@ -84,7 +84,7 @@ const ListUserComponent: FunctionComponent<ListUserComponentProps> = (props) => 
     const deleteHandler = (row: any) => {
         if (window.confirm(`Are you sure you want to delete:\r ${row.email}?`)) {
             sendRequest('/acp/user/delete', 'POST', true, {
-                email: row.email
+                id: row.id
             });
             const index = state.users.findIndex((r: any) => r.id === row.id);
             setState({ users: [...state.users.slice(0, index), ...state.users.slice(index + 1)], groups: state.groups });
@@ -93,10 +93,8 @@ const ListUserComponent: FunctionComponent<ListUserComponentProps> = (props) => 
 
     const changeCallback = (row: any, group_id: number) => {
         sendRequest('/acp/user/update', 'POST', true, {
-            email: row.email,
-            user: {
-                group: group_id
-            }
+            id: row.id,
+            group: group_id
         }).then((response) => {
             if (response.data.success) {
                 let groupObject = state.groups.find((val) => val.id === group_id);
