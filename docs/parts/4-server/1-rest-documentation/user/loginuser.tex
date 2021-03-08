@@ -14,10 +14,10 @@ Keine
 \subsubsection{Payload}
 
 \lstinline{email: string} (benötigt) \\
-$\rightarrow$ Die E-Mail-Adresse des Nutzerkontos, bei dem die Anmeldung durchzuführen ist
+$\rightarrow$ Die E-Mail-Adresse des Nutzerkontos, bei dem die Anmeldung durchgeführt werden soll.
 
 \lstinline{password: string} (benötigt) \\
-$\rightarrow$ Das Passwort des Nutzerkontos, bei dem die Anmeldung durchzuführen ist
+$\rightarrow$ Das Passwort des Nutzerkontos, bei dem die Anmeldung durchgeführt werden soll.
 
 \subsubsection{Beispiel}
 
@@ -43,3 +43,7 @@ Führt eine Anmeldung beim Nutzerkonto mit der E-Mail-Adresse \lstinline{meineEm
 \end{lstlisting}
 
 Bei Erfolg wird ein Session-Token generiert und zurückgegeben.
+
+\subsubsection{Rate Limit}
+
+Diese API-Route verfügt über ein Rate-Limit, um Missbrauch vorzubeugen. Es können maximal 5 Anmeldungen innerhalb von 5 Minuten von derselben IP-Adresse durchgeführt werden.

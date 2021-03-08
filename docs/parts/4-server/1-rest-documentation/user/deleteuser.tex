@@ -1,1 +1,25 @@
-\subsection{/user/delete}
+\subsection{/acp/user/delete}
+
+\begin{lstlisting}
+    POST /acp/user/delete
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Löscht das aktuell angemeldete Nutzerkonto. Wird genutzt, um DSGVO-konform Nutzern die Löschung ihres Kontos und ihrer Daten zu ermöglichen.
+
+\textbf{Authorization-Typ:} \\
+App
+
+\subsubsection{Payload}
+
+Keiner
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        "success": true, 
+        "message": "User deleted successfully"
+    }
+\end{lstlisting}

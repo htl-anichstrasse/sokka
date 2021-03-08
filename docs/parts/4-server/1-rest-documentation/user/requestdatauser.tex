@@ -1,1 +1,44 @@
 \subsection{/user/request}
+
+\begin{lstlisting}
+    GET /user/request
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Gibt alle Daten zurück, welche über den angemeldeten Nutzer im System gespeichert sind. Wird genutzt, um einen Datenexport nach DSGVO zu ermöglichen.
+
+\textbf{Authorization-Typ:} \\
+App
+
+\subsubsection{Parameter}
+
+Keine
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        "success": true, 
+        "data": {
+            "userData": {
+                ...
+            },
+            "orderData": {
+                ...
+            },
+            "sessionData": {
+                ...
+            },
+            "verificationData": {
+                ...
+            }
+        }
+    }
+\end{lstlisting}
+
+Hierbei stellt \lstinline{userData} alle Nutzer-Metadaten wie E-Mail-Adresse oder Zeitpunkt der Registrierung dar. \lstinline{orderData} beinhaltet alle Daten über Bestellungen, welche dem Nutzer zugeordnet werden können. \lstinline{sessionData} alle Daten über Sessions, welche dem Nutzer zugeordnet werden können und \lstinline{verificationData} alle Daten über die Verifizierung des Nutzers (beispielsweise die generierte Verifiuierungs-URL).
+
+\subsubsection{Rate Limit}
+
+Diese API-Route verfügt über ein Rate-Limit, um Missbrauch vorzubeugen. Es kann maximal eine Abfrage innerhalb von 24 Stunden von derselben IP-Adresse durchgeführt werden.
