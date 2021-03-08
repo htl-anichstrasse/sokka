@@ -116,7 +116,7 @@ Kind-Widget erzeugt.
 Wie bereits erwähnt können durch das Kaskadieren unterschiedlicher Widgets
 relativ einfach komplexe UI-Strukturen erzeugt werden.\\
 Hierfür müssen lediglich die weiteren / inneren Widgets dem 
-\textit{child}- bzw. \textit{children}-Property des äußeren Widgets übergeben werden.
+\lstinline{child}- bzw. \lstinline{children}-Property des äußeren Widgets übergeben werden.
 \pagebreak
 \begin{lstlisting}
 ...
@@ -144,7 +144,7 @@ new Container(
 
 \subsection{Rendern von Widgets}
 
-Grundsätzlich erfolgt das Rendern eines Widgets über seine eigene \textit{build}-Funktion. Diese wird aufgerufen,
+Grundsätzlich erfolgt das Rendern eines Widgets über seine eigene \lstinline{build()}-Funktion. Diese wird aufgerufen,
 sobald ein Widget gerendert bzw. neugerendert werden muss und retourniert ein entsprechendes Widget-Objekt,
 der dem Design-Tree des entsprechenden Kontexts hinzugefügt wird.
 
@@ -201,7 +201,7 @@ beispielsweise ob ein ExpansionPanel (aufklappbare Karte) auf- oder zugeklappt i
 aktuell hat.
 
 Um den Zustand eines Widgets während der Laufzeit verändern und jene Änderung im Anschluss anzeigen zu können,
-wird hierfür die \textit{setState()}-Funktion verwendet.\\
+wird hierfür die \lstinline{setState()}-Funktion verwendet.\\
 Diese überschreibt die entsprechende Variable mit dem neuen Zustandswert und lässt die Flutter-Engine das entsprechende
 Widget neu rendern um die Veränderung direkt erkennbar zu machen.
 
@@ -300,7 +300,7 @@ Navigator.of(context).pushNamed('/login');
 Navigator.of(context).popAndPushNamed('/signup');
 \end{lstlisting}
 
-Alternativ kann auch ohne NamedRoutes durch die App mithilfe der (umständlicheren) \textit{push()}-Funktion navigiert 
+Alternativ kann auch ohne NamedRoutes durch die App mithilfe der (umständlicheren) \lstinline{push()}-Funktion navigiert 
 werden.
 
 \begin{lstlisting}
