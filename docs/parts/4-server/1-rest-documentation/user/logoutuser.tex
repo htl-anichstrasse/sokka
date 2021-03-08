@@ -1,1 +1,42 @@
 \subsection{/user/logout}
+\label{appauth}
+
+\begin{lstlisting}
+    POST /user/logout
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Führt eine Abmeldung bei einem existenten Nutzerkonto durch. Wird genutzt, um Abmeldungen von Nutzerkonten im Client zu ermöglichen.
+
+\textbf{Authorization-Typ:} \\
+App
+
+\subsubsection{Payload}
+
+\lstinline{email: string} (benötigt) \\
+$\rightarrow$ Die E-Mail-Adresse des Nutzerkontos, bei dem die Abmeldung durchgeführt werden soll.
+
+\lstinline{token: string} (benötigt) \\
+$\rightarrow$ Der Token des Nutzerkontos, bei dem die Abmeldung durchgeführt werden soll.
+
+\subsubsection{Beispiel}
+
+\begin{lstlisting}
+    POST /user/login
+    {
+        "email": "meineEmail@sokka.me",
+        "token": "eYiKOYqtihKgVknurEq1luc3mhawIxAo"
+    }
+\end{lstlisting}
+
+Führt eine Abmeldung beim Nutzerkonto mit der E-Mail-Adresse \lstinline{meineEmail@sokka.me} für die Session mit dem Token \lstinline{eYiKOYqtihKgVknurEq1luc3mhawIxAo} durch.
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        "success": true, 
+        "message": "Successfully invalidated session"
+    }
+\end{lstlisting}

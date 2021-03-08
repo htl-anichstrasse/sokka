@@ -1,4 +1,5 @@
 \subsection{/acp/login}
+\label{acpauth}
 
 \begin{lstlisting}
     POST /acp/login
@@ -40,3 +41,7 @@ Führt eine Anmeldung für das ACP-Nutzerkonto \lstinline{admin} mit dem Passwor
         "name": "admin"
     }
 \end{lstlisting}
+
+\subsubsection{Rate Limit}
+
+Diese API-Route verfügt über ein Rate-Limit, um Missbrauch vorzubeugen. Es können maximal 5 Anmeldungen innerhalb von 5 Minuten von derselben IP-Adresse durchgeführt werden.

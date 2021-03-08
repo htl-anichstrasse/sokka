@@ -32,6 +32,30 @@ Wenn zum Beispiel die \lstinline{email} und der \lstinline{token} im obigen Code
     Authorization: Bearer am9zaEBzb2trYS5tZTpUWEo5R2I5czVnWUlkR3BQU0RZbHE2TG5UcGc3clJNYg==
 \end{lstlisting}
 
+\section{Rate-Limiting}
+
+Ein Rate-Limit hindert Nutzer daran, zu viele Anfragen an eine API(-Route) zu stellen. Das ist zum Beispiel sinnvoll, wenn eine Anfrage einen serverseitig hohen Ressourcenaufwand verursacht (z. B. bei Anfragen für Berechnungen) oder die Anfrage auf sensitive Ressourcen zugreift (z. B. bei Nutzeranmeldungen).
+
+Bei Sokka wird das Rate-Limit durch eine Open-Source-Library namens \lstinline{express-rate-limit} realisiert. Die Library erlaubt die Angabe eines Zeitfensters in Millisekunden (\lstinline{windowMs}) und eine Maximalanzahl an Anfragen von einer IP-Adresse innerhalb dieses Fensters (\lstinline{max}).
+
+Wenn die Maximalanzahl überschritten wurde, wird ein 421 HTTP-Code mit untenstehender Antwort zurückgegeben. \cite{nfriedly2021}
+
+\begin{lstlisting}
+    const rateLimit = require('express-rate-limit');
+    const limiter = rateLimit({
+        windowMs: 1 * 1000 * 60, // 5 minutes
+        max: 5,
+        handler: (req, res) => {
+            res.set('Content-Type', 'application/json');
+            res.send({ success: false, message: 'Too many failed login attempts, please try again later' });
+        }
+    });
+\end{lstlisting}
+
+Einige API-Routes verfügen über ein Rate-Limit, um Missbrauch vorzubeugen, diese haben eine entsprechende Information dazu in der Dokumentation.
+
+\newpage
+
 \input{parts/4-server/1-rest-documentation/root/index}
 
 \input{parts/4-server/1-rest-documentation/acp/index}

@@ -1,1 +1,54 @@
 \subsection{/user/create}
+
+\begin{lstlisting}
+    POST /user/create
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Erstellt ein neues Nutzerkonto. Wird genutzt, um neue Registrierungen für Nutzerkonten im Client zu ermöglichen.
+
+\textbf{Authorization-Typ:} \\
+Keine
+
+\subsubsection{Payload}
+
+\lstinline{email: string} (benötigt) \\
+$\rightarrow$ Die E-Mail-Adresse des zu erstellenden Nutzerkontos
+
+\lstinline{password: string} (benötigt) \\
+$\rightarrow$ Das Passwort des zu erstellenden Nutzerkontos
+
+\lstinline{tos: boolean} (benötigt) \\
+$\rightarrow$ Signalisiert eine Zustimmung zu den allgemeinen Nutzungsbedingungen des Sokka-Systems (muss \lstinline{true} sein)
+
+\lstinline{privacypolicy: boolean} (benötigt) \\
+$\rightarrow$ Signalisiert eine Zustimmung zu der Datenschutzerklärung des Sokka-Systems (muss \lstinline{true} sein)
+
+\subsubsection{Beispiel}
+
+\begin{lstlisting}
+    POST /user/create
+    {
+        "email": "meineEmail@sokka.me",
+        "password": "test123"
+    }
+\end{lstlisting}
+
+Erstellt ein neues Nutzerkonto mit der E-Mail-Adresse \lstinline{meineEmail@sokka.me} und dem Passwort \lstinline{test123}.
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        "success": true, 
+        "message": "Successfully created user",
+        "token": "eYiKOYqtihKgVknurEq1luc3mhawIxAo"
+    }
+\end{lstlisting}
+
+Bei Erfolg wird ein Session-Token generiert und zurückgegeben. Außerdem wird eine Verifikations-E-Mail an die übergebene E-Mail-Adresse gesendet.
+
+\subsubsection{Rate Limit}
+
+Diese API-Route verfügt über ein Rate-Limit, um Missbrauch vorzubeugen. Es können maximal 5 Registrierungen innerhalb von 10 Minuten von derselben IP-Adresse durchgeführt werden.

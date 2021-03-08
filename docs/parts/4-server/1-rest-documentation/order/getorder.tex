@@ -1,1 +1,53 @@
 \subsection{/order/get}
+
+\begin{lstlisting}
+    GET /order/get
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Gibt alle Bestellungen des angemeldeten Nutzerkontos zurück, oder nur jene, welche an einem angegebenen Datum getätigt wurden. Wird genutzt, um getätigte Bestellungen im Client aufzulisten.
+
+\textbf{Authorization-Typ:} \\
+App
+
+\subsubsection{Parameter}
+
+\lstinline{date: string} (optional)
+$\rightarrow$ Das Datum der abzurufenden Bestellungen.
+
+\subsubsection{Beispiel}
+
+\begin{lstlisting}
+    GET /product/get?date=2021-03-03
+\end{lstlisting}
+
+Gibt alle Bestellungen des angemeldeten Nutzerkontos zurück, welche am 3. März 2021 getätigt wurden.
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        "success": true, 
+        "orders": [
+            {
+                "id": 60,
+                "user_id": 26,
+                "timestamp": "2021-03-01T08:29:34.000Z"
+                "state": "VALID",
+                "rebate": 10,
+                "total": 6,
+                "menuOrders": [
+                    "menu_id": 1,
+                    "quantity": 1,
+                    "menu": <Menu Object>
+                ],
+                "productOrders": [
+                    "product_id": 1,
+                    "quantity": 1,
+                    "product": <Product Object>
+                ]
+            }
+        ]
+    }
+\end{lstlisting}

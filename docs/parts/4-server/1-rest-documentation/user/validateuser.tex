@@ -1,1 +1,51 @@
 \subsection{/user/validate}
+
+\begin{lstlisting}
+    POST /user/validate
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Prüft, ob der Session-Token eines Nutzerkontos gültig ist. Wird genutzt, um bei Aufruf des Clients einen vorhandenen Session-Cookie zu prüfen.
+
+\textbf{Authorization-Typ:} \\
+App
+
+\subsubsection{Payload}
+
+\lstinline{email: string} (benötigt) \\
+$\rightarrow$ Die E-Mail-Adresse des Nutzerkontos, bei dem die Validierung durchgeführt werden soll
+
+\lstinline{token: string} (benötigt) \\
+$\rightarrow$ Der Token des Nutzerkontos, bei dem die Validierung durchgeführt werden soll
+
+\subsubsection{Beispiel}
+
+\begin{lstlisting}
+    POST /user/validate
+    {
+        "email": "meineEmail@sokka.me",
+        "token": "eYiKOYqtihKgVknurEq1luc3mhawIxAo"
+    }
+\end{lstlisting}
+
+Validiert den Session-Token \lstinline{eYiKOYqtihKgVknurEq1luc3mhawIxAo} für das Nutzerkonto mit der E-Mail-Adresse \lstinline{meineEmail@sokka.me}.
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        "success": true, 
+        "message": "Token for this email is valid"
+    }
+\end{lstlisting}
+
+\subsubsection{Antwort (bei ungültigen Token)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        "success": true, 
+        "message": "Could not validate token for email 'meineEmail@sokka.me'"
+    }
+\end{lstlisting}
