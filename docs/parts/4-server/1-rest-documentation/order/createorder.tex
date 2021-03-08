@@ -1,1 +1,51 @@
 \subsection{/order/create}
+
+\begin{lstlisting}
+    POST /order/create
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Erstellt eine neue Bestellung. Wird genutzt, um neue Bestellungen im Client zu tätigen.
+
+\textbf{Authorization-Typ:} \\
+App
+
+\subsubsection{Payload}
+
+\lstinline{products: ProductOrder[]} (benötigt) \\
+$\rightarrow$ Der Produktbestellungen dieser Bestellung
+
+\lstinline{menus: MenuOrder[]} (benötigt) \\
+$\rightarrow$ Die Menübestellungen dieser Bestellung
+
+\subsubsection{Beispiel}
+
+\begin{lstlisting}
+    POST /order/create
+    {
+        "products": [
+            {
+                "product_id": 3,
+                "quantity": 2
+            }
+        ],
+        "menus": [
+            {
+                "menu_id": 2,
+                "quantity": 1
+            }
+        ]
+    }
+\end{lstlisting}
+
+Tätigt eine Bestellung von 2x Produkt mit ID \lstinline{3} und 1x Menü mit ID \lstinline{2}.
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        "success": true, 
+        "message": "Order successfully created"
+    }
+\end{lstlisting}

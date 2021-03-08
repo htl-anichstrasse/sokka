@@ -1,2 +1,45 @@
 \subsection{/user/login}
 \label{appauth}
+
+\begin{lstlisting}
+    POST /user/login
+\end{lstlisting}
+
+\textbf{Beschreibung:} \\
+Führt eine Anmeldung bei einem existenten Nutzerkonto durch. Wird genutzt, um neue Anmeldungen für Nutzerkonten im Client zu ermöglichen.
+
+\textbf{Authorization-Typ:} \\
+Keine
+
+\subsubsection{Payload}
+
+\lstinline{email: string} (benötigt) \\
+$\rightarrow$ Die E-Mail-Adresse des Nutzerkontos, bei dem die Anmeldung durchzuführen ist
+
+\lstinline{password: string} (benötigt) \\
+$\rightarrow$ Das Passwort des Nutzerkontos, bei dem die Anmeldung durchzuführen ist
+
+\subsubsection{Beispiel}
+
+\begin{lstlisting}
+    POST /user/login
+    {
+        "email": "meineEmail@sokka.me",
+        "password": "test123"
+    }
+\end{lstlisting}
+
+Führt eine Anmeldung beim Nutzerkonto mit der E-Mail-Adresse \lstinline{meineEmail@sokka.me} und dem Passwort \lstinline{test123} durch.
+
+\subsubsection{Antwort (bei Erfolg)}
+
+\lstinline{Content-Type: application/json}
+\begin{lstlisting}
+    {
+        "success": true, 
+        "message": "Credentials validated",
+        "token": "eYiKOYqtihKgVknurEq1luc3mhawIxAo"
+    }
+\end{lstlisting}
+
+Bei Erfolg wird ein Session-Token generiert und zurückgegeben.
