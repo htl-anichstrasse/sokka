@@ -21,11 +21,12 @@ Die Syntax von Dart sieht auf den ersten Blick aus, wie eine Mischung aus \texti
 und \text{JavaScript}.
 
 Ein \textit{Hello-World}-Programm würde in Dart also folgendermaßen aussehen:
-\begin{lstlisting}
-void main(List<String> arguments) {
-    print('Hello, World!');
-}
-\end{lstlisting}
+
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Dart/dartHelloWorld.png}
+    \caption{Einfaches Hello-World-Programm in Dart}
+\end{code}
 
 \subsubsection{Variablen}
 
@@ -36,13 +37,11 @@ Alternativ kann auf das Schlüsselwort \textit{var} aus JavaScript zurückgegrif
 ist vergleichbar mit dem \textit{Object}-Datentyp aus Java und ''errät'' den benötigten
 Typ der entsprechenden Variable.
 
-\begin{lstlisting}
-// Direktes Anlegen eines Integers mit dem Wert 5.
-int x = 5;
-
-// Anlegen eines Integers mit dem Wert 7 mithilfe von ''var''.
-var y = 7;
-\end{lstlisting}
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Dart/dartVariables.png}
+    \caption{Anlegen einfacher Variablen in Dart}
+\end{code}
 
 Nach Dart-Konventionen ist es allerdings üblich, die Angabe des Datentyps für Variablen 
 im lokalen Scope, bspw. innerhalb einer Funktion durch das \textit{var}-Keyword zu ersetzen.
@@ -51,9 +50,11 @@ Für \textit{finale} Variablen kann sowohl auf dezidierten Datentyp als auch auf
 verzichtet werden, bei der Deklaration von Referenzdatentypen kann das \textit{new}-Keyword 
 weggelassen werden.
 
-\begin{lstlisting}
-final x = 10;
-\end{lstlisting}
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Dart/dartLocalFinal.png}
+    \caption{Finale Variable im lokalen Scope}
+\end{code}
 
 \subsubsection{Verzweigungen und Schleifen}
 
@@ -61,57 +62,36 @@ Für die Kontrolle des Ablaufs eines Programms werden wie gewohnt \textit{if-els
 wie \textit{for / for in / for each} oder \textit{while} verwendet.\\
 Die Syntax jener Kontrollstrukturen ist mit der von JavaScript quasi ident.
 
-\begin{lstlisting}
-// Verzweigung mit zwei Bedingungen
-if (condition 1) {
-    ...
-} else if (condition 2) {
-    ...
-} else {
-    ...
-}
-\end{lstlisting}
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Dart/dartConditional.png}
+    \caption{Conditional mit zwei Bedingungen}
+\end{code}
 
-\begin{lstlisting}
-final list = [1, 2, 3, 4, 5];
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Dart/dartForLoop.png}
+    \caption{Arten von for-Schleifen in Dart}
+\end{code}
 
-// Standard for-Schleife
-for (var i; i < list.length; i++) {
-    ...
-}
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Dart/dartWhileLoops.png}
+    \caption{While-Schleife in Dart}
+\end{code}
 
-// for-in-Schleife
-for (var value in list) {
-    ...
-}
-
-// forEach-Schleife mit Callback-Funktion
-list.forEach((value) => {
-    ...
-})
-\end{lstlisting}
-
-\begin{lstlisting}
-//while-Schleife
-while(!condition) {
-    ...
-}
-\end{lstlisting}
+\newpage
 
 \subsubsection{Funktionen}
 
 Funktionen in Dart werden auf dieselbe Weise wie in Java deklariert. Die Funktionssignatur 
 bzw. der Funtkionskopf benötigt den Rückgabewert der Funktion, den Namen und die Parameterliste.
 
-\begin{lstlisting}
-// Funktion ohne Rueckgabewert
-void sayHi() {
-    print('Hi!');
-}
-
-// Funktion mit Integer als Rueckgabewert
-int multiply(final int x, final int y) => x * y;
-\end{lstlisting}
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Dart/dartFunctions.png}
+    \caption{asdfas}
+\end{code}
 
 Dart bietet in Bezug auf das Übergeben von Parametern an eine Funktion mehrere Mögichkeiten:
 \begin{itemize}
@@ -123,55 +103,57 @@ Sogenannte \textit{positionierte und optionale Parameter} werden in der Argument
 mithilfe eckiger Klammern gekennzeichnet und bewirken, wie der Name bereits verrät, dass jene Parameter
 optional und in ihrer Position fixiert sind.
 
-\begin{lstlisting}
-void sendRequest(final String url, final String message, [ final int port = 80 ]) {
-    ...
-}
-\end{lstlisting}
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Dart/dartPositionedArgumentsFunction.png}
+    \caption{Funktion mit positioned, optional Parametern}
+\end{code}
 
 Die Funktion \textit{getHttpUrl()} benötigt neben dem Server und Pfad auch eine Portnummer, welche
 hier als positionierter, optionaler Parameter mit einem Standartwert von 80 festgelegt wird.
+
 Wird beim Aufruf dieser Funktion der Port-Integer weggelassen, so wird dieser immer auf 80 gesetzt.
 
-\begin{lstlisting}
-// Aufruf mit Port 8080
-getHttpUrl('sokka.me', 'Sokka is awesome!', 8080);
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Dart/dartCallPositionedFunction.png}
+    \caption{Aufrufen einer Funktion mit positioned Parametern}
+\end{code}
 
-// Aufruf mit Standartport 80
-getHttpUrl('sokka.me', 'Sokka is awesome!');
-\end{lstlisting}
+\newpage
 
 Neben positionierten Parametern gibt es noch ''benannte'', sogenannte \textit{named} Parameter, 
 die mit geschwungenen Klammern in der Parameterliste deklariert werden.\\
 
-\begin{lstlisting}
-sendRequest(final String url, { final String message, final int port }) {
-    ...
-}
-\end{lstlisting}
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Dart/dartNamedArguments.png}
+    \caption{Aufrufen einer Funktion mit named Parametern}
+\end{code}
 
 Neben einer URL benötigt die obige Funktion auch eine Nachricht und eine Port-Nummer,
 um einen gültigen Request zu versenden.\\
 Aufgrund ihrer Deklaration innerhalb der geschwungen Klammern
 werden sie als benannte Parameter interpretiert und werden wie folgt übergeben.
 
-\begin{lstlisting}
-sendRequest('api.sokka.me', message: 'Sokka is awesome!', port: 80);
-\end{lstlisting}
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Dart/dartCallNamedArguments.png}
+    \caption{Aufrufen einer Funktion mit named Parametern}
+\end{code}
+
+\newpage
 
 \subsubsection{Klassen}
 
 Ähnlich zu Hochsprachen wie Java oder C\# können auch in Dart einfach Klassen
 erstellt werden, wie nachfolgend zu sehen ist.
 
-\begin{lstlisting}[language=JavaScript]
-class Point {
-    int _x;
-    int _y;
-    
-    Point(this._x, this._y);
-}
-\end{lstlisting}
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Dart/dartClass.png}
+    \caption{Simple Klassen in Dart}
+\end{code}
 
 Wie auch in JavaScript oder Python gibt es in Dart keine Access-Modifier um den Zugriff
 auf klasseninterne Felder oder Methoden zu regulieren.\\
@@ -183,15 +165,11 @@ Desweiteren stehen in Dart - ebenso wie in C\# - die Schlüsselwörter \textbf{g
 \textbf{set} zur Verfügung, mit deren Verwendung Funktionen als dezidierte Getter- bzw.
 Setter-Funktion für eine Membervariable definiert werden können.
 
-\begin{lstlisting}[language=JavaScript]
-class Foo {
-    String _bar;
-
-    String get getBar => this._bar;
-
-    set setBar(final String bar) => this._bar = bar;
-}
-\end{lstlisting}
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Dart/dartGetterSetter.png}
+    \caption{Getter- und Setter-Funktionen in Dart}
+\end{code}
 
 In diesem Beispiel werden \textit{getBar} und \textit{setBar} als dezidierte Getter- und\\
 Setter-Funktion für das Feld \textbf{\_bar} festgelegt.\\
@@ -200,15 +178,13 @@ zur Gänze ersetzen kann.
 So kann ein \textit{return}, wie es in Java geschrieben wird, durch ein Arrow-Statement wie folgt
 ersetzt werden.
 
-\begin{lstlisting}[language=JavaScript]
-// Java
-public String getName() {
-    return this.name;
-}
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Dart/dartVSJavaGetter.png}
+    \caption{Vergleich einer Getter-Funktion zwischen Java und Dart}
+\end{code}
 
-// Dart
-String get getName => this._name;
-\end{lstlisting}
+\newpage
 
 \subsubsection{Vererbungsstrukturen}
 
@@ -219,15 +195,11 @@ String get getName => this._name;
 Um eine Klasse als abstrakt zu definieren wird in Dart das \textit{abstract}-Keyword verwendet und mittels
 \textit{extends}-Keyword an andere Klassen vererbt.
 
-\begin{lstlisting}
-abstract class Foo {
-    ...
-}
-
-class Bar extends Foo {
-    ...
-}
-\end{lstlisting}
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Dart/dartAbstractClass.png}
+    \caption{Erzeugen und Vererben abstrakter Klassen in Dart}
+\end{code}
 
 \paragraph{Interfaces}
  
@@ -236,13 +208,8 @@ class Bar extends Foo {
 Dart unterstützt das Prinzip von sogenannten \textit{impliziten Interfaces}, das heißt, dass jede
 erzeugte Klasse automatisch als ein Interface genutzt und implementiert werden kann.
 
-\begin{lstlisting}
-class Foo {
-    ...
-}
-
-class Bar implements Foo {
-    ...
-}
-\end{lstlisting}
-
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Dart/dartCallPositionedFunction.png}
+    \caption{Aufrufen einer Funktion mit positioned Parametern}
+\end{code}
