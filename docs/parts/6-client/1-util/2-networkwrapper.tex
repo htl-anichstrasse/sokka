@@ -40,8 +40,6 @@ als Argumente, welche direkt per \lstinline{jsonEncode()} umgewandelt werden.
 Tritt bei einem durchgeführten Request ein Fehler auf - ein Statuscode der Antwort unter 200 bzw. über 400 oder ein
 leeres JSON-Objekt - wirft die Funktion eine Exception mit entsprechendem HTTP-Code.
 
-\pagebreak
-
 Erfolgt der Request fehlerlos so wird dessen Body per \lstinline{jsonDecode()} umgewandelt und retourniert.
 
 \subsubsection{NetworkWrapper.GET}
