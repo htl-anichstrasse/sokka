@@ -57,26 +57,26 @@ Im Order-Model werden alle relevanten Daten zu einer Bestellung abgespeichert.
     String & \_qrData & String, aus dem der QR-Code der Bestellung generiert wird\\
 \end{tabular}
 
-\subsection{MenuController}
+\subsection{Menu-Controller}
 
-Der MenuController speichert alle zum aktuellen Zeitpunkt verfügbaren Menüs in einer internen Liste,
+Der Menu-Controller speichert alle zum aktuellen Zeitpunkt verfügbaren Menüs in einer internen Liste,
 die zu App-Start per API-Call befüllt wird, ab.\\
-Ebenso wie der \textit{CookieStorage} ist auch der MenuController - sowie alle weiteren Controller -
+Ebenso wie der \textit{CookieStorage} ist auch der Menu-Controller - sowie alle weiteren Controller -
 als Singleton implementiert.
 
-\subsection{ProductController}
+\subsection{Product-Controller}
 
-Im ProductController werden alle zum Kauf verfügbaren Produkte abgespeichert. Auch dieser wird
+Im Product-Controller werden alle zum Kauf verfügbaren Produkte abgespeichert. Auch dieser wird
 bei App-Start durch einen Aufruf der API initialisiert.
 
-\subsection{ShoppingBasketController}
+\subsection{ShoppingBasket-Controller}
 
-In der Liste des ShoppingBasketControllers werden all jene Menüs und Produkte zwischengespeichert, die 
+In der Liste des ShoppingBasket-Controllers werden all jene Menüs und Produkte zwischengespeichert, die 
 vom Nutzer zu seinem Warenkorb hinzugefügt worden sind.\\
 Im Gegensatz zu den anderen Controllern ist dieser beim Start der App leer und wird erst durch
 die Interaktion des Users befüllt.
 
-\subsection{OrderController}
+\subsection{Order-Controller}
 
-Der OrderController verwaltet alle vom Nutzer getätigten Bestellungen und wird gleich wie der
-Menu- und ProductController zu Beginn über die Sokka-API befüllt.
+Der Order-Controller verwaltet alle vom Nutzer getätigten Bestellungen und wird gleich wie der
+Menu- und Product-Controller zu Beginn über die Sokka-API befüllt.

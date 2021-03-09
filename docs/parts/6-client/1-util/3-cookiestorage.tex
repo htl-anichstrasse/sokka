@@ -11,7 +11,7 @@ verwendet.
 Dieses Plugin wrapped die \lstinline{NSUserDefaults} von iOS und die \lstinline{SharedPreferences} von Android
 wodurch Key-Value-Paare persistent unabhängig des Betriebssystems abgespeichert werden können.
 
-Damit die Daten, die im CookieStorage gespeichert sind, global in der App verfügbar sind, wird in jener
+Damit die Daten, die im Cookie-Storage gespeichert sind, global in der App verfügbar sind, wird in jener
 Klasse das \textit{Singleton-Design-Pattern} angewendet. Dieses ermöglicht, dass immer dieselbe, einzige Instanz
 dieser Klasse aufgerufen wird, anstatt immer neue Objekte per Konstruktor anzulegen.
 
@@ -19,7 +19,7 @@ Dart hat hierfür eine eigene syntaktische Lösung:
 
 \begin{lstlisting}
 class CookieStorage {
-    // Eigentliche Instanz des CookieStorages
+    // Eigentliche Instanz des Cookie-Storagess
     static CookieStorage _instance = new CookieStorage.internal();
 
     // Singleton-Konstruktor, der immer _instance retourniert anstatt ein neues Objekt
@@ -33,7 +33,7 @@ class CookieStorage {
 }
 \end{lstlisting}
 
-Innerhalb der Klasse besitzt der CookieStorage zusätzlich eine Map \lstinline{Map<String, String>}, in der die Key-Value-Paare
+Innerhalb der Klasse besitzt der Cookie-Storage zusätzlich eine Map \lstinline{Map<String, String>}, in der die Key-Value-Paare
 gespeichert nochmals abgespeichert werden, damit sie in notwendigen Situationen synchron abgefragt werden können.
 
 Das Speichern und Abfragen von Werten, die im externen Speicher des Geräts gespeichert sind erfolgt über
@@ -56,7 +56,7 @@ Future<void> storeString(final String key, final String value) async {
 \end{lstlisting}
 
 Damit die gespeicherten Daten auch in der App persistent abgerufen werden können, gibt es klassenintern
-im CookieStorage vorgefertigte, statische Keys sowohl für den Session-Token als auch für die User-Email-Adresse:
+im Cookie-Storage vorgefertigte, statische Keys sowohl für den Session-Token als auch für die User-Email-Adresse:
 
 \begin{lstlisting}
 static const TOKEN_KEY = 'token';
