@@ -14,6 +14,12 @@
 \usepackage{color}
 \usepackage{scrhack}
 \usepackage{siunitx}
+\usepackage{newfloat}
+\DeclareFloatingEnvironment[
+  fileext=png,
+  name=Code-Snippet,
+  placement=htp,
+]{code}
 \bibliographystyle{plain}
 \graphicspath{{images/}{../images/}} % set correct path to images
 \headsep = 35pt
@@ -94,6 +100,6 @@
 \nocite{*}
 
 \listoffigures
-\listoftables
+\listof{code}{Code-Snippet-Verzeichnis}
 
 \end{document}
