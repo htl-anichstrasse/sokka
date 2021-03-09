@@ -15,23 +15,15 @@ Damit die Daten, die im Cookie-Storage gespeichert sind, global in der App verf�
 Klasse das \textit{Singleton-Design-Pattern} angewendet. Dieses ermöglicht, dass immer dieselbe, einzige Instanz
 dieser Klasse aufgerufen wird, anstatt immer neue Objekte per Konstruktor anzulegen.
 
+\newpage
+
 Dart hat hierfür eine eigene syntaktische Lösung:
 
-\begin{lstlisting}
-class CookieStorage {
-    // Eigentliche Instanz des Cookie-Storagess
-    static CookieStorage _instance = new CookieStorage.internal();
-
-    // Singleton-Konstruktor, der immer _instance retourniert anstatt ein neues Objekt
-    // zu erzeugen
-    factory CookieStorage() => _instance;
-
-    ...
-
-    // Eigentlicher Konstruktor
-    CookieStorage.internal();
-}
-\end{lstlisting}
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Dart/util/cookie-storage/cookieStorageSingleton.png}
+    \caption{Dart's syntaktische Lösung für die Erstellung eines Singletons}
+\end{code}
 
 Innerhalb der Klasse besitzt der Cookie-Storage zusätzlich eine Map \lstinline{Map<String, String>}, in der die Key-Value-Paare
 gespeichert nochmals abgespeichert werden, damit sie in notwendigen Situationen synchron abgefragt werden können.
@@ -39,29 +31,20 @@ gespeichert nochmals abgespeichert werden, damit sie in notwendigen Situationen 
 Das Speichern und Abfragen von Werten, die im externen Speicher des Geräts gespeichert sind erfolgt über
 eine Instanz der \textit{SharedPreferences}:
 
-\begin{lstlisting}
-import 'package:shared_preferences/shared_preferences.dart';
-
-...
-
-// Retourniert den String, der mit entsprechendem Key gespeichert wurde
-Future<String> getString(final String key) async {
-    return await SharedPreferences.getInstance().getString(key);
-}
-
-// Speichert den Argument-String mit entsprechendem Key ab
-Future<void> storeString(final String key, final String value) async {
-    await SharedPreferences.getInstance().setString(key, value);
-}
-\end{lstlisting}
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Dart/util/cookie-storage/sharedPreferences.png}
+    \caption{Speichern von Key-Value-Pairs in den externen Gerätespeichern}
+\end{code}
 
 Damit die gespeicherten Daten auch in der App persistent abgerufen werden können, gibt es klassenintern
 im Cookie-Storage vorgefertigte, statische Keys sowohl für den Session-Token als auch für die User-Email-Adresse:
 
-\begin{lstlisting}
-static const TOKEN_KEY = 'token';
-static const EMAIL_KEY = 'email';
-\end{lstlisting}
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Dart/util/cookie-storage/cookieKeys.png}
+    \caption{Definieren von statischen Key-Strings für erhöhte Typsicherheit}
+\end{code}
 
 So können Fehler, die durch Tippfehler oder falsche Angaben des Keys beim Abspeichern bzw. Abfragen
 von Werten entstehen, zur Gänze verhindert werden.
@@ -69,20 +52,8 @@ von Werten entstehen, zur Gänze verhindert werden.
 Anstatt den Key also manuell anzugeben kann dieser nun simpel über die statische Klassenvariable
 aufgerufen werden.
 
-\begin{lstlisting}
-Future<String> getEmail() async {
-    return await SharedPreferences.getInstance()
-        .getString(CookieStorage.EMAIL_KEY);
-}
-
-Future<void> storeEmail(final String email) async {
-    await SharedPreferences.getInstance()
-        .setString(CookieStorage.EMAIL_KEY, email);
-}
-\end{lstlisting}
-
-
-
-
-
-
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Dart/util/cookie-storage/getAndStoreWithStaticKey.png}
+    \caption{Verwalten von Cookie-Daten mithilfe oben definierter Static-Keys}
+\end{code}

@@ -1,58 +1,38 @@
 \section{User-Authentication}
 
-
-
-\subsection{Registrieren eines neuen Users}
+\subsection{Registrieren eines neuen Nutzers}
 
 Für die Registrierung eines neuen Nutzers müssen seine E-Mail-Adresse inklusive seines 
-gewählten Passwords an die API gesendet werden.\\
+gewählten Passwords sowie seine Zustimmung zur an die API gesendet werden. 
+
 Dies geschieht über die Form im Signup-Screen.
 
-\begin{lstlisting}
-Future<String> signUpUser(final String email, final String password) async {
-    return await this._networkWrapper.post(
-        SIGNUP_ROUTE,
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: {
-            'email': email,
-            'password': password,
-            "tos": true,
-            "privacypolicy": true,
-        },
-    ).then((response) {
-        return response['token'];
-    });
-}
-\end{lstlisting}
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Dart/services/user-auth/signup.png}
+    \caption{Funktion zum Registrieren eines neuen Nutzers}
+\end{code}
 
 Ist der Request erfolgreich, so wird ein neuer Nutzer in der Datenbank erzeugt. Als Antwort wird der
-Token für die damit generierte User-Session übermittelt, welcher in weiterer Folge im CookieStorage
+Token für die damit generierte Nutzer-Session übermittelt, welcher in weiterer Folge im CookieStorage
 abgespeichert wird.
 
-\subsection{Anmelden eines vorhandenen Users}
+\newpage
 
-\begin{lstlisting}
-Future<String> loginUser(final String email, final String password) async {
-    return await this._networkWrapper.post(
-        LOGIN_ROUTE,
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: {
-            'email': email,
-            'password': password,
-        }
-    ).then((response) {
-        return response['token'];
-    });
-}
-\end{lstlisting}
+\subsection{Anmelden eines vorhandenen Nutzers}
 
-\subsection{Abmelden eines Users}
+Zur Anmeldung eines bestehenden Nutzers in der App müssen dessen Logindaten an die 
+\lstinline{/user/login}-Route der Sokka-API gesendet werden.\\
 
-Wenn sich ein User manuell in der App abmeldet wird ein Request an \lstinline{/user/logout} mit
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Dart/services/user-auth/login.png}
+    \caption{Funktion zum Anmelden eines bestehenden Nutzers}
+\end{code}
+
+\subsection{Abmelden eines Nutzers}
+
+Wenn sich ein Nutzers manuell in der App abmeldet wird ein Request an \lstinline{/user/logout} mit
 dem gespeicherten Session-Token und der E-Mail des Nutzers gesendet.
 
 Jener Session-Token wird in weiterer Folge ungültig gemacht und aus dem Cookie-Storage der App
@@ -73,16 +53,16 @@ Future<void> logoutUser(final String sessionToken, final String email) async {
 }
 \end{lstlisting}
 
-\subsection{Validieren einer User-Session}
+\subsection{Validieren einer Nutzer-Session}
 
 Damit sich ein Nutzer der Sokka-App nicht bei jedem Start der App mit seinen Logindaten neu
 anmelden muss, werden die E-Mail-Adresse und der Session-Token nach einer erfolgreichen Anmeldung
 im CookieStorage abgespeichert.
 
 Mit jenen Daten im Speicher kann nun bei jedem weiteren App-Start ein Request an die
-\lstinline{/user/validate}-Route mit Session-Token und E-Mail zur Validierung der User-Session
+\lstinline{/user/validate}-Route mit Session-Token und E-Mail zur Validierung der Nutzer-Session
 gesendet werden.\\
-Wenn der Session-Token nachwievor gültig ist wird der User automatisch zum Home-Screen weitergeleitet.
+Wenn der Session-Token nachwievor gültig ist wird der Nutzer automatisch zum Home-Screen weitergeleitet.
 Ist die Session abgelaufen erscheint der Login- bzw. Signup-Screen.
 
 \begin{lstlisting}

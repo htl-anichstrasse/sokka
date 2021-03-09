@@ -4,32 +4,23 @@ Um in einer Flutter-App Requests sowie Responses über das \textit{HTTP}-Protoko
 muss das von Dart bereitgestellte \textit{http}-Package zu den Dependencies im \lstinline{pubspec.yaml}-File hinzugefügt
 werden.
 
-\begin{lstlisting}
-dependencies:
-  http: ^0.12.2
-\end{lstlisting}
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Dart/util/network-wrapper/dependency.png}
+    \caption{Hinzufügen des \textbf{http}-Packages zum \lstinline{pubspec.yaml}-File}
+\end{code}
 
 Mithilfe dieses Packages können nun \textit{GET}- und \textit{POST}-Requests an eine bestimmte URL, in unserem Fall
 an die Sokka-API gesendet werden, wobei die erhaltene Antwort per \lstinline{jsonDecode()}-Funktion in ein lesbares
 JSON-Format umgewandelt werden muss.
 
-\begin{lstlisting}
-import 'dart:convert';
-import 'package:http/http.dart' as http;
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Dart/util/network-wrapper/postRequest.png}
+    \caption{Simples Beispiel für einen POST-Request}
+\end{code}
 
-void main (List<String> arguments) async {
-    final response = await http.post(
-        'https://api.sokka.me/user/login',
-        headers: {
-            ...
-        },
-        body: jsonEncode({
-            email: 'email',
-            password: 'password'
-        }),
-    );
-}
-\end{lstlisting}
+\newpage
 
 Um das Versenden und Verarbeiten solcher HTTP-Requests möglichst einfach zu gestalten bietet jene
 Klasse zwei Wrapper-Funktionen für GET- und POST-Requests an.
@@ -44,34 +35,16 @@ Erfolgt der Request fehlerlos so wird dessen Body per \lstinline{jsonDecode()} u
 
 \subsubsection{NetworkWrapper.GET}
 
-\begin{lstlisting}
-Future<dynamic> get(final String url, { final Map<String, String> headers }) async {
-    return await http.get(
-        url,
-        headers: headers,
-    ).then((http.Response response) {
-        if (response.statusCode < 200 || response.statusCode > 400 || json == null) {
-            throw new Exception("Error fetching data from $url with ${response.statusCode}");
-        }
-        return this._jsonDecoder.convert(response.body);
-    });
-}
-\end{lstlisting}
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Dart/util/network-wrapper/networkWrapperGET.png}
+    \caption{GET-Request-Wrapper der NetworkWrapper-Klasse}
+\end{code}
 
 \subsubsection{NetworkWrapper.POST}
 
-\begin{lstlisting}
-Future<dynamic> post(final String url, { final Map<String, String> headers, body, encoding }) async {
-    return await http.post(
-        url,
-        headers: headers,
-        body: this._jsonEncoder.convert(body),
-        encoding: encoding
-    ).then((http.Response response) {
-        if (response.statusCode < 200 || response.statusCode > 400 || json == null) {
-            throw new Exception("Error fetching data from $url");
-        }
-        return this._jsonDecoder.convert(response.body);
-    });
-}
-\end{lstlisting}
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Dart/util/network-wrapper/networkWrapperPOST.png}
+    \caption{POST-Request-Wrapper der NetworkWrapper-Klasse}
+\end{code}
