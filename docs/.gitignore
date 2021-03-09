@@ -2,6 +2,7 @@
 *.fdb*
 *.fls
 *.log
+*.lg
 *.lof
 *.lot
 *.blg
