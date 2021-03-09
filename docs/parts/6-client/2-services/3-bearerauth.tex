@@ -1,3 +1,36 @@
 \section{Bearer-Authentication}
 
 \subsection{Allgemeines}
+
+Um die aktuell verfügbaren Menüs und Produkte sowie die Bestellungen eines Nutzers per API-Request
+abfragen zu können wird ein \textit{Bearer-Authorization-Token} benötigt.
+
+\subsection{Generieren eines Bearer-Tokens}
+
+Dieser setzt sich aus der E-Mail-Adresse des Nutzers und dem Token der aktuellen
+Nutzer-Session zusammen.
+
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Client/services/bearer-auth/generateBearerToken.png}
+    \caption{Generieren eines Bearer-Authorizaton-Tokens}
+\end{code}
+
+Rufen wir testweise oben angeführte Funktion auf
+
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Client/services/bearer-auth/callGenerateBearerToken.png}
+    \caption{Erstellen eines Test-Bearer-Tokens}
+\end{code}
+
+erhalten wir folgenden Authorization-Token:
+
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Client/services/bearer-auth/testToken.png}
+    \caption{Test-Bearer-Authorization-Token}
+\end{code}
+
+Ein solcher Token wird als \lstinline{Authorization}-Parameter bei Requests des \lstinline{FetchOrderables}-
+oder des \lstinline{ManageOrders}-Service benötigt.
