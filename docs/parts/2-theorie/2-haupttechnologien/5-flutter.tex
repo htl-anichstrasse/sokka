@@ -93,21 +93,18 @@ kaskadierendes Verhalten zueinander.
 
 Ähnlich zu anderen Frameworks wie beispielsweise \textit{Bootstrap 4}
 können unter Einsatz von bekannten Standard-Widgets wie Containern, Rows und Columns
-bereits simple Layouts erstellt werden.\\
+bereits simple Layouts erstellt werden.
+
+\newpage
 
 Ein Widget wird in Flutter mithilfe des entsprechenden Objekt-Konstruktors
 an der gewünschten Stelle erzeugt und mit entsprechenden Attributen befüllt.
 
-\begin{lstlisting}
-...
-new Container(
-    height: 280.0,
-    width: 400.0,
-    padding: new EdgeInsets.only(top: 10.0),
-    child: new Text('Sokka is awesome!')
-),
-...
-\end{lstlisting}
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Flutter/flutterCreateContainer.png}
+    \caption{Erzeugen eines einfachen Container-Widgets mithilfe von Flutter}
+\end{code}
 
 Hiermit wird ein neues Container-Widget mit 280 Pixeln Höhe,
 400 Pixeln Breite, einem Top-Padding von zehn Pixeln und einem Text als
@@ -117,28 +114,12 @@ Wie bereits erwähnt können durch das Kaskadieren unterschiedlicher Widgets
 relativ einfach komplexe UI-Strukturen erzeugt werden.\\
 Hierfür müssen lediglich die weiteren / inneren Widgets dem 
 \lstinline{child}- bzw. \lstinline{children}-Property des äußeren Widgets übergeben werden.
-\pagebreak
-\begin{lstlisting}
-...
-new Container(
-    child: new Row(
-        children: <Widget>[
-            new Icon(
-                Icons.ac_unit,
-                color: Colors.white,
-            ),
-            new Text(
-                'Sokka is awesome!',
-                color: Colors.white,
-            ),
-            new Container(
-                child: new Image(...)
-            ),
-        ],
-    ),
-),
-...
-\end{lstlisting}
+
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Flutter/flutterCreateCascadingContainer.png}
+    \caption{Erzeugen eines Containers mit verschachtelten Child-Widgets}
+\end{code}
 
 % https://flutter.dev/docs/development/ui/layout
 
@@ -148,16 +129,11 @@ Grundsätzlich erfolgt das Rendern eines Widgets über seine eigene \lstinline{b
 sobald ein Widget gerendert bzw. neugerendert werden muss und retourniert ein entsprechendes Widget-Objekt,
 der dem Design-Tree des entsprechenden Kontexts hinzugefügt wird.
 
-\begin{lstlisting}
-@override
-Widget build(BuildContext context) {
-    return new Container(
-        child: new Image(
-            image: new AssetImage('path/to/image')
-        ),
-    );
-}
-\end{lstlisting}
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Flutter/flutterBuildFunction.png}
+    \caption{\lstinline{build()}-Funktion eines Widgets}
+\end{code}
 
 Obige Build-Funktion erzeugt einen neuen Container mit einem Bild als Kindelement und übergibt dieses
 an den Widget-Tree des entsprechenden Layouts.
@@ -169,20 +145,11 @@ Wie der Name bereits verrät, haben Stateless-Widgets einen definierten, statisc
 auf das Verhalten anderer Widgets oder die Interaktion eines Nutzers, beispielsweise Icons, Text oder einfache
 Buttons.
 
-\begin{lstlisting}
-class SokkaLogo extends StatelessWidget {
-    @override
-    Widget build(BuildContext build) {
-        return new ListTile(
-            title: new Text('Sokka is awesome!'),
-            leading: new Icon(
-                Icons.flutter_logo,
-                color: colors.White,
-            ),
-        );
-    }
-}
-\end{lstlisting}
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Flutter/flutterStatelessWidget.png}
+    \caption{Einfaches Stateless Widget}
+\end{code}
 
 Stateful-Widgets dagegen haben einen internen Zustand, welcher durch Interaktion mit dem Nutzer dynamisch verändert
 werden kann, beispielsweise durch das Tippverhalten des Benutzers.
@@ -205,23 +172,11 @@ wird hierfür die \lstinline{setState()}-Funktion verwendet.\\
 Diese überschreibt die entsprechende Variable mit dem neuen Zustandswert und lässt die Flutter-Engine das entsprechende
 Widget neu rendern um die Veränderung direkt erkennbar zu machen.
 
-\begin{lstlisting}
-class LoginScreen extends StatefulWidget {
-    @override
-    _LoginScreenState createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-    @override
-    Widget build(BuildContext context) {
-        return new Scaffold(
-            body: new Center(
-                ...
-            ),
-        );
-    }
-}
-\end{lstlisting}
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Flutter/flutterStatefulWidget.png}
+    \caption{Ein einfaches Stateful Widget}
+\end{code}
 
 Wie anhand der Implementation zu erkennen ist, ruft das Widget \textit{LoginScreen} die Build-Funktion
 seines Zustandwrappers \textit{\_LoginScreenState} auf und erzeugt damit ein neues Widget mit dem entsprechenden
@@ -267,46 +222,40 @@ Um zwischen den verschiedenen Screens und Views der App zu wechseln und zu navig
 benötigen wir die \textit{Navigator}-Klasse von Flutter.
 
 Hierfür ist es sinnvoll zuerst eine HashMap mit allen möglichen Routes der App zu definieren
-um so benannte Routen (\textit{named routes}) verwenden zu können.\\
+um so benannte Routen (\textit{named routes}) verwenden zu können.
+
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Flutter/flutterRoutes.png}
+    \caption{Routes für die Navigation zwischen Screens}
+\end{code}
+
+\newpage
+
 Diese Routen müssen im Anschluss dem \textit{routes}-Property des MaterialApp-Widgets unserer App übergeben werden.
 
-\begin{lstlisting}
-final Map<String, WidgetBuilder> routes = {
-    '/':        (BuildContext buildContext) => new HomeScreen(),
-    '/login':   (BuildContext buildContext) => new LoginScreen(),
-    '/signup':  (BuildContext buildContext) => new SignUpScreen(),
-    '/loading': (BuildContext buildContext) => new LoadingSplashScreen()
-};
-\end{lstlisting}
-
-\begin{lstlisting}
-return new MaterialApp( 
-    ...
-    routes: routes
-    ...
-);
-\end{lstlisting}
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Flutter/flutterMainRoute.png}
+    \caption{Setzten der Routes im App Entry-Point}
+\end{code}
 
 Nun kann mithilfe der Navigator-Klasse und unseren definierten Routen einfach durch die App
 navigiert werden.
 
 Hierfür stehen einige Methoden zur Verfügung:
 
-\begin{lstlisting}
-// Wechselt vom aktuellen Screen zum LoginScreen
-Navigator.of(context).pushNamed('/login');
-
-// Wechselt vom aktuellen Screen zum SignupScreen und schliesst vorherigen.
-Navigator.of(context).popAndPushNamed('/signup');
-\end{lstlisting}
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Flutter/flutterNavigatorOf.png}
+    \caption{\lstinline{Navigator.of()}-Funktion zum Wechseln der Screens per \textit{namedRoutes}}
+\end{code}
 
 Alternativ kann auch ohne NamedRoutes durch die App mithilfe der (umständlicheren) \lstinline{push()}-Funktion navigiert 
 werden.
 
-\begin{lstlisting}
-// Erzeugt eine neue, temporaere Route zum HomeScreen und wechselt direkt zu diesem
-Navigator.of(context).push(context, new MaterialPageRoute(builder: (context) => new HomeScreen()));
-
-// Schliesst HomeScreen und kehrt zu vorherigen Screen zurueck
-Navigator.pop(context);
-\end{lstlisting}
+\begin{code}
+    \centering
+    \includegraphics[width=1\textwidth]{images/Flutter/flutterAlternateNavigator.png}
+    \caption{Navigieren durch die App per MaterialPageRoutes}
+\end{code}
