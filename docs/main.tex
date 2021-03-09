@@ -16,7 +16,7 @@
 \usepackage{siunitx}
 \usepackage{newfloat}
 \DeclareFloatingEnvironment[
-  fileext=png,
+  fileext=lg,
   name=Code-Snippet,
   placement=htp,
 ]{code}
@@ -96,10 +96,19 @@
 \setcounter{secnumdepth}{1}
 \appendix
 
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Literaturverzeichnis}
 \bibliography{references} %references bibtech as used for all papers dealing with online-surveys
 \nocite{*}
 
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{\listfigurename}
 \listoffigures
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Code-Snippet-Verzeichnis}
 \listof{code}{Code-Snippet-Verzeichnis}
 
 \end{document}
