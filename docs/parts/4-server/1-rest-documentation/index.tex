@@ -1,7 +1,7 @@
 \chapter{REST-Route-Dokumentation}
 \label{restdoc}
 
-Im folgenden Kapitel werden alle verfügbaren Routes der im Backend-Server eingebauten REST-API so genau wie möglich dokumentiert. Die Routes der API sind nicht für die öffentliche Verwendung, beziehungsweise für die Erstellung benutzerdefinierter Clients gedacht und wurden ausschließlich für die Verwendung in Kombination mit dem \textbf{Sokka-Flutter-Client} konzipiert und umgesetzt.
+Im folgenden Kapitel werden alle verfügbaren Routes der im Backend-Server eingebauten REST-API so genau wie möglich dokumentiert. Die Routes der API sind nicht für die öffentliche Verwendung, bzw. für die Erstellung Nutzerdefinierter Clients gedacht und wurden ausschließlich für die Verwendung in Kombination mit dem \textbf{Sokka-Flutter-Client} konzipiert und umgesetzt.
 
 \section{Authorization}
 
@@ -16,7 +16,7 @@ Im Sokka-System gibt es 2 Arten von Tokens, welche für die Authorisierung benö
     \item Einen \lstinline{ACP}-Token erhält man durch eine Anmeldung im ACP (siehe \nameref{acpauth})
 \end{itemize}
 
-Damit die Authorisierung dann klappt, muss der empfangene Token gemeinsam mit der Nutzer-E-Mail beziehungsweise dem ACP-Nutzernamen im Format \lstinline{<Name/E-Mail>:<Token>} in Base64-Enkodierung in dem \lstinline{Authorization}-Header der gewünschten API-Anfrage gesendet werden.
+Damit die Authorisierung dann klappt, muss der empfangene Token gemeinsam mit der Nutzer-E-Mail bzw. dem ACP-Nutzernamen im Format \lstinline{<Name/E-Mail>:<Token>} in Base64-Enkodierung in dem \lstinline{Authorization}-Header der gewünschten API-Anfrage gesendet werden.
 
 Wenn nun beispielsweise eine Anmeldung mit E-Mail und Passwort an die User-Login-Route (\nameref{appauth}) durchgeführt wird, muss der davon erhaltene Token gemeinsam mit der E-Mail immer in dem Header mitgesendet werden.
 
