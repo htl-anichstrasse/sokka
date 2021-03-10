@@ -1,4 +1,6 @@
 \part{Backend}
+\label{backend}
+
 \chapter{Allgemeines}
 
 Der \textbf{Backend-Server} hat die Aufgabe, durch fest definierte Zugangspunkte den Abruf oder die Veränderung von Daten in der Datenbank des Systems zu ermöglichen. Damit das funktioniert besteht der Server aus zwei ganz grundlegenden Teilen:
@@ -48,6 +50,7 @@ Die Secrets müssen in Textdateien in einem vom VCS ausgenommenen Ordner erstell
 \begin{code}[htp]
     \begin{center}
         \includegraphics[width=1\textwidth]{images/Backend/secrets.png}
+        \vspace{-25pt}
         \caption{Sokkas Docker Secrets in der \lstinline{docker-compose.yml}}
     \end{center}
 \end{code}
