@@ -57,4 +57,4 @@ Nicolaus Rossi - nico@sokka.me<br>
 Joshua Winkler - josh@sokka.me<br>
 HTL Anichstraße - htlinn@tsn.at
 
-<a href="https://htl-anichstrasse.tirol" target="_blank"><img src=".github/logo_background.png" width="180px"></a>
+<a href="https://htlanichstrasse.tirol" target="_blank"><img src=".github/logo_background.png" width="180px"></a>
