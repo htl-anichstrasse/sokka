@@ -66,6 +66,7 @@ Sowohl Produkte als auch Menüs erhalten in Sokka anpassbare Bilder. Um dies zu 
 Wenn ein Bild über die ACP-Route hochgeladen wird, legt der Server das Bild mit einer zufallsgenerierten ID (16 Bytes, Hex enkodiert) in einer Docker Volume ab. Diese Bilder können dann später wieder über die zweite Route abgerufen werden.
 
 \subsection{Verifikation}
+\label{verification}
 
 Bei der Registrierung müssen Nutzer ihre E-Mail-Adresse angeben. Um sicherzugehen, dass diese Adresse auch wirklich gültig ist, wurde mit Hilfe der Library \textit{nodemailer} ein simples E-Mail-Verifikationssystem implementiert. Ein Nutzer kann erst Bestellungen tätigen, wenn sein Nutzerkonto verifiziert ist.
 

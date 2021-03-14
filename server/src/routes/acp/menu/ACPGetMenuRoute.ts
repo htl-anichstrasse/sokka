@@ -19,10 +19,14 @@ class ACPGetMenuRoute extends Route {
         try {
             const id = parseInt(String(req.query.id));
             let menus;
-            if (!isNaN(id)) {
-                menus = [await Menu.get(id)];
-            } else {
-                menus = await Menu.getAll();
+            try {
+                if (!isNaN(id)) {
+                    menus = [await Menu.get(id)];
+                } else {
+                    menus = await Menu.getAll();
+                }
+            } catch (err) {
+                menus = [];
             }
             res.send({ success: true, menus: menus });
         } catch (err) {
