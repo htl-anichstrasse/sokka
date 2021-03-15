@@ -81,6 +81,7 @@ services:
       - VERIFY_EMAIL
       - VERIFY_EMAIL_PASSWORD
     environment:
+      - TZ=Europe/Vienna
       - NGINX_HOST=api.sokka.me
       - NGINX_PORT=8090
       - DEBUG=false
