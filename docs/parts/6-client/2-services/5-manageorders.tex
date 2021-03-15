@@ -20,19 +20,21 @@ deren QR-Code vorzeigen kann.
 Sobald ein Nutzer die in seinem Warenkorb befindlichen Waren bestellt, wird ein API-Request abgesendet,
 der in der Datenbank einen neuen Bestell-Eintrag erzeugt und abrufbar macht.
 
+\newpage
+
 Hierfür müssen alle Menüs und Produkte, die der Nutzer bestellen möchte, als Payload an den
 Request übergeben werden.\\
 Diese werden per \lstinline{loadMenus()}- sowie \lstinline{loadProducts()}-Funktion
 in den Body des Requests geschrieben.
 
-\begin{code}
+\begin{code}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/Client/services/manage-orders/createMenuPayload.png}
     \vspace{-25pt}
     \caption{\lstinline{loadMenus()}-Funktion zum Laden bestellter Menüs in den Request-Body}
 \end{code}
 
-\begin{code}
+\begin{code}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/Client/services/manage-orders/createProductPayload.png}
     \vspace{-25pt}
@@ -43,7 +45,7 @@ in den Body des Requests geschrieben.
 
 Jene Funktionen können nun in der \lstinline{createOrder()}-Funktion aufgerufen werden.
 
-\begin{code}
+\begin{code}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/Client/services/manage-orders/createOrder.png}
     \vspace{-25pt}
@@ -54,8 +56,6 @@ Ist der Request erfolgreich, wird eine neue Bestellung in der Datenbank erzeugt 
 \lstinline{Order-View} dargestellt, damit der QR-Code der eben aufgegebenen Bestellung
 direkt zum Abruf bereit steht.
 
-\newpage
-
 \subsection{Abfragen der Bestellungen eines Nutzers}
 
 Damit ein Nutzer Einblick über seine vergangenen Bestellungen hat und diese aufrufen zum Scan 
@@ -64,7 +64,7 @@ der Liste des \lstinline{Order-Controllers} übergeben, um im \lstinline{Order-V
 
 Dies geschieht mithilfe der \lstinline{appendOrders()}-Funktion des Services.
 
-\begin{code}
+\begin{code}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/Client/services/manage-orders/appendOrders.png}
     \vspace{-25pt}

@@ -1,4 +1,5 @@
 \section{Cookie-Storage}
+\label{clientcookie}
 
 Damit sich ein User des Clients nicht nach jedem App-Neustart erneut mit seinen Logindaten anmelden muss,
 werden dessen E-Mail-Adresse sowie der generierte Session-Token, der nach einem erfolgreichem Login erhalten wird, 
@@ -15,11 +16,9 @@ Damit die Daten, die im Cookie-Storage gespeichert sind, global in der App verf�
 Klasse das \textit{Singleton-Design-Pattern} angewendet. Dieses ermöglicht, dass immer dieselbe, einzige Instanz
 dieser Klasse aufgerufen wird, anstatt immer neue Objekte per Konstruktor anzulegen.
 
-\newpage
-
 Dart hat hierfür eine eigene syntaktische Lösung:
 
-\begin{code}
+\begin{code}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/Client/util/cookie-storage/cookieStorageSingleton.png}
     \vspace{-25pt}
@@ -32,7 +31,7 @@ gespeichert nochmals abgespeichert werden, damit sie in notwendigen Situationen 
 Das Speichern und Abfragen von Werten, die im externen Speicher des Geräts gespeichert sind erfolgt über
 eine Instanz der \textit{SharedPreferences}:
 
-\begin{code}
+\begin{code}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/Client/util/cookie-storage/sharedPreferences.png}
     \vspace{-25pt}
