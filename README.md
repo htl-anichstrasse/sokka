@@ -29,7 +29,7 @@ Clone the repository.
 git clone https://github.com/htl-anichstrasse/sokka.git
 ```
 
-You can now make changes to the Docker container names, `VIRTUAL_HOST`, `NGINX_HOST` & `LETSENCRYPT_HOST` settings. If you wish, you can also modify module configurations to include your logo for example. Once you're ready, simply run the start script with the build flag.
+Change the Docker container names, `VIRTUAL_HOST`, `NGINX_HOST` & `LETSENCRYPT_HOST` settings for all containers to use the domain name you want Sokka to use. Once you're ready, simply run the start script with the build flag. It is currently not possible to change the Sokka brand via configuration. You may however fork this repository and replace Sokka logos with your corporate logo.
 
 ```
 ./start.sh build
@@ -48,6 +48,10 @@ chmod +x stop.sh
 Make sure to change the MySQL default root password after setup. This can be done by logging in to the phpMyAdmin page (see `NGINX_HOST` environment variable for the PMA Docker container), clicking on `User accounts`, then `Edit privileges` for the `root` user account and then on `Change password`.
 
 <img src=".github/phpmyadmin_changepassword.png" alt="phpMyAdmin Change Password Screenshot">
+
+After setting a new MySQL password, create needed Docker Secrets. Docker loads the secrets from `./secrets`, so simply create a folder called 'secrets' in the root folder of the project and create text files referenced in `docker-compose.yml` with the corresponding contents.
+
+Besides MySQL login data, you will also need to create Docker Secrets for a Gmail login used by the verification service. For that, you will need to create an app password by clicking [here](https://myaccount.google.com/u/1/apppasswords) or by following [this guide](https://support.google.com/accounts/answer/185833). After you have obtained your app password, simply set the password and the email corresponding to the password as a Docker Secret.
 
 ## Contact
 
