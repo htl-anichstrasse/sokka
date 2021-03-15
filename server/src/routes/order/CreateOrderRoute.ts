@@ -33,7 +33,7 @@ class CreateOrderRoute extends Route {
         let curDate = new Date();
         let beforeClosingTime = false;
         if (curDate.getHours() <= closingTime[0]) {
-            if (curDate.getHours() === closingTime[0]) {
+            if (curDate.getHours() == closingTime[0]) {
                 if (curDate.getMinutes() < closingTime[1]) {
                     beforeClosingTime = true;
                 }
