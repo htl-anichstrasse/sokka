@@ -1,0 +1,66 @@
+\section{ACPOrderValidation}
+
+Der \textit{ACP-Order-Validation}-Service bildet das Fundament für die Hauptfunktion des Admin-Clients -
+dem Validieren von Bestellungen durch Einscannen des entsprechenden QR-Codes.
+
+Hierfür wird ein Bearer-Token als Authorization-Parameter - gleich wie für die Verwendung des 
+\nameref{clientfetchorderables} des Clients - benötigt.\\
+Dieser wird mithilfe des \nameref{clientbearerauth}-Services, der aus dem Client übernommen worden ist,
+generiert und setzt sich aus dem Namen und dem Passwort des angemeldeten ACP-Nutzers zusammen.
+
+\subsection{Service-Routes}
+
+\begin{code}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/Admin-Client/services/acpordervalidation/routes.png}
+    \vspace{-25pt}
+    \caption{API-Routes für den Order-Validation-Service}
+\end{code}
+
+\subsection{Validieren einer Bestellung}
+
+Wird der QR-Code einer Bestellung mithilfe des Admin-Clients eingescanned muss als ersten Schritt deren
+Validität in Hinblick auf 
+
+\begin{itemize}
+    \item den Zeitpunkt der Bestellung (diese muss am Vortag vor der \glqq Closing Time\grqq aufgegeben werden)
+    \item Nutzerzugehörigkeit, sprich, ob die Bestellung zum entsprechenden Nutzer gehört
+    \item Gültigkeit des QR-Codes
+\end{itemize}
+
+überprüft werden.
+
+Hierfür wird mit nachfolgend angeführter Funktion ein entsprechender Request nach dem Scan eines Codes
+an die API gesendet.
+
+\begin{code}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/Admin-Client/services/acpordervalidation/validateOrder.png}
+    \vspace{-25pt}
+    \caption{Überprüfen der Gültigkeit einer Bestellung}
+\end{code}
+
+Ist die Bestellung gültig und der Request damit erfolgreich, so werden die vom Nutzer bestellten
+Waren, deren Preis, der Rabatt und der Gesamtpreis nach Abzug des Rabatts in einem Dialog-Fenster
+angezeigt.
+
+Das Personal kann nun den entsprechenden Betrag vom Nutzer kassieren und die Bestellung abschließen
+und den QR-Code invalidieren.
+
+\subsection{Abschließen einer Bestellung}
+
+Wird eine Bestellung durch den Admin-Client als gültig erkannt und in weiterer Folge durch den
+Restaurantangestellten abkassiert muss die Bestellung und deren QR-Code ungültig gemacht werden,
+um künftig nicht nochmals vorgezeigt werden zu könne.
+
+Dies kann über den Druck eines Buttons im oben erwähnten Dialog-Fenster, in dem die relevanten Daten
+der Bestellung aufgelistet sind, durchgeführt werden.\\
+Dabei wird folgende Anfrage an die API gesendet:
+
+\begin{code}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/Admin-Client/services/acpordervalidation/invalidateOrder.png}
+    \vspace{-25pt}
+    \caption{Invalidieren einer Bestellung}
+\end{code}
+
