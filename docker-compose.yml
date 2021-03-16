@@ -1,6 +1,6 @@
 version: "3.6"
 services:
-  # NGINX REVERSE PROXY
+  # nginx reverse proxy, this service distributes traffic to underlying services via virtual hosts
   proxy:
     image: jwilder/nginx-proxy:latest
     container_name: "proxy"
@@ -18,6 +18,7 @@ services:
       - "/usr/share/nginx/html"
       - "./vhost.conf:/etc/nginx/vhost.d"
       - "./proxy.conf:/etc/nginx/conf.d"
+  # LE companion for nginx reverse proxy, used for automatically creating TLS cerificates for Sokka services
   nginx-letsencrypt-companion:
     depends_on:
       - proxy
@@ -30,24 +31,7 @@ services:
       - "/etc/nginx/vhost.d"
       - "/usr/share/nginx/html"
       - "./proxy.conf:/etc/nginx/conf.d"
-  # MAIN PAGE
-  main:
-    depends_on:
-      - proxy
-    image: nginx
-    container_name: "sokka.me"
-    restart: always
-    volumes:
-      - ./main/html:/usr/share/nginx/html
-    ports:
-      - "8080:80"
-    environment:
-      - NGINX_HOST=sokka.me
-      - NGINX_PORT=80
-      - VIRTUAL_HOST=sokka.me,www.sokka.me
-      - LETSENCRYPT_HOST=sokka.me,www.sokka.me
-      - LETSENCRYPT_EMAIL=jos.winkler@tsn.at
-  # MySQL database
+    # MySQL database
   mysql:
     image: mysql:latest
     container_name: "api.sokka.me_db"
@@ -57,7 +41,25 @@ services:
       MYSQL_DATABASE: default_schema
     cap_add:
       - SYS_NICE
-  # API PAGE
+  # phpMyAdmin container for easily debugging MySQL, you can remove this if not needed
+  pma:
+    image: phpmyadmin/phpmyadmin
+    container_name: "api.sokka.me_pma"
+    restart: always
+    links:
+      - mysql
+    environment:
+      - PMA_HOST=mysql
+      - PMA_PORT=3306
+      - PMA_ARBITRARY=1
+      - NGINX_HOST=pma.sokka.me
+      - VIRTUAL_PORT=8095
+      - VIRTUAL_HOST=pma.sokka.me
+      - LETSENCRYPT_HOST=pma.sokka.me
+      - LETSENCRYPT_EMAIL=jos.winkler@tsn.at
+    ports:
+      - "8095:80"
+    # API and Sokka backend service
   api:
     depends_on:
       - proxy
@@ -79,6 +81,7 @@ services:
       - VERIFY_EMAIL
       - VERIFY_EMAIL_PASSWORD
     environment:
+      - TZ=Europe/Vienna
       - NGINX_HOST=api.sokka.me
       - NGINX_PORT=8090
       - DEBUG=false
@@ -92,23 +95,7 @@ services:
       - SALT_ROUNDS=10
       - MAX_USER_SESSIONS=3
       - MAX_ACP_USER_SESSIONS=1
-  pma:
-    image: phpmyadmin/phpmyadmin
-    container_name: "api.sokka.me_pma"
-    restart: always
-    links:
-      - mysql
-    environment:
-      - PMA_HOST=mysql
-      - PMA_PORT=3306
-      - PMA_ARBITRARY=1
-      - NGINX_HOST=pma.sokka.me
-      - VIRTUAL_PORT=8095
-      - VIRTUAL_HOST=pma.sokka.me
-      - LETSENCRYPT_HOST=pma.sokka.me
-      - LETSENCRYPT_EMAIL=jos.winkler@tsn.at
-    ports:
-      - "8095:80"
+  # ACP React app for managing the Sokka system
   acp:
     depends_on:
       - proxy
@@ -127,7 +114,24 @@ services:
       - HTTPS_METHOD=noredirect
       - LETSENCRYPT_HOST=acp.sokka.me
       - LETSENCRYPT_EMAIL=jos.winkler@tsn.at
-  # DEFAULT PAGE (FALLBACK)
+  # Main Page - DELETE THIS, this is just used for hosting Sokka's main page at www.sokka.me
+  main:
+    depends_on:
+      - proxy
+    image: nginx
+    container_name: "sokka.me"
+    restart: always
+    volumes:
+      - ./main/html:/usr/share/nginx/html
+    ports:
+      - "8080:80"
+    environment:
+      - NGINX_HOST=sokka.me
+      - NGINX_PORT=80
+      - VIRTUAL_HOST=sokka.me,www.sokka.me
+      - LETSENCRYPT_HOST=sokka.me,www.sokka.me
+      - LETSENCRYPT_EMAIL=jos.winkler@tsn.at
+  # Fallback page for unmapped virtual hosts (e. g. this page will be shown when someone tries to access your server via IP)
   default:
     depends_on:
       - proxy
@@ -143,6 +147,7 @@ services:
       - NGINX_PORT=80
       - VIRTUAL_HOST=default.sokka.me
       - HTTPS_METHOD=noredirect
+# Docker Secrets, make sure to create these files with the corresponding content before firing up the services
 secrets:
   MYSQL_DB:
     file: ./secrets/MYSQL_DB.txt
