@@ -1,12 +1,12 @@
 \section{Docker}
 
-\textit{Docker} ist eine erstmals 2013 veröffentlichte Technologie, welche durch den US-amerikanischen Unternehmer Solomon Hykes geschaffen wurde. \cite{hykes2018} Sie ermöglicht eine einfache Bereitstellungen von Software durch das Virtualisieren von isolierten Containern, welche einer Software eine funktionsfähige Lauftzeitumgebung und alle benötigten Abhängigkeiten bieten.
+\textit{Docker} ist eine erstmals 2013 veröffentlichte Technologie, die vom US-amerikanischen Unternehmer \textit{Solomon Hykes} geschaffen wurde. \cite{hykes2018} Sie ermöglicht eine einfache Bereitstellung von Software durch das Virtualisieren von isolierten Containern, welche einer Software eine funktionsfähige Lauftzeitumgebung und alle benötigten Abhängigkeiten bietet.
 
 Docker wird genutzt, um das Sokka-System schnell und einfach auf neuen Systemen lauffähig zu machen. Dafür existiert eine \lstinline{docker-compose.yml}-Datei im Root-Verzeichnis des Sokka-Repositories, welche Docker so konfiguriert, dass alle benötigten Container (in der Datei genannt: \lstinline{services}) vollautomatisch erstellt werden.
 
 \subsection{Images}
 
-Wenn eine Anwendung durch Docker lauffähig gemacht werden soll, muss ein \textbf{Docker Image} erstellt werden. Dafür wird ein \textbf{Dockerfile} erstellt, welches Docker Anweisungen zum Kompilieren des Images gibt. Im Dockerfile wird zum Beispiel festgelegt, welche \textit{Laufzeitumgebung} und welche Version bzw. Implementation dieser benötigt wird (beispielsweise eine JVM-Implementation für Java-Anwendungen oder Node.js für JavaScript-Anwendungen). Außerdem werden dem Dockerfile Befehle übergeben, welche für die Anwendung benötigte Anwendungen nachlädt und ins Image kompiliert.
+Wenn eine Anwendung durch Docker lauffähig gemacht werden soll, muss ein \textbf{Docker Image} erstellt werden. Dafür wird ein \textbf{Dockerfile} erstellt, das Docker Anweisungen zum Kompilieren des Images gibt. Im Dockerfile wird zum Beispiel festgelegt, welche \textit{Laufzeitumgebung} und welche Version bzw. Implementation dieser Umgebung benötigt wird (beispielsweise eine JVM-Implementation für Java-Anwendungen oder Node.js für JavaScript-Anwendungen). Außerdem werden dem Dockerfile Befehle übergeben, die für die Anwendung benötigte Anwendungen nachlädt und ins Image kompiliert.
 
 \begin{code}[htp]
     \begin{center}

@@ -5,12 +5,12 @@
 
 \textit{Dart} ist eine höhere, clientoptimierte Programmiersprache zur Entwicklung von Apps auf mehreren Plattformen.
 
-Sie wird von \textit{Google} entwickelt und wird hauptsächlich zum Entwickeln von Serversoftware, (nativen) Mobile-, Desktop- oder Web-Apps verwendet.
+Sie wird von \textit{Google} entwickelt und wird hauptsächlich zur Entwicklung von Serversoftware, (nativen) Mobile-, Desktop- oder Web-Apps verwendet.
 
-Wie viele andere Hochsprachen baut Dart strikt auf dem Konzept der Objekt-Orientierung auf und ist eine klassenbasierte Programmiersprache mit eingebautem, automatischem
+Wie viele andere Hochsprachen baut Dart strikt auf dem Konzept der Objekt-Orientierung auf und ist eine klassenbasierte Programmiersprache mit eingebautem, automatischen
 Garbage-Collector.
 
-Dart ist eine kompilierte Sprache und kann sowohl in Maschinencode als auch in Vanilla-JavaScript kompiliert werden, wodurch plattformunabhängige Entwicklung ermöglicht 
+Dart ist eine kompilierte Sprache und kann sowohl in Maschinencode als auch in Vanilla-JavaScript kompiliert werden, wodurch eine plattformunabhängige Entwicklung ermöglicht 
 wird.~\cite{dartoverview2021}
 
 \subsection{Syntax von Dart}
@@ -28,7 +28,7 @@ Ein \textit{Hello-World}-Programm würde in Dart also folgendermaßen aussehen:
 
 \subsubsection{Variablen}
 
-Die Deklaration von Variablen funktioniert gleich wie in anderen Hochsprachen, so werden Primitiv- und Referenzdatentypen gleich wie in Java deklariert (int, char, byte bzw. Integer, String, Boolean ...).
+Die Deklaration von Variablen funktioniert ident wie in anderen Hochsprachen, so werden Primitiv- und Referenzdatentypen gleich wie in Java deklariert (int, char, byte bzw. Integer, String, Boolean ...).
 
 Alternativ kann auf das Schlüsselwort \textit{var} aus JavaScript zurückgegriffen werden. Dieses ist vergleichbar mit dem \textit{Object}-Datentyp aus Java und \glqq errät\grqq\space den benötigten Typ der entsprechenden Variable.
 
@@ -41,8 +41,7 @@ Alternativ kann auf das Schlüsselwort \textit{var} aus JavaScript zurückgegrif
 
 Nach Dart-Konventionen ist es allerdings üblich, die Angabe des Datentyps für Variablen im lokalen Scope, beispielsweise innerhalb einer Funktion, durch das \textit{var}-Keyword zu ersetzen. \cite{dartdesignvariables2021}
 
-Für \textit{finale} Variablen kann sowohl auf dezidierte Datentypen als auch auf \textit{var} verzichtet werden, bei der Deklaration von Referenzdatentypen kann das \textit{new}-Keyword 
-weggelassen werden.
+Für \textit{finale} Variablen mit Initialwert kann sowohl auf dezidierte Datentypen als auch auf \textit{var} verzichtet werden. Bei der Deklaration von Referenzdatentypen kann das \textit{new}-Keyword entfallen.
 
 \begin{code}[h]
     \centering
@@ -192,7 +191,7 @@ ersetzt werden.
 
 % https://dart.dev/guides/language/language-tour#abstract-classes
 
-Um eine Klasse als abstrakt zu definieren wird in Dart das \textit{abstract}-Keyword verwendet und mittels
+Um eine Klasse als abstrakt zu definieren, wird in Dart das \textit{abstract}-Keyword verwendet und mittels
 \textit{extends}-Keyword an andere Klassen vererbt.
 
 \begin{code}[h]

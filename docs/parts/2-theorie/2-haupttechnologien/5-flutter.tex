@@ -35,19 +35,18 @@ View zur Laufzeit aussehen wird.
 vergleicht dabei vorherige Zustände mit der neuen Änderung und rendert nur jene Widgets neu, die
 sich auch wirklich verändert haben.
 
-Auf diesem Wege kann der Renderprozess von Widgets so schnell wie möglich durchlaufen werden, wodurch auch die Performance der App gesteigert wird.
+Auf diesem Weg kann der Renderprozess von Widgets so schnell wie möglich durchlaufen werden, wodurch auch die Performance der App gesteigert wird.
 
 Auf diesem Prinzip baut auch Flutters \textit{Hot-Reload}-Funktion bei der Entwicklung auf. Mithilfe dieser
-können Veränderungen an der App in wenigen Augenblicken auf den Emulator übertragen werden, ohne, dass es einen
+können Veränderungen an der App in wenigen Augenblicken auf den Emulator übertragen werden, ohne dass es einen
 Neustart der App bedingt.
 
-So können selbst die kleinsten Veränderungen schnell ausprobiert und getestet werden, ohne einen erneuten Build von Grund auf
-zu benötigen.
+So können selbst die kleinsten Veränderungen schnell ausprobiert und getestet werden, ohne einen erneuten Build von Grund auf notwendig zu machen.
 
 \subsubsection{Plattformunabhängigkeit}
 
-Mithlfe von Flutter können Apps unabhängig von einer Zielplattform entwickelt werden. Das heißt, dass eine Codebase
-sowohl als Android-App und iOS-App als auch als Web-App deployed werden kann.
+Mithilfe von Flutter können Apps unabhängig von einer Zielplattform entwickelt werden. Das heißt, dass eine Codebase
+sowohl als Android-App, iOS-App und als Web-App deployed werden kann.
 
 Neben den enormen Zeitersparnissen werden ebenso die nötigen Kenntnisse zweier Programmiersprachen, beispielsweise
 \textit{Kotlin} für Android und \textit{Swift} für iOS, auf \textbf{Dart} reduziert.
@@ -57,7 +56,7 @@ von Widgets an, einerseits die \textit{Material Components} für Android, andere
 für iOS.
 
 Das jeweilige Widget-Paket passt sich adaptiv an das Design des entsprechenden Betriebssystems an, um einen möglichst
-geringen UI-Kontrast zwischen App und dem Rest des Betriebssystems zu garantieren.
+geringen UI-Kontrast zwischen der App und dem Rest des Betriebssystems zu garantieren.
 
 % Kombination von Material & Cupertino oder Default mit Custom Scrolls.
 
@@ -81,7 +80,7 @@ geringen UI-Kontrast zwischen App und dem Rest des Betriebssystems zu garantiere
 
 \subsection{Layoutting in Flutter}
 
-Den Kern von Flutters Layout-System bilden, wie bereits erwähnt, die einzelnen Widgets, deren Attribute und ihr
+Den Kern von Flutters Layout-System bilden die einzelnen Widgets, deren Attribute und deren
 kaskadierendes Verhalten zueinander.
 
 \begin{figure}[H]
@@ -106,10 +105,10 @@ Ein Widget wird in Flutter mithilfe des entsprechenden Objekt-Konstruktors an de
     \caption{Erzeugen eines einfachen Container-Widgets mithilfe von Flutter}
 \end{code}
 
-Hiermit wird ein neues Container-Widget mit 280 Pixeln Höhe,
+Hier wird ein neues Container-Widget mit 280 Pixeln Höhe,
 400 Pixeln Breite, einem Top-Padding von zehn Pixeln und einem Text als Kind-Widget erzeugt.
 
-Wie bereits erwähnt können durch das Kaskadieren unterschiedlicher Widgets relativ einfach komplexe UI-Strukturen erzeugt werden. Hierfür müssen lediglich die weiteren / inneren Widgets dem \lstinline{child}- bzw. \lstinline{children}-Property des äußeren Widgets übergeben werden.
+Durch das Kaskadieren unterschiedlicher Widgets können relativ einfach komplexe UI-Strukturen erzeugt werden. Hierfür müssen lediglich die weiteren / inneren Widgets dem \lstinline{child}- bzw. \lstinline{children}-Property des äußeren Widgets übergeben werden.
 
 \begin{code}
     \centering
@@ -124,7 +123,7 @@ Wie bereits erwähnt können durch das Kaskadieren unterschiedlicher Widgets rel
 
 Grundsätzlich erfolgt das Rendern eines Widgets über seine eigene \lstinline{build()}-Funktion. Diese wird aufgerufen,
 sobald ein Widget gerendert bzw. neugerendert werden muss und retourniert ein entsprechendes Widget-Objekt,
-der dem Design-Tree des entsprechenden Kontexts hinzugefügt wird.
+das dem Design-Tree des entsprechenden Kontexts hinzugefügt wird.
 
 \begin{code}
     \centering
@@ -136,10 +135,10 @@ der dem Design-Tree des entsprechenden Kontexts hinzugefügt wird.
 Obige Build-Funktion erzeugt einen neuen Container mit einem Bild als Child-Element und übergibt dieses
 an den Widget-Tree des entsprechenden Layouts.
 
-Hierbei gilt allerdings, zwischen zwei Arten von Widgets zu unterscheiden, den sogenannten \textit{Stateless Widgets}
+Hierbei gilt, dass allerdings zwischen zwei Arten von Widgets zu unterscheiden ist: den sogenannten \textit{Stateless Widgets}
 und \textit{Stateful Widgets}.
 
-Wie der Name bereits verrät, haben Stateless-Widgets einen definierten, statischen Zustand und reagieren nicht
+Stateless-Widgets haben einen definierten, statischen Zustand und reagieren nicht
 auf das Verhalten anderer Widgets oder die Interaktion eines Nutzers, beispielsweise Icons, Text oder einfache
 Buttons.
 
@@ -150,7 +149,7 @@ Buttons.
     \caption{Einfaches Stateless Widget}
 \end{code}
 
-Stateful-Widgets dagegen haben einen internen Zustand, welcher durch Interaktion mit dem Nutzer dynamisch verändert
+Stateful-Widgets dagegen haben einen internen Zustand, der durch Interaktion mit dem Nutzer dynamisch verändert
 werden kann, beispielsweise durch das Tippverhalten des Nutzers.
 
 \subsection{Interaktivität der App}
@@ -160,7 +159,7 @@ werden kann, beispielsweise durch das Tippverhalten des Nutzers.
 Um für Interaktion der App zu sorgen werden, wie eben erwähnt, sogenannte Stateful-Widgets benötigt. Diese Widgets sind dynamisch und können beispielsweise ihr Aussehen als Reaktion auf Events, Input durch den Nutzer oder den Erhalt von Daten von einer API verändern.
 
 Damit ein solches Widget weiß welchen Zustand es zum aktuellen Zeitpunkt hat, wird dieser in einem \textit{State}-Objekt vom Typ
-des Widgets gespeichert. Ein solches State-Objekt besteht aus Werten, die den Zustand des entsprechenden Widget beschreiben können, beispielsweise ob ein ExpansionPanel (aufklappbare Karte) auf- oder zugeklappt ist oder der welchen Wert ein Slider-Widget aktuell hat.
+des Widgets gespeichert. Ein solches State-Objekt besteht aus Werten, die den Zustand des entsprechenden Widget beschreiben können. Beispielsweise ob ein ExpansionPanel (aufklappbare Karte) auf- oder zugeklappt ist oder der welchen Wert ein Slider-Widget aktuell hat.
 
 Um den Zustand eines Widgets während der Laufzeit zu verändern und jene Änderung im Anschluss anzeigen zu können, wird hierfür die \lstinline{setState()}-Funktion verwendet.
 
@@ -184,12 +183,14 @@ Zustand.
 
 % https://flutter.dev/docs/development/data-and-backend/state-mgmt/ephemeral-vs-app
 
-In Bezug auf die Widget-Architektur von Flutter gilt es zwei Arten von Zuständen zu unterscheiden:
+In Bezug auf die Widget-Architektur von Flutter gibt es zwei Arten von Zuständen:
 
 \paragraph{Ephemerale States}
 
 Unter sogenannten ephemeralen Zuständen, auch UI-Zustände oder lokale Zustände genannt, versteht man Zustände, welche in
 einem einzelnen Widget gespeichert werden können. Ein ephemeraler Zustand ist also vergleichbar mit einer veränderbaren, lokalen Variable einer Klasse oder eines Scopes.
+
+\newpage
 
 Einfache Beispiele hierfür sind etwa
 \begin{itemize}
@@ -212,10 +213,9 @@ Beispiele im konkreten Fall von Sokka sind unter anderem
 
 \subsection{Navigation und Routing durch die App}
 
-Um zwischen den verschiedenen Screens und Views der App zu wechseln und zu navigieren benötigen wir die \textit{Navigator}-Klasse von Flutter.
+Um zwischen den verschiedenen Screens und Views der App zu wechseln und zu navigieren, benötigen wir die \textit{Navigator}-Klasse von Flutter.
 
-Hierfür ist es sinnvoll zuerst eine \textit{HashMap} mit allen möglichen Routes der App zu definieren
-um so benannte Routen (\textit{named routes}) verwenden zu können.
+Hierfür ist es sinnvoll, zuerst eine \textit{HashMap} mit allen möglichen Routes der App zu definieren, um so benannte Routen (\textit{named routes}) verwenden zu können.
 
 \begin{code}
     \centering
@@ -232,7 +232,7 @@ Diese Routes müssen im Anschluss dem \textit{routes}-Property des MaterialApp-W
     \centering
     \includegraphics[width=1\textwidth]{images/Flutter/flutterMainRoute.png}
     \vspace{-25pt}
-    \caption{Setzten der Routes im App Entry-Point}
+    \caption{Setzen der Routes im App Entry-Point}
 \end{code}
 
 Nun kann mithilfe der Navigator-Klasse und unseren definierten Routes einfach durch die App navigiert werden.
@@ -246,7 +246,7 @@ Hierfür stehen einige Methoden zur Verfügung:
     \caption{\lstinline{Navigator.of()}-Funktion zum Wechseln der Screens per \textit{namedRoutes}}
 \end{code}
 
-Alternativ kann auch ohne NamedRoutes durch die App mithilfe der (umständlicheren) \lstinline{push()}-Funktion navigiert 
+Alternativ kann auch ohne Named-Routes durch die App mithilfe der (umständlicheren) \lstinline{push()}-Funktion navigiert 
 werden.
 
 \begin{code}

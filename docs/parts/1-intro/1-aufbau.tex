@@ -8,14 +8,14 @@ Das Projekt besteht aus insgesamt \textbf{vier Komponenten}. Nicht alle Komponen
     \item \textbf{Server}: Der Server verwaltet die Daten des Systems und agiert als Kern von Sokka. Alle anderen Komponenten greifen auf den Server zu und stellen Anfragen an diesen.
     \item \textbf{Client}: Der Client ist eine Smartphone-App, welche Kunden des Restaurants installieren können. Durch den Client können verfügbare Produkte eingesehen und bestellt werden.
     \item \textbf{ACP}: Das Admin-Control-Panel ist eine passwortgeschütze Website für das Personal des Restaurants. Über dieses ist es möglich, die Systeminhalte wie Produkte, Menüs und Nutzer zu bearbeiten.
-    \item \textbf{Admin-Client}: Der Admin-Client ist eine Smartphone-App, welche vom Personal des Restaurants installiert werden kann. Mit dem Admin-Client können Bestellungen durch Scannen eines QR-Codes von der Client App geprüft und abgeschlossen werden.
+    \item \textbf{Admin-Client}: Der Admin-Client ist eine Smartphone-App, welche vom Personal des Restaurants installiert werden kann. Mit dem Admin-Client können Bestellungen durch Scannen eines QR-Codes der Client-App geprüft und abgeschlossen werden.
 \end{itemize}
 
 Die genaue Funktionsweise der einzelnen Komponenten wird in den folgenden Teilen der Diplomschrift noch genauer beschrieben.
 
 \section{Testumgebung}
 
-Zum Testen der Komponenten wurde ein einfacher virtueller Server vom Hoster Hetzner Online GmbH (Frankfurt am Main) verwendet. Dieser fungierte als Host für den \textit{Server} und dem \textit{ACP}. Der \textit{Client} und der \textit{Admin-Client} benötigen keinen Server, da sie als App direkt auf Smartphones laufen.
+Zum Testen der Komponenten wurde ein einfacher virtueller Server vom Hoster \textit{Hetzner Online GmbH} (Frankfurt am Main) verwendet. Dieser fungierte als Host für den \textit{Server} und dem \textit{ACP}. Der \textit{Client} und der \textit{Admin-Client} benötigen keinen Server, da sie als App direkt auf Smartphones laufen.
 
 \begin{figure}[ht]
     \centering
@@ -23,7 +23,7 @@ Zum Testen der Komponenten wurde ein einfacher virtueller Server vom Hoster Hetz
     \caption{\lstinline{neofetch}: Spezifikationen des Test-VServers}
 \end{figure}
 
-Um Zugriff aud die verschiedenen Komponenten zu ermöglichen wurde die Domain \lstinline{sokka.me} beim US-amerikanischen Domain-Registrar \textit{Namecheap} registriert, für das Hosten entsprechender Subdomains für die jeweiligen Komponenten sind die Nameserver von \textit{CloudFlare} verwendet worden.
+Um Zugriff auf die verschiedenen Komponenten zu ermöglichen, wurde die Domain \lstinline{sokka.me} beim US-amerikanischen Domain-Registrar \textit{Namecheap} registriert. Für das Hosten entsprechender Subdomains für die jeweiligen Komponenten sind die Nameserver von \textit{CloudFlare} verwendet worden.
 
 Während des Entwicklungsprozesses kamen folgende Subdomains zur Verwendung:
 
