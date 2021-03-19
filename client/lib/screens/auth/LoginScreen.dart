@@ -218,19 +218,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                             onTap: () => Navigator.of(context).pushNamed('/signup'),
                                         ),
                                     ),
-                                    new Container(
-                                        margin: new EdgeInsets.only(left: 120.0),
-                                        child: new InkWell(
-                                            child: new Text(
-                                                'Forgot Password',
-                                                style: GoogleFonts.montserrat(
-                                                    color: Colors.white,
-                                                    fontSize: 16.0,
-                                                ),
-                                            ),
-                                            onTap: null,
-                                        ),
-                                    ),
                                 ],
                             ),
                         ],
