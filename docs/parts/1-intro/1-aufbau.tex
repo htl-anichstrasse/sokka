@@ -8,7 +8,7 @@ Das Projekt besteht aus insgesamt \textbf{4 Komponenten}. Nicht alle Komponenten
     \item \textbf{Server}: Der Server verwaltet die Daten des Systems und agiert als Kern von Sokka. Alle anderen Komponenten greifen auf den Server zu und stellen Anfragen an diesen.
     \item \textbf{Client}: Der Client ist eine Smartphone-App, welche Kunden des Restaurants installieren können. Durch den Client können verfügbare Produkte eingesehen und bestellt werden.
     \item \textbf{ACP}: Das Admin-Control-Panel ist eine passwortgeschütze Website für das Personal des Restaurants. Über dieses ist es möglich, die Systeminhalte wie Produkte, Menüs und Nutzer zu bearbeiten.
-    \item \textbf{Admin-Client}: Der Admin-Client ist eine Smartphone-App, welche vom Personal des Restaurants installiert werden kann. Mit dem Admin-Client können Bestellungen durch Scannen eines QR-Codes von der Client App geprüft und eingelöst werden.
+    \item \textbf{Admin-Client}: Der Admin-Client ist eine Smartphone-App, welche vom Personal des Restaurants installiert werden kann. Mit dem Admin-Client können Bestellungen durch Scannen eines QR-Codes von der Client App geprüft und abgeschlossen werden.
 \end{itemize}
 
 Die genaue Funktionsweise der einzelnen Komponenten wird in den folgenden Teilen der Diplomschrift noch genauer beschrieben.
@@ -23,7 +23,9 @@ Zum Testen der Komponenten wurde ein einfacher virtueller Server vom Hoster Hetz
     \caption{\lstinline{neofetch}: Spezifikationen des Test-VServers}
 \end{figure}
 
-Um Zugriff auf die Komponenten zu ermöglichen wurde die Domain \lstinline{sokka.me} beim US-amerikanischen Domain-Registrar Namecheap registriert. Es wurden Nameserver von CloudFlare verwendet, um entsprechende Subdomains für die Komponenten zu hosten. Während der Entwicklung wurden folgende Subdomains verwendet:
+Um Zugriff aud die verschiedenen Komponenten zu ermöglichen wurde die Domain \lstinline{sokka.me} beim US-amerikanischen Domain-Registrar \textit{Namecheap} registriert, für das Hosten entsprechender Subdomains für die jeweiligen Komponenten sind die Nameserver von \textit{CloudFlare} verwendet worden.
+
+Während des Entwicklungsprozesses kamen folgende Subdomains zur Verwendung:
 
 \begin{itemize}
     \item \textbf{api.sokka.me}: Über diese Domain erfolgte der Zugriff auf den Server und dessen REST-API.
