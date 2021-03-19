@@ -56,7 +56,6 @@ class ACPOrderValidation {
                     'order': orderKey,
                 },
             );
-        print(response['message']);
         return response['success'];
     }
 }
