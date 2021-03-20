@@ -7,7 +7,7 @@ Im folgenden Kapitel werden alle verfügbaren Routes der im Backend-Server einge
 
 Um die Zugriffe auf gespeicherte Daten und Nutzerkonten zu sichern, sind einige der REST-Routes durch eine \textit{Bearer-Authorization} (auch bekannt als \textit{Token-Authorization}) geschützt. Diese Routes benötigen in dem Header der Anfrage einen Eintrag mit dem Schlüsselwort \lstinline{Authorization}. Fehlt dieser Eintrag oder ist er ungültig, so wird die Anfrage an die API nicht bearbeitet.
 
-Die Funktionsweise der \textit{Bearer-Authorization} steckt in ihrem Namen. Sie gibt dem \glqq Bearer\grqq, zu Deutsch dem \glqq Inhaber\grqq eines Zugriff-Tokens, Zugriff auf eine Ressource. \cite{levin2019}
+Die Funktionsweise der \textit{Bearer-Authorization} steckt in ihrem Namen. Sie gibt dem \glqq Bearer\grqq, zu Deutsch dem \glqq Inhaber\grqq\space eines Zugriff-Tokens, Zugriff auf eine Ressource. \cite{levin2019}
 
 Im Sokka-System gibt es zwei Arten von Tokens, die für die Authorisierung benötigt werden können: \lstinline{App} und \lstinline{ACP}. Welche der beiden Arten für eine Route benötigt wird, ist bei den einzelnen Routes als \textbf{Authorization-Typ} angegeben.
 
