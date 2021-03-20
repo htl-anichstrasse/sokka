@@ -1,22 +1,22 @@
 \chapter{REST-Route-Dokumentation}
 \label{restdoc}
 
-Im folgenden Kapitel werden alle verfügbaren Routes der im Backend-Server eingebauten REST-API so genau wie möglich dokumentiert. Die Routes der API sind nicht für die öffentliche Verwendung, bzw. für die Erstellung Nutzerdefinierter Clients gedacht und wurden ausschließlich für die Verwendung in Kombination mit dem \textbf{Sokka-Flutter-Client} konzipiert und umgesetzt.
+Im folgenden Kapitel werden alle verfügbaren Routes der im Backend-Server eingebauten REST-API dokumentiert. Die Routes der API sind nicht für die öffentliche Verwendung bzw. für die Erstellung nutzerdefinierter Clients gedacht und wurden ausschließlich für die Verwendung in Kombination mit dem \textbf{Sokka-Flutter-Client} konzipiert und umgesetzt.
 
 \section{Authorization}
 
 Um die Zugriffe auf gespeicherte Daten und Nutzerkonten zu sichern, sind einige der REST-Routes durch eine \textit{Bearer-Authorization} (auch bekannt als \textit{Token-Authorization}) geschützt. Diese Routes benötigen in dem Header der Anfrage einen Eintrag mit dem Schlüsselwort \lstinline{Authorization}. Fehlt dieser Eintrag oder ist er ungültig, so wird die Anfrage an die API nicht bearbeitet.
 
-Die Funktionsweise der \textit{Bearer-Authorization} steckt in dessen Namen. Sie gibt dem \glqq Bearer\grqq, zu Deutsch dem \glqq Inhaber\grqq eines Zugriff-Tokens Zugriff auf eine Ressource. \cite{levin2019}
+Die Funktionsweise der \textit{Bearer-Authorization} steckt in ihrem Namen. Sie gibt dem \glqq Bearer\grqq, zu Deutsch dem \glqq Inhaber\grqq eines Zugriff-Tokens, Zugriff auf eine Ressource. \cite{levin2019}
 
-Im Sokka-System gibt es 2 Arten von Tokens, welche für die Authorisierung benötigt werden können: \lstinline{App} und \lstinline{ACP}. Welche der beiden Arten für eine Route benötigt ist, wird bei den einzelnen Routes als \textbf{Authorization-Typ} angegeben.
+Im Sokka-System gibt es zwei Arten von Tokens, die für die Authorisierung benötigt werden können: \lstinline{App} und \lstinline{ACP}. Welche der beiden Arten für eine Route benötigt wird, ist bei den einzelnen Routes als \textbf{Authorization-Typ} angegeben.
 
 \begin{itemize}
     \item Einen \lstinline{App}-Token erhält man durch eine Anmeldung in der App (siehe \nameref{appauth})
     \item Einen \lstinline{ACP}-Token erhält man durch eine Anmeldung im ACP (siehe \nameref{acpauth})
 \end{itemize}
 
-Damit die Authorisierung dann klappt, muss der empfangene Token gemeinsam mit der Nutzer-E-Mail bzw. dem ACP-Nutzernamen im Format \lstinline{<Name/E-Mail>:<Token>} in Base64-Enkodierung in dem \lstinline{Authorization}-Header der gewünschten API-Anfrage gesendet werden.
+Damit die Authorisierung klappt, muss der empfangene Token gemeinsam mit der Nutzer-E-Mail bzw. dem ACP-Nutzernamen im Format \lstinline{<Name/E-Mail>:<Token>} in Base64-Enkodierung in dem \lstinline{Authorization}-Header der gewünschten API-Anfrage gesendet werden.
 
 Wenn nun beispielsweise eine Anmeldung mit E-Mail und Passwort an die User-Login-Route (\nameref{appauth}) durchgeführt wird, muss der davon erhaltene Token gemeinsam mit der E-Mail immer in dem Header mitgesendet werden.
 
@@ -36,7 +36,7 @@ Wenn zum Beispiel die \lstinline{email} und der \lstinline{token} im obigen Code
 
 \section{Rate-Limiting}
 
-Ein Rate-Limit hindert Nutzer daran, zu viele Anfragen an eine API(-Route) zu stellen. Das ist zum Beispiel sinnvoll, wenn eine Anfrage einen serverseitig hohen Ressourcenaufwand verursacht (z. B. bei Anfragen für Berechnungen) oder die Anfrage auf sensitive Ressourcen zugreift (z. B. bei Nutzeranmeldungen).
+Ein Rate-Limit hindert Nutzer daran, zu viele Anfragen an eine API(-Route) zu stellen. Das ist sinnvoll, wenn eine Anfrage einen serverseitig hohen Ressourcenaufwand verursacht (z. B. bei Anfragen für Berechnungen) oder die Anfrage auf sensitive Ressourcen zugreift (z. B. bei Nutzeranmeldungen).
 
 Bei Sokka wird das Rate-Limit durch eine Open-Source-Library namens \lstinline{express-rate-limit} realisiert. Die Library erlaubt die Angabe eines Zeitfensters in Millisekunden (\lstinline{windowMs}) und eine Maximalanzahl an Anfragen von einer IP-Adresse innerhalb dieses Fensters (\lstinline{max}).
 
@@ -50,18 +50,18 @@ Wenn die Maximalanzahl überschritten wurde, wird ein 421 HTTP-Code mit untenste
     \end{center}
 \end{code}
 
-Einige API-Routes verfügen über ein Rate-Limit, um Missbrauch vorzubeugen, diese haben eine entsprechende Information dazu in der Dokumentation.
+Einige API-Routes verfügen über ein Rate-Limit, um Missbrauch vorzubeugen. Diese haben eine entsprechende Information dazu in der Dokumentation.
 
 \newpage
 
-\input{parts/4-server/1-rest-documentation/root/index}
+\input{parts/3-server/1-rest-documentation/root/index}
 
-\input{parts/4-server/1-rest-documentation/acp/index}
+\input{parts/3-server/1-rest-documentation/acp/index}
 
-\input{parts/4-server/1-rest-documentation/menu/index}
+\input{parts/3-server/1-rest-documentation/menu/index}
 
-\input{parts/4-server/1-rest-documentation/product/index}
+\input{parts/3-server/1-rest-documentation/product/index}
 
-\input{parts/4-server/1-rest-documentation/order/index}
+\input{parts/3-server/1-rest-documentation/order/index}
 
-\input{parts/4-server/1-rest-documentation/user/index}
+\input{parts/3-server/1-rest-documentation/user/index}

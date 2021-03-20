@@ -26,13 +26,13 @@ JSON-Format umgewandelt werden muss.
 Um das Versenden und Verarbeiten solcher HTTP-Requests möglichst einfach zu gestalten bietet jene
 Klasse zwei Wrapper-Funktionen für GET- und POST-Requests an.
 
-Jene Funktionen erhalten die \textit{Ziel-URL} und entsprechendend \textit{Request-Headers} und \textit{-Body} in Form einer HashMap
+Jene Funktionen erhalten die \textit{Ziel-URL} und entsprechenden \textit{Request-Headers} und \textit{-Body} in Form einer HashMap
 als Argumente, welche direkt per \lstinline{jsonEncode()} umgewandelt werden.
 
 Tritt bei einem durchgeführten Request ein Fehler auf - ein Statuscode der Antwort unter 200 bzw. über 400 oder ein
 leeres JSON-Objekt - wirft die Funktion eine Exception mit entsprechendem HTTP-Code.
 
-Erfolgt der Request fehlerlos so wird dessen Body per \lstinline{jsonDecode()} umgewandelt und retourniert.
+Erfolgt der Request fehlerlos, so wird dessen Body per \lstinline{jsonDecode()} umgewandelt und retourniert.
 
 \subsubsection{NetworkWrapper.GET}
 

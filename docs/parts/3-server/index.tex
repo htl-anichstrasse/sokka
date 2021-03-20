@@ -3,22 +3,22 @@
 
 \chapter{Allgemeines}
 
-Der \textbf{Backend-Server} hat die Aufgabe, durch fest definierte Zugangspunkte den Abruf oder die Veränderung von Daten in der Datenbank des Systems zu ermöglichen. Damit das funktioniert besteht der Server aus zwei ganz grundlegenden Teilen:
+Der \textbf{Backend-Server} hat die Aufgabe, durch fest definierte Zugangspunkte den Abruf oder die Veränderung von Daten in der Datenbank des Systems zu ermöglichen. Damit dies funktioniert, besteht der Server aus zwei ganz grundlegenden Teilen:
 
 \begin{itemize}
     \item \textbf{Datenbankverbindung}
     \item \textbf{REST-API}
 \end{itemize}
 
-Für die Implementation des Servers wurde die von Microsoft entwickelte Scriptsprache \textit{\nameref{typescript}} gewählt. Der Code davon wird anschließend mit Hilfe von \textit{\nameref{gulpjs}} zu \textit{\nameref{javascript}} kompiliert.
+Für die Implementation des Servers wurde die von Microsoft entwickelte Scriptsprache \textit{\nameref{typescript}} gewählt. Der Code davon wird anschließend mit \textit{\nameref{gulpjs}} zu \textit{\nameref{javascript}} kompiliert.
 
 \section{Datenbankverbindung}
 
-Zum Start der Anwendung versucht der Server mit Hilfe der Library \lstinline{mysql} eine Verbindung zum MySQL-Server aufgebaut, welcher in einem anderen Docker-Container läuft. MySQL nutzt als Hostname den Containernamen, weshalb der Server via \lstinline{mysql:3306} eine Verbindung zu MySQL herstellen kann. Die Anmeldedaten für MySQL werden sicher in \textit{\nameref{dockersecrets}} gespeichert.
+Zum Start der Anwendung versucht der Server mit Hilfe der Library \lstinline{mysql} eine Verbindung zum MySQL-Server aufzubauen, welcher in einem anderen Docker-Container läuft. MySQL nutzt als Hostname den Containernamen, weshalb der Server via \lstinline{mysql:3306} eine Verbindung zu MySQL herstellen kann. Die Anmeldedaten für MySQL werden sicher in \textit{\nameref{dockersecrets}} gespeichert.
 
 \section{Konfiguration}
 
-Der Backend-Server erlaubt einige Konfigurationsmöglichkeiten. Werte für Konfigurationen werden zuerst aus den Umgebungsvariablen geladen. Sofern dort kein Wert gefunden werden kann, wird der Wert in \textit{\nameref{dockersecrets}} gesucht.
+Der Backend-Server erlaubt einige Konfigurationsmöglichkeiten. Werte für Konfigurationen werden zuerst aus den Umgebungsvariablen geladen. Falls dort kein Wert gefunden werden kann, wird der Wert in \textit{\nameref{dockersecrets}} gesucht.
 
 \subsection{Verfügbare Konfigurationen}
 
@@ -29,7 +29,9 @@ $\rightarrow$ aktiviert den Debug-Modus. Dieser muss für lokale Tests immer \ls
 $\rightarrow$ aktiviert den Debug-Log. Ist dieser Wert auf \lstinline{true} werden beispielsweise alle eingehende Anfragen an den Server im Log mitgeschrieben.
 
 \lstinline{DOMAIN: string} \\
-$\rightarrow$ ist die Domain, unter dem der Backend-Server erreichbar ist. Wird genutzt, um in Verifikations-E-Mails die richtige Domain zu senden.
+$\rightarrow$ ist die Domain, unter der der Backend-Server erreichbar ist. Sie wird genutzt, um in Verifikations-E-Mails die richtige Domain zu senden.
+
+\newpage
 
 \lstinline{MAX_USER_SESSIONS: number} \\
 $\rightarrow$ gibt an, wie oft sich ein Nutzer (z. B. bei einem neuen Gerät) anmelden kann, bevor eine Session ungültig gemacht wird.
@@ -43,7 +45,7 @@ $\rightarrow$ gibt an, wie oft \lstinline{bcrypt} ein Passwort oder einen Sessio
 \subsection{Docker Secrets}
 \label{dockersecrets}
 
-\textbf{Docker Secrets} erlaubt es, sensitive Daten wie Passwörter oder Zugangsschlüssel sicher auf einem Server zu speichern. Im Fall von Sokka werden \lstinline{MYSQL_DB}, \lstinline{MYSQL_HOST}, \lstinline{MYSQL_USERNAME}, \lstinline{MYSQL_PASSWORD}, \lstinline{VERIFY_EMAIL} und \lstinline{VERIFY_EMAIL_PASSWORD}. 
+\textbf{Docker Secrets} erlaubt es, sensitive Daten wie Passwörter oder Zugangsschlüssel sicher auf einem Server zu speichern. Im Fall von Sokka werden \lstinline{MYSQL_DB}, \lstinline{MYSQL_HOST}, \lstinline{MYSQL_USERNAME}, \lstinline{MYSQL_PASSWORD}, \lstinline{VERIFY_EMAIL} und \lstinline{VERIFY_EMAIL_PASSWORD} gespeichert.
 
 Die Secrets müssen in Textdateien in einem vom VCS ausgenommenen Ordner erstellt werden. Diese Textdateien müssen anschließend bei der Erstellung der Container, in unserem Fall in der \lstinline{docker-compose.yml}, eingetragen werden. Beim Start der Container werden alle Secrets in die Container an den Pfad \lstinline{/run/secrets/<key>} kopiert, wo sie schlussendlich ausgelesen werden können.
 
@@ -61,7 +63,7 @@ Damit die \textit{\nameref{client}} und das \textit{\nameref{acp}} auch auf die 
 
 \subsection{Bilder}
 
-Sowohl Produkte als auch Menüs erhalten in Sokka anpassbare Bilder. Um dies zu realisieren existiert \textit{\nameref{acpimage}} zum Hochladen von Bildern und \textit{\nameref{image}} zum Abrufen von Bildern.
+Sowohl Produkte als auch Menüs erhalten in Sokka anpassbare Bilder. Um dies zu realisieren, existiert \textit{\nameref{acpimage}} zum Hochladen von Bildern und \textit{\nameref{image}} zum Abrufen von Bildern.
 
 Wenn ein Bild über die ACP-Route hochgeladen wird, legt der Server das Bild mit einer zufallsgenerierten ID (16 Bytes, Hex enkodiert) in einer Docker Volume ab. Diese Bilder können dann später wieder über die zweite Route abgerufen werden.
 
@@ -74,7 +76,7 @@ Schon beim Start des Servers wird geprüft, ob die in den \textit{\nameref{docke
 
 Sofern die gespeicherten Anmeldedaten korrekt sind (und der Anmeldevorgang bei Google erfolgreich war), kann der Server vollautomatisch E-Mails an neue Nutzer versenden.
 
-Wenn sich ein neuer Nutzer durch die REST-Route \textit{\nameref{usercreate}} mit einer laut RFC 5322 gültigen E-Mail-Adresse registriert, werden 64 zufällige Bytes generiert, welche anschließend in Base64 enkodiert werden und der entstandene String in Verbindung mit der ID des Nutzerkontos in einer Tabelle abgelegt.
+Wenn sich ein neuer Nutzer durch die REST-Route \textit{\nameref{usercreate}} mit einer laut RFC 5322 gültigen E-Mail-Adresse registriert, werden 64 zufällige Bytes generiert, welche anschließend in Base64 enkodiert werden und der entstandene String in Verbindung mit der ID des Nutzerkontos in einer Tabelle abgelegt wird.
 
 Im selben Moment wird an die angegebene E-Mail-Adresse eine Nachricht mit einer URL gesendet, welche den generierten String enthält.
 
@@ -87,4 +89,4 @@ Im selben Moment wird an die angegebene E-Mail-Adresse eine Nachricht mit einer 
 
 Die URL in der E-Mail führt zur REST-Route \textit{\nameref{verify}}, welche, wenn der String in der URL gültig ist, das damit verbundene Nutzerkonto verifiziert.
 
-\input{parts/4-server/1-rest-documentation/index}
+\input{parts/3-server/1-rest-documentation/index}

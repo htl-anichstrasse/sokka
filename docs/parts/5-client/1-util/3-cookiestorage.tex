@@ -9,12 +9,10 @@ in Form von Cookies im externen Speichers des Geräts abgespeichert.
 
 Damit dies plattformunabhängig funktioniert, wird das \lstinline{shared-preferences}-Package von Flutter
 verwendet.
-Dieses Plugin wrapped die \lstinline{NSUserDefaults} von iOS und die \lstinline{SharedPreferences} von Android
-wodurch Key-Value-Paare persistent unabhängig des Betriebssystems abgespeichert werden können.
+Dieses Plugin wrapped die \lstinline{NSUserDefaults} von iOS und die \lstinline{SharedPreferences} von Android,
+wodurch Key-Value-Paare persistent unabhängig vom Betriebssystem abgespeichert werden können.
 
-Damit die Daten, die im Cookie-Storage gespeichert sind, global in der App verfügbar sind, wird in jener
-Klasse das \textit{Singleton-Design-Pattern} angewendet. Dieses ermöglicht, dass immer dieselbe, einzige Instanz
-dieser Klasse aufgerufen wird, anstatt immer neue Objekte per Konstruktor anzulegen.
+Damit die Daten, die im Cookie-Storage gespeichert sind, global in der App verfügbar sind, wird in jener Klasse das \textit{Singleton-Design-Pattern} angewendet. Dieses ermöglicht, dass immer dieselbe, einzige Instanz dieser Klasse aufgerufen wird, anstatt immer neue Objekte per Konstruktor anzulegen.
 
 Dart hat hierfür eine eigene syntaktische Lösung:
 
@@ -25,11 +23,9 @@ Dart hat hierfür eine eigene syntaktische Lösung:
     \caption{Dart's syntaktische Lösung für die Erstellung eines Singletons}
 \end{code}
 
-Innerhalb der Klasse besitzt der Cookie-Storage zusätzlich eine Map \lstinline{Map<String, String>}, in der die Key-Value-Paare
-gespeichert nochmals abgespeichert werden, damit sie in notwendigen Situationen synchron abgefragt werden können.
+Innerhalb der Klasse besitzt der Cookie-Storage zusätzlich eine Map \lstinline{Map<String, String>},in der die Key-Value-Paare nochmals abgespeichert werden, damit sie in dafür notwendigen Situationen synchron abgefragt werden können.
 
-Das Speichern und Abfragen von Werten, die im externen Speicher des Geräts gespeichert sind erfolgt über
-eine Instanz der \textit{SharedPreferences}:
+Das Speichern und Abfragen von Werten, die im externen Speicher des Geräts gespeichert sind erfolgt, über eine Instanz der \textit{SharedPreferences}:
 
 \begin{code}[H]
     \centering
@@ -51,7 +47,7 @@ im Cookie-Storage vorgefertigte, statische Keys sowohl für den Session-Token al
 So können Fehler, die durch Tippfehler oder falsche Angaben des Keys beim Abspeichern bzw. Abfragen
 von Werten entstehen, zur Gänze verhindert werden.
 
-Anstatt den Key also manuell anzugeben kann dieser nun simpel über die statische Klassenvariable
+Anstatt den Key also manuell anzugeben, kann dieser nun simpel über die statische Klassenvariable
 aufgerufen werden.
 
 \begin{code}
