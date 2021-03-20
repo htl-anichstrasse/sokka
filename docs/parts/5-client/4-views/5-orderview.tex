@@ -5,10 +5,11 @@ jederzeit abgerufen werden.
 
 \subsection{Render-Widget für Bestellungen}
 
-Eine Bestellung wird, gleich wie ein Menü, mithlfe eines individualisierten Card-Widgets
+Eine Bestellung wird, wie ein Menü, mithilfe eines individualisierten Card-Widgets
 dargestellt.
 Anstatt der bekannten Informationen des Menüs werden hier die wichtigen Daten der entsprechenden
-Bestellung angezeigt, dazu gehören:
+Bestellung angezeigt\\
+Dazu gehören:
 
 \begin{itemize}
     \item das Datum der Bestellung
@@ -27,11 +28,11 @@ ungültig zu machen.
     \caption{Order-View mit Card-Widgets für jede Bestellung}
 \end{figure}
 
-Damit das Scannen des QR-Codes an der Kassa vor Ort verbessert wird kann der Code einer Bestellung
+Damit das Scannen des QR-Codes an der Kassa vor Ort verbessert wird, kann der Code einer Bestellung
 durch Antippen vergrößert werden. Hierfür wird ein \lstinline{ModalBottomSheet} mit weißem Hintergrund
-geöffnet auf dem das QR-Image in vergrößerter Form abgebildet und damit leichter einscannbar ist.
+geöffnet, auf dem das QR-Image in vergrößerter Form abgebildet und damit leichter einscanbar ist.
 
-Da ein \lstinline{QrImage}-Widget allerdings kein definiertes \lstinline{onTap}-Property muss
+Da ein \lstinline{QrImage}-Widget allerdings kein definiertes \lstinline{onTap}-Property hat, muss
 das onTap-Verhalten des QR-Codes mithilfe eines \lstinline{GestureDetectors} implementiert werden.
 
 \begin{code}[H]
@@ -44,7 +45,7 @@ das onTap-Verhalten des QR-Codes mithilfe eines \lstinline{GestureDetectors} imp
 
 \newpage
 
-Nun kann durch kurzes Antippen eines QR-Codes für den Scan vergrößert werden und sieht wie folgt
+Nun kann durch kurzes Antippen der QR-Codes für den Scan vergrößert werden und sieht wie folgt
 in der App aus:
 
 \begin{figure}[H]
@@ -57,10 +58,10 @@ in der App aus:
 
 \subsection{Darstellen der Bestellungen im Order-View}
 
-Dem Prinzip des \nameref{basketview}s folgend werden auch im Order-View alle Bestellungen des Nutzers
+Dem Prinzip des \nameref{basketview}s folgend, werden auch im Order-View alle Bestellungen des Nutzers
 in Form von Order-Panels generiert und mittels ListView.builder-Widget angezeigt.
 
-Hat der Nutzer hingegen noch keine Bestellungen getägigt wird auch hier das Sokka-Logo mit entsprechender
+Hat der Nutzer hingegen noch keine Bestellungen getägigt wird, auch hier das Sokka-Logo mit entsprechender
 Meldung angezeigt.
 
 \begin{figure}[H]

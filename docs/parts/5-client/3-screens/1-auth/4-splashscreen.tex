@@ -3,8 +3,7 @@
 Der Loading-Splash-Screen dient als zeitliche Überbrückung der Ladesequenz beim Starten der App und
 wird solange angezeigt, bis der gespeicherte Session-Token validiert worden ist.
 
-Wenn der gespeicherte Token gültig ist, wird der Nutzer auf die Hauptseite weitergeleitet, wenn nicht,
-wird der Login- bzw. Signup-Screen angezeigt.
+Wenn der gespeicherte Token gültig ist, wird der Nutzer auf die Hauptseite weitergeleitet. Andernfalls wird der Login- bzw. Signup-Screen angezeigt.
 
 Da dieser Screen frei von Nutzer-Interaktion ist, wird dieser als Stateless Widget deklariert,
 als Status-Anzeige wird ein \lstinline{CircularProgressIndicator}-Widget verwendet.

@@ -4,23 +4,25 @@
 \subsection{Allgemeines}
 
 Um die aktuell verfügbaren Menüs und Produkte sowie die Bestellungen eines Nutzers per API-Request
-abfragen zu können wird ein \textit{Bearer-Authorization-Token} benötigt.
+abfragen zu können, wird ein \textit{Bearer-Authorization-Token} benötigt.
 
 \subsection{Generieren eines Bearer-Tokens}
 
 Dieser setzt sich aus der E-Mail-Adresse des Nutzers und dem Token der aktuellen
 Nutzer-Session zusammen.
 
-\begin{code}
+\begin{code}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/Client/services/bearer-auth/generateBearerToken.png}
     \vspace{-25pt}
     \caption{Generieren eines Bearer-Authorizaton-Tokens}
 \end{code}
 
-Rufen wir testweise oben angeführte Funktion auf
+\newpage
 
-\begin{code}
+Rufen wir testweise oben angeführte Funktion auf,
+
+\begin{code}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/Client/services/bearer-auth/callGenerateBearerToken.png}
     \vspace{-25pt}
@@ -29,7 +31,7 @@ Rufen wir testweise oben angeführte Funktion auf
 
 erhalten wir folgenden Authorization-Token:
 
-\begin{code}
+\begin{code}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/Client/services/bearer-auth/testToken.png}
     \vspace{-25pt}

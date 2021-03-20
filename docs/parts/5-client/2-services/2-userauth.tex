@@ -67,8 +67,8 @@ im Cookie-Storage abgespeichert.
 Mit jenen Daten im externen Gerätespeicher kann nun bei jedem weiteren App-Start ein Request an die
 \lstinline{/user/validate}-Route mit Session-Token und E-Mail zur Validierung der Nutzer-Session
 gesendet werden.\\
-Wenn der Session-Token nachwievor gültig ist wird der Nutzer automatisch zum Home-Screen weitergeleitet.
-Ist die Session abgelaufen erscheint der Login- bzw. Signup-Screen.
+Wenn der Session-Token nachwievor gültig ist, wird der Nutzer automatisch zum Home-Screen weitergeleitet.
+Ist die Session abgelaufen, erscheint der Login- bzw. Signup-Screen.
 
 \begin{code}
     \centering
@@ -80,7 +80,7 @@ Ist die Session abgelaufen erscheint der Login- bzw. Signup-Screen.
 \subsubsection{Wrapper-Funktion zur Session-Validierung}
 
 Damit der Check der Validität des gespeicherten Session-Tokens einfach
-bei Start der App ausgeführt werden kann gibt es folgende Wrapper-Funktion,
+bei Start der App ausgeführt werden kann, gibt es folgende Wrapper-Funktion,
 die automatisch benötigte Werte aus dem Storage nimmt und einen entsprechenden
 Request an die Sokka-API sendet.
 

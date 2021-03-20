@@ -19,12 +19,12 @@ generiert und setzt sich aus dem Namen und dem Passwort des angemeldeten ACP-Nut
 
 \subsection{Validieren einer Bestellung}
 
-Wird der QR-Code einer Bestellung mithilfe des Admin-Clients eingescanned muss als ersten Schritt deren
+Wird der QR-Code einer Bestellung mithilfe des Admin-Clients eingescanned, muss als erster Schritt dessen
 Validität in Hinblick auf 
 
 \begin{itemize}
-    \item den Zeitpunkt der Bestellung (diese muss am Vortag vor der \glqq Closing Time\grqq aufgegeben werden)
-    \item Nutzerzugehörigkeit, sprich, ob die Bestellung zum entsprechenden Nutzer gehört
+    \item den Zeitpunkt der Bestellung (diese muss am Vortag vor der \glqq Closing Time\grqq aufgegeben worden sein)
+    \item Zugehörigkeit der Bestellung zum eingeloggten Nutzer
     \item Gültigkeit des QR-Codes
 \end{itemize}
 
@@ -50,8 +50,8 @@ und den QR-Code invalidieren.
 \subsection{Abschließen einer Bestellung}
 
 Wird eine Bestellung durch den Admin-Client als gültig erkannt und in weiterer Folge durch den
-Restaurantangestellten abkassiert muss die Bestellung und deren QR-Code ungültig gemacht werden,
-um künftig nicht nochmals vorgezeigt werden zu könne.
+Restaurantangestellten kassiert muss die Bestellung und deren QR-Code ungültig gemacht werden,
+um nicht mehrmals vorgezeigt werden zu können.
 
 Dies kann über den Druck eines Buttons im oben erwähnten Dialog-Fenster, in dem die relevanten Daten
 der Bestellung aufgelistet sind, durchgeführt werden.\\

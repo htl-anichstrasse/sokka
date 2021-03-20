@@ -25,7 +25,7 @@ durch eine einfache Iteration alle Menüs schnell in die App geladen werden kön
     \centering
     \includegraphics[width=1\textwidth]{images/Client/services/fetch-orderables/appendMenus.png}
     \vspace{-25pt}
-    \caption{Abrufen und Speichern der verfübaren Menüs}
+    \caption{Abrufen und Speichern der verfügbaren Menüs}
 \end{code}
 
 Aus den erhaltenen Response-Daten werden direkt neue Objekte vom \lstinline{Menu}-Model erzeugt,
@@ -33,7 +33,7 @@ dem Menu-Controller hinzugefügt und im Menu-View angezeigt.
 
 \subsection{Laden von verfügbaren Produkten}
 
-Das Abrufen der angebotenen Produkte erfolgt nach demselben Prinzip wie bei der Abfrage der Menüs.
+Das Abrufen der angebotenen Produkte erfolgt nach demselben Prinzip wie die Abfrage der Menüs.
 Per API-Call werden alle Produkte übermittelt und können durch Iterieren über das JSON-Objekt
 in die App geladen werden.
 
@@ -47,7 +47,7 @@ in die App geladen werden.
 \subsubsection{Wrapper-Funktionen für das Initialisieren der Menüs und Produkte}
 
 Wie beim User-Authentication-Service gibt es auch für die Initialisierung aller Waren eine Wrapper-Funktion,
-die bei Start der App aufgerufen wird.
+die beim Start der App aufgerufen wird.
 
 \begin{code}
     \centering
@@ -55,5 +55,3 @@ die bei Start der App aufgerufen wird.
     \vspace{-25pt}
     \caption{Abrufen und Speichern der verfübaren Menüs}
 \end{code}
-
-\newpage
