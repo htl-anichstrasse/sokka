@@ -22,13 +22,12 @@ class OrderService {
     }
 
     Future<void> appendOrders() async {
-        final response = await this._networkWrapper
-            .get(
-                ORDER_GET,
-                headers: {
-                    'Authorization': this._bearerAuth.createBearerAuthToken(),
-                },
-            );
+        final response = await this._networkWrapper.get(
+            ORDER_GET,
+            headers: {
+                'Authorization': this._bearerAuth.createBearerAuthToken(),
+            },
+        );
         final data = response['orders'];
 
         for (var order in data) {
@@ -48,18 +47,17 @@ class OrderService {
     }
 
     Future<dynamic> createOrder() async {
-        final response = await this._networkWrapper
-            .post(
-                ORDER_CREATE,
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': this._bearerAuth.createBearerAuthToken(),
-                },
-                body: {
-                    'products': await this.loadProducts(),
-                    'menus': await this.loadMenus(),
-                },
-            );
+        final response = await this._networkWrapper.post(
+            ORDER_CREATE,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': this._bearerAuth.createBearerAuthToken(),
+            },
+            body: {
+                'products': await this.loadProducts(),
+                'menus': await this.loadMenus(),
+            },
+        );
         return response;
     }
 

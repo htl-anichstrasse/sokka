@@ -26,36 +26,33 @@ class FetchOrderables {
     }
 
     Future<int> getAmountOfMenus() async {
-        final response = await this._networkWrapper
-            .get(
-                MENU_ROUTE,
-                headers: {
-                    'Authorization': this._bearerAuth.createBearerAuthToken()
-                }
-            );
+        final response = await this._networkWrapper.get(
+            MENU_ROUTE,
+            headers: {
+                'Authorization': this._bearerAuth.createBearerAuthToken()
+            }
+        );
         return response['data'].length;
     }
 
     Future<int> getAmountOfProducts() async {
-        final response = await this._networkWrapper
-            .get(
-                PRODUCT_ROUTE,
-                headers: {
-                    'Authorization': this._bearerAuth.createBearerAuthToken()
-                }
-            );
+        final response = await this._networkWrapper.get(
+            PRODUCT_ROUTE,
+            headers: {
+                'Authorization': this._bearerAuth.createBearerAuthToken()
+            }
+        );
         return response['data'].length;
     }
 
     Future<void> appendMenus() async {
         final auth = this._bearerAuth.createBearerAuthToken();
-        final response = await this._networkWrapper
-            .get(
-                '$MENU_ROUTE',
-                headers: {
-                    'Authorization': auth
-                },
-            );
+        final response = await this._networkWrapper.get(
+            '$MENU_ROUTE',
+            headers: {
+                'Authorization': auth
+            },
+        );
         final data = response['data'];
 
         for (var i = 0; i < data.length; i++) {
@@ -72,24 +69,22 @@ class FetchOrderables {
     }
 
     Future<String> getProductName(final int productID) async {
-        final response = await this._networkWrapper
-            .get(
-                '$PRODUCT_ROUTE?id=$productID',
-                headers: {
-                    'Authorization': this._bearerAuth.createBearerAuthToken(),
-                },
-            );
+        final response = await this._networkWrapper.get(
+            '$PRODUCT_ROUTE?id=$productID',
+            headers: {
+                'Authorization': this._bearerAuth.createBearerAuthToken(),
+            },
+        );
         return response['data'].where((product) => product['id'] == productID)['name'];
     }
 
     Future<void> appendProducts() async {
-        final response = await this._networkWrapper
-            .get(
-                '$PRODUCT_ROUTE',
-                headers: {
-                    'Authorization': this._bearerAuth.createBearerAuthToken(),
-                },
-            );
+        final response = await this._networkWrapper.get(
+            '$PRODUCT_ROUTE',
+            headers: {
+                'Authorization': this._bearerAuth.createBearerAuthToken(),
+            },
+        );
         final data = response['data'];
 
         for (var product in data) {
@@ -99,13 +94,12 @@ class FetchOrderables {
     }
 
     Future<Product> getProduct(final int productID) async {
-        final response = await this._networkWrapper
-            .get(
-                '$PRODUCT_ROUTE?id=$productID',
-                headers: {
-                    'Authorization': this._bearerAuth.createBearerAuthToken(),
-                },
-            );
+        final response = await this._networkWrapper.get(
+            '$PRODUCT_ROUTE?id=$productID',
+            headers: {
+                'Authorization': this._bearerAuth.createBearerAuthToken(),
+            },
+        );
         final data = response['data'].where((product) => product['id'] == productID).toList()[0];
 
         return new Product(productID: productID, name: data['name'], price: data['price'].toDouble(),
