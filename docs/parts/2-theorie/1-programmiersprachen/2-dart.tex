@@ -17,9 +17,11 @@ wird.~\cite{dartoverview2021}
 
 Die Syntax von Dart sieht auf den ersten Blick aus, wie eine Mischung aus \textit{Java} und \text{JavaScript}.
 
+\newpage
+
 Ein \textit{Hello-World}-Programm würde in Dart also folgendermaßen aussehen:
 
-\begin{code}[h]
+\begin{code}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/Dart/theory/dartHelloWorld.png}
     \vspace{-25pt}
@@ -32,7 +34,7 @@ Die Deklaration von Variablen funktioniert ident wie in anderen Hochsprachen, so
 
 Alternativ kann auf das Schlüsselwort \textit{var} aus JavaScript zurückgegriffen werden. Dieses ist vergleichbar mit dem \textit{Object}-Datentyp aus Java und \glqq errät\grqq\space den benötigten Typ der entsprechenden Variable.
 
-\begin{code}[h]
+\begin{code}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/Dart/theory/dartVariables.png}
     \vspace{-25pt}
@@ -43,12 +45,14 @@ Nach Dart-Konventionen ist es allerdings üblich, die Angabe des Datentyps für 
 
 Für \textit{finale} Variablen mit Initialwert kann sowohl auf dezidierte Datentypen als auch auf \textit{var} verzichtet werden. Bei der Deklaration von Referenzdatentypen kann das \textit{new}-Keyword entfallen.
 
-\begin{code}[h]
+\begin{code}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/Dart/theory/dartLocalFinal.png}
     \vspace{-25pt}
     \caption{Finale Variable im lokalen Scope}
 \end{code}
+
+\newpage
 
 \subsubsection{Verzweigungen und Schleifen}
 
@@ -57,21 +61,21 @@ wie \textit{for / for in / for each} oder \textit{while} verwendet.
 
 Die Syntax jener Kontrollstrukturen ist mit der von JavaScript quasi ident.
 
-\begin{code}[h]
+\begin{code}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/Dart/theory/dartConditional.png}
     \vspace{-25pt}
     \caption{Conditional mit zwei Bedingungen}
 \end{code}
 
-\begin{code}[h]
+\begin{code}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/Dart/theory/dartForLoop.png}
     \vspace{-25pt}
     \caption{Arten von for-Schleifen in Dart}
 \end{code}
 
-\begin{code}[h]
+\begin{code}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/Dart/theory/dartWhileLoops.png}
     \vspace{-25pt}
@@ -84,14 +88,12 @@ Die Syntax jener Kontrollstrukturen ist mit der von JavaScript quasi ident.
 
 Funktionen in Dart werden auf dieselbe Weise wie in Java deklariert. Die Funktionssignatur bzw. der Funktionskopf benötigt den Rückgabewert der Funktion, den Namen und die Parameterliste.
 
-\begin{code}[h]
+\begin{code}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/Dart/theory/dartFunctions.png}
     \vspace{-25pt}
     \caption{Deklarieren von Funktionen in Dart}
 \end{code}
-
-\newpage
 
 Dart bietet in Bezug auf das Übergeben von Parametern an eine Funktion mehrere Mögichkeiten:
 
@@ -102,7 +104,7 @@ Dart bietet in Bezug auf das Übergeben von Parametern an eine Funktion mehrere 
 
 Sogenannte \textit{positionierte und optionale Parameter} werden in der Argumentliste einer Funktion mithilfe eckiger Klammern gekennzeichnet und bewirken, wie der Name bereits verrät, dass jene Parameter optional und in ihrer Position fixiert sind.
 
-\begin{code}
+\begin{code}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/Dart/theory/dartPositionedArgumentsFunction.png}
     \vspace{-25pt}
@@ -110,6 +112,8 @@ Sogenannte \textit{positionierte und optionale Parameter} werden in der Argument
 \end{code}
 
 Die Funktion \textit{getHttpUrl()} benötigt neben dem Server und Pfad auch eine Portnummer, welche hier als positionierter, optionaler Parameter mit einem Standartwert von 80 festgelegt wird.
+
+\newpage
 
 Wird beim Aufruf dieser Funktion der Port-Integer weggelassen, so wird dieser immer auf 80 gesetzt.
 
@@ -120,11 +124,9 @@ Wird beim Aufruf dieser Funktion der Port-Integer weggelassen, so wird dieser im
     \caption{Aufrufen einer Funktion mit positioned Parametern}
 \end{code}
 
-\newpage
-
 Neben positionierten Parametern gibt es noch \glqq benannte\grqq , sogenannte \textit{named} Parameter, die mit geschwungenen Klammern in der Parameterliste deklariert werden.
 
-\begin{code}
+\begin{code}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/Dart/theory/dartNamedArguments.png}
     \vspace{-25pt}
@@ -134,14 +136,14 @@ Neben positionierten Parametern gibt es noch \glqq benannte\grqq , sogenannte \t
 Neben einer URL benötigt die obige Funktion auch eine Nachricht und eine Port-Nummer, um einen gültigen Request zu versenden. Aufgrund ihrer Deklaration innerhalb der geschwungenen Klammern
 werden sie als benannte Parameter interpretiert und werden wie folgt übergeben.
 
-\begin{code}[h]
+\begin{code}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/Dart/theory/dartCallNamedArguments.png}
     \vspace{-25pt}
     \caption{Aufrufen einer Funktion mit \textit{named} Parametern}
 \end{code}
 
-\begin{code}[h]
+\begin{code}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/Dart/theory/dartCallPositionedFunction.png}
     \vspace{-25pt}
@@ -154,7 +156,7 @@ werden sie als benannte Parameter interpretiert und werden wie folgt übergeben.
 
 Ähnlich zu Hochsprachen wie Java oder C\# können auch in Dart einfach Klassen erstellt werden, wie nachfolgend zu sehen ist.
 
-\begin{code}[h]
+\begin{code}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/Dart/theory/dartClass.png}
     \vspace{-25pt}
@@ -166,7 +168,7 @@ Wie auch in JavaScript oder Python gibt es in Dart keine Access-Modifier, um den
 Desweiteren stehen in Dart, ebenso wie in C\#, die Schlüsselwörter \textbf{get} und \textbf{set} zur Verfügung, mit deren Verwendung Funktionen als dezidierte Getter- bzw.
 Setter-Funktion für eine Membervariable definiert werden können.
 
-\begin{code}[h]
+\begin{code}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/Dart/theory/dartGetterSetter.png}
     \vspace{-25pt}
@@ -175,10 +177,12 @@ Setter-Funktion für eine Membervariable definiert werden können.
 
 In diesem Beispiel werden \textit{getBar} und \textit{setBar} als dezidierte Getter- und Setter-Funktion für das Feld \textbf{\_bar} festgelegt. Auffällig ist ebenso die JavaScript-ähnliche Arrow-Syntax, die ein Return-Statement zur Gänze ersetzen kann.
 
+\newpage
+
 So kann ein \textit{return}, wie es in Java geschrieben wird, durch ein Arrow-Statement wie folgt
 ersetzt werden.
 
-\begin{code}[h]
+\begin{code}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/Dart/theory/dartVSJavaGetter.png}
     \vspace{-25pt}
@@ -194,7 +198,7 @@ ersetzt werden.
 Um eine Klasse als abstrakt zu definieren, wird in Dart das \textit{abstract}-Keyword verwendet und mittels
 \textit{extends}-Keyword an andere Klassen vererbt.
 
-\begin{code}[h]
+\begin{code}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/Dart/theory/dartAbstractClass.png}
     \vspace{-25pt}
