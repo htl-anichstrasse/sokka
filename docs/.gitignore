@@ -11,4 +11,5 @@
 *.gz
 *.pdf
 *.out
+*.synctex
 __latexindent*
