@@ -12,14 +12,13 @@ class ACPOrderValidation {
     static const ACP_ORDER_INVALIDATE = 'https://api.sokka.me/acp/order/invalidate';
 
     Future<dynamic> validateOrder({ final String orderKey }) async {
-        final response = await this._networkWrapper
-            .get(
-                '$ACP_ORDER_VALIDATE?order=$orderKey',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': await this._bearerAuth.createBearerAuthToken(),
-                },
-            );
+        final response = await this._networkWrapper.get(
+            '$ACP_ORDER_VALIDATE?order=$orderKey',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': await this._bearerAuth.createBearerAuthToken(),
+            },
+        );
         if (response['success'] && response['valid']) {
             final order = response['order'];
 
@@ -44,18 +43,16 @@ class ACPOrderValidation {
     }
 
     Future<bool> invalidateOrder(final String orderKey) async {
-        print(orderKey);
-        final response = await this._networkWrapper
-            .post(
-                ACP_ORDER_INVALIDATE,
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': await this._bearerAuth.createBearerAuthToken(),
-                },
-                body: {
-                    'order': orderKey,
-                },
-            );
+        final response = await this._networkWrapper.post(
+            ACP_ORDER_INVALIDATE,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': await this._bearerAuth.createBearerAuthToken(),
+            },
+            body: {
+                'order': orderKey,
+            },
+        );
         return response['success'];
     }
 }

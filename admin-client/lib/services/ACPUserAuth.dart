@@ -11,51 +11,44 @@ class ACPUserAuth {
     static const String ACP_VALIDATE_ROUTE = 'https://api.sokka.me/acp/validate';
 
     Future<String> loginACPUser(final String name, final String password) async {
-        return await this._networkWrapper
-            .post(
-                ACP_LOGIN_ROUTE,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: {
-                    'name': name,
-                    'password': password,
-                }
-            )
-            .then((response) {
-                return response['token'];
-            });
+        final response = await this._networkWrapper.post(
+            ACP_LOGIN_ROUTE,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: {
+                'name': name,
+                'password': password,
+            }
+        );
+        return response['token'];
     }
 
     Future<void> logoutACPUser(final String sessionToken, final String name) async {
-        await this._networkWrapper
-            .post(
-                ACP_LOGOUT_ROUTE,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: {
-                    'token': sessionToken,
-                    'name': name
-                },
-            );
+        await this._networkWrapper.post(
+            ACP_LOGOUT_ROUTE,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: {
+                'token': sessionToken,
+                'name': name
+            },
+        );
     }
     
     Future<bool> validateACPSessionToken(final String sessionToken, final String name) async {
-        return await this._networkWrapper
-            .post(
-                ACP_VALIDATE_ROUTE,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: {
-                    'token': sessionToken,
-                    'name': name
-                },
-            )
-            .then((response) {
-                return response['success'];
-            });
+        final response = await this._networkWrapper.post(
+            ACP_VALIDATE_ROUTE,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: {
+                'token': sessionToken,
+                'name': name
+            },
+        );
+        return response['success'];
     }
 
     Future<bool> validateACPSession() async {
