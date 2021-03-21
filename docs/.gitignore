@@ -12,4 +12,5 @@
 *.pdf
 *.out
 *.synctex
+*.synctex(busy)
 __latexindent*
