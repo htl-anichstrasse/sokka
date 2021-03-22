@@ -1,3 +1,7 @@
+[![](https://tokei.rs/b1/github/htl-anichstrasse/sokka?category=code)](https://github.com/XAMPPRocky/tokei)
+[![](https://img.shields.io/codacy/grade/9668f5d04b3d4f8f9b9ad2166e5f17af)](https://www.codacy.com/gh/htl-anichstrasse/sokka/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=htl-anichstrasse/sokka&amp;utm_campaign=Badge_Grade)
+[![](https://img.shields.io/github/license/htl-anichstrasse/sokka)](https://github.com/htl-anichstrasse/sokka/blob/master/LICENSE)
+
 # Sokka
 
 <br/>
