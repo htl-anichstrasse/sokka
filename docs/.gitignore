@@ -9,7 +9,7 @@
 *.bbl
 *.toc
 *.gz
-*.pdf
+main.pdf
 *.out
 *.synctex
 *.synctex(busy)
