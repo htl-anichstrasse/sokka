@@ -17,7 +17,7 @@
     <br/>
     <a href="https://github.com/htl-anichstrasse/sokka/releases">Releases</a>
     ·
-    <a href="https://github.com/htl-anichstrasse/sokka/blob/master/docs/thesis.pdf">Thesis</a>
+    <a href="https://raw.githubusercontent.com/htl-anichstrasse/sokka/master/docs/thesis.pdf">Thesis</a>
   </p>
 </p>
 
