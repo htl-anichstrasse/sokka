@@ -23,7 +23,7 @@
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^9.0.2",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-bearer-token": "^2.4.0",
     "express-rate-limit": "^5.2.6",
     "log4js": "^6.4.0",
